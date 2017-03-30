@@ -53,7 +53,7 @@ public class DamageActionFixture extends ActionFixtures{
                         }
                         DamageActionFixture.this.canBeApplied = true;
                     }
-                }, 0.2f);
+                }, 0.15f);
         }
     }
 

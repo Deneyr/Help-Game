@@ -60,14 +60,14 @@ public class ActivableVentilo extends Ventilo{
         if(this.isWorking){
             this.changeAnimation(3, false);
             
-            for(WindObject2D wind : this.wind){
-                wind.changeAnimation(-1, false);
+            for(WindObject2D windUnit : this.wind){
+                windUnit.changeAnimation(-1, false);
             }
         }else{
             this.changeAnimation(2, false);
             
-            for(WindObject2D wind : this.wind){
-                wind.changeAnimation(0, false);
+            for(WindObject2D windUnit : this.wind){
+                windUnit.changeAnimation(0, false);
             }
         }
         
@@ -84,8 +84,8 @@ public class ActivableVentilo extends Ventilo{
     
     @Override
     public void dispose(){
-        for(WindObject2D wind : this.wind){
-            wind.dispose();
+        for(WindObject2D windUnit : this.wind){
+            windUnit.dispose();
         }
         this.wind.clear();
         this.button.dispose();

@@ -87,7 +87,7 @@ public class Ventilo extends SolidObject2D{
         
         // Create a polygon shape
         PolygonShape ground = new PolygonShape();
-        ground.setAsBox((152/8f + 7) * P2M * SCALE_X, (152)/2 * P2M * SCALE_Y, new Vector2(-152/8f * P2M * SCALE_X, 0), 0);
+        ground.setAsBox((152/8f + 7) * P2M * SCALE_X, (142)/2 * P2M * SCALE_Y, new Vector2(-152/8f * P2M * SCALE_X, 0), 0);
         // Set the polygon shape as a box which is twice the size of our view port and 20 high
         // (setAsBox takes half-width and half-height as arguments)
         FixtureDef fixtureDef2 = new FixtureDef();
