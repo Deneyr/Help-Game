@@ -494,9 +494,7 @@ public class Grandma extends Character2D{
         Vector2 dirOpponent = damageOwner.getPositionBody().sub(this.getPositionBody());
         dirOpponent = dirOpponent.nor();
         
-        Vector2 dirDown = new Vector2(0, -1);
-        
-        
+        Vector2 dirDown = new Vector2(0, -1);           
         if(!dirOpponent.isZero(0.001f) && 
                 this.currentStateNode.stateNode == GrandmaState.UNFOLDED_UMBRELLA_DOWN &&
                 Math.abs(Math.acos(dirOpponent.dot(dirDown))) < Math.PI/4){

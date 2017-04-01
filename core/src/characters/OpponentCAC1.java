@@ -38,7 +38,7 @@ public class OpponentCAC1 extends Character2D{
     
     private Set<OppInfluence> influences = new HashSet<OppInfluence>();
     
-    private Body target;
+    private final Body target;
     
     private DamageActionFixture damageActionFixture;
     

@@ -22,6 +22,7 @@ import com.mygdx.game.scenery.ActivableVentilo;
 import com.mygdx.game.scenery.Banc;
 import com.mygdx.game.scenery.GroundUpperCity;
 import com.mygdx.game.scenery.Poutrelle;
+import com.mygdx.game.scenery.SmallBox;
 import com.mygdx.game.scenery.TreeWithoutLeaf;
 import com.mygdx.game.scenery.Ventilo;
 import java.util.ArrayList;
@@ -240,6 +241,17 @@ public class HelpGame extends Game{
         
         ActivableVentilo activableVentilo = new ActivableVentilo(this.getGameWorld().getWorld(), -3000f, -130f, 3f, (float) Math.PI*3/4, true);
         this.getGameWorld().addObject2DToWorld(activableVentilo);
+        
+        // box 
+        
+        SmallBox box = new SmallBox(this.getGameWorld().getWorld(), -2800f, -50);
+        this.getGameWorld().addObject2DToWorld(box);
+        
+        box = new SmallBox(this.getGameWorld().getWorld(), -2800f, -75);
+        this.getGameWorld().addObject2DToWorld(box);
+        
+        box = new SmallBox(this.getGameWorld().getWorld(), -2800f, -100);
+        this.getGameWorld().addObject2DToWorld(box);
     }
 
     /**

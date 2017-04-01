@@ -33,8 +33,11 @@ public abstract class Character2D extends Object2D{
     protected float timeInvulnerabilitySec = 0.5f;
     protected boolean isInvulnerable;
     protected float scaleDamageForce;
+    protected float scaleBounceForce;
     
     protected boolean canBeBounced;
+    
+    protected boolean hasLifeBar;
     
     public Character2D(int lifePoints){
         this.nbStaticObjUnderFeet = 0;
@@ -49,7 +52,11 @@ public abstract class Character2D extends Object2D{
         this.canBeBounced = true;
         
         this.timeInvulnerabilitySec = 0.5f;
+        
         this.scaleDamageForce = 1.f;
+        this.scaleBounceForce = 1.f;
+        
+        this.hasLifeBar = true;
     }
     
     public void addStaticObj(){
@@ -123,6 +130,13 @@ public abstract class Character2D extends Object2D{
     public int getLifePoints() {
         return lifePoints;
     }
+
+    /**
+     * @return the hasLifeBar
+     */
+    public boolean HasLifeBar() {
+        return hasLifeBar;
+    }
     
     protected enum LifeState{
         ALIVE,
@@ -161,7 +175,7 @@ public abstract class Character2D extends Object2D{
                 return false;
             }
         }
-                
+
         int oldLifePoints = this.lifePoints;
         
         this.setLifePoints(this.lifePoints - damage);
@@ -181,6 +195,34 @@ public abstract class Character2D extends Object2D{
         return false;
     }
     
+    public boolean applyDamage(int damage, Vector2 dirDamage, Object2D damageOwner, Vector2 ptApplication){
+        if(damageOwner instanceof Character2D){
+            boolean isDamageEffective = ((Character2D) damageOwner).isAnOpponent ^ this.isAnOpponent;
+            if(!isDamageEffective){
+                return false;
+            }
+        }
+                
+        int oldLifePoints = this.lifePoints;
+        
+        this.setLifePoints(this.lifePoints - damage);
+        
+        if(oldLifePoints > this.lifePoints){
+            
+            Vector2 upVector = new Vector2(0, 1);
+            float angle = dirDamage.angle(upVector) / 2f;
+            dirDamage = dirDamage.rotate(angle);
+            
+            float ratioDamage = (oldLifePoints - this.lifePoints) / (float) this.lifePointMax;
+            if(ratioDamage > 0 && !dirDamage.epsilonEquals(Vector2.Zero, 0.01f)){
+                this.physicBody.applyLinearImpulse(dirDamage.scl(ratioDamage * 100.f * this.scaleDamageForce), ptApplication, true);
+            }
+            return true;
+        }
+        
+        return false;
+    }
+    
     public void applyBounce(Vector2 bounceVector, Object2D bounceOwner){
         if(this.canBeBounced){
             this.canBeBounced = false;
@@ -188,8 +230,35 @@ public abstract class Character2D extends Object2D{
             Vector2 upVector = new Vector2(0, 1);
             float angle = bounceVector.angle(upVector) / 2f;
             bounceVector = bounceVector.rotate(angle);
-
-            this.physicBody.applyLinearImpulse(bounceVector, Vector2.Zero, true);
+            
+            bounceVector.scl(this.scaleBounceForce);
+            
+            if(!bounceVector.epsilonEquals(Vector2.Zero, 0.01f)){
+                this.physicBody.applyLinearImpulse(bounceVector, Vector2.Zero, true);
+            }
+            
+            Timer.schedule(new Task(){
+                @Override
+                public void run() {
+                    Character2D.this.canBeBounced = true;
+                }
+            }, 0.2f);
+        }
+    }
+    
+    public void applyBounce(Vector2 bounceVector, Object2D bounceOwner, Vector2 ptApplication){
+        if(this.canBeBounced){
+            this.canBeBounced = false;
+            
+            Vector2 upVector = new Vector2(0, 1);
+            float angle = bounceVector.angle(upVector) / 2f;
+            bounceVector = bounceVector.rotate(angle);
+            
+            bounceVector.scl(this.scaleBounceForce);
+            
+            if(!bounceVector.epsilonEquals(Vector2.Zero, 0.01f)){
+                this.physicBody.applyLinearImpulse(bounceVector, ptApplication, true);
+            }
             
             Timer.schedule(new Task(){
                 @Override

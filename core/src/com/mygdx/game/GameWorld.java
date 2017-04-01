@@ -67,10 +67,15 @@ public class GameWorld implements WorldPlane{
         List<Sprite> listSprites = new ArrayList<Sprite>();
         while(it.hasNext()){
             Object2D obj = it.next();
-            if(obj instanceof Character2D && obj != this.hero && ((Character2D) obj).getLifePoints() > 0){
-                Sprite sprite = obj.createCurrentSprite();
-                sprite.setScale(((Character2D)obj).getLifePoints() / 100.f, 1.f);
-                listSprites.add(sprite);
+            if(obj instanceof Character2D && obj != this.hero){
+                Character2D chara = (Character2D) obj;
+                if(chara.getLifePoints() > 0 && chara.HasLifeBar()){
+                    Sprite sprite = obj.createCurrentSprite();
+                    if(sprite != null){
+                        sprite.setScale(((Character2D)obj).getLifePoints() / 100.f, 1.f);
+                        listSprites.add(sprite);
+                    }
+                }
             }
         }
         return listSprites;

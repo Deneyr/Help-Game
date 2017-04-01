@@ -42,7 +42,8 @@ public class DamageActionFixture extends ActionFixtures{
                     public void run() {
                         for(Object2D obj : DamageActionFixture.this.setObject2DInside){
                             if(obj != owner){
-                                Vector2 dirDamage = obj.physicBody.getPosition().sub(owner.physicBody.getPosition());
+                                Vector2 physicBody = new Vector2(obj.physicBody.getPosition());
+                                Vector2 dirDamage = physicBody.sub(owner.physicBody.getPosition());
                                 dirDamage = dirDamage.nor();
 
                                 boolean isEffective = obj.applyDamage(DamageActionFixture.this.damageInflicted, dirDamage, owner);
