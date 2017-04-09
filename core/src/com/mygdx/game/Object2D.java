@@ -38,17 +38,22 @@ public abstract class Object2D implements Disposable{
     
     protected List<Fixture> collisionFixture;
     
+    private float alpha;
+    
     public Object2D(){
         this.currentAnimation = -1;
         this.animationTime = 0.f;
         this.collisionFixture = null;
         this.priority = 2;
         this.pause = true;
+        
+        this.alpha = 1f;
     }
     
     public void updateLogic(float deltaTime){
-        if(this.currentAnimation >=0 && !this.pause)
+        if(this.currentAnimation >=0 && !this.pause){
             this.animationTime += deltaTime;
+        }
     }
     
     public Sprite createCurrentSprite(){
@@ -69,6 +74,12 @@ public abstract class Object2D implements Disposable{
             sprite.setRotation((float)Math.toDegrees(this.physicBody.getAngle()));
             sprite.setPosition(this.physicBody.getPosition().x / P2M - sprite.getWidth() / 2.f, this.physicBody.getPosition().y / P2M - sprite.getHeight() / 2.f);
         }    
+        
+        if(sprite != null){
+            if(Math.abs(this.getAlpha() - sprite.getColor().a) > 0.01 && this.getAlpha() <= 1f && this.getAlpha() >= 0f){
+                sprite.setAlpha(this.getAlpha());
+            }
+        }
         
         return sprite;
     }
@@ -101,7 +112,11 @@ public abstract class Object2D implements Disposable{
     }
     
     public void removeBody(World world){
-        world.destroyBody(this.physicBody);
+        this.dispose();
+        
+        if(this.physicBody != null){
+            world.destroyBody(this.physicBody);
+        }
     }
     
     public int getPriority(){
@@ -117,9 +132,33 @@ public abstract class Object2D implements Disposable{
     }
    
     // dispose function
-    
     @Override
     public void dispose(){
-        // to override
+        if(this.collisionFixture != null){
+            for(Fixture fixture : this.collisionFixture){
+                this.physicBody.destroyFixture(fixture);
+            }
+        }
+    }
+
+    /**
+     * @return the alpha
+     */
+    public float getAlpha() {
+        return alpha;
+    }
+
+    /**
+     * @param alpha the alpha to set
+     */
+    public void setAlpha(float alpha) {
+        this.alpha = alpha;
+        
+        if(this.alpha < 0){
+            this.alpha = 0f;
+        }else if(this.alpha > 1){
+            this.alpha = 1f;
+        }
+
     }
 }

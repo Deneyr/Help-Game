@@ -11,6 +11,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -18,6 +21,11 @@ import com.badlogic.gdx.utils.Timer.Task;
  * @author françois
  */
 public abstract class Character2D extends Object2D{
+    
+    // listeners
+    protected List<WeakReference<Object2DStateListener>> listObject2DStateListener;
+    // end part listeners
+    
     protected Fixture feetFixture;
     
     protected int nbStaticObjUnderFeet;
@@ -57,6 +65,8 @@ public abstract class Character2D extends Object2D{
         this.scaleBounceForce = 1.f;
         
         this.hasLifeBar = true;
+        
+        this.listObject2DStateListener = new ArrayList<WeakReference<Object2DStateListener>>();
     }
     
     public void addStaticObj(){
@@ -276,4 +286,32 @@ public abstract class Character2D extends Object2D{
     public Vector2 getBodyVelocity(){
         return this.physicBody.getLinearVelocity();
     }
+    
+    // dispose function
+    @Override
+    public void dispose(){
+        
+        if(this.feetFixture != null){
+            this.physicBody.destroyFixture(this.feetFixture);
+        }
+        
+        super.dispose();
+    }
+    
+    // listeners
+    
+    public void addObject2DStateListener(Object2DStateListener object2DStateListener){
+        if(object2DStateListener != null){
+            this.listObject2DStateListener.add(new WeakReference(object2DStateListener));
+        }
+    }
+    
+    protected void notifyObject2DStateListener(Object2DStateListener.Object2DState state, int animCounter){
+        for(WeakReference<Object2DStateListener> refObject2DStateListener : this.listObject2DStateListener){
+            if(refObject2DStateListener.get() != null){
+                refObject2DStateListener.get().notifyStateChanged(this, state, animCounter);
+            }
+        }
+    }
+    
 }

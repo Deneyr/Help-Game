@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Character2D;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
+import com.mygdx.game.Object2DStateListener;
 import com.mygdx.game.ShieldActionFixture;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -501,7 +502,13 @@ public class Grandma extends Character2D{
             return false;
         }
         
-        return super.applyDamage(damage, dirDamage, damageOwner);
+        boolean isDamageApplied = super.applyDamage(damage, dirDamage, damageOwner);
+        
+        if(isDamageApplied && this.getLifePoints() > 0){
+            this.notifyObject2DStateListener(Object2DStateListener.Object2DState.DAMAGE_TOOK, 4);
+        }
+        
+        return isDamageApplied;
     }
     
     /*

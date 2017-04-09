@@ -7,6 +7,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.utils.Timer;
 import java.util.Set;
 
 /**
@@ -19,21 +20,34 @@ public class ShieldActionFixture extends DamageActionFixture{
     
     private boolean applyDamage;
     
+    private boolean canBeApplied;
+    
     public ShieldActionFixture(Set<Fixture> fixtures, int damageInflicted, float ratioBounce) {
         super(fixtures, damageInflicted);
         
         this.ratioBounce = ratioBounce;
         this.applyDamage = true;
+        
+        this.canBeApplied = true;
     }
 
     @Override
-    public void applyAction(float deltaTime, Object2D owner) {
+    public void applyAction(final float deltaTime, final Object2D owner) {
         
         if(this.applyDamage){
-            super.applyAction(deltaTime, owner);
+            if(this.canBeApplied){
+                this.canBeApplied = false;
+                Timer.schedule(new Timer.Task(){
+                        @Override
+                        public void run() {
+                            ShieldActionFixture.super.applyAction(deltaTime, owner);
+                            ShieldActionFixture.this.canBeApplied = true;
+                        }
+                    }, 0.15f);
+             }
         }else{
             applyDefaultAction();
-            
+
             for(Object2D obj : this.setObject2DInside){
                 if(obj != owner && obj instanceof Character2D){
                     Character2D chara = (Character2D) obj;

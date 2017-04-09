@@ -245,13 +245,13 @@ public class HelpGame extends Game{
         // box 
         
         SmallBox box = new SmallBox(this.getGameWorld().getWorld(), -2800f, -50);
-        this.getGameWorld().addObject2DToWorld(box);
+        this.getGameWorld().addObject2DToWorld(box, true);
         
         box = new SmallBox(this.getGameWorld().getWorld(), -2800f, -75);
-        this.getGameWorld().addObject2DToWorld(box);
+        this.getGameWorld().addObject2DToWorld(box, true);
         
         box = new SmallBox(this.getGameWorld().getWorld(), -2800f, -100);
-        this.getGameWorld().addObject2DToWorld(box);
+        this.getGameWorld().addObject2DToWorld(box, true);
     }
 
     /**

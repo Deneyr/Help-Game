@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Disposable;
 import static com.mygdx.game.HelpGame.P2M;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -23,18 +24,26 @@ import java.util.Set;
  *
  * @author françois
  */
-public class GameWorld implements WorldPlane{
+public class GameWorld implements Disposable, WorldPlane{
     private World world;
     
     private List<Object2D> listCurrentObject2D = new ArrayList<Object2D>();
     
     private Character2D hero; 
     
+    private Set<Object2D> object2D2Flush;
+    
+    private StateAnimationHandler stateAnimationHanlder;
+    
     public GameWorld(){
         this.world = new World(new Vector2(0, -20f), true);
         this.hero = null;
         
         this.world.setContactListener(new GameContactListener());
+        
+        this.object2D2Flush = new HashSet<Object2D>();
+        
+        this.stateAnimationHanlder = new StateAnimationHandler(this);
     }
     
     @Override
@@ -87,16 +96,33 @@ public class GameWorld implements WorldPlane{
     
     @Override
     public void step(float delta){
+        if(!this.stateAnimationHanlder.IsScheduled()){
+            this.stateAnimationHanlder.scheduleTask();
+        }
+        
         Iterator<Object2D> it = this.listCurrentObject2D.iterator();
         while(it.hasNext()){
             it.next().updateLogic(delta);
         }
         
+        this.handleObject2D2Flush();
+        
         this.world.step(delta, 6, 2);
     }
     
     public void addObject2DToWorld(Object2D obj){
-        this.listCurrentObject2D.add(obj);
+        if(obj != null){
+            this.listCurrentObject2D.add(obj);
+        }
+    }
+    public void addObject2DToWorld(Object2D obj, boolean isStateHandled){
+        if(obj != null){
+            this.listCurrentObject2D.add(obj);
+
+            if(isStateHandled && obj instanceof Character2D){
+                ((Character2D) obj).addObject2DStateListener(this.stateAnimationHanlder);
+            }
+        }
     }
     
     public void removeObject2DToWorld(Object2D obj){
@@ -112,15 +138,17 @@ public class GameWorld implements WorldPlane{
         
         this.hero = hero;
         
-        addObject2DToWorld(hero);
+        addObject2DToWorld(hero, true);
     }
     
     @Override
     public void flushWorld(){
-        this.world.dispose();
+        this.dispose();
+        
         this.world = new World(new Vector2(0, -20f), true);
-        this.hero = null;
         this.listCurrentObject2D = new ArrayList();
+        
+        this.stateAnimationHanlder = new StateAnimationHandler(this);
         
         this.world.setContactListener(new GameContactListener());
     }
@@ -131,6 +159,19 @@ public class GameWorld implements WorldPlane{
         }else{
             return new Vector2(this.hero.getPositionBody().add(-Grandma.LEFT_RIGHT_DIST * P2M / 2f, 0));
         }
+    }
+
+    @Override
+    public void dispose() {
+        this.hero = null;
+
+        this.stateAnimationHanlder.dispose();
+        for(Object2D obj : this.listCurrentObject2D){
+            obj.removeBody(this.world);
+        }
+        this.world.dispose();
+        
+        assert this.world.getBodyCount() == 0;
     }
     
     private class ScreenQueryCallback implements QueryCallback{
@@ -177,4 +218,15 @@ public class GameWorld implements WorldPlane{
         return this.world;
     }
     
+    public void addObject2D2Flush(Object2D obj){
+        this.object2D2Flush.add(obj);
+    }
+    
+    private void handleObject2D2Flush(){
+        for(Object2D obj : this.object2D2Flush){
+            this.removeObject2DToWorld(obj);
+        }
+        
+        this.object2D2Flush.clear();
+    }
 }

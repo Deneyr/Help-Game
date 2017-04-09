@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Character2D;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
+import com.mygdx.game.Object2DStateListener;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -123,6 +124,10 @@ public class SmallBox extends Character2D{
         
         if(this.currentAnimation != animationUpdated){
             this.changeAnimation(animationUpdated, true);
+        }
+        
+        if(this.getLifePoints() <= 0){
+            this.notifyObject2DStateListener(Object2DStateListener.Object2DState.DEATH, 10);
         }
         
         return result;

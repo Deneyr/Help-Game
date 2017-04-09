@@ -90,6 +90,8 @@ public class ActivableVentilo extends Ventilo{
         this.wind.clear();
         this.button.dispose();
         this.button = null;
+        
+        super.dispose();
     }
     
     public class ButtonObject2D extends Object2D{
@@ -143,6 +145,8 @@ public class ActivableVentilo extends Ventilo{
         @Override
         public void dispose(){
             this.ventilo = null;
+            
+            super.dispose();
         }
     }
     

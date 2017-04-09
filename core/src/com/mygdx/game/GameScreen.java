@@ -44,6 +44,8 @@ public class GameScreen implements Screen{
         this.getCamera().position.set(this.game.getGameWorld().getHeroPosition().x / P2M, this.game.getGameWorld().getHeroPosition().y / P2M, 0);
         this.getCamera().update();
         this.game.batch.setProjectionMatrix(this.getCamera().combined);
+       
+        //this.game.batch.enableBlending();
         
         this.game.batch.begin();
         
@@ -57,6 +59,7 @@ public class GameScreen implements Screen{
         while(it.hasNext()){
             Sprite sprite = it.next();
             if(sprite != null){
+                this.game.batch.setColor(sprite.getColor());
                 this.game.batch.draw(sprite, 
                                         sprite.getX(), sprite.getY(),
                                         sprite.getOriginX(), sprite.getOriginY(),
