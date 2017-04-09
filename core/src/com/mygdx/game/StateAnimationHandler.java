@@ -70,8 +70,6 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
                 
                 entry.getKey().setAlpha(entry.getKey().getAlpha() + deltaAlpha);
                 
-                System.out.println(entry.getKey().getAlpha());
-                
                 if(entry.getKey().getAlpha() <= 0f || entry.getKey().getAlpha() >= 1f){
                     entry.setValue(entry.getValue() - 1);
                 }           
@@ -111,6 +109,17 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
     public void notifyStateChanged(Object2D notifier, Object2DState state, int animCounter) {
         this.currentAnimatedObjectsCounter.put(notifier, animCounter);
         this.currentAnimatedObjectsState.put(notifier, state);
+    }
+    
+    @Override
+    public void notifyStateChanged(Object2D notifier, Object2DState state, int animCounter, boolean canReplace){
+        if(!this.IsObject2DHandled(notifier) || canReplace){
+            this.notifyStateChanged(notifier, state, animCounter);
+        }
+    }
+    
+    public boolean IsObject2DHandled(Object2D notifier){
+        return this.currentAnimatedObjectsCounter.containsKey(notifier);
     }
 
     /**

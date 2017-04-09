@@ -10,6 +10,9 @@ package com.mygdx.game;
  * @author françois
  */
 public interface Object2DStateListener {
+    
+    void notifyStateChanged(Object2D notifier, Object2DState state, int animCounter, boolean canReplace);
+    
     void notifyStateChanged(Object2D notifier, Object2DState state, int animCounter);
             
     public enum Object2DState{

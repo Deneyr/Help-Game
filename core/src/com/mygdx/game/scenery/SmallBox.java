@@ -127,7 +127,7 @@ public class SmallBox extends Character2D{
         }
         
         if(this.getLifePoints() <= 0){
-            this.notifyObject2DStateListener(Object2DStateListener.Object2DState.DEATH, 10);
+            this.notifyObject2DStateListener(Object2DStateListener.Object2DState.DEATH, 6, false);
         }
         
         return result;

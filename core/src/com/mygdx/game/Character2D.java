@@ -314,4 +314,12 @@ public abstract class Character2D extends Object2D{
         }
     }
     
+    protected void notifyObject2DStateListener(Object2DStateListener.Object2DState state, int animCounter, boolean canReplace){
+        for(WeakReference<Object2DStateListener> refObject2DStateListener : this.listObject2DStateListener){
+            if(refObject2DStateListener.get() != null){
+                refObject2DStateListener.get().notifyStateChanged(this, state, animCounter, canReplace);
+            }
+        }
+    }
+    
 }
