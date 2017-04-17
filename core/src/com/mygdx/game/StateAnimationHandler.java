@@ -5,6 +5,7 @@
  */
 package com.mygdx.game;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
@@ -32,11 +33,16 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
     
     private boolean isScheduled;
     
+    // Part Pool create
+    private final Map<Class, FactoryPool> Object2DFactoryPools;
+    
     public StateAnimationHandler(GameWorld gameWorld){
         this.gameWorld = new WeakReference(gameWorld);
         
         this.currentAnimatedObjectsCounter = new HashMap<Object2D, Integer>();
         this.currentAnimatedObjectsState = new HashMap<Object2D, Object2DStateListener.Object2DState>();
+        
+        this.Object2DFactoryPools = new HashMap<Class, FactoryPool>();
         
         // Set Timer
         
@@ -46,7 +52,7 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
                 StateAnimationHandler.this.run();
             }
         };
-        
+
         this.isScheduled = false;
     }
     
@@ -118,10 +124,27 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
         }
     }
     
+    @Override
+    public void notifyObject2D2Create(Object2D notifier, Class obj2DClass, Vector2 position, Vector2 speed){
+        
+        if(this.Object2DFactoryPools.containsKey(obj2DClass) && this.gameWorld.get() != null){
+            FactoryPool factoryPool = this.Object2DFactoryPools.get(obj2DClass);
+            
+            factoryPool.obtainTriggeredObject2D(this.gameWorld.get().getWorld(), position, speed);
+        }
+    }
+    
     public boolean IsObject2DHandled(Object2D notifier){
         return this.currentAnimatedObjectsCounter.containsKey(notifier);
     }
 
+    public void freeObject2D(Object2D obj){
+        if(this.Object2DFactoryPools.containsKey(obj.getClass())){
+            FactoryPool factoryPool = this.Object2DFactoryPools.get(obj.getClass());
+            factoryPool.freeTriggeredObject2D((TriggeredObject2D) obj);
+        }
+    }
+    
     /**
      * @return the isScheduled
      */

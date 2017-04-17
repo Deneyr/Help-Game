@@ -60,9 +60,13 @@ public abstract class ActionFixtures{
     }
     
     public void dispose(Body owner){
-        for(Fixture fixture : this.fixtures){
-            owner.destroyFixture(fixture);
+        if(this.fixtures != null){
+            for(Fixture fixture : this.fixtures){
+                owner.destroyFixture(fixture);
+            }
+            this.fixtures.clear();
         }
+        
         this.object2DInside.clear();
         this.setObject2DInside.clear();
     }
@@ -75,4 +79,5 @@ public abstract class ActionFixtures{
             }
         }
     }
+    
 }

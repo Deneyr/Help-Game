@@ -225,6 +225,7 @@ public class GameWorld implements Disposable, WorldPlane{
     private void handleObject2D2Flush(){
         for(Object2D obj : this.object2D2Flush){
             this.removeObject2DToWorld(obj);
+            this.stateAnimationHanlder.freeObject2D(obj);
         }
         
         this.object2D2Flush.clear();

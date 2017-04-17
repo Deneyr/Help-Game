@@ -48,6 +48,8 @@ public abstract class Character2D extends Object2D{
     protected boolean hasLifeBar;
     
     public Character2D(int lifePoints){
+        super();
+        
         this.nbStaticObjUnderFeet = 0;
         this.lifeState = LifeState.ALIVE;
         
@@ -293,6 +295,8 @@ public abstract class Character2D extends Object2D{
         
         if(this.feetFixture != null){
             this.physicBody.destroyFixture(this.feetFixture);
+            
+            this.feetFixture = null;
         }
         
         super.dispose();

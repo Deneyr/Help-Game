@@ -46,6 +46,7 @@ public abstract class Object2D implements Disposable{
         this.collisionFixture = null;
         this.priority = 2;
         this.pause = true;
+        this.physicBody = null;
         
         this.alpha = 1f;
     }
@@ -116,6 +117,7 @@ public abstract class Object2D implements Disposable{
         
         if(this.physicBody != null){
             world.destroyBody(this.physicBody);
+            this.physicBody = null;
         }
     }
     
@@ -138,6 +140,8 @@ public abstract class Object2D implements Disposable{
             for(Fixture fixture : this.collisionFixture){
                 this.physicBody.destroyFixture(fixture);
             }
+            
+            this.collisionFixture.clear();
         }
     }
 
