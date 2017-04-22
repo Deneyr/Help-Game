@@ -8,6 +8,8 @@ package com.mygdx.game;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Pool;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,8 +18,18 @@ import com.badlogic.gdx.utils.Pool;
  */
 public class Object2DFactoryPool<T extends TriggeredObject2D> extends Pool<T> implements FactoryPool<T>{
 
+    private Class class2Generate;
+    
+    public Object2DFactoryPool(Class class2Generate){
+        super();
+        
+        this.class2Generate = class2Generate;
+    }
+    
+    
     @Override
     public T obtainTriggeredObject2D(World world, Vector2 position, Vector2 speed) {
+        
         T obj = super.obtain();
         
         obj.initialize(world, position, speed);
@@ -27,16 +39,20 @@ public class Object2DFactoryPool<T extends TriggeredObject2D> extends Pool<T> im
 
     @Override
     protected T newObject() {
-        TriggeredObject2D newTriggeredObject2D = T.createNewTriggeredObject2D();
-        
-        if(newTriggeredObject2D != null){
-            return (T) newTriggeredObject2D;
-        }
+        try {
+            return (T) this.class2Generate.newInstance();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Object2DFactoryPool.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Object2DFactoryPool.class.getName()).log(Level.SEVERE, null, ex);
+        } 
         return null;
     }
 
     @Override
     public void freeTriggeredObject2D(T obj) {
+        System.out.println("testqsdfs");
+        
         this.free(obj);
     }
     

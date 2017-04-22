@@ -15,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import static com.mygdx.game.HelpGame.P2M;
 import java.lang.ref.WeakReference;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -46,7 +45,7 @@ public abstract class TriggeredObject2D extends Object2D{
             BodyDef bodyDef = new BodyDef();
             
             if(this.IsDynamicObject()){
-                bodyDef.type = BodyDef.BodyType.DynamicBody;
+                bodyDef.type = BodyDef.BodyType.DynamicBody;         
             }else{
                 bodyDef.type = BodyDef.BodyType.KinematicBody;
             }
@@ -70,6 +69,12 @@ public abstract class TriggeredObject2D extends Object2D{
             this.triggerActionFixture = new TriggerActionFixture(setTrigger);
 
             this.physicBody = body;
+            
+            // Set physic
+            this.physicBody.applyLinearImpulse(speed, Vector2.Zero, true);
+            
+            // Reset alpha
+            this.setAlpha(1f);
         }
     }
     
@@ -85,8 +90,8 @@ public abstract class TriggeredObject2D extends Object2D{
     }
     
     public void trigger(Object2D objThatTriggered){
-        if(this.object2DStateListener.get() != null){
-            this.object2DStateListener.get().notifyStateChanged(this, Object2DStateListener.Object2DState.DEATH, 0);
+        if(this.object2DStateListener != null && this.object2DStateListener.get() != null){
+            this.object2DStateListener.get().notifyStateChanged(this, Object2DStateListener.Object2DState.DEATH, 1/* WIP */);
         }
     }
     
@@ -100,8 +105,10 @@ public abstract class TriggeredObject2D extends Object2D{
         super.dispose();
     }
     
-    
-    public static TriggeredObject2D createNewTriggeredObject2D(){
-        return null;
+    @Override
+    public void addObject2DStateListener(Object2DStateListener object2DStateListener){
+        if(object2DStateListener != null){
+            this.object2DStateListener = new WeakReference(object2DStateListener);
+        }
     }
 }

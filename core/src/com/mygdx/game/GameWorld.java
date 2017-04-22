@@ -119,8 +119,8 @@ public class GameWorld implements Disposable, WorldPlane{
         if(obj != null){
             this.listCurrentObject2D.add(obj);
 
-            if(isStateHandled && obj instanceof Character2D){
-                ((Character2D) obj).addObject2DStateListener(this.stateAnimationHanlder);
+            if(isStateHandled){
+                obj.addObject2DStateListener(this.stateAnimationHanlder);
             }
         }
     }

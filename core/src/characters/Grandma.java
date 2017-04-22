@@ -1161,10 +1161,6 @@ public class Grandma extends Character2D{
             
         }
         
-        private void applyPhysicJump(){
-            Grandma.this.physicBody.applyLinearImpulse(new Vector2(0, 10f), new Vector2(0, 0f), true);
-        }
-        
         public int isPauseAnimation(){
             return this.pauseAnimation;
         }

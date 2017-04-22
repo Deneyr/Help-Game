@@ -42,7 +42,10 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
         this.currentAnimatedObjectsCounter = new HashMap<Object2D, Integer>();
         this.currentAnimatedObjectsState = new HashMap<Object2D, Object2DStateListener.Object2DState>();
         
+        // Set pool factory
         this.Object2DFactoryPools = new HashMap<Class, FactoryPool>();
+        
+        this.Object2DFactoryPools.put(UpTriggeredObject2D.class, new Object2DFactoryPool<UpTriggeredObject2D>(UpTriggeredObject2D.class));
         
         // Set Timer
         
@@ -129,8 +132,9 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
         
         if(this.Object2DFactoryPools.containsKey(obj2DClass) && this.gameWorld.get() != null){
             FactoryPool factoryPool = this.Object2DFactoryPools.get(obj2DClass);
+            TriggeredObject2D triggeredObj2D = factoryPool.obtainTriggeredObject2D(this.gameWorld.get().getWorld(), position, speed);
             
-            factoryPool.obtainTriggeredObject2D(this.gameWorld.get().getWorld(), position, speed);
+            this.gameWorld.get().addObject2DToWorld(triggeredObj2D, true);
         }
     }
     
@@ -140,6 +144,7 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
 
     public void freeObject2D(Object2D obj){
         if(this.Object2DFactoryPools.containsKey(obj.getClass())){
+   
             FactoryPool factoryPool = this.Object2DFactoryPools.get(obj.getClass());
             factoryPool.freeTriggeredObject2D((TriggeredObject2D) obj);
         }

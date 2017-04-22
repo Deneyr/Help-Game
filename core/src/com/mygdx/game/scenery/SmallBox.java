@@ -20,6 +20,7 @@ import com.mygdx.game.Character2D;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DStateListener;
+import com.mygdx.game.UpTriggeredObject2D;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -126,8 +127,10 @@ public class SmallBox extends Character2D{
             this.changeAnimation(animationUpdated, true);
         }
         
-        if(this.getLifePoints() <= 0){
+        if(result && this.getLifePoints() <= 0){
             this.notifyObject2DStateListener(Object2DStateListener.Object2DState.DEATH, 6, false);
+            
+            this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(0.1f));
         }
         
         return result;

@@ -24,6 +24,7 @@ import java.util.List;
  * @author françois
  */
 public abstract class Object2D implements Disposable{
+    // end collision mask
     
     protected int priority;
     
@@ -112,10 +113,10 @@ public abstract class Object2D implements Disposable{
         return this.physicBody.getType();
     }
     
-    public void removeBody(World world){
-        this.dispose();
-        
+    public void removeBody(World world){     
         if(this.physicBody != null){
+            this.dispose();
+            
             world.destroyBody(this.physicBody);
             this.physicBody = null;
         }
@@ -164,5 +165,13 @@ public abstract class Object2D implements Disposable{
             this.alpha = 1f;
         }
 
+    }
+    
+    public void addObject2DStateListener(Object2DStateListener object2DStateListener){
+        // nothing to do
+    }
+    
+    public int getGroupIndex(){
+        return 2;
     }
 }
