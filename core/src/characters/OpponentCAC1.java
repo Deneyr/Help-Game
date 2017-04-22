@@ -112,12 +112,18 @@ public class OpponentCAC1 extends Character2D{
         granMa.setAsBox(25 * P2M, 18 * P2M, new Vector2(0, -13 * P2M), 0);*/  
         // Create a fixture definition to apply our shape to
         FixtureDef fixtureDef = new FixtureDef();
+        
+        this.setCollisionFilterMask(fixtureDef, false);
+        
         fixtureDef.shape = circle;
         fixtureDef.density = 5f; 
         fixtureDef.friction = 0.1f;
         fixtureDef.restitution = 0.1f; 
         body.setFixedRotation(true);
         Fixture fix = body.createFixture(fixtureDef);
+        
+        this.setCollisionFilterMask(fixtureDef, true);
+        
         this.collisionFixture = new ArrayList<Fixture>();
         this.collisionFixture.add(fix);
         fix.setUserData(this);

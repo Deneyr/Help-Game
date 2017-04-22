@@ -54,13 +54,16 @@ public class TreeWithoutLeaf extends SolidObject2D{
         
         ground.setAsBox(8 * P2M, 79 * P2M, new Vector2(0, - 12 * P2M), 0);
         
-        FixtureDef fixtureDef2 = new FixtureDef();
-        fixtureDef2.shape = ground;
-        fixtureDef2.density = 1f; 
-        fixtureDef2.friction = 0.05f;
-        fixtureDef2.restitution = 0.1f; // Make it bounce a little bit
+        FixtureDef fixtureDef = new FixtureDef();
+        
+        this.setCollisionFilterMask(fixtureDef, false);
+        
+        fixtureDef.shape = ground;
+        fixtureDef.density = 1f; 
+        fixtureDef.friction = 0.05f;
+        fixtureDef.restitution = 0.1f; // Make it bounce a little bit
         // Create a fixture from our polygon shape and add it to our ground body  
-        Fixture fix = groundBody.createFixture(fixtureDef2); 
+        Fixture fix = groundBody.createFixture(fixtureDef); 
         fix.setUserData(this);
 
         this.collisionFixture.add(fix);
@@ -69,13 +72,13 @@ public class TreeWithoutLeaf extends SolidObject2D{
         
         ground.setAsBox(90 * P2M, 8 * P2M, new Vector2(0, 10 * P2M), 0);
         
-        fixtureDef2 = new FixtureDef();
-        fixtureDef2.shape = ground;
-        fixtureDef2.density = 1f; 
-        fixtureDef2.friction = 0.05f;
-        fixtureDef2.restitution = 0.1f; // Make it bounce a little bit
+        fixtureDef = new FixtureDef();
+        fixtureDef.shape = ground;
+        fixtureDef.density = 1f; 
+        fixtureDef.friction = 0.05f;
+        fixtureDef.restitution = 0.1f; // Make it bounce a little bit
         // Create a fixture from our polygon shape and add it to our ground body  
-        fix = groundBody.createFixture(fixtureDef2); 
+        fix = groundBody.createFixture(fixtureDef); 
         fix.setUserData(this);
 
         this.collisionFixture.add(fix);

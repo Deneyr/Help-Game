@@ -14,15 +14,11 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.JointDef;
-import com.badlogic.gdx.physics.box2d.JointDef.JointType;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.ActionFixtures;
 import static com.mygdx.game.HelpGame.P2M;
-import com.mygdx.game.KinematicActionFixtures;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.SolidObject2D;
 import com.mygdx.game.WindActionFixture;
@@ -90,20 +86,25 @@ public class Ventilo extends SolidObject2D{
         ground.setAsBox((152/8f + 7) * P2M * SCALE_X, (142)/2 * P2M * SCALE_Y, new Vector2(-152/8f * P2M * SCALE_X, 0), 0);
         // Set the polygon shape as a box which is twice the size of our view port and 20 high
         // (setAsBox takes half-width and half-height as arguments)
-        FixtureDef fixtureDef2 = new FixtureDef();
-        fixtureDef2.shape = ground;
-        fixtureDef2.density = 1f; 
-        fixtureDef2.friction = 0.05f;
-        fixtureDef2.restitution = 0.1f; // Make it bounce a little bit
+        FixtureDef fixtureDef = new FixtureDef();
+        
+        this.setCollisionFilterMask(fixtureDef, false);
+        
+        fixtureDef.shape = ground;
+        fixtureDef.density = 1f; 
+        fixtureDef.friction = 0.05f;
+        fixtureDef.restitution = 0.1f; // Make it bounce a little bit
         // Create a fixture from our polygon shape and add it to our ground body  
-        Fixture fix = groundBody.createFixture(fixtureDef2); 
+        Fixture fix = groundBody.createFixture(fixtureDef); 
         fix.setUserData(this);
         this.collisionFixture.add(fix);
         
         ground.setAsBox((152/8f + 15) * P2M * SCALE_X, (152/2f + 20)/2 * P2M * SCALE_Y, new Vector2(152/8f * P2M * SCALE_X, 0), 0);
-        fix = groundBody.createFixture(fixtureDef2); 
+        fix = groundBody.createFixture(fixtureDef); 
         fix.setUserData(this);
         this.collisionFixture.add(fix);
+        
+        this.setCollisionFilterMask(fixtureDef, true);
         
         this.physicBody = groundBody;
         
@@ -111,7 +112,7 @@ public class Ventilo extends SolidObject2D{
         Set<Fixture> setFixtures = new HashSet();
         
         ground.setAsBox(152 * P2M * SCALE_X, (152f + 20)/2 * P2M * SCALE_Y, new Vector2((152) * P2M * SCALE_X, 0), 0);
-        fix = groundBody.createFixture(fixtureDef2); 
+        fix = groundBody.createFixture(fixtureDef); 
         setFixtures.add(fix);
         this.windActionFixture = new WindActionFixture(setFixtures, this.strength);
         

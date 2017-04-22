@@ -20,7 +20,7 @@ import com.mygdx.game.Character2D;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DStateListener;
-import com.mygdx.game.UpTriggeredObject2D;
+import triggered.UpTriggeredObject2D;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -75,6 +75,8 @@ public class SmallBox extends Character2D{
         // Collision fixture
         FixtureDef fixtureDef = new FixtureDef();
         
+        this.setCollisionFilterMask(fixtureDef, false);
+        
         PolygonShape collisionBox = new PolygonShape();
         collisionBox.setAsBox(20 * P2M, 16 * P2M, new Vector2( 0, 0), 0);
         fixtureDef = new FixtureDef();
@@ -84,6 +86,9 @@ public class SmallBox extends Character2D{
         fixtureDef.restitution = 0.005f; 
 
         Fixture fix = this.physicBody.createFixture(fixtureDef);
+        
+        this.setCollisionFilterMask(fixtureDef, true);
+        
         this.collisionFixture = new ArrayList<Fixture>();
         this.collisionFixture.add(fix);
         fix.setUserData(this);
@@ -130,7 +135,15 @@ public class SmallBox extends Character2D{
         if(result && this.getLifePoints() <= 0){
             this.notifyObject2DStateListener(Object2DStateListener.Object2DState.DEATH, 6, false);
             
-            this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(0.1f));
+            this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(0.3f));
+            
+            if(Math.random() < 0.2){
+                this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(0.3f));
+            }
+            
+            if(Math.random() < 0.1){
+                this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(0.3f));
+            }
         }
         
         return result;

@@ -227,6 +227,9 @@ public class Grandma extends Character2D{
             circleLeft.setPosition(new Vector2(-LEFT_RIGHT_DIST * P2M, -20 * P2M));
             
             FixtureDef fixtureDef = new FixtureDef();
+            
+            this.setCollisionFilterMask(fixtureDef, false);
+            
             fixtureDef.shape = circleLeft;
             fixtureDef.density = 1f; 
             fixtureDef.friction = 0.1f;
@@ -234,6 +237,8 @@ public class Grandma extends Character2D{
             
             Fixture fix = this.physicBody.createFixture(fixtureDef);
         
+            this.setCollisionFilterMask(fixtureDef, true);
+            
             this.collisionFixture = new ArrayList<Fixture>();
             this.collisionFixture.add(fix);
             fix.setUserData(this);
@@ -279,6 +284,9 @@ public class Grandma extends Character2D{
             circleRight.setPosition(new Vector2(LEFT_RIGHT_DIST * P2M, -20 * P2M));
             
             FixtureDef fixtureDef = new FixtureDef();
+            
+            this.setCollisionFilterMask(fixtureDef, false);
+            
             fixtureDef.shape = circleRight;
             fixtureDef.density = 1f; 
             fixtureDef.friction = 0.1f;
@@ -286,6 +294,8 @@ public class Grandma extends Character2D{
             
             Fixture fix = this.physicBody.createFixture(fixtureDef);
         
+            this.setCollisionFilterMask(fixtureDef, true);
+            
             this.collisionFixture = new ArrayList<Fixture>();
             this.collisionFixture.add(fix);
             fix.setUserData(this);

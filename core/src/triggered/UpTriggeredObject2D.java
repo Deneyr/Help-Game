@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mygdx.game;
+package triggered;
 
 import characters.Grandma;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,6 +15,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.Object2D;
+import com.mygdx.game.TriggeredObject2D;
 import static com.mygdx.game.HelpGame.P2M;
 import java.util.ArrayList;
 
@@ -62,13 +64,15 @@ public class UpTriggeredObject2D extends TriggeredObject2D{
         circle.setPosition(new Vector2(0, 0));
 
         FixtureDef fixtureDef = new FixtureDef();
+        
+        this.setCollisionFilterMask(fixtureDef, false);
+        
         fixtureDef.shape = circle;
-        fixtureDef.density = 1f; 
+        fixtureDef.density = 2f; 
         fixtureDef.friction = 0.1f;
         fixtureDef.restitution = 0.8f; 
         
         Fixture fix = this.physicBody.createFixture(fixtureDef);
-        fix.
         
         this.collisionFixture = new ArrayList<Fixture>();
         this.collisionFixture.add(fix);

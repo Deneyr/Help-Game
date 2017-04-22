@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import java.lang.ref.WeakReference;
@@ -336,8 +337,14 @@ public abstract class Character2D extends Object2D{
     }
     
     @Override
-    public int getGroupIndex(){
-        return 1;
+    protected void setCollisionFilterMask(FixtureDef fixtureDef, boolean reset){
+        
+        if(reset){
+            super.setCollisionFilterMask(fixtureDef, true);
+            return;
+        }
+        
+        fixtureDef.filter.categoryBits = 0x0001;
     }
     
 }

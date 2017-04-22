@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import static com.mygdx.game.HelpGame.P2M;
@@ -171,7 +172,12 @@ public abstract class Object2D implements Disposable{
         // nothing to do
     }
     
-    public int getGroupIndex(){
-        return 2;
+    protected void setCollisionFilterMask(FixtureDef fixtureDef, boolean reset){
+        if(reset){
+            fixtureDef.filter.categoryBits = 0x0001;
+            fixtureDef.filter.groupIndex = 0;
+            fixtureDef.filter.maskBits = -1;
+        }
     }
+       
 }

@@ -50,62 +50,65 @@ public class TestMarioStage extends SolidObject2D{
         ground.setAsBox(275 * P2M, 22 * P2M, new Vector2(0, -(206 - 22) * P2M), 0);
         // Set the polygon shape as a box which is twice the size of our view port and 20 high
         // (setAsBox takes half-width and half-height as arguments)
-        FixtureDef fixtureDef2 = new FixtureDef();
-        fixtureDef2.shape = ground;
-        fixtureDef2.density = 1f; 
-        fixtureDef2.friction = 0.05f;
-        fixtureDef2.restitution = 0.1f; // Make it bounce a little bit
+        FixtureDef fixtureDef = new FixtureDef();
+        
+        this.setCollisionFilterMask(fixtureDef, false);
+        
+        fixtureDef.shape = ground;
+        fixtureDef.density = 1f; 
+        fixtureDef.friction = 0.05f;
+        fixtureDef.restitution = 0.1f; // Make it bounce a little bit
         // Create a fixture from our polygon shape and add it to our ground body  
-        Fixture fix = groundBody.createFixture(fixtureDef2); 
+        Fixture fix = groundBody.createFixture(fixtureDef); 
         fix.setUserData(this);
         this.collisionFixture.add(fix);
 
         ground = new PolygonShape();
         ground.setAsBox(16 * P2M, 15 * P2M, new Vector2((245 - 275) * P2M, (412 - 264 - 206) * P2M), 0);
-        fixtureDef2 = new FixtureDef();
-        fixtureDef2.shape = ground;
-        fixtureDef2.density = 1f; 
-        fixtureDef2.friction = 0.05f;
-        fixtureDef2.restitution = 0.1f; // Make it bounce a little bit
+        fixtureDef = new FixtureDef();
+        fixtureDef.shape = ground;
+        fixtureDef.density = 1f; 
+        fixtureDef.friction = 0.05f;
+        fixtureDef.restitution = 0.1f; // Make it bounce a little bit
         // Create a fixture from our polygon shape and add it to our ground body  
-        fix = groundBody.createFixture(fixtureDef2); 
+        fix = groundBody.createFixture(fixtureDef); 
         fix.setUserData(this);
         this.collisionFixture.add(fix);
 
         ground = new PolygonShape();
         ground.setAsBox(16 * P2M, 15 * P2M, new Vector2((452 - 275) * P2M, (412 - 146 - 206) * P2M), 0);
-        fixtureDef2 = new FixtureDef();
-        fixtureDef2.shape = ground;
-        fixtureDef2.density = 1f; 
-        fixtureDef2.friction = 0.05f;
-        fixtureDef2.restitution = 0.1f; // Make it bounce a little bit
+        fixtureDef = new FixtureDef();
+        fixtureDef.shape = ground;
+        fixtureDef.density = 1f; 
+        fixtureDef.friction = 0.05f;
+        fixtureDef.restitution = 0.1f; // Make it bounce a little bit
         // Create a fixture from our polygon shape and add it to our ground body  
-        fix = groundBody.createFixture(fixtureDef2); 
+        fix = groundBody.createFixture(fixtureDef); 
         fix.setUserData(this);
         this.collisionFixture.add(fix);
 
         ground = new PolygonShape();
         ground.setAsBox(16 * 5 * P2M, 15 * P2M, new Vector2((452 - 275) * P2M, (412 - 264 - 206) * P2M), 0);
-        fixtureDef2 = new FixtureDef();
-        fixtureDef2.shape = ground;
-        fixtureDef2.density = 1f; 
-        fixtureDef2.friction = 0.05f;
-        fixtureDef2.restitution = 0.1f; // Make it bounce a little bit
+        fixtureDef = new FixtureDef();
+        fixtureDef.shape = ground;
+        fixtureDef.density = 1f; 
+        fixtureDef.friction = 0.05f;
+        fixtureDef.restitution = 0.1f; // Make it bounce a little bit
         // Create a fixture from our polygon shape and add it to our ground body  
-        fix = groundBody.createFixture(fixtureDef2); 
+        fix = groundBody.createFixture(fixtureDef); 
         fix.setUserData(this);
         this.collisionFixture.add(fix);
         
         // Test sensor bounding
         ground = new PolygonShape();
         ground.setAsBox(275 * P2M, 206 * P2M, new Vector2(0, 0), 0);
-        fixtureDef2 = new FixtureDef();
-        fixtureDef2.shape = ground;
-        fixtureDef2.density = 1f; 
-        fixtureDef2.friction = 0.05f;
-        fixtureDef2.restitution = 0.1f; // Make it bounce a little bit
+        fixtureDef = new FixtureDef();
+        fixtureDef.shape = ground;
+        fixtureDef.density = 1f; 
+        fixtureDef.friction = 0.05f;
+        fixtureDef.restitution = 0.1f; // Make it bounce a little bit
         // Create a fixture from our polygon shape and add it to our ground body  
-        fix = groundBody.createFixture(fixtureDef2); 
+        fix = groundBody.createFixture(fixtureDef); 
         fix.setSensor(true);
         fix.setUserData(this);
 

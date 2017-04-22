@@ -49,58 +49,34 @@ public class Orphanage extends SolidObject2D{
         // Create a polygon shape
         PolygonShape ground = new PolygonShape();
         ground.setAsBox(280 * P2M, 160 * P2M, new Vector2(0, -(245 - 204) * P2M), 0);
-        // Set the polygon shape as a box which is twice the size of our view port and 20 high
-        // (setAsBox takes half-width and half-height as arguments)
-        FixtureDef fixtureDef2 = new FixtureDef();
-        fixtureDef2.shape = ground;
-        fixtureDef2.density = 1f; 
-        fixtureDef2.friction = 0.05f;
-        fixtureDef2.restitution = 0.1f; // Make it bounce a little bit
+
+        FixtureDef fixtureDef = new FixtureDef();
+        
+        this.setCollisionFilterMask(fixtureDef, false);
+        
+        fixtureDef.shape = ground;
+        fixtureDef.density = 1f; 
+        fixtureDef.friction = 0.05f;
+        fixtureDef.restitution = 0.1f; // Make it bounce a little bit
         // Create a fixture from our polygon shape and add it to our ground body  
-        Fixture fix = groundBody.createFixture(fixtureDef2); 
+        Fixture fix = groundBody.createFixture(fixtureDef); 
         fix.setUserData(this);
         this.collisionFixture.add(fix);
-
-        /*ground = new PolygonShape();
-        Vector2 listPoints [] = {new Vector2(- 294 * P2M, - 204 * P2M),
-                                new Vector2(587 * P2M - 294 * P2M, - 204 * P2M),
-                                new Vector2(572 * P2M - 294 * P2M, 20 * P2M - 204 * P2M),
-                                new Vector2(15 * P2M - 294 * P2M, 20 * P2M - 204 * P2M)
-                                };
-        ground.set(listPoints);
-        //EdgeShape edge = new EdgeShape();
-        //edge.set((15 - 294) * P2M, (408 - 110 - 204) * P2M, (294 - 15) * P2M, (408 - 110 - 204) * P2M);
-        fixtureDef2 = new FixtureDef();
-        fixtureDef2.shape = ground;
-        fixtureDef2.density = 1f; 
-        fixtureDef2.friction = 0.05f;
-        fixtureDef2.restitution = 0.1f; // Make it bounce a little bit
-        // Create a fixture from our polygon shape and add it to our ground body  
-        fix = groundBody.createFixture(fixtureDef2); 
-        fix.setUserData(this);
-        this.collisionFixture.add(fix);*/
         
         // Test sensor bounding
         ground = new PolygonShape();
         ground.setAsBox(294 * P2M, 204 * P2M, new Vector2(0, 0), 0);
-        fixtureDef2 = new FixtureDef();
-        fixtureDef2.shape = ground;
-        fixtureDef2.density = 1f; 
-        fixtureDef2.friction = 0.05f;
-        fixtureDef2.restitution = 0.1f; // Make it bounce a little bit
+        fixtureDef = new FixtureDef();
+        fixtureDef.shape = ground;
+        fixtureDef.density = 1f; 
+        fixtureDef.friction = 0.05f;
+        fixtureDef.restitution = 0.1f; // Make it bounce a little bit
         // Create a fixture from our polygon shape and add it to our ground body  
-        fix = groundBody.createFixture(fixtureDef2); 
+        fix = groundBody.createFixture(fixtureDef); 
         fix.setSensor(true);
         fix.setUserData(this);
 
         this.physicBody = groundBody;
-        //this.physicBody.setLinearVelocity(new Vector2(0.5f, 0));
     }
     
-    
-    /*@Override
-    public void updateLogic(float deltaTime){
-        super.updateLogic(deltaTime);
-        
-    }*/
 }

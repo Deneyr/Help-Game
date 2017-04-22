@@ -5,6 +5,7 @@
  */
 package com.mygdx.game;
 
+import triggered.UpTriggeredObject2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Timer;

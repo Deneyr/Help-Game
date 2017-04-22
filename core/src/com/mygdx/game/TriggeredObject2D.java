@@ -31,6 +31,8 @@ public abstract class TriggeredObject2D extends Object2D{
     
     public TriggeredObject2D(){
         super();    
+        
+        this.priority = 3;
     }
     
     public void setObject2DStateListener(Object2DStateListener obj){
@@ -110,5 +112,17 @@ public abstract class TriggeredObject2D extends Object2D{
         if(object2DStateListener != null){
             this.object2DStateListener = new WeakReference(object2DStateListener);
         }
+    }
+    
+    @Override
+    protected void setCollisionFilterMask(FixtureDef fixtureDef, boolean reset){
+        
+        if(reset){
+            super.setCollisionFilterMask(fixtureDef, true);
+            return;
+        }
+        
+        fixtureDef.filter.categoryBits = 0x0004;
+        fixtureDef.filter.maskBits = 0x0002;
     }
 }
