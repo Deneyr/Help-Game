@@ -41,6 +41,7 @@ public abstract class Object2D implements Disposable{
     protected List<Fixture> collisionFixture;
     
     private float alpha;
+    private float scale;
     
     public Object2D(){
         this.currentAnimation = -1;
@@ -51,6 +52,8 @@ public abstract class Object2D implements Disposable{
         this.physicBody = null;
         
         this.alpha = 1f;
+        
+        this.scale = 1f;
     }
     
     public void updateLogic(float deltaTime){
@@ -82,7 +85,12 @@ public abstract class Object2D implements Disposable{
             if(Math.abs(this.getAlpha() - sprite.getColor().a) > 0.01 && this.getAlpha() <= 1f && this.getAlpha() >= 0f){
                 sprite.setAlpha(this.getAlpha());
             }
+            
+            if(Math.abs(this.scale - 1f) > 0.01){
+                sprite.setScale(this.scale);
+            }
         }
+        
         
         return sprite;
     }
@@ -151,7 +159,7 @@ public abstract class Object2D implements Disposable{
      * @return the alpha
      */
     public float getAlpha() {
-        return alpha;
+        return this.alpha;
     }
 
     /**
@@ -178,6 +186,21 @@ public abstract class Object2D implements Disposable{
             fixtureDef.filter.groupIndex = 0;
             fixtureDef.filter.maskBits = -1;
         }
+    }
+
+    /**
+     * @return the scale
+     */
+    public float getScale() {
+        return this.scale;
+    }
+
+    /**
+     * @param scale the scale to set
+     */
+    public void setScale(float scale) {    
+        
+        this.scale = scale;
     }
        
 }

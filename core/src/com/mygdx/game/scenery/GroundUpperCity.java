@@ -75,7 +75,7 @@ public class GroundUpperCity extends SolidObject2D {
     @Override
     public Sprite createCurrentSprite(){
         Sprite sprite = super.createCurrentSprite();
-        sprite.setScale(SCALE_X, SCALE_Y);
+        sprite.setScale(sprite.getScaleX() * SCALE_X, sprite.getScaleY() * SCALE_Y);
         return sprite;
     }
 }

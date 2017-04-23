@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import triggered.TeethTriggeredObject2D;
 
 /**
  *
@@ -47,6 +48,7 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
         this.Object2DFactoryPools = new HashMap<Class, FactoryPool>();
         
         this.Object2DFactoryPools.put(UpTriggeredObject2D.class, new Object2DFactoryPool<UpTriggeredObject2D>(UpTriggeredObject2D.class));
+        this.Object2DFactoryPools.put(TeethTriggeredObject2D.class, new Object2DFactoryPool<TeethTriggeredObject2D>(TeethTriggeredObject2D.class));
         
         // Set Timer
         
@@ -74,19 +76,26 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
             
             if(entry.getValue() > 0){
                 float deltaAlpha = 0.3f;
+                float deltaScale = -0.5f;
                 if(entry.getValue() % 2 == 1){
                     deltaAlpha *= -1;
+                    deltaScale *= -1;
                 }
                 
                 entry.getKey().setAlpha(entry.getKey().getAlpha() + deltaAlpha);
                 
+                if(this.currentAnimatedObjectsState.get(entry.getKey()) == Object2DStateListener.Object2DState.TOOK_BY_PLAYER){
+                    entry.getKey().setScale(entry.getKey().getScale() + deltaScale);
+                }
+                
                 if(entry.getKey().getAlpha() <= 0f || entry.getKey().getAlpha() >= 1f){
                     entry.setValue(entry.getValue() - 1);
-                }           
+                }
                 
             }else{
                 switch(this.currentAnimatedObjectsState.get(entry.getKey())){
                     case DEATH:
+                    case TOOK_BY_PLAYER:
                         if(this.gameWorld.get() != null){
                             this.gameWorld.get().addObject2D2Flush(entry.getKey());
                         }

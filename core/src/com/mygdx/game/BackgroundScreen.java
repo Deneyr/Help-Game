@@ -46,7 +46,7 @@ public class BackgroundScreen implements Screen{
         for(Entry<Float, WorldPlane> plane : this.game.getMapBackgroundPlanes().entrySet()){
 
             // Update camera (center on hero)
-            this.getCamera().position.set(this.game.getGameWorld().getHeroPosition().x / P2M * plane.getKey(), this.game.getGameWorld().getHeroPosition().y / P2M * plane.getKey(), 0);
+            this.getCamera().position.set(this.game.getGameWorld().getHeroPosition().x / P2M * plane.getKey(), this.game.getGameWorld().getHeroPosition().y / P2M /** plane.getKey() WIP */, 0);
             this.getCamera().update();
             this.game.batch.setProjectionMatrix(this.getCamera().combined);
             

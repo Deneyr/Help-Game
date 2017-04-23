@@ -29,10 +29,13 @@ public abstract class TriggeredObject2D extends Object2D{
     
     private TriggerActionFixture triggerActionFixture;
     
+    protected boolean isTriggered;
+    
     public TriggeredObject2D(){
         super();    
         
         this.priority = 3;
+        this.isTriggered = false;
     }
     
     public void setObject2DStateListener(Object2DStateListener obj){
@@ -75,9 +78,12 @@ public abstract class TriggeredObject2D extends Object2D{
             // Set physic
             this.physicBody.applyLinearImpulse(speed, Vector2.Zero, true);
             
-            // Reset alpha
+            // Reset alpha & scaling
             this.setAlpha(1f);
+            this.setScale(1f);
         }
+        
+        this.isTriggered = false;
     }
     
     public boolean IsDynamicObject(){
@@ -92,8 +98,10 @@ public abstract class TriggeredObject2D extends Object2D{
     }
     
     public void trigger(Object2D objThatTriggered){
+        this.isTriggered = true;
+        
         if(this.object2DStateListener != null && this.object2DStateListener.get() != null){
-            this.object2DStateListener.get().notifyStateChanged(this, Object2DStateListener.Object2DState.DEATH, 1/* WIP */);
+            this.object2DStateListener.get().notifyStateChanged(this, Object2DStateListener.Object2DState.TOOK_BY_PLAYER, 1/* WIP */);
         }
     }
     

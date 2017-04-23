@@ -137,12 +137,12 @@ public class SmallBox extends Character2D{
             
             this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(0.3f));
             
-            if(Math.random() < 0.2){
+            if(Math.random() < 0.3){
                 this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(0.3f));
             }
             
             if(Math.random() < 0.1){
-                this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(0.3f));
+                this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(0.5f));
             }
         }
         

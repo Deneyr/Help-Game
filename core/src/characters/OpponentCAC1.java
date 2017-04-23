@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import triggered.TeethTriggeredObject2D;
 
 /**
  *
@@ -190,6 +191,13 @@ public class OpponentCAC1 extends Character2D{
         Fixture fix = this.physicBody.createFixture(fixtureDef);
         fix.setUserData(this);
         this.collisionFixture.add(fix);
+        
+        if(Math.random() < 0.3){
+            this.notifyObject2D2CreateListener(TeethTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), this.getBodyVelocity().scl(2f));
+        }
+        if(Math.random() < 0.1){
+            this.notifyObject2D2CreateListener(TeethTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), this.getBodyVelocity().scl(3f));
+        }
     }
     
     private void createInfluences(){

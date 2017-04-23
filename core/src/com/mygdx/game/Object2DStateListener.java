@@ -21,6 +21,7 @@ public interface Object2DStateListener {
     
     public enum Object2DState{
         DAMAGE_TOOK,
-        DEATH
+        DEATH,
+        TOOK_BY_PLAYER
     }
 }

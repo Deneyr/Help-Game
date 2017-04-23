@@ -162,54 +162,54 @@ public class HelpGame extends Game{
         // init opponent
         
         OpponentCAC1 opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, -1400, 100);
-        this.getGameWorld().addObject2DToWorld(opp);
+        this.getGameWorld().addObject2DToWorld(opp, true);
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, -1450, 100);
-        this.getGameWorld().addObject2DToWorld(opp);
+        this.getGameWorld().addObject2DToWorld(opp, true);
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, -1450, 100);
-        this.getGameWorld().addObject2DToWorld(opp);
+        this.getGameWorld().addObject2DToWorld(opp, true);
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, -1500, 100);
-        this.getGameWorld().addObject2DToWorld(opp);
+        this.getGameWorld().addObject2DToWorld(opp, true);
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, -1350, 100);
-        this.getGameWorld().addObject2DToWorld(opp);
+        this.getGameWorld().addObject2DToWorld(opp, true);
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, -1300, 100);
-        this.getGameWorld().addObject2DToWorld(opp);
+        this.getGameWorld().addObject2DToWorld(opp, true);
         
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, -200, 100);
-        this.getGameWorld().addObject2DToWorld(opp);
+        this.getGameWorld().addObject2DToWorld(opp, true);
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, -150, 100);
-        this.getGameWorld().addObject2DToWorld(opp);
+        this.getGameWorld().addObject2DToWorld(opp, true);
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, -100, 100);
-        this.getGameWorld().addObject2DToWorld(opp);
+        this.getGameWorld().addObject2DToWorld(opp, true);
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, -50, 100);
-        this.getGameWorld().addObject2DToWorld(opp);
+        this.getGameWorld().addObject2DToWorld(opp, true);
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, 0, 100);
-        this.getGameWorld().addObject2DToWorld(opp);
+        this.getGameWorld().addObject2DToWorld(opp, true);
         
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, 100, 100);
-        this.getGameWorld().addObject2DToWorld(opp);
+        this.getGameWorld().addObject2DToWorld(opp, true);
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, 150, 100);
-        this.getGameWorld().addObject2DToWorld(opp);
+        this.getGameWorld().addObject2DToWorld(opp, true);
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, 200, 100);
-        this.getGameWorld().addObject2DToWorld(opp);
+        this.getGameWorld().addObject2DToWorld(opp, true);
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, 250, 100);
-        this.getGameWorld().addObject2DToWorld(opp);
+        this.getGameWorld().addObject2DToWorld(opp, true);
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, 300, 100);
-        this.getGameWorld().addObject2DToWorld(opp);
+        this.getGameWorld().addObject2DToWorld(opp, true);
         
         // init scenary
         Orphanage orph = new Orphanage(this.getGameWorld().getWorld(), 0f, 0f);

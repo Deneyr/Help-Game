@@ -45,7 +45,7 @@ public class HillBackground extends BackgroundWorld{
         
         this.ratioDist = 0.8f;
         
-        BackgroundPart part = new BackgroundPart(200 * P2M, new Vector2(-2000 * P2M, -200 * P2M),  new Vector2(0 * P2M, -200 * P2M), 1f);
+        BackgroundPart part = new BackgroundPart(200 * P2M, new Vector2(-2000 * P2M, -235 * P2M),  new Vector2(0 * P2M, -235 * P2M), 1f);
         
         part.addObject2D2Scenary(HILL, 30);
         part.addObject2D2Scenary(CityBackground.BUILDING, 30);

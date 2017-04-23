@@ -25,7 +25,7 @@ public class CityBackground extends BackgroundWorld{
         
         this.ratioDist = 0.6f;
         
-        BackgroundPart part = new BackgroundPart(111 * P2M, new Vector2(-2000 * P2M, -150 * P2M),  new Vector2(2000 * P2M, -150 * P2M), 1f);
+        BackgroundPart part = new BackgroundPart(111 * P2M, new Vector2(-2000 * P2M, -225 * P2M),  new Vector2(2000 * P2M, -225 * P2M), 1f);
         
         part.addObject2D2Scenary(BUILDING, 70);
         part.createSpriteList(seed);

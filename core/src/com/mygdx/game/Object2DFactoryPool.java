@@ -51,7 +51,6 @@ public class Object2DFactoryPool<T extends TriggeredObject2D> extends Pool<T> im
 
     @Override
     public void freeTriggeredObject2D(T obj) {
-        System.out.println("testqsdfs");
         
         this.free(obj);
     }
