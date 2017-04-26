@@ -96,6 +96,8 @@ public class GameWorld implements Disposable, WorldPlane{
     
     @Override
     public void step(float delta){
+        delta = Math.min(delta, 0.1f);
+        
         if(!this.stateAnimationHanlder.IsScheduled()){
             this.stateAnimationHanlder.scheduleTask();
         }

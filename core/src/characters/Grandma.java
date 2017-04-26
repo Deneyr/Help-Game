@@ -65,8 +65,6 @@ public class Grandma extends Character2D{
         
         this.isAnOpponent = false;
         
-        this.priority = 2;
-        
         this.side = SideCharacter.RIGHT;
         this.previousSide = SideCharacter.RIGHT;
         

@@ -76,7 +76,12 @@ public abstract class TriggeredObject2D extends Object2D{
             this.physicBody = body;
             
             // Set physic
-            this.physicBody.applyLinearImpulse(speed, Vector2.Zero, true);
+            if(this.IsDynamicObject()){
+                this.physicBody.applyLinearImpulse(speed, Vector2.Zero, true);   
+            }else{
+                this.physicBody.setLinearVelocity(speed);
+            }
+            
             
             // Reset alpha & scaling
             this.setAlpha(1f);

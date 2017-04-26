@@ -35,10 +35,7 @@ public class SmallBox extends Character2D{
     public SmallBox(World world, float posX, float posY) {
         super(3);
         
-        this.priority = 2;
-        
-        this.side = SideCharacter.RIGHT;
-       
+        this.side = SideCharacter.RIGHT;   
         
         // Part graphic
         this.texture = SMALLBOXTEXT;
@@ -133,16 +130,21 @@ public class SmallBox extends Character2D{
         }
         
         if(result && this.getLifePoints() <= 0){
+            
+            Vector2 upVector = new Vector2(0, 1);
+            float angle = dirDamage.nor().angle(upVector) / 2f;
+            dirDamage = dirDamage.rotate(angle);
+            
             this.notifyObject2DStateListener(Object2DStateListener.Object2DState.DEATH, 6, false);
             
-            this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(0.3f));
+            this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(2f));
             
             if(Math.random() < 0.3){
-                this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(0.3f));
+                this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(3f));
             }
             
             if(Math.random() < 0.1){
-                this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(0.5f));
+                this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(4f));
             }
         }
         

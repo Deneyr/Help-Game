@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
@@ -116,7 +117,7 @@ public class Ventilo extends SolidObject2D{
         setFixtures.add(fix);
         this.windActionFixture = new WindActionFixture(setFixtures, this.strength);
         
-        //Child
+        // Child
         array = new Array<TextureRegion>(tmp[1]);
         this.wind.add(new WindObject2D( this.physicBody, world, array, posX + (152 * SCALE_X), posY, 152 * SCALE_X));
         this.wind.add(new WindObject2D( this.physicBody, world, array, posX + (152*2 * SCALE_X), posY, 152 * 2 * SCALE_X));
@@ -159,6 +160,9 @@ public class Ventilo extends SolidObject2D{
     }
     
     public class WindObject2D extends Object2D{
+        
+        private Joint joint;
+        
         public WindObject2D(Body ownerBody, World world, Array<TextureRegion> array, float posX, float posY, float offsetX){
             this.listAnimations.add(new Animation(0.1f, new Array(array)));
             this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
@@ -179,17 +183,19 @@ public class Ventilo extends SolidObject2D{
             ground.setAsBox(152 * P2M * SCALE_X, 152 * P2M * SCALE_Y, new Vector2(0, 0), 0);
             // Set the polygon shape as a box which is twice the size of our view port and 20 high
             // (setAsBox takes half-width and half-height as arguments)
-            FixtureDef fixtureDef2 = new FixtureDef();
-            fixtureDef2.shape = ground;
-            fixtureDef2.density = 1f; 
-            fixtureDef2.friction = 0.05f;
-            fixtureDef2.restitution = 0.1f; // Make it bounce a little bit
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.shape = ground;
+            fixtureDef.density = 1f; 
+            fixtureDef.friction = 0.05f;
+            fixtureDef.restitution = 0.1f; // Make it bounce a little bit
             // Create a fixture from our polygon shape and add it to our ground body  
-            Fixture fix = groundBody.createFixture(fixtureDef2); 
+            Fixture fix = groundBody.createFixture(fixtureDef); 
             fix.setSensor(true);
             fix.setUserData(this);
             
             this.physicBody = groundBody;
+            
+            // Create joint
             
             WeldJointDef jointDef = new WeldJointDef ();
             jointDef.bodyA = ownerBody;
@@ -198,8 +204,16 @@ public class Ventilo extends SolidObject2D{
             jointDef.localAnchorB.set(new Vector2(0 ,0));
             jointDef.collideConnected = false;
         
-            world.createJoint(jointDef);
+            this.joint = world.createJoint(jointDef);
            
+        }
+        
+        @Override
+        public void removeBody(World world){
+
+            world.destroyJoint(this.joint);
+            
+            super.removeBody(world);
         }
         
     }

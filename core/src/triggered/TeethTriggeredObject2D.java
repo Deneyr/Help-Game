@@ -30,9 +30,7 @@ public class TeethTriggeredObject2D extends TriggeredObject2D{
         super();
         
         // Part graphic
-        this.texture = UPTEXTURE;
-        
-        
+        this.texture = UPTEXTURE;     
     }
     
     @Override

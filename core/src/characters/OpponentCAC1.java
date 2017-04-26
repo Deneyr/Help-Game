@@ -47,8 +47,6 @@ public class OpponentCAC1 extends Character2D{
         super(100);
         this.target = target;
         
-        this.priority = 2;
-        
         this.side = SideCharacter.RIGHT;
         
         this.currentStateNode = new OpponentCAC1.StateNode(OpponentCAC1.OppState.NORMAL);
@@ -192,11 +190,16 @@ public class OpponentCAC1 extends Character2D{
         fix.setUserData(this);
         this.collisionFixture.add(fix);
         
+        Vector2 dirVelocity = this.getBodyVelocity().nor();
+        Vector2 upVector = new Vector2(0, 1);
+        float angle = dirVelocity.angle(upVector) / 2f;
+        dirVelocity = dirVelocity.rotate(angle);
+        
         if(Math.random() < 0.3){
-            this.notifyObject2D2CreateListener(TeethTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), this.getBodyVelocity().scl(2f));
+            this.notifyObject2D2CreateListener(TeethTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirVelocity.scl(-3f));
         }
         if(Math.random() < 0.1){
-            this.notifyObject2D2CreateListener(TeethTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), this.getBodyVelocity().scl(3f));
+            this.notifyObject2D2CreateListener(TeethTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirVelocity.scl(-4f));
         }
     }
     

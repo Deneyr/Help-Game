@@ -20,6 +20,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.scenery.Abribus;
 import com.mygdx.game.scenery.ActivableVentilo;
 import com.mygdx.game.scenery.Banc;
+import com.mygdx.game.scenery.CannonCorpus;
 import com.mygdx.game.scenery.GroundUpperCity;
 import com.mygdx.game.scenery.Poutrelle;
 import com.mygdx.game.scenery.SmallBox;
@@ -244,14 +245,19 @@ public class HelpGame extends Game{
         
         // box 
         
-        SmallBox box = new SmallBox(this.getGameWorld().getWorld(), -2800f, -50);
+        SmallBox box = new SmallBox(this.getGameWorld().getWorld(), -2800f, -50f);
         this.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(this.getGameWorld().getWorld(), -2800f, -75);
+        box = new SmallBox(this.getGameWorld().getWorld(), -2800f, -75f);
         this.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(this.getGameWorld().getWorld(), -2800f, -100);
+        box = new SmallBox(this.getGameWorld().getWorld(), -2800f, -100f);
         this.getGameWorld().addObject2DToWorld(box, true);
+        
+        // Cannon
+        
+        CannonCorpus cannon = new CannonCorpus(this.getGameWorld().getWorld(), -3400f, -170f, 0);
+        this.getGameWorld().addObject2DToWorld(cannon);
     }
 
     /**

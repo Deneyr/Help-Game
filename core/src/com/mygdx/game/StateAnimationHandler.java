@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import triggered.CannonBallTriggeredObject2D;
 import triggered.TeethTriggeredObject2D;
 
 /**
@@ -49,6 +50,7 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
         
         this.Object2DFactoryPools.put(UpTriggeredObject2D.class, new Object2DFactoryPool<UpTriggeredObject2D>(UpTriggeredObject2D.class));
         this.Object2DFactoryPools.put(TeethTriggeredObject2D.class, new Object2DFactoryPool<TeethTriggeredObject2D>(TeethTriggeredObject2D.class));
+        this.Object2DFactoryPools.put(CannonBallTriggeredObject2D.class, new Object2DFactoryPool<CannonBallTriggeredObject2D>(CannonBallTriggeredObject2D.class));
         
         // Set Timer
         

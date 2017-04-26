@@ -51,6 +51,8 @@ public abstract class Character2D extends Object2D{
     public Character2D(int lifePoints){
         super();
         
+        this.priority = 2;
+        
         this.nbStaticObjUnderFeet = 0;
         this.lifeState = LifeState.ALIVE;
         
