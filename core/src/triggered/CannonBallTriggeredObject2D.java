@@ -12,7 +12,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
+import com.mygdx.game.Object2DStateListener;
 import com.mygdx.game.SolidObject2D;
 import com.mygdx.game.TriggeredObject2D;
 
@@ -65,7 +67,6 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
                 grandma.setLifePoints(grandma.getLifePoints() - this.damageInflicted);
             }
             
-            // WIP : +1 score
             this.changeAnimation(1, false);
 
             super.trigger(objThatTriggered);
@@ -75,5 +76,12 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
     @Override
     public boolean IsDynamicObject(){
         return false;
+    }
+    
+    @Override
+    public void onOutOfScreen(double dist){
+        if(dist > 10 * P2M && this.object2DStateListener.get() != null){
+            this.object2DStateListener.get().notifyStateChanged(this, Object2DStateListener.Object2DState.DEATH, 0);
+        }
     }
 }

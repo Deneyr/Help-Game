@@ -35,6 +35,9 @@ public class GameWorld implements Disposable, WorldPlane{
     
     private StateAnimationHandler stateAnimationHanlder;
     
+    private double screenFOV;
+    private float timerOutOfScreen;
+    
     public GameWorld(){
         this.world = new World(new Vector2(0, -20f), true);
         this.hero = null;
@@ -44,6 +47,9 @@ public class GameWorld implements Disposable, WorldPlane{
         this.object2D2Flush = new HashSet<Object2D>();
         
         this.stateAnimationHanlder = new StateAnimationHandler(this);
+        
+        this.screenFOV = -1d;
+        this.timerOutOfScreen = 0;
     }
     
     @Override
@@ -66,6 +72,8 @@ public class GameWorld implements Disposable, WorldPlane{
     }
     
     public List<Sprite> getLifeBarInRegion(float lowerX, float lowerY, float upperX, float upperY){
+        this.screenFOV = Math.sqrt((upperY - lowerY) * (upperY - lowerY) + (upperX - lowerX) * (upperX - lowerX));
+        
         ScreenQueryCallback query = new ScreenQueryCallback();
         
         this.world.QueryAABB(query, lowerX, lowerY, upperX, upperY);
@@ -97,6 +105,7 @@ public class GameWorld implements Disposable, WorldPlane{
     @Override
     public void step(float delta){
         delta = Math.min(delta, 0.1f);
+        this.timerOutOfScreen += delta;
         
         if(!this.stateAnimationHanlder.IsScheduled()){
             this.stateAnimationHanlder.scheduleTask();
@@ -110,6 +119,11 @@ public class GameWorld implements Disposable, WorldPlane{
         this.handleObject2D2Flush();
         
         this.world.step(delta, 6, 2);
+        
+        if(this.timerOutOfScreen > 1f){
+            this.timerOutOfScreen = 0;
+            this.computeObjectsOutOfScreen();
+        }
     }
     
     public void addObject2DToWorld(Object2D obj){
@@ -231,5 +245,20 @@ public class GameWorld implements Disposable, WorldPlane{
         }
         
         this.object2D2Flush.clear();
+    }
+    
+    private void computeObjectsOutOfScreen(){
+        for(Object2D obj : this.listCurrentObject2D){
+            
+            Vector2 distHeroObj = obj.getPositionBody().sub(this.hero.getPositionBody());
+            double margin = distHeroObj.len() - this.screenFOV;
+            if(margin > 0){
+                if(obj instanceof TriggeredObject2D){
+                    TriggeredObject2D triggerObj2D = (TriggeredObject2D) obj;
+
+                    triggerObj2D.onOutOfScreen(margin);
+                }
+            }
+        }
     }
 }

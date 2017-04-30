@@ -256,7 +256,7 @@ public class HelpGame extends Game{
         
         // Cannon
         
-        CannonCorpus cannon = new CannonCorpus(this.getGameWorld().getWorld(), -3400f, -170f, 0);
+        CannonCorpus cannon = new CannonCorpus(this.getGameWorld().getWorld(), hero.physicBody, -3400f, -170f, 0);
         this.getGameWorld().addObject2DToWorld(cannon);
     }
 

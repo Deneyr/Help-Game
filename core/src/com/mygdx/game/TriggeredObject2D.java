@@ -95,6 +95,10 @@ public abstract class TriggeredObject2D extends Object2D{
         return false;
     }
     
+    public void onOutOfScreen(double dist){
+        // nothing to do
+    }
+    
     @Override
     public void updateLogic(float deltaTime){
         super.updateLogic(deltaTime);

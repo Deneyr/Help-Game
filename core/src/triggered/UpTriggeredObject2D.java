@@ -15,9 +15,10 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.Object2D;
-import com.mygdx.game.TriggeredObject2D;
 import static com.mygdx.game.HelpGame.P2M;
+import com.mygdx.game.Object2D;
+import com.mygdx.game.Object2DStateListener;
+import com.mygdx.game.TriggeredObject2D;
 import java.util.ArrayList;
 
 /**

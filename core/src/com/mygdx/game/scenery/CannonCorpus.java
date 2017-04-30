@@ -19,8 +19,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.mygdx.game.Character2D;
 import static com.mygdx.game.HelpGame.P2M;
+import com.mygdx.game.Object2D;
 import com.mygdx.game.SolidObject2D;
 import java.util.ArrayList;
+import triggered.CannonBallTriggeredObject2D;
 
 /**
  *
@@ -36,7 +38,7 @@ public class CannonCorpus extends SolidObject2D{
     
     private Cannon cannon;
     
-    public CannonCorpus(World world, float posX, float posY, float angle){
+    public CannonCorpus(World world, Body target, float posX, float posY, float angle){
         this.texture = CANNONCORPUSTEXT;
         
         // Part physic
@@ -77,7 +79,7 @@ public class CannonCorpus extends SolidObject2D{
         this.physicBody = groundBody;
         
         // Child
-        this.cannon = new Cannon(this.physicBody, world, posX , posY);
+        this.cannon = new Cannon(this.physicBody, target, world, posX , posY);
         
         // Transform
         if(angle != 0){
@@ -100,18 +102,34 @@ public class CannonCorpus extends SolidObject2D{
         super.removeBody(world);
     }
     
+    @Override
+    public void updateLogic(float deltaTime){  
+        super.updateLogic(deltaTime);
+        
+        this.cannon.updateLogic(deltaTime);
+    }
+    
     public class Cannon extends Character2D{
 
         private Joint joint;
         
+        private int angularDir = -1;
         
-        public Cannon(Body ownerBody, World world, float posX, float posY) {
+        private Body target;
+        
+        private float timerFire;
+        
+        public Cannon(Body ownerBody, Body target, World world, float posX, float posY) {
             super(100);
+            
+            this.target = target;
             
             this.texture = CANNONTEXT;
             
             this.isInvulnerable = true;
             this.hasLifeBar = false;
+            
+            this.timerFire = 0;
             
             // Part physic
             BodyDef groundBodyDef = new BodyDef();    
@@ -131,7 +149,7 @@ public class CannonCorpus extends SolidObject2D{
             this.setCollisionFilterMask(fixtureDef, false);
             
             fixtureDef.shape = ground;
-            fixtureDef.density = 1f; 
+            fixtureDef.density = 2f; 
             fixtureDef.friction = 0.05f;
             fixtureDef.restitution = 0.1f; // Make it bounce a little bit
             // Create a fixture from our polygon shape and add it to our ground body  
@@ -144,7 +162,7 @@ public class CannonCorpus extends SolidObject2D{
             RevoluteJointDef jointDef = new RevoluteJointDef();
             jointDef.bodyA = ownerBody;
             jointDef.bodyB = this.physicBody;
-            jointDef.localAnchorA.set(new Vector2(0, -5 * P2M));
+            jointDef.localAnchorA.set(new Vector2(0,  0));
             jointDef.localAnchorB.set(new Vector2(50 * P2M, 0));
             jointDef.collideConnected = false;
             
@@ -159,7 +177,59 @@ public class CannonCorpus extends SolidObject2D{
             
             super.removeBody(world);
         }
-    
+        
+        @Override
+        public void updateLogic(float deltaTime){       
+           this.timerFire += deltaTime;
+            
+            
+           if(this.timerFire > 1){
+               this.timerFire = 0;
+               
+               if(this.target.getPosition().sub(this.getBodyVelocity()).len() < 400 * P2M){
+                   Vector2 dirBall = new Vector2(1, 0).rotate(this.physicBody.getAngle());
+                   
+                   this.notifyObject2D2CreateListener(CannonBallTriggeredObject2D.class, this.getPositionBody(), dirBall.scl(2 * P2M));
+               }
+               
+           }
+            
+            
+            this.updateCannonPhysic(deltaTime);
+            
+        }
+        
+        private void updateCannonPhysic(float deltaTime){
+            
+            if(this.angularDir == 1){
+                if(this.physicBody.getAngle() < -Math.PI / 2){
+                    this.physicBody.applyAngularImpulse((float) (10000 * deltaTime * Math.PI / 180), true);
+                }
+                
+                if(this.physicBody.getAngle() > 0){
+                    this.angularDir = -1;
+                }
+            }else{
+                if(this.physicBody.getAngle() > -Math.PI / 2){
+                    this.physicBody.applyAngularImpulse((float) (-10000 * deltaTime * Math.PI / 180), true);
+                }
+                
+                if(this.physicBody.getAngle() < -Math.PI){
+                    this.angularDir = 1;
+                }
+            }
+            
+        }
+        
+        @Override
+        public void applyBounce(Vector2 bounceVector, Object2D bounceOwner){
+
+            float sign = -Math.signum((new Vector2(1f, 0f).dot(bounceVector)));
+
+            Vector2 ptApplication = new Vector2(15 * P2M * sign, 0);
+
+            super.applyBounce(bounceVector, bounceOwner, ptApplication.add(this.physicBody.getPosition()));
+        }
     }
     
 }
