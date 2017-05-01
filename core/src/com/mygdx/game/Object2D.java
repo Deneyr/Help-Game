@@ -187,7 +187,7 @@ public abstract class Object2D implements Disposable{
             fixtureDef.filter.maskBits = -1;
         }
     }
-
+    
     /**
      * @return the scale
      */

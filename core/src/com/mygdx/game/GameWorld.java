@@ -111,9 +111,11 @@ public class GameWorld implements Disposable, WorldPlane{
             this.stateAnimationHanlder.scheduleTask();
         }
         
-        Iterator<Object2D> it = this.listCurrentObject2D.iterator();
-        while(it.hasNext()){
-            it.next().updateLogic(delta);
+        
+        List<Object2D> copyListCurrentObject2D = new ArrayList<Object2D>(this.listCurrentObject2D);      
+        for(Object2D obj : copyListCurrentObject2D)
+        {
+            obj.updateLogic(delta);
         }
         
         this.handleObject2D2Flush();
@@ -249,11 +251,11 @@ public class GameWorld implements Disposable, WorldPlane{
     
     private void computeObjectsOutOfScreen(){
         for(Object2D obj : this.listCurrentObject2D){
-            
-            Vector2 distHeroObj = obj.getPositionBody().sub(this.hero.getPositionBody());
-            double margin = distHeroObj.len() - this.screenFOV;
-            if(margin > 0){
-                if(obj instanceof TriggeredObject2D){
+            if(obj instanceof TriggeredObject2D){
+                Vector2 distHeroObj = obj.getPositionBody().sub(this.hero.getPositionBody());
+                double margin = distHeroObj.len() - this.screenFOV/2;
+                System.out.println(margin);
+                if(margin > 0){
                     TriggeredObject2D triggerObj2D = (TriggeredObject2D) obj;
 
                     triggerObj2D.onOutOfScreen(margin);

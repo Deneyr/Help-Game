@@ -20,6 +20,7 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.mygdx.game.Character2D;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
+import com.mygdx.game.Object2DStateListener;
 import com.mygdx.game.SolidObject2D;
 import java.util.ArrayList;
 import triggered.CannonBallTriggeredObject2D;
@@ -109,6 +110,11 @@ public class CannonCorpus extends SolidObject2D{
         this.cannon.updateLogic(deltaTime);
     }
     
+    @Override
+    public void addObject2DStateListener(Object2DStateListener object2DStateListener){
+        this.cannon.addObject2DStateListener(object2DStateListener);
+    }
+    
     public class Cannon extends Character2D{
 
         private Joint joint;
@@ -186,10 +192,10 @@ public class CannonCorpus extends SolidObject2D{
            if(this.timerFire > 1){
                this.timerFire = 0;
                
-               if(this.target.getPosition().sub(this.getBodyVelocity()).len() < 400 * P2M){
-                   Vector2 dirBall = new Vector2(1, 0).rotate(this.physicBody.getAngle());
+               if(Math.abs(this.target.getPosition().sub(this.getPositionBody()).len()) < 400 * P2M){
+                   Vector2 dirBall = new Vector2(-1, 0).rotate((float) (this.physicBody.getAngle() * 180 / Math.PI));
                    
-                   this.notifyObject2D2CreateListener(CannonBallTriggeredObject2D.class, this.getPositionBody(), dirBall.scl(2 * P2M));
+                   this.notifyObject2D2CreateListener(CannonBallTriggeredObject2D.class, this.getPositionBody().add(dirBall.scl(this.texture.getWidth() / 2 * P2M)).scl(1 / P2M), dirBall.scl(150 * P2M));
                }
                
            }

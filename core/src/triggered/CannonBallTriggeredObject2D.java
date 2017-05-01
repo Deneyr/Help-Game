@@ -8,8 +8,12 @@ package triggered;
 import characters.Grandma;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import static com.mygdx.game.HelpGame.P2M;
@@ -17,6 +21,7 @@ import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DStateListener;
 import com.mygdx.game.SolidObject2D;
 import com.mygdx.game.TriggeredObject2D;
+import java.util.ArrayList;
 
 /**
  *
@@ -49,8 +54,29 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
     @Override
     public void initialize(World world, Vector2 position, Vector2 speed) {
         float radius = 33;
-        
+
         super.initialize(world, position, speed, radius * 1.1f);
+        
+        // Collision fixture
+        CircleShape circle = new CircleShape();
+        circle.setRadius(radius * P2M);
+        circle.setPosition(new Vector2(0, 0));
+
+        FixtureDef fixtureDef = new FixtureDef();
+        
+        this.setCollisionFilterMask(fixtureDef, false);
+        
+        fixtureDef.shape = circle;
+        fixtureDef.density = 2f; 
+        fixtureDef.friction = 0.1f;
+        fixtureDef.restitution = 0.8f; 
+        
+        Fixture fix = this.physicBody.createFixture(fixtureDef);
+        
+        this.collisionFixture = new ArrayList<Fixture>();
+        this.collisionFixture.add(fix);
+        fix.setUserData(this);
+        fix.setSensor(true);
         
         this.changeAnimation(0, true);
     }
@@ -64,7 +90,11 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
             if(objThatTriggered instanceof Grandma){
                 Grandma grandma = (Grandma) objThatTriggered;
                 
-                grandma.setLifePoints(grandma.getLifePoints() - this.damageInflicted);
+                Vector2 targetPhysicBody = new Vector2(grandma.getPositionBody());
+                Vector2 dirDamage = targetPhysicBody.sub(this.getPositionBody());
+                dirDamage = dirDamage.nor();
+                
+                grandma.applyDamage(3, dirDamage, this);
             }
             
             this.changeAnimation(1, false);
@@ -80,8 +110,18 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
     
     @Override
     public void onOutOfScreen(double dist){
-        if(dist > 10 * P2M && this.object2DStateListener.get() != null){
+        if(this.object2DStateListener.get() != null){
             this.object2DStateListener.get().notifyStateChanged(this, Object2DStateListener.Object2DState.DEATH, 0);
         }
+    }
+    
+    @Override
+    public Sprite createCurrentSprite(){
+        Sprite sprite = super.createCurrentSprite();
+        
+        if(sprite != null){
+            sprite.setColor(0.5f, 0.5f, 0.5f, 1f);
+        }
+        return sprite;
     }
 }

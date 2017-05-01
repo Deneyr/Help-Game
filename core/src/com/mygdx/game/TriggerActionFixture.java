@@ -6,6 +6,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.mygdx.game.scenery.Ventilo;
 import java.util.Set;
 
 /**
@@ -25,7 +26,7 @@ public class TriggerActionFixture extends ActionFixtures{
         if(owner != null && owner instanceof TriggeredObject2D){
             TriggeredObject2D triggerObj = (TriggeredObject2D) owner;
 
-            for(Object2D obj : TriggerActionFixture.this.setObject2DInside){
+            for(Object2D obj : this.setObject2DInside){
                 if(obj != owner){
                     triggerObj.trigger(obj);
                 }

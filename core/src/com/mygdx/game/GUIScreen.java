@@ -70,6 +70,7 @@ public class GUIScreen implements Screen{
         
         // life bar hero
         Sprite lifeBarHero = this.game.getGameWorld().getLifeBarHero();
+        this.game.batch.setColor(lifeBarHero.getColor());
         this.game.batch.draw(lifeBarHero, 
                                         this.camera.position.x - this.camera.viewportWidth / 2.f, this.camera.position.y + this.camera.viewportHeight / 2.f - lifeBarHero.getHeight(),
                                         lifeBarHero.getOriginX(), lifeBarHero.getOriginY(),

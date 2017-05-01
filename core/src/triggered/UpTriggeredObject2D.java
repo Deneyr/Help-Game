@@ -42,7 +42,7 @@ public class UpTriggeredObject2D extends TriggeredObject2D{
 
         
         array = new Array<TextureRegion>(tmp[1]);
-        array.removeRange(3, 7);
+        array.removeRange(4, 7);
         this.listAnimations.add(new Animation(0.2f, array));
         
     }
