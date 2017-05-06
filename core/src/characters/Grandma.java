@@ -194,7 +194,7 @@ public class Grandma extends Character2D{
             this.damageZone.applyAction(deltaTime, this);
         }else if(this.currentStateNode.stateNode == GrandmaState.FOLDED_UMBRELLA_ATTACK){
             this.damageZone.setApplyDamage(true);
-            this.damageZone.applyAction(deltaTime, this);
+            this.damageZone.applyAction(deltaTime, this, 0.15f);
         }
     }
     

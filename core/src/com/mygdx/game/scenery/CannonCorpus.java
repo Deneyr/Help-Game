@@ -23,6 +23,9 @@ import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DStateListener;
 import com.mygdx.game.SolidObject2D;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import triggered.CannonBallTriggeredObject2D;
 
 /**
@@ -37,7 +40,8 @@ public class CannonCorpus extends SolidObject2D{
     protected static final float SCALE_X = 1f;
     protected static final float SCALE_Y = 1f;
     
-    private Cannon cannon;
+    protected Cannon cannon;
+    
     
     public CannonCorpus(World world, Body target, float posX, float posY, float angle){
         this.texture = CANNONCORPUSTEXT;
@@ -125,6 +129,9 @@ public class CannonCorpus extends SolidObject2D{
         
         private float timerFire;
         
+        private StateNode currentStateNode;      
+        private Set<CannonInfluence> influences = new HashSet<CannonInfluence>();
+        
         public Cannon(Body ownerBody, Body target, World world, float posX, float posY) {
             super(100);
             
@@ -136,6 +143,8 @@ public class CannonCorpus extends SolidObject2D{
             this.hasLifeBar = false;
             
             this.timerFire = 0;
+            
+            this.currentStateNode = new StateNode(CannonState.STOP);
             
             // Part physic
             BodyDef groundBodyDef = new BodyDef();    
@@ -186,7 +195,7 @@ public class CannonCorpus extends SolidObject2D{
         
         @Override
         public void updateLogic(float deltaTime){       
-           this.timerFire += deltaTime;
+           /*this.timerFire += deltaTime;
             
             
            if(this.timerFire > 1){
@@ -201,30 +210,42 @@ public class CannonCorpus extends SolidObject2D{
            }
             
             
-            this.updateCannonPhysic(deltaTime);
+            this.updateCannonPhysic(deltaTime);*/
+           
+
+            super.updateLogic(deltaTime);
+        
+            this.createInfluences();
+            this.influences2Actions(deltaTime);
             
+            this.influences.clear();
         }
         
-        private void updateCannonPhysic(float deltaTime){
-            
-            if(this.angularDir == 1){
-                if(this.physicBody.getAngle() < -Math.PI / 2){
-                    this.physicBody.applyAngularImpulse((float) (10000 * deltaTime * Math.PI / 180), true);
+        private void createInfluences(){
+            if(this.target.getPosition().sub(this.getPositionBody()).len() < 400 * P2M){
+                Vector2 dirCannon = new Vector2(-1, 0).rotate((float) (this.physicBody.getAngle() * 180 / Math.PI));
+                Vector2 dirTarget = new Vector2(Cannon.this.target.getPosition().sub(Cannon.this.getPositionBody())).nor();
+                if(dirTarget.crs(dirCannon) > 0){
+                    this.influences.add(CannonInfluence.GO_RIGHT);
+                }else{
+                    this.influences.add(CannonInfluence.GO_LEFT);
                 }
                 
-                if(this.physicBody.getAngle() > 0){
-                    this.angularDir = -1;
-                }
-            }else{
-                if(this.physicBody.getAngle() > -Math.PI / 2){
-                    this.physicBody.applyAngularImpulse((float) (-10000 * deltaTime * Math.PI / 180), true);
-                }
-                
-                if(this.physicBody.getAngle() < -Math.PI){
-                    this.angularDir = 1;
+                if(Math.abs(dirTarget.crs(dirCannon)) < 0.1f && dirTarget.dot(dirCannon) > 0){
+                    this.influences.add(CannonInfluence.ATTACK);
                 }
             }
+        }
+        
+        private void influences2Actions(float deltaTime){
             
+            StateNode prevNode = this.currentStateNode;
+            StateNode nextNode = this.currentStateNode.getNextStateNode();
+            if(nextNode != null){
+                this.currentStateNode = nextNode;
+            }
+            
+            this.currentStateNode.updatePhysic(deltaTime);
         }
         
         @Override
@@ -236,6 +257,168 @@ public class CannonCorpus extends SolidObject2D{
 
             super.applyBounce(bounceVector, bounceOwner, ptApplication.add(this.physicBody.getPosition()));
         }
+        
+        protected class StateNode{
+            private CannonState stateNode;
+
+            public StateNode(CannonState state){
+                this.stateNode = state;
+            }
+
+            // Part nextNode
+            public StateNode getNextStateNode(){
+
+                switch(this.stateNode){
+                    case STOP:
+                        return getNextNodeStop();
+                    case MOVE:
+                        return getNextNodeMove();
+                    case ATTACK:
+                        return getNextNodeAttack();
+
+                } 
+                return null;
+            }
+
+            private StateNode getNextNodeStop(){
+                
+                Iterator<CannonInfluence> it = Cannon.this.influences.iterator();
+            
+                while(it.hasNext()){
+                    CannonInfluence currentInfluence = it.next();
+                    switch(currentInfluence){
+                        case GO_RIGHT :
+                        case GO_LEFT :
+                            return new StateNode(CannonState.MOVE);
+                        case ATTACK :
+                            return new StateNode(CannonState.ATTACK);
+                            
+                    }
+                }
+                
+                return null;
+            }
+
+            private StateNode getNextNodeAttack(){
+                if(Cannon.this.isCurrentAnimationOver()){
+                    return new StateNode(CannonState.STOP);
+                }
+                return null;
+            }
+
+            private StateNode getNextNodeMove(){
+
+                Iterator<CannonInfluence> it = Cannon.this.influences.iterator();
+            
+                boolean isStillMoving = false;
+                
+                while(it.hasNext()){
+                    CannonInfluence currentInfluence = it.next();
+                    switch(currentInfluence){
+                        case GO_RIGHT :
+                        case GO_LEFT :
+                            isStillMoving = true;
+                            break;
+                        case ATTACK :
+                            return new StateNode(CannonState.ATTACK);
+                            
+                    }
+                }
+                
+                if(isStillMoving){
+                    return null;
+                }
+                return new StateNode(CannonState.STOP);
+            }
+
+            // Part animation 
+            public int getCurrentAnimation(){
+
+                switch(this.stateNode){
+                    case ATTACK:
+                        return getAnimationAttack();
+
+                } 
+                return -1;
+            }
+
+
+            private int getAnimationAttack(){
+                // WIP
+                return -1;
+            }
+
+            // Part physic
+            public void updatePhysic(float deltaTime){
+                Iterator<CannonInfluence> it = Cannon.this.influences.iterator();
+            
+                while(it.hasNext()){
+                    CannonInfluence currentInfluence = it.next();
+                    switch(currentInfluence){
+                        case GO_RIGHT :
+                            Cannon.this.side = SideCharacter.RIGHT;
+                            break;
+                        case GO_LEFT :
+                            Cannon.this.side = SideCharacter.LEFT;
+                            break;
+                            
+                    }
+                }
+                
+                switch(this.stateNode){
+                    
+                    case ATTACK:
+                        Cannon.this.physicBody.setFixedRotation(true);
+                        
+                        //test if we are at the end of the attack animation.
+                        //Vector2 dirBall = new Vector2(-1, 0).rotate((float) (this.physicBody.getAngle() * 180 / Math.PI));
+                   
+                        //this.notifyObject2D2CreateListener(CannonBallTriggeredObject2D.class, this.getPositionBody().add(dirBall.scl(this.texture.getWidth() / 2 * P2M)).scl(1 / P2M), dirBall.scl(150 * P2M));
+                        break;
+                    case MOVE:
+                        if(Cannon.this.physicBody.isFixedRotation()){
+                            Cannon.this.physicBody.setFixedRotation(false);
+                        }
+                        this.updateCannonMove(deltaTime);
+                        break;
+
+                } 
+            }
+            
+            
+            private void updateCannonMove(float deltaTime){
+                if(Cannon.this.side == SideCharacter.LEFT){
+                    if(Cannon.this.physicBody.getAngle() < -Math.PI / 2){
+                        Cannon.this.physicBody.applyAngularImpulse((float) (10000 * deltaTime * Math.PI / 180), true);
+                    }
+
+                    if(Cannon.this.physicBody.getAngle() > 0){
+                        Cannon.this.angularDir = -1;
+                    }
+                }else{
+                    if(Cannon.this.physicBody.getAngle() > -Math.PI / 2){
+                        Cannon.this.physicBody.applyAngularImpulse((float) (-10000 * deltaTime * Math.PI / 180), true);
+                    }
+
+                    if(Cannon.this.physicBody.getAngle() < -Math.PI){
+                        Cannon.this.angularDir = 1;
+                    }
+                }
+
+            }
+        }
+        
     }
     
+    protected enum CannonState{
+        STOP,
+        MOVE,
+        ATTACK
+    }
+
+    protected enum CannonInfluence{
+        GO_RIGHT,
+        GO_LEFT,
+        ATTACK
+    }
 }

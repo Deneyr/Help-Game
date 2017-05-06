@@ -33,7 +33,8 @@ import triggered.TeethTriggeredObject2D;
 public class OpponentCAC1 extends Character2D{
 
     private static final Texture OPPCAC1TEXT = new Texture("spritemapkairaVoleur-01.png");
-    private static final float ATT_DIST = P2M * 200;
+    private static final float ATT_DIST = P2M * 70;
+    private static final float MOVE_DIST = P2M * 200;
     
     private StateNode currentStateNode;
     
@@ -54,7 +55,7 @@ public class OpponentCAC1 extends Character2D{
         // Part graphic
         this.texture = OPPCAC1TEXT;
         TextureRegion[][] tmp = TextureRegion.split(this.texture, 76, 76);
-        // walk folded
+        // walk
         Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
         array.removeRange(9, 9);
         this.listAnimations.add(new Animation(0.2f, array));
@@ -208,11 +209,15 @@ public class OpponentCAC1 extends Character2D{
             return;
         }
         
-        if(this.target.getPosition().dst(this.physicBody.getPosition()) < ATT_DIST){
+        if(this.target.getPosition().dst(this.physicBody.getPosition()) < MOVE_DIST){
             if(this.target.getPosition().x - this.physicBody.getPosition().x > 0){
                 this.influences.add(OppInfluence.GO_RIGHT);
             }else{
                 this.influences.add(OppInfluence.GO_LEFT);
+            }
+            
+            if(Math.abs(this.target.getPosition().sub(this.physicBody.getPosition()).len()) <  ATT_DIST){
+                this.influences.add(OppInfluence.ATTACK);
             }
         }else{
             double rand = Math.random()*100;
@@ -342,6 +347,7 @@ public class OpponentCAC1 extends Character2D{
         public int getCurrentAnimation(){
             if(OpponentCAC1.this.lifeState == LifeState.DEAD){
                 this.pauseAnimation = 0;
+                this.restartAnimation = true;
                 if(OpponentCAC1.this.side == SideCharacter.RIGHT){
                     return 8;
                 }else{
@@ -413,9 +419,9 @@ public class OpponentCAC1 extends Character2D{
             this.pauseAnimation = 0;
             this.restartAnimation = false;
             if(OpponentCAC1.this.side == SideCharacter.RIGHT){
-                return 3;
+                return 2;
             }else{
-                return 4;
+                return 3;
             }
         }
         

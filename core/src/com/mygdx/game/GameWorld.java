@@ -254,7 +254,6 @@ public class GameWorld implements Disposable, WorldPlane{
             if(obj instanceof TriggeredObject2D){
                 Vector2 distHeroObj = obj.getPositionBody().sub(this.hero.getPositionBody());
                 double margin = distHeroObj.len() - this.screenFOV/2;
-                System.out.println(margin);
                 if(margin > 0){
                     TriggeredObject2D triggerObj2D = (TriggeredObject2D) obj;
 

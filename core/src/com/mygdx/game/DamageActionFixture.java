@@ -7,6 +7,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.utils.Timer;
 import java.util.Set;
 
 /**
@@ -19,12 +20,16 @@ public class DamageActionFixture extends ActionFixtures{
     
     private boolean encounterSomething;
     
+    private boolean canBeApplied;
+    
     public DamageActionFixture(Set<Fixture> fixtures, int damageInflicted){
         super(fixtures);
         
         this.damageInflicted = damageInflicted;
         
         this.encounterSomething = false;
+        
+        this.canBeApplied = true;
     }
     
     @Override
@@ -41,6 +46,19 @@ public class DamageActionFixture extends ActionFixtures{
 
                 DamageActionFixture.this.encounterSomething |= isEffective;
             }
+        }
+    }
+    
+    public void applyAction(final float deltaTime, final Object2D owner, float delay) {
+        if(this.canBeApplied){
+            this.canBeApplied = false;
+            Timer.schedule(new Timer.Task(){
+                    @Override
+                    public void run() {
+                        DamageActionFixture.this.canBeApplied = true;
+                        DamageActionFixture.this.applyAction(deltaTime, owner);
+                    }
+            }, delay);
         }
     }
 

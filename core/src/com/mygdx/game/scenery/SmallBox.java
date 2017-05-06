@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -151,6 +152,16 @@ public class SmallBox extends Character2D{
         return result;
     }
     
+    @Override
+    protected void onDeath(){
+        Filter filter = new Filter();
+        filter.categoryBits = 0x0004;
+        filter.maskBits = 0x0002;
+        
+        for(Fixture fixture : this.collisionFixture){   
+            fixture.setFilterData(filter);
+        }
+    }
     
     @Override
     public void applyBounce(Vector2 bounceVector, Object2D bounceOwner){
