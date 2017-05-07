@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Character2D;
 import com.mygdx.game.DamageActionFixture;
 import static com.mygdx.game.HelpGame.P2M;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -32,17 +33,31 @@ import triggered.TeethTriggeredObject2D;
  */
 public class OpponentCAC1 extends Character2D{
 
-    private static final Texture OPPCAC1TEXT = new Texture("spritemapkairaVoleur-01.png");
+    private static final Texture OPPCAC1TEXT = new Texture("character" + File.separator + "opponentCAC1.png");
     private static final float ATT_DIST = P2M * 70;
     private static final float MOVE_DIST = P2M * 200;
     
-    private StateNode currentStateNode;
+    protected StateNode currentStateNode;
     
-    private Set<OppInfluence> influences = new HashSet<OppInfluence>();
+    protected Set<OppInfluence> influences = new HashSet<OppInfluence>();
     
-    private final Body target;
+    protected final Body target;
     
-    private DamageActionFixture damageActionFixture;
+    protected DamageActionFixture damageActionFixture;
+    
+    protected boolean canAttack;
+    
+    public OpponentCAC1(int lifePoint, Body target){
+        super(lifePoint);
+        
+        this.side = SideCharacter.RIGHT;
+        
+        this.currentStateNode = new OpponentCAC1.StateNode(OpponentCAC1.OppState.NORMAL);
+        
+        this.canAttack = true;
+        
+        this.target = target;
+    }
     
     public OpponentCAC1(World world, Body target, float posX, float posY) {
         super(100);
@@ -52,8 +67,37 @@ public class OpponentCAC1 extends Character2D{
         
         this.currentStateNode = new OpponentCAC1.StateNode(OpponentCAC1.OppState.NORMAL);
         
+        this.canAttack = true;
+        
         // Part graphic
         this.texture = OPPCAC1TEXT;
+        
+        this.initializeGraphic();
+        
+        // Part Physic
+        this.initializePhysicCAC1(world, posX, posY);
+    }
+    
+    @Override
+    public void updateLogic(float deltaTime){
+        super.updateLogic(deltaTime);
+        
+        createInfluencesCAC1();
+        
+        if(this.isInvulnerable){
+            this.influences.remove(OppInfluence.ATTACK);
+        }
+        
+        influences2Actions();
+        
+        if(this.lifeState != LifeState.DEAD){
+            this.damageActionFixture.applyAction(deltaTime, this);
+        }
+    }
+    
+    protected final void initializeGraphic()
+    {
+        // Part graphic
         TextureRegion[][] tmp = TextureRegion.split(this.texture, 76, 76);
         // walk
         Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
@@ -71,6 +115,7 @@ public class OpponentCAC1 extends Character2D{
         array = new Array<TextureRegion>(tmp[2]);
         array.removeRange(0, 6);
         this.listAnimations.add(new Animation(0.3f, array));
+        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.REVERSED);
         // death
         array = new Array<TextureRegion>(tmp[3]);
         array.removeRange(3, 9);
@@ -78,6 +123,7 @@ public class OpponentCAC1 extends Character2D{
         array = new Array<TextureRegion>(tmp[3]);
         array.removeRange(0, 6);
         this.listAnimations.add(new Animation(0.3f, array));
+        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.REVERSED);
         // flying
         array = new Array<TextureRegion>(tmp[0]);
         array.removeRange(0, 8);
@@ -86,17 +132,10 @@ public class OpponentCAC1 extends Character2D{
         array.removeRange(1, 9);
         this.listAnimations.add(new Animation(10, array));
         
-        // death
-        array = new Array<TextureRegion>(tmp[3]);
-        array.removeRange(3, 9);
-        this.listAnimations.add(new Animation(0.3f, array));
-        array = new Array<TextureRegion>(tmp[3]);
-        array.removeRange(0, 6);
-        this.listAnimations.add(new Animation(0.3f, array));
-        
         this.changeAnimation(0, true);
-        
-        // Part Physic
+    }
+    
+    protected final void initializePhysicCAC1(World world, float posX, float posY){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(posX * P2M, posY * P2M); 
@@ -105,7 +144,7 @@ public class OpponentCAC1 extends Character2D{
 
         // Collision fixture
         CircleShape circle = new CircleShape();
-        circle.setRadius(20 * P2M);
+        circle.setRadius(19 * P2M);
         circle.setPosition(new Vector2(0, 0));
         //circle.setPosition(new Vector2(38 * P2M, 14 * P2M));
         /*PolygonShape granMa = new PolygonShape();
@@ -158,19 +197,6 @@ public class OpponentCAC1 extends Character2D{
         Set<Fixture> setDamage = new HashSet<Fixture>();
         setDamage.add(fix);
         this.damageActionFixture = new DamageActionFixture(setDamage, 2);
-        
-    }
-    
-    @Override
-    public void updateLogic(float deltaTime){
-        super.updateLogic(deltaTime);
-        
-        createInfluences();
-        influences2Actions();
-        
-        if(this.lifeState != LifeState.DEAD){
-            this.damageActionFixture.applyAction(deltaTime, this);
-        }
     }
     
     @Override
@@ -204,7 +230,7 @@ public class OpponentCAC1 extends Character2D{
         }
     }
     
-    private void createInfluences(){
+    protected void createInfluencesDIST1(){
         if(this.lifeState == LifeState.DEAD){
             return;
         }
@@ -216,7 +242,14 @@ public class OpponentCAC1 extends Character2D{
                 this.influences.add(OppInfluence.GO_LEFT);
             }
             
-            if(Math.abs(this.target.getPosition().sub(this.physicBody.getPosition()).len()) <  ATT_DIST){
+            if(this.canAttack
+                    && this.target.getPosition().y - this.physicBody.getPosition().y > 75 * P2M 
+                    && this.target.getPosition().y - this.physicBody.getPosition().y < 150 * P2M){
+                this.influences.add(OppInfluence.JUMP);
+            }
+            
+            if(Math.abs(this.target.getPosition().sub(this.physicBody.getPosition()).len()) <  300 * P2M
+                    && Math.abs(this.target.getPosition().y - this.physicBody.getPosition().y) < 50 * P2M){
                 this.influences.add(OppInfluence.ATTACK);
             }
         }else{
@@ -237,7 +270,36 @@ public class OpponentCAC1 extends Character2D{
         }
     }
     
-    private void influences2Actions(){
+    protected void createInfluencesCAC1(){
+        if(this.lifeState == LifeState.DEAD){
+            return;
+        }
+        
+        if(this.target.getPosition().dst(this.physicBody.getPosition()) < MOVE_DIST){
+            if(this.target.getPosition().x - this.physicBody.getPosition().x > 0){
+                this.influences.add(OppInfluence.GO_RIGHT);
+            }else{
+                this.influences.add(OppInfluence.GO_LEFT);
+            }
+        }else{
+            double rand = Math.random()*100;
+            if(rand > 10){
+                if(this.side == SideCharacter.RIGHT){
+                    this.influences.add(OppInfluence.GO_RIGHT);
+                }else{
+                    this.influences.add(OppInfluence.GO_LEFT);
+                }
+            }else if(rand > 8){
+                if(this.side == SideCharacter.RIGHT){
+                    this.influences.add(OppInfluence.GO_LEFT);
+                }else{
+                    this.influences.add(OppInfluence.GO_RIGHT);
+                }
+            }
+        }
+    }
+    
+    protected void influences2Actions(){
         
         StateNode prevNode = this.currentStateNode;
         StateNode nextNode = this.currentStateNode.getNextStateNode();
@@ -288,12 +350,13 @@ public class OpponentCAC1 extends Character2D{
     }
     
     protected enum OppInfluence{
+        JUMP,
         GO_RIGHT,
         GO_LEFT,
         ATTACK
     }
     
-    private class StateNode{
+    protected class StateNode{
         private OppState stateNode;
         
         private int pauseAnimation;
@@ -313,7 +376,7 @@ public class OpponentCAC1 extends Character2D{
             if(OpponentCAC1.this.lifeState == LifeState.DEAD)
                 return null;
             
-            switch(this.stateNode){
+            switch(this.getStateNode()){
                 case NORMAL:
                     return getNextNodeNormal();
                 case ATTACK:
@@ -330,7 +393,9 @@ public class OpponentCAC1 extends Character2D{
                 OppInfluence currentInfluence = it.next();
                 switch(currentInfluence){
                     case ATTACK :
-                        return new StateNode(OppState.ATTACK);
+                        if(OpponentCAC1.this.canAttack){
+                            return new StateNode(OppState.ATTACK);
+                        }
                 }
             }
             return null;
@@ -349,9 +414,9 @@ public class OpponentCAC1 extends Character2D{
                 this.pauseAnimation = 0;
                 this.restartAnimation = true;
                 if(OpponentCAC1.this.side == SideCharacter.RIGHT){
-                    return 8;
+                    return 4;
                 }else{
-                    return 9;
+                    return 5;
                 }
             }
 
@@ -359,13 +424,13 @@ public class OpponentCAC1 extends Character2D{
             if(OpponentCAC1.this.isInvulnerable){
                 this.pauseAnimation = -1;
                 if(OpponentCAC1.this.side == SideCharacter.RIGHT){
-                    return 8;
+                    return 4;
                 }else{
-                    return 9;
+                    return 5;
                 }
             }
             
-            switch(this.stateNode){
+            switch(this.getStateNode()){
                 case NORMAL:
                     return getAnimationNormal();
                 case ATTACK:
@@ -427,15 +492,32 @@ public class OpponentCAC1 extends Character2D{
         
         // Part physic
         public void updatePhysic(){
-            if(OpponentCAC1.this.lifeState == LifeState.DEAD)
+            if(OpponentCAC1.this.lifeState == LifeState.DEAD){
                 return;
+            }
             
             Vector2 velocity = OpponentCAC1.this.physicBody.getLinearVelocity();
             
-            if(this.stateNode != OpponentCAC1.OppState.ATTACK){
+            boolean isMove = false;
+            if(!OpponentCAC1.this.isFlying()){
+                Iterator<OpponentCAC1.OppInfluence> it = OpponentCAC1.this.influences.iterator();
+                
+                while(it.hasNext()){
+                    OpponentCAC1.OppInfluence currentInfluence = it.next();
+                    switch(currentInfluence){
+                        case JUMP :
+                            velocity.y += 4f;
+                            isMove = true;
+                            break;
+
+                    }
+                }
+            }
+            
+            if(this.getStateNode() != OpponentCAC1.OppState.ATTACK){
                 Iterator<OpponentCAC1.OppInfluence> it = OpponentCAC1.this.influences.iterator();
 
-                boolean isMove = false;
+                isMove = false;
                 
                 while(it.hasNext()){
                     OpponentCAC1.OppInfluence currentInfluence = it.next();
@@ -451,24 +533,14 @@ public class OpponentCAC1 extends Character2D{
                             isMove = true;
                             break;
                     }
-                }
-                
-                if(!(isMove || OpponentCAC1.this.isFlying())){
-                    if(Math.abs(velocity.x) > 1.f){
-                        velocity.x -= 0.5f * (float)Math.signum(velocity.x);
-                    }else{
-                        velocity.x = 0.f;
-                    }
-                }
-                
-                
-            }else{
-                if(!OpponentCAC1.this.isFlying()){
-                    if(Math.abs(velocity.x) > 1.f){
-                        velocity.x -= 0.5f * (float)Math.signum(velocity.x);
-                    }else{
-                        velocity.x = 0.f;
-                    }
+                }              
+            }
+            
+            if(!(isMove || OpponentCAC1.this.isFlying())){
+                if(Math.abs(velocity.x) > 1.f){
+                    velocity.x -= 0.5f * (float)Math.signum(velocity.x);
+                }else{
+                    velocity.x = 0.f;
                 }
             }
             
@@ -484,6 +556,13 @@ public class OpponentCAC1 extends Character2D{
         
         public boolean isRestartAnimation(){
             return this.restartAnimation;
+        }
+
+        /**
+         * @return the stateNode
+         */
+        public OppState getStateNode() {
+            return stateNode;
         }
     }
     

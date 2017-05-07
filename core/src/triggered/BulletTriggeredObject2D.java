@@ -25,22 +25,21 @@ import java.util.ArrayList;
 
 /**
  *
- * @author françois
+ * @author Deneyr
  */
-public class CannonBallTriggeredObject2D extends TriggeredObject2D{
-
-    private static final Texture CANNONBALLTEXTURE = new Texture("Canon_Boulet.png");
+public class BulletTriggeredObject2D extends TriggeredObject2D{
+    private static final Texture BULLETTEXTURE = new Texture("Bullet.png");
     
     private int damageInflicted;
     
-    public CannonBallTriggeredObject2D(){
+    public BulletTriggeredObject2D(){
         super();
         
         this.damageInflicted = 3;
         
         // Part graphic
-        this.texture = CANNONBALLTEXTURE;
-        TextureRegion[][] tmp = TextureRegion.split(this.texture, 50, 50);
+        this.texture = BULLETTEXTURE;
+        TextureRegion[][] tmp = TextureRegion.split(this.texture, 20, 20);
         // walk folded
         Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
         array.removeRange(1, 3);
@@ -53,7 +52,7 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
     
     @Override
     public void initialize(World world, Vector2 position, Vector2 speed) {
-        float radius = 25;
+        float radius = 10;
 
         super.initialize(world, position, speed, radius * 1.1f);
         
@@ -94,7 +93,7 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
                 Vector2 dirDamage = targetPhysicBody.sub(this.getPositionBody());
                 dirDamage = dirDamage.nor();
                 
-                grandma.applyDamage(3, dirDamage, this);
+                grandma.applyDamage(2, dirDamage, this);
             }
             
             this.changeAnimation(1, false);

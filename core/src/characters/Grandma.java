@@ -25,6 +25,7 @@ import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DStateListener;
 import com.mygdx.game.ShieldActionFixture;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -38,7 +39,7 @@ public class Grandma extends Character2D{
     
     public static final int LEFT_RIGHT_DIST = 18;
     
-    private static final Texture GRANDMATEXT = new Texture("spritemapmeme.png");
+    private static final Texture GRANDMATEXT = new Texture("character" + File.separator + "spritemapmeme.png");
     
     private static final Texture DENTIER = new Texture("spritemapdentierV2-01.png");
     TextureRegion[][] lifeSprites;
