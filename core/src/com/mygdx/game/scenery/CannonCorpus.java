@@ -6,7 +6,9 @@
 package com.mygdx.game.scenery;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -17,6 +19,8 @@ import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.Character2D;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
@@ -83,13 +87,13 @@ public class CannonCorpus extends SolidObject2D{
         
         this.physicBody = groundBody;
         
-        // Child
-        this.cannon = new Cannon(this.physicBody, target, world, posX , posY);
-        
         // Transform
         if(angle != 0){
             this.physicBody.setTransform(this.physicBody.getPosition(), angle);
         }
+        
+        // Child
+        this.cannon = new Cannon(this.physicBody, target, world, posX , posY);
     }   
             
     @Override
@@ -132,6 +136,8 @@ public class CannonCorpus extends SolidObject2D{
         private StateNode currentStateNode;      
         private Set<CannonInfluence> influences = new HashSet<CannonInfluence>();
         
+        private boolean canAttack;
+        
         public Cannon(Body ownerBody, Body target, World world, float posX, float posY) {
             super(100);
             
@@ -145,6 +151,17 @@ public class CannonCorpus extends SolidObject2D{
             this.timerFire = 0;
             
             this.currentStateNode = new StateNode(CannonState.STOP);
+            
+            this.canAttack = true;
+            
+            // Part graphic
+            TextureRegion[][] tmp = TextureRegion.split(this.texture, 152, 153);
+            // walk
+            Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
+            array.removeRange(1, 4);
+            this.listAnimations.add(new Animation(0.2f, array));
+            array = new Array<TextureRegion>(tmp[0]);
+            this.listAnimations.add(new Animation(0.1f, array));
             
             // Part physic
             BodyDef groundBodyDef = new BodyDef();    
@@ -181,8 +198,11 @@ public class CannonCorpus extends SolidObject2D{
             jointDef.localAnchorB.set(new Vector2(50 * P2M, 0));
             jointDef.collideConnected = false;
             
-            this.joint = world.createJoint(jointDef);
+            this.physicBody.setTransform(this.getPositionBody(), (float) (ownerBody.getAngle() - Math.PI / 4));
             
+            this.joint = world.createJoint(jointDef);
+                       
+            this.changeAnimation(0, false);
         }
     
         @Override
@@ -195,24 +215,6 @@ public class CannonCorpus extends SolidObject2D{
         
         @Override
         public void updateLogic(float deltaTime){       
-           /*this.timerFire += deltaTime;
-            
-            
-           if(this.timerFire > 1){
-               this.timerFire = 0;
-               
-               if(Math.abs(this.target.getPosition().sub(this.getPositionBody()).len()) < 400 * P2M){
-                   Vector2 dirBall = new Vector2(-1, 0).rotate((float) (this.physicBody.getAngle() * 180 / Math.PI));
-                   
-                   this.notifyObject2D2CreateListener(CannonBallTriggeredObject2D.class, this.getPositionBody().add(dirBall.scl(this.texture.getWidth() / 2 * P2M)).scl(1 / P2M), dirBall.scl(150 * P2M));
-               }
-               
-           }
-            
-            
-            this.updateCannonPhysic(deltaTime);*/
-           
-
             super.updateLogic(deltaTime);
         
             this.createInfluences();
@@ -245,7 +247,42 @@ public class CannonCorpus extends SolidObject2D{
                 this.currentStateNode = nextNode;
             }
             
+            if(this.currentStateNode.getCurrentAnimation() != this.currentAnimation){
+                this.changeAnimation(this.currentStateNode.getCurrentAnimation(), false);
+            }
+            
+            this.updateAttack(prevNode, nextNode);
+            
             this.currentStateNode.updatePhysic(deltaTime);
+        }
+        
+        protected void updateAttack(StateNode prevNode, StateNode nextNode){
+            if(this.lifeState == LifeState.DEAD){
+                return;
+            }
+
+            if(this.canAttack
+                    && prevNode.getStateNode() != CannonState.ATTACK 
+                    && (nextNode != null && nextNode.getStateNode() == CannonState.ATTACK)){
+                this.canAttack = false;
+                Timer.schedule(new Timer.Task(){
+                        @Override
+                        public void run() {
+                            Vector2 dirBall = new Vector2(-1, 0).rotate((float) (Cannon.this.physicBody.getAngle() * 180 / Math.PI));
+                   
+                            Cannon.this.notifyObject2D2CreateListener(CannonBallTriggeredObject2D.class, Cannon.this.getPositionBody().add(dirBall.scl(Cannon.this.texture.getWidth() / 10.5f * P2M)).scl(1 / P2M), dirBall.scl(160 * P2M));
+                        }
+                        
+                }, 0.5f);
+                
+                Timer.schedule(new Timer.Task(){
+                        @Override
+                        public void run() {
+                            Cannon.this.canAttack = true;
+                        }
+                        
+                }, 2f);
+            }
         }
         
         @Override
@@ -268,7 +305,7 @@ public class CannonCorpus extends SolidObject2D{
             // Part nextNode
             public StateNode getNextStateNode(){
 
-                switch(this.stateNode){
+                switch(this.getStateNode()){
                     case STOP:
                         return getNextNodeStop();
                     case MOVE:
@@ -291,7 +328,9 @@ public class CannonCorpus extends SolidObject2D{
                         case GO_LEFT :
                             return new StateNode(CannonState.MOVE);
                         case ATTACK :
-                            return new StateNode(CannonState.ATTACK);
+                            if(Cannon.this.canAttack){
+                                return new StateNode(CannonState.ATTACK);
+                            }
                             
                     }
                 }
@@ -320,7 +359,9 @@ public class CannonCorpus extends SolidObject2D{
                             isStillMoving = true;
                             break;
                         case ATTACK :
-                            return new StateNode(CannonState.ATTACK);
+                            if(Cannon.this.canAttack){
+                                return new StateNode(CannonState.ATTACK);
+                            }
                             
                     }
                 }
@@ -334,18 +375,17 @@ public class CannonCorpus extends SolidObject2D{
             // Part animation 
             public int getCurrentAnimation(){
 
-                switch(this.stateNode){
+                switch(this.getStateNode()){
                     case ATTACK:
                         return getAnimationAttack();
 
                 } 
-                return -1;
+                return 0;
             }
 
 
             private int getAnimationAttack(){
-                // WIP
-                return -1;
+                return 1;
             }
 
             // Part physic
@@ -365,21 +405,24 @@ public class CannonCorpus extends SolidObject2D{
                     }
                 }
                 
-                switch(this.stateNode){
+                switch(this.getStateNode()){
                     
                     case ATTACK:
-                        Cannon.this.physicBody.setFixedRotation(true);
-                        
-                        //test if we are at the end of the attack animation.
-                        //Vector2 dirBall = new Vector2(-1, 0).rotate((float) (this.physicBody.getAngle() * 180 / Math.PI));
-                   
-                        //this.notifyObject2D2CreateListener(CannonBallTriggeredObject2D.class, this.getPositionBody().add(dirBall.scl(this.texture.getWidth() / 2 * P2M)).scl(1 / P2M), dirBall.scl(150 * P2M));
+                        if(!Cannon.this.physicBody.isFixedRotation()){
+                            Cannon.this.physicBody.setFixedRotation(true);
+                        }
                         break;
                     case MOVE:
                         if(Cannon.this.physicBody.isFixedRotation()){
                             Cannon.this.physicBody.setFixedRotation(false);
+                            Cannon.this.physicBody.setAwake(true);
                         }
                         this.updateCannonMove(deltaTime);
+                        break;
+                    case STOP:
+                        if(!Cannon.this.physicBody.isFixedRotation()){
+                            Cannon.this.physicBody.setFixedRotation(true);
+                        }
                         break;
 
                 } 
@@ -405,6 +448,13 @@ public class CannonCorpus extends SolidObject2D{
                     }
                 }
 
+            }
+
+            /**
+             * @return the stateNode
+             */
+            public CannonState getStateNode() {
+                return stateNode;
             }
         }
         
