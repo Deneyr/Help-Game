@@ -64,8 +64,6 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
 
         FixtureDef fixtureDef = new FixtureDef();
         
-        this.setCollisionFilterMask(fixtureDef, false);
-        
         fixtureDef.shape = circle;
         fixtureDef.density = 2f; 
         fixtureDef.friction = 0.1f;
@@ -123,5 +121,14 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
             sprite.setColor(0.5f, 0.5f, 0.5f, 1f);
         }
         return sprite;
+    }
+    
+    @Override
+    public void reflectBullet(Object2D reflecter){
+        if(!this.isTriggered){
+            this.physicBody.setLinearVelocity(Vector2.Zero);
+            this.changeAnimation(1, false);
+            super.trigger(reflecter);
+        }
     }
 }

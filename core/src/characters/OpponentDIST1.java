@@ -115,7 +115,7 @@ public class OpponentDIST1 extends OpponentCAC1{
                             Vector2 dirBall = new Vector2(OpponentDIST1.this.side == SideCharacter.RIGHT? 1: -1, 0);
                             Vector2 posBall = new Vector2(OpponentDIST1.this.getPositionBody()).scl(1 / P2M);
                             posBall = posBall.add(dirBall.scl(10)).add(new Vector2(0, 4));
-                            OpponentDIST1.this.notifyObject2D2CreateListener(BulletTriggeredObject2D.class, posBall, dirBall.scl(100 * P2M));
+                            OpponentDIST1.this.notifyObject2D2CreateListener(BulletTriggeredObject2D.class, posBall, dirBall.scl(50 * P2M));
                         }
                     }
             }, 0.6f);

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Timer;
 import java.util.Set;
+import triggered.BulletTriggeredObject2D;
 
 /**
  *
@@ -40,23 +41,31 @@ public class ShieldActionFixture extends DamageActionFixture{
             applyDefaultAction();
 
             for(Object2D obj : this.setObject2DInside){
-                if(obj != owner && obj instanceof Character2D){
-                    Character2D chara = (Character2D) obj;
-                    
-                    Vector2 physicBody = new Vector2(chara.physicBody.getPosition());
-                    Vector2 dirChara = physicBody.sub(owner.physicBody.getPosition());
-                    
-                    Vector2 dirDamage = new Vector2(1, 0);
-                    dirDamage = dirDamage.scl(dirDamage.dot(dirChara));
-                    
-                    if(dirDamage.isZero(0.001f)){
-                        dirDamage = new Vector2(1, 0);
-                    }
-                    
-                    dirDamage = dirDamage.nor();
-                    dirDamage = dirDamage.scl(this.ratioBounce * 100);
+                if(obj != owner){
+                    if(obj instanceof Character2D){
+                        Character2D chara = (Character2D) obj;
 
-                    chara.applyBounce(dirDamage, owner);
+                        Vector2 physicBody = new Vector2(chara.physicBody.getPosition());
+                        Vector2 dirChara = physicBody.sub(owner.physicBody.getPosition());
+
+                        Vector2 dirDamage = new Vector2(1, 0);
+                        dirDamage = dirDamage.scl(dirDamage.dot(dirChara));
+
+                        if(dirDamage.isZero(0.001f)){
+                            dirDamage = new Vector2(1, 0);
+                        }
+
+                        dirDamage = dirDamage.nor();
+                        dirDamage = dirDamage.scl(this.ratioBounce * 100);
+
+                        chara.applyBounce(dirDamage, owner);
+                    }else if(obj instanceof TriggeredObject2D){
+
+                        TriggeredObject2D triggeredObject2D = (TriggeredObject2D) obj;
+                                        
+                        triggeredObject2D.reflectBullet(owner);
+                        
+                    }
                 }
             }
         }
@@ -78,23 +87,31 @@ public class ShieldActionFixture extends DamageActionFixture{
 
                             ShieldActionFixture.this.canBeApplied = true;
                             for(Object2D obj : ShieldActionFixture.this.setObject2DInside){
-                                if(obj != owner && obj instanceof Character2D){
-                                    Character2D chara = (Character2D) obj;
+                                if(obj != owner){
+                                    if(obj instanceof Character2D){
+                                        Character2D chara = (Character2D) obj;
 
-                                    Vector2 physicBody = new Vector2(chara.physicBody.getPosition());
-                                    Vector2 dirChara = physicBody.sub(owner.physicBody.getPosition());
+                                        Vector2 physicBody = new Vector2(chara.physicBody.getPosition());
+                                        Vector2 dirChara = physicBody.sub(owner.physicBody.getPosition());
 
-                                    Vector2 dirDamage = new Vector2(1, 0);
-                                    dirDamage = dirDamage.scl(dirDamage.dot(dirChara));
+                                        Vector2 dirDamage = new Vector2(1, 0);
+                                        dirDamage = dirDamage.scl(dirDamage.dot(dirChara));
 
-                                    if(dirDamage.isZero(0.001f)){
-                                        dirDamage = new Vector2(1, 0);
+                                        if(dirDamage.isZero(0.001f)){
+                                            dirDamage = new Vector2(1, 0);
+                                        }
+
+                                        dirDamage = dirDamage.nor();
+                                        dirDamage = dirDamage.scl(ShieldActionFixture.this.ratioBounce * 100);
+
+                                        chara.applyBounce(dirDamage, owner);
+                                    }else if(obj instanceof TriggeredObject2D){
+
+                                        TriggeredObject2D triggeredObject2D = (TriggeredObject2D) obj;
+                                        
+                                        triggeredObject2D.reflectBullet(owner);
+
                                     }
-
-                                    dirDamage = dirDamage.nor();
-                                    dirDamage = dirDamage.scl(ShieldActionFixture.this.ratioBounce * 100);
-
-                                    chara.applyBounce(dirDamage, owner);
                                 }
                             }
                         }

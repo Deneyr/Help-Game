@@ -32,6 +32,8 @@ public class BulletTriggeredObject2D extends TriggeredObject2D{
     
     private int damageInflicted;
     
+    private boolean canReflect;
+    
     public BulletTriggeredObject2D(){
         super();
         
@@ -53,6 +55,8 @@ public class BulletTriggeredObject2D extends TriggeredObject2D{
     @Override
     public void initialize(World world, Vector2 position, Vector2 speed) {
         float radius = 10;
+        
+        this.canReflect = true;
 
         super.initialize(world, position, speed, radius * 1.1f);
         
@@ -62,8 +66,6 @@ public class BulletTriggeredObject2D extends TriggeredObject2D{
         circle.setPosition(new Vector2(0, 0));
 
         FixtureDef fixtureDef = new FixtureDef();
-        
-        this.setCollisionFilterMask(fixtureDef, false);
         
         fixtureDef.shape = circle;
         fixtureDef.density = 2f; 
@@ -111,6 +113,23 @@ public class BulletTriggeredObject2D extends TriggeredObject2D{
     public void onOutOfScreen(double dist){
         if(this.object2DStateListener.get() != null){
             this.object2DStateListener.get().notifyStateChanged(this, Object2DStateListener.Object2DState.DEATH, 0);
+        }
+    }
+    
+    @Override
+    public void reflectBullet(Object2D reflecter){
+        if(this.canReflect){
+            this.canReflect = false;
+            
+            Vector2 physicBody = new Vector2(this.physicBody.getPosition());
+            Vector2 dirChara = physicBody.sub(reflecter.getPositionBody()).nor();
+
+            if(Math.random() > 0.5){
+                dirChara = dirChara.rotate(dirChara.angle(new Vector2(0, 1)) / 2);
+            }
+            dirChara = dirChara.scl(this.physicBody.getLinearVelocity().len());
+             
+            this.physicBody.setLinearVelocity(dirChara);      
         }
     }
     

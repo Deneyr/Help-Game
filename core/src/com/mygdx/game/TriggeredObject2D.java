@@ -142,4 +142,8 @@ public abstract class TriggeredObject2D extends Object2D{
         fixtureDef.filter.categoryBits = 0x0004;
         fixtureDef.filter.maskBits = 0x0002;
     }
+    
+    public void reflectBullet(Object2D reflecter){
+        // nothing to do
+    }
 }
