@@ -11,6 +11,7 @@ import backgrounds.HillBackground;
 import backgrounds.NearBackground;
 import characters.OpponentCAC1;
 import characters.Grandma;
+import characters.OpponentCAC2;
 import characters.OpponentDIST1;
 import com.mygdx.game.scenery.Orphanage;
 import com.mygdx.game.scenery.TestMarioStage;
@@ -211,6 +212,13 @@ public class HelpGame extends Game{
         this.getGameWorld().addObject2DToWorld(opp, true);
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, 300, 100);
+        this.getGameWorld().addObject2DToWorld(opp, true);
+        
+        
+        opp = new OpponentCAC2(this.getGameWorld().getWorld(), hero.physicBody, -1600, 100);
+        this.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC2(this.getGameWorld().getWorld(), hero.physicBody, -1700, 100);
         this.getGameWorld().addObject2DToWorld(opp, true);
         
         // init scenary

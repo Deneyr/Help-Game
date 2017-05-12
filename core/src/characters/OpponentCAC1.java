@@ -47,6 +47,8 @@ public class OpponentCAC1 extends Character2D{
     
     protected boolean canAttack;
     
+    protected float maxSpeed;
+    
     public OpponentCAC1(int lifePoint, Body target){
         super(lifePoint);
         
@@ -57,6 +59,8 @@ public class OpponentCAC1 extends Character2D{
         this.canAttack = true;
         
         this.target = target;
+        
+        this.maxSpeed = 2f;
     }
     
     public OpponentCAC1(World world, Body target, float posX, float posY) {
@@ -68,6 +72,8 @@ public class OpponentCAC1 extends Character2D{
         this.currentStateNode = new OpponentCAC1.StateNode(OpponentCAC1.OppState.NORMAL);
         
         this.canAttack = true;
+        
+        this.maxSpeed = 2f;
         
         // Part graphic
         this.texture = OPPCAC1TEXT;
@@ -196,7 +202,7 @@ public class OpponentCAC1 extends Character2D{
         fix = this.physicBody.createFixture(fixtureDef);
         Set<Fixture> setDamage = new HashSet<Fixture>();
         setDamage.add(fix);
-        this.damageActionFixture = new DamageActionFixture(setDamage, 2);
+        this.damageActionFixture = new DamageActionFixture(setDamage, 1);
     }
     
     @Override
@@ -280,6 +286,46 @@ public class OpponentCAC1 extends Character2D{
                 this.influences.add(OppInfluence.GO_RIGHT);
             }else{
                 this.influences.add(OppInfluence.GO_LEFT);
+            }
+        }else{
+            double rand = Math.random()*100;
+            if(rand > 10){
+                if(this.side == SideCharacter.RIGHT){
+                    this.influences.add(OppInfluence.GO_RIGHT);
+                }else{
+                    this.influences.add(OppInfluence.GO_LEFT);
+                }
+            }else if(rand > 8){
+                if(this.side == SideCharacter.RIGHT){
+                    this.influences.add(OppInfluence.GO_LEFT);
+                }else{
+                    this.influences.add(OppInfluence.GO_RIGHT);
+                }
+            }
+        }
+    }
+    
+    protected void createInfluencesCAC2(){
+        if(this.lifeState == LifeState.DEAD){
+            return;
+        }
+        
+        if(this.target.getPosition().dst(this.physicBody.getPosition()) < MOVE_DIST){
+            if(this.target.getPosition().x - this.physicBody.getPosition().x > 0){
+                this.influences.add(OppInfluence.GO_RIGHT);
+            }else{
+                this.influences.add(OppInfluence.GO_LEFT);
+            }
+            
+            if(this.canAttack
+                    && this.target.getPosition().y - this.physicBody.getPosition().y > 75 * P2M 
+                    && this.target.getPosition().y - this.physicBody.getPosition().y < 150 * P2M){
+                this.influences.add(OppInfluence.JUMP);
+            }
+            
+            if(Math.abs(this.target.getPosition().sub(this.physicBody.getPosition()).len()) <  50 * P2M
+                    && Math.abs(this.target.getPosition().y - this.physicBody.getPosition().y) < 50 * P2M){
+                this.influences.add(OppInfluence.ATTACK);
             }
         }else{
             double rand = Math.random()*100;
@@ -544,8 +590,8 @@ public class OpponentCAC1 extends Character2D{
                 }
             }
             
-            if(Math.abs(velocity.x) > 2.f){
-                velocity.x = 2.f * (float)Math.signum(velocity.x);
+            if(Math.abs(velocity.x) > OpponentCAC1.this.maxSpeed){
+                velocity.x = OpponentCAC1.this.maxSpeed * (float)Math.signum(velocity.x);
             }
             OpponentCAC1.this.physicBody.setLinearVelocity(velocity);
         }

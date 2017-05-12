@@ -33,7 +33,7 @@ public class DamageActionFixture extends ActionFixtures{
     }
     
     @Override
-    public void applyAction(float deltaTime, final Object2D owner) {
+    public void applyAction(final float deltaTime, final Object2D owner) {
         super.applyAction(deltaTime, owner);
 
         for(Object2D obj : DamageActionFixture.this.setObject2DInside){

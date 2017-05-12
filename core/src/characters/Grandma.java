@@ -209,9 +209,7 @@ public class Grandma extends Character2D{
         }
         
         if(this.damageZone != null){
-            for(Fixture fix : this.damageZone.getFixtures()){
-                this.physicBody.destroyFixture(fix);
-            }
+            this.damageZone.dispose(this.physicBody);
         }
         
         float yOffset = 0f;

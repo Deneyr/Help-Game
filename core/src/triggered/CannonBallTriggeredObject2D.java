@@ -92,7 +92,7 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
                 Vector2 dirDamage = targetPhysicBody.sub(this.getPositionBody());
                 dirDamage = dirDamage.nor();
                 
-                grandma.applyDamage(3, dirDamage, this);
+                grandma.applyDamage(2, dirDamage, this);
             }
             
             this.changeAnimation(1, false);

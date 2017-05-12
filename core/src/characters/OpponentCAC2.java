@@ -15,27 +15,41 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
+import com.mygdx.game.DamageActionFixture;
 import static com.mygdx.game.HelpGame.P2M;
+import com.mygdx.game.Object2D;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import triggered.BulletTriggeredObject2D;
 
 /**
  *
  * @author Deneyr
  */
-public class OpponentDIST1 extends OpponentCAC1{
+public class OpponentCAC2 extends OpponentCAC1{
     
-    private static final Texture OPPDIST1TEXT = new Texture("character" + File.separator + "spritemapkairaTir-01.png");
+    private static final Texture OPPCAC2TEXT = new Texture("character" + File.separator + "spritemapkaira_batte-01.png");
     
-    public OpponentDIST1(World world, Body target, float posX, float posY){
+    private SideCharacter previousSide;
+    
+    public OpponentCAC2(World world, Body target, float posX, float posY){
         super(100, target);
         
-        this.texture = OPPDIST1TEXT;
+        this.texture = OPPCAC2TEXT;
+        
+        this.maxSpeed = 4f;
         
         this.initializeGraphic();
+        this.listAnimations.get(2).setFrameDuration(0.2f);
+        this.listAnimations.get(3).setFrameDuration(0.2f);
         
-        this.initializePhysicDIST1(world, posX, posY);
+        this.initializePhysicCAC2(world, posX, posY);
+        
+        this.updateFixture();
+        
+        this.previousSide = this.side;
     }
     
     @Override
@@ -44,20 +58,23 @@ public class OpponentDIST1 extends OpponentCAC1{
             this.animationTime += deltaTime;
         }
         
-        createInfluencesDIST1();
+        this.createInfluencesCAC2();
         
-        influences2Actions();
+        this.influences2Actions(deltaTime);
+        
+        if(this.side != this.previousSide){
+            this.updateFixture();
+            this.previousSide = this.side;
+        }
     }
     
-    @Override
-    protected void influences2Actions(){
+    protected void influences2Actions(float deltaTime){
         
         OpponentCAC1.StateNode prevNode = this.currentStateNode;
         OpponentCAC1.StateNode nextNode = this.currentStateNode.getNextStateNode();
         if(nextNode != null){
             this.currentStateNode = nextNode;
         }
-        
         
         int animIndex = this.currentStateNode.getCurrentAnimation();
         boolean restartAnimation = this.currentStateNode.isRestartAnimation();
@@ -91,7 +108,7 @@ public class OpponentDIST1 extends OpponentCAC1{
             }
         }
         
-        this.updateAttack(prevNode, nextNode);
+        this.updateAttack(prevNode, nextNode, deltaTime);
         
         this.currentStateNode.updatePhysic();
           
@@ -99,7 +116,7 @@ public class OpponentDIST1 extends OpponentCAC1{
         this.influences.clear();
     }
     
-    protected void updateAttack(OpponentCAC1.StateNode prevNode, OpponentCAC1.StateNode nextNode){
+    protected void updateAttack(OpponentCAC1.StateNode prevNode, OpponentCAC1.StateNode nextNode, final float deltaTime){
         if(this.lifeState == LifeState.DEAD){
             return;
         }
@@ -108,29 +125,27 @@ public class OpponentDIST1 extends OpponentCAC1{
                 && prevNode.getStateNode() != OppState.ATTACK 
                 && (nextNode != null && nextNode.getStateNode() == OppState.ATTACK)){
             this.canAttack = false;
+            
             Timer.schedule(new Timer.Task(){
-                    @Override
-                    public void run() {
-                        if(!OpponentDIST1.this.isInvulnerable){
-                            Vector2 dirBall = new Vector2(OpponentDIST1.this.side == SideCharacter.RIGHT? 1: -1, 0);
-                            Vector2 posBall = new Vector2(OpponentDIST1.this.getPositionBody()).scl(1 / P2M);
-                            posBall = posBall.add(dirBall.scl(10)).add(new Vector2(0, 4));
-                            OpponentDIST1.this.notifyObject2D2CreateListener(BulletTriggeredObject2D.class, posBall, dirBall.scl(50 * P2M));
-                        }
+                @Override
+                public void run() {
+                    if(!OpponentCAC2.this.isInvulnerable){
+                        OpponentCAC2.this.damageActionFixture.applyAction(deltaTime, OpponentCAC2.this);
                     }
-            }, 0.6f);
+                }
+            }, 0.4f);
             
             
             Timer.schedule(new Timer.Task(){
                     @Override
                     public void run() {
-                        OpponentDIST1.this.canAttack = true;
+                        OpponentCAC2.this.canAttack = true;
                     }         
-            }, 4f);
+            }, 2f);
         }
     }
     
-    protected final void initializePhysicDIST1(World world, float posX, float posY){
+    protected final void initializePhysicCAC2(World world, float posX, float posY){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(posX * P2M, posY * P2M); 
@@ -179,4 +194,57 @@ public class OpponentDIST1 extends OpponentCAC1{
         this.physicBody = body;
     }
     
+    private void updateFixture(){
+        
+        if(this.damageActionFixture != null){
+            damageActionFixture.dispose(this.physicBody);
+        }
+        
+        
+        if(this.side == SideCharacter.RIGHT){        
+            // Part damage zone
+            
+            PolygonShape damageShape = new PolygonShape();
+
+            damageShape.setAsBox(20 * P2M, 35 * P2M, new Vector2(25 * P2M, 0), 0);
+            
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.shape = damageShape;
+            fixtureDef.density = 0f; 
+            fixtureDef.friction = 0.05f;
+            fixtureDef.restitution = 0.1f; 
+
+            Fixture fix = this.physicBody.createFixture(fixtureDef);
+            Set<Fixture> setDamage = new HashSet<Fixture>();
+            setDamage.add(fix);
+            this.damageActionFixture = new DamageActionFixture(setDamage, 2);
+            
+        }else{
+            // Part damage zone
+            
+            PolygonShape damageShape = new PolygonShape();
+
+            damageShape.setAsBox(20 * P2M, 35 * P2M, new Vector2(-25 * P2M, 0), 0);
+            
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.shape = damageShape;
+            fixtureDef.density = 0f; 
+            fixtureDef.friction = 0.05f;
+            fixtureDef.restitution = 0.1f; 
+
+            Fixture fix = this.physicBody.createFixture(fixtureDef);
+            Set<Fixture> setDamage = new HashSet<Fixture>();
+            setDamage.add(fix);
+            this.damageActionFixture = new DamageActionFixture(setDamage, 2);
+        }
+        
+    }
+    
+    @Override
+    public boolean applyDamage(int damage, Vector2 dirDamage, Object2D damageOwner){
+        
+        damage -= 5;
+        
+        return super.applyDamage(damage, dirDamage, damageOwner);
+    }
 }
