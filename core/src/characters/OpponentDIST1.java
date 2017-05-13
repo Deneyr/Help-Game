@@ -46,10 +46,10 @@ public class OpponentDIST1 extends OpponentCAC1{
         
         createInfluencesDIST1();
         
-        influences2Actions();
+        influences2Actions(deltaTime);
     }
     
-    @Override
+    /*@Override
     protected void influences2Actions(){
         
         OpponentCAC1.StateNode prevNode = this.currentStateNode;
@@ -97,9 +97,10 @@ public class OpponentDIST1 extends OpponentCAC1{
           
         
         this.influences.clear();
-    }
+    }*/
     
-    protected void updateAttack(OpponentCAC1.StateNode prevNode, OpponentCAC1.StateNode nextNode){
+    @Override
+    protected void updateAttack(OpponentCAC1.StateNode prevNode, OpponentCAC1.StateNode nextNode, float deltaTime){
         if(this.lifeState == LifeState.DEAD){
             return;
         }

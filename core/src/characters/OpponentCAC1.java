@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.Character2D;
 import com.mygdx.game.DamageActionFixture;
 import static com.mygdx.game.HelpGame.P2M;
@@ -49,6 +50,8 @@ public class OpponentCAC1 extends Character2D{
     
     protected float maxSpeed;
     
+    protected SideCharacter previousSide;
+    
     public OpponentCAC1(int lifePoint, Body target){
         super(lifePoint);
         
@@ -79,9 +82,58 @@ public class OpponentCAC1 extends Character2D{
         this.texture = OPPCAC1TEXT;
         
         this.initializeGraphic();
+        this.listAnimations.get(2).setFrameDuration(0.15f);
+        this.listAnimations.get(3).setFrameDuration(0.15f);
         
         // Part Physic
         this.initializePhysicCAC1(world, posX, posY);
+        
+        this.previousSide = this.side;
+    }
+    
+    protected void updateFixture(){
+        
+        if(this.damageActionFixture != null){
+            damageActionFixture.dispose(this.physicBody);
+        }
+        
+        
+        if(this.side == SideCharacter.RIGHT){        
+            // Part damage zone
+            
+            PolygonShape damageShape = new PolygonShape();
+
+            damageShape.setAsBox(20 * P2M, 35 * P2M, new Vector2(20 * P2M, 0), 0);
+            
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.shape = damageShape;
+            fixtureDef.density = 0f; 
+            fixtureDef.friction = 0.05f;
+            fixtureDef.restitution = 0.1f; 
+
+            Fixture fix = this.physicBody.createFixture(fixtureDef);
+            Set<Fixture> setDamage = new HashSet<Fixture>();
+            setDamage.add(fix);
+            this.damageActionFixture = new DamageActionFixture(setDamage, 1);
+            
+        }else{
+            // Part damage zone
+            
+            PolygonShape damageShape = new PolygonShape();
+
+            damageShape.setAsBox(20 * P2M, 35 * P2M, new Vector2(-20 * P2M, 0), 0);
+            
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.shape = damageShape;
+            fixtureDef.density = 0f; 
+            fixtureDef.friction = 0.05f;
+            fixtureDef.restitution = 0.1f; 
+
+            Fixture fix = this.physicBody.createFixture(fixtureDef);
+            Set<Fixture> setDamage = new HashSet<Fixture>();
+            setDamage.add(fix);
+            this.damageActionFixture = new DamageActionFixture(setDamage, 1);
+        }
     }
     
     @Override
@@ -94,10 +146,11 @@ public class OpponentCAC1 extends Character2D{
             this.influences.remove(OppInfluence.ATTACK);
         }
         
-        influences2Actions();
+        influences2Actions(deltaTime);
         
-        if(this.lifeState != LifeState.DEAD){
-            this.damageActionFixture.applyAction(deltaTime, this);
+        if(this.side != this.previousSide){
+            this.updateFixture();
+            this.previousSide = this.side;
         }
     }
     
@@ -287,6 +340,11 @@ public class OpponentCAC1 extends Character2D{
             }else{
                 this.influences.add(OppInfluence.GO_LEFT);
             }
+            
+            if(Math.abs(this.target.getPosition().sub(this.physicBody.getPosition()).len()) <  50 * P2M
+                    && Math.abs(this.target.getPosition().y - this.physicBody.getPosition().y) < 50 * P2M){
+                this.influences.add(OppInfluence.ATTACK);
+            }
         }else{
             double rand = Math.random()*100;
             if(rand > 10){
@@ -363,14 +421,14 @@ public class OpponentCAC1 extends Character2D{
                 this.influences.add(OppInfluence.JUMP);
             }
             
-            if(Math.abs(this.target.getPosition().sub(this.physicBody.getPosition()).len()) <  75 * P2M
+            if(Math.abs(this.target.getPosition().sub(this.physicBody.getPosition()).len()) <  60 * P2M
                     && Math.abs(this.target.getPosition().y - this.physicBody.getPosition().y) < 50 * P2M){
                 this.influences.add(OppInfluence.ATTACK);
             }
         }
     }
     
-    protected void influences2Actions(){
+    protected void influences2Actions(float deltaTime){
         
         StateNode prevNode = this.currentStateNode;
         StateNode nextNode = this.currentStateNode.getNextStateNode();
@@ -409,10 +467,41 @@ public class OpponentCAC1 extends Character2D{
                 }
             }
         }
-        this.currentStateNode.updatePhysic();
-          
         
+        this.updateAttack(prevNode, nextNode, deltaTime);
+        
+        this.currentStateNode.updatePhysic();
+                
         this.influences.clear();
+    }
+    
+    protected void updateAttack(OpponentCAC1.StateNode prevNode, OpponentCAC1.StateNode nextNode, final float deltaTime){
+        if(this.lifeState == LifeState.DEAD){
+            return;
+        }
+        
+        if(this.canAttack
+                && prevNode.getStateNode() != OppState.ATTACK 
+                && (nextNode != null && nextNode.getStateNode() == OppState.ATTACK)){
+            this.canAttack = false;
+            
+            Timer.schedule(new Timer.Task(){
+                @Override
+                public void run() {
+                    if(!OpponentCAC1.this.isInvulnerable){
+                        OpponentCAC1.this.damageActionFixture.applyAction(deltaTime, OpponentCAC1.this);
+                    }
+                }
+            }, 0.3f);
+            
+            
+            Timer.schedule(new Timer.Task(){
+                    @Override
+                    public void run() {
+                        OpponentCAC1.this.canAttack = true;
+                    }         
+            }, 2f);
+        }
     }
     
     protected enum OppState{

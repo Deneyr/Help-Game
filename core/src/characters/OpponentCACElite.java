@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.DamageActionFixture;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
@@ -60,7 +61,7 @@ public class OpponentCACElite extends OpponentCAC2{
 
         // Collision fixture
         CircleShape circle = new CircleShape();
-        circle.setRadius(18 * P2M);
+        circle.setRadius(19 * P2M);
         circle.setPosition(new Vector2(0, 0));
         //circle.setPosition(new Vector2(38 * P2M, 14 * P2M));
         /*PolygonShape granMa = new PolygonShape();
@@ -100,7 +101,7 @@ public class OpponentCACElite extends OpponentCAC2{
         this.physicBody = body;
         
         // shield fixture
-        circle.setRadius(20 * P2M);
+        circle.setRadius(22 * P2M);
         
         fixtureDef = new FixtureDef();
         fixtureDef.shape = circle;
@@ -111,7 +112,7 @@ public class OpponentCACElite extends OpponentCAC2{
         fix = this.physicBody.createFixture(fixtureDef);
         Set<Fixture> setDamage = new HashSet<Fixture>();
         setDamage.add(fix);
-        this.shieldActionFixture = new ShieldActionFixture(setDamage, 3, 0.1f);
+        this.shieldActionFixture = new ShieldActionFixture(setDamage, 3, 0.2f);
         this.shieldActionFixture.setApplyDamage(false);
     }
     
@@ -130,9 +131,9 @@ public class OpponentCACElite extends OpponentCAC2{
             this.previousSide = this.side;
         }
         
-        if(this.lifeState == LifeState.ALIVE){
+        /*if(this.lifeState == LifeState.ALIVE){
             this.shieldActionFixture.applyAction(deltaTime, this);
-        }
+        }*/
     }
     
     protected void updateFixture(){
@@ -179,6 +180,37 @@ public class OpponentCACElite extends OpponentCAC2{
             this.damageActionFixture = new DamageActionFixture(setDamage, 3);
         }
         
+    }
+    
+    @Override
+    protected void updateAttack(OpponentCAC1.StateNode prevNode, OpponentCAC1.StateNode nextNode, final float deltaTime){
+        if(this.lifeState == LifeState.DEAD){
+            return;
+        }
+        
+        if(this.canAttack
+                && prevNode.getStateNode() != OppState.ATTACK 
+                && (nextNode != null && nextNode.getStateNode() == OppState.ATTACK)){
+            this.canAttack = false;
+            
+            Timer.schedule(new Timer.Task(){
+                @Override
+                public void run() {
+                    if(!OpponentCACElite.this.isInvulnerable){
+                        OpponentCACElite.this.shieldActionFixture.applyAction(deltaTime, OpponentCACElite.this);
+                        OpponentCACElite.this.damageActionFixture.applyAction(deltaTime, OpponentCACElite.this);
+                    }
+                }
+            }, 0.4f);
+            
+            
+            Timer.schedule(new Timer.Task(){
+                    @Override
+                    public void run() {
+                        OpponentCACElite.this.canAttack = true;
+                    }         
+            }, 2f);
+        }
     }
     
     @Override

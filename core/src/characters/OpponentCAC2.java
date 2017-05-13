@@ -32,8 +32,6 @@ public class OpponentCAC2 extends OpponentCAC1{
     
     private static final Texture OPPCAC2TEXT = new Texture("character" + File.separator + "spritemapkaira_batte-01.png");
     
-    protected SideCharacter previousSide;
-    
     public OpponentCAC2(World world, Body target){
         super(100, target);
     }
@@ -72,54 +70,7 @@ public class OpponentCAC2 extends OpponentCAC1{
         }
     }
     
-    protected void influences2Actions(float deltaTime){
-        
-        OpponentCAC1.StateNode prevNode = this.currentStateNode;
-        OpponentCAC1.StateNode nextNode = this.currentStateNode.getNextStateNode();
-        if(nextNode != null){
-            this.currentStateNode = nextNode;
-        }
-        
-        int animIndex = this.currentStateNode.getCurrentAnimation();
-        boolean restartAnimation = this.currentStateNode.isRestartAnimation();
-        
-        int pauseAnim = this.currentStateNode.isPauseAnimation();
-        if(animIndex >= 0 && (this.currentAnimation != animIndex || (pauseAnim == 0) == this.pause)){
-            if(prevNode != this.currentStateNode || restartAnimation){
-                switch(pauseAnim){
-                    case 0:
-                        this.changeAnimation(animIndex, false);
-                        break;
-                    case 1 :
-                        this.changeAnimation(animIndex, true, 10f);
-                        break;
-                    case -1 :
-                        this.changeAnimation(animIndex, true);
-                        break;
-                }
-            }else{
-                switch(pauseAnim){
-                    case 0:
-                        this.changeAnimation(animIndex, false, this.animationTime);
-                        break;
-                    case 1 :
-                        this.changeAnimation(animIndex, true, this.animationTime);
-                        break;
-                    case -1 :
-                        this.changeAnimation(animIndex, true, this.animationTime);
-                        break;
-                }
-            }
-        }
-        
-        this.updateAttack(prevNode, nextNode, deltaTime);
-        
-        this.currentStateNode.updatePhysic();
-          
-        
-        this.influences.clear();
-    }
-    
+    @Override
     protected void updateAttack(OpponentCAC1.StateNode prevNode, OpponentCAC1.StateNode nextNode, final float deltaTime){
         if(this.lifeState == LifeState.DEAD){
             return;
@@ -210,7 +161,7 @@ public class OpponentCAC2 extends OpponentCAC1{
             
             PolygonShape damageShape = new PolygonShape();
 
-            damageShape.setAsBox(20 * P2M, 35 * P2M, new Vector2(25 * P2M, 0), 0);
+            damageShape.setAsBox(20 * P2M, 35 * P2M, new Vector2(30 * P2M, 0), 0);
             
             FixtureDef fixtureDef = new FixtureDef();
             fixtureDef.shape = damageShape;
