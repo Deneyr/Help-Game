@@ -14,142 +14,44 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.DamageActionFixture;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
+import com.mygdx.game.ShieldActionFixture;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import triggered.BulletTriggeredObject2D;
 
 /**
  *
  * @author Deneyr
  */
-public class OpponentCAC2 extends OpponentCAC1{
+public class OpponentCACElite extends OpponentCAC2{
     
-    private static final Texture OPPCAC2TEXT = new Texture("character" + File.separator + "spritemapkaira_batte-01.png");
+    private static final Texture OPPCACELITETEXT = new Texture("character" + File.separator + "spritemapkairaBrute-01.png");
     
-    protected SideCharacter previousSide;
+    protected ShieldActionFixture shieldActionFixture;
     
-    public OpponentCAC2(World world, Body target){
-        super(100, target);
-    }
-    
-    public OpponentCAC2(World world, Body target, float posX, float posY){
-        super(100, target);
+    public OpponentCACElite(World world, Body target, float posX, float posY) {
+        super(world, target);
         
-        this.texture = OPPCAC2TEXT;
+        this.texture = OPPCACELITETEXT;
         
-        this.maxSpeed = 4f;
+        this.maxSpeed = 6f;
         
         this.initializeGraphic();
         this.listAnimations.get(2).setFrameDuration(0.2f);
         this.listAnimations.get(3).setFrameDuration(0.2f);
         
-        this.initializePhysicCAC2(world, posX, posY);
+        this.initializePhysicCACElite(world, posX, posY);
         
         this.updateFixture();
         
         this.previousSide = this.side;
     }
     
-    @Override
-    public void updateLogic(float deltaTime){
-        if(this.currentAnimation >=0 && !this.pause){
-            this.animationTime += deltaTime;
-        }
-        
-        this.createInfluencesCAC2();
-        
-        this.influences2Actions(deltaTime);
-        
-        if(this.side != this.previousSide){
-            this.updateFixture();
-            this.previousSide = this.side;
-        }
-    }
-    
-    protected void influences2Actions(float deltaTime){
-        
-        OpponentCAC1.StateNode prevNode = this.currentStateNode;
-        OpponentCAC1.StateNode nextNode = this.currentStateNode.getNextStateNode();
-        if(nextNode != null){
-            this.currentStateNode = nextNode;
-        }
-        
-        int animIndex = this.currentStateNode.getCurrentAnimation();
-        boolean restartAnimation = this.currentStateNode.isRestartAnimation();
-        
-        int pauseAnim = this.currentStateNode.isPauseAnimation();
-        if(animIndex >= 0 && (this.currentAnimation != animIndex || (pauseAnim == 0) == this.pause)){
-            if(prevNode != this.currentStateNode || restartAnimation){
-                switch(pauseAnim){
-                    case 0:
-                        this.changeAnimation(animIndex, false);
-                        break;
-                    case 1 :
-                        this.changeAnimation(animIndex, true, 10f);
-                        break;
-                    case -1 :
-                        this.changeAnimation(animIndex, true);
-                        break;
-                }
-            }else{
-                switch(pauseAnim){
-                    case 0:
-                        this.changeAnimation(animIndex, false, this.animationTime);
-                        break;
-                    case 1 :
-                        this.changeAnimation(animIndex, true, this.animationTime);
-                        break;
-                    case -1 :
-                        this.changeAnimation(animIndex, true, this.animationTime);
-                        break;
-                }
-            }
-        }
-        
-        this.updateAttack(prevNode, nextNode, deltaTime);
-        
-        this.currentStateNode.updatePhysic();
-          
-        
-        this.influences.clear();
-    }
-    
-    protected void updateAttack(OpponentCAC1.StateNode prevNode, OpponentCAC1.StateNode nextNode, final float deltaTime){
-        if(this.lifeState == LifeState.DEAD){
-            return;
-        }
-        
-        if(this.canAttack
-                && prevNode.getStateNode() != OppState.ATTACK 
-                && (nextNode != null && nextNode.getStateNode() == OppState.ATTACK)){
-            this.canAttack = false;
-            
-            Timer.schedule(new Timer.Task(){
-                @Override
-                public void run() {
-                    if(!OpponentCAC2.this.isInvulnerable){
-                        OpponentCAC2.this.damageActionFixture.applyAction(deltaTime, OpponentCAC2.this);
-                    }
-                }
-            }, 0.4f);
-            
-            
-            Timer.schedule(new Timer.Task(){
-                    @Override
-                    public void run() {
-                        OpponentCAC2.this.canAttack = true;
-                    }         
-            }, 2f);
-        }
-    }
-    
-    protected final void initializePhysicCAC2(World world, float posX, float posY){
+    protected final void initializePhysicCACElite(World world, float posX, float posY){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(posX * P2M, posY * P2M); 
@@ -158,7 +60,7 @@ public class OpponentCAC2 extends OpponentCAC1{
 
         // Collision fixture
         CircleShape circle = new CircleShape();
-        circle.setRadius(19 * P2M);
+        circle.setRadius(18 * P2M);
         circle.setPosition(new Vector2(0, 0));
         //circle.setPosition(new Vector2(38 * P2M, 14 * P2M));
         /*PolygonShape granMa = new PolygonShape();
@@ -169,7 +71,7 @@ public class OpponentCAC2 extends OpponentCAC1{
         this.setCollisionFilterMask(fixtureDef, false);
         
         fixtureDef.shape = circle;
-        fixtureDef.density = 5f; 
+        fixtureDef.density = 10f; 
         fixtureDef.friction = 0.1f;
         fixtureDef.restitution = 0.1f; 
         body.setFixedRotation(true);
@@ -196,6 +98,41 @@ public class OpponentCAC2 extends OpponentCAC1{
         
         this.feetFixture = fix;
         this.physicBody = body;
+        
+        // shield fixture
+        circle.setRadius(20 * P2M);
+        
+        fixtureDef = new FixtureDef();
+        fixtureDef.shape = circle;
+        fixtureDef.density = 0f; 
+        fixtureDef.friction = 0.05f;
+        fixtureDef.restitution = 0.1f; 
+
+        fix = this.physicBody.createFixture(fixtureDef);
+        Set<Fixture> setDamage = new HashSet<Fixture>();
+        setDamage.add(fix);
+        this.shieldActionFixture = new ShieldActionFixture(setDamage, 3, 0.1f);
+        this.shieldActionFixture.setApplyDamage(false);
+    }
+    
+    @Override
+    public void updateLogic(float deltaTime){
+        if(this.currentAnimation >=0 && !this.pause){
+            this.animationTime += deltaTime;
+        }
+        
+        this.createInfluencesCACElite();
+        
+        this.influences2Actions(deltaTime);
+        
+        if(this.side != this.previousSide){
+            this.updateFixture();
+            this.previousSide = this.side;
+        }
+        
+        if(this.lifeState == LifeState.ALIVE){
+            this.shieldActionFixture.applyAction(deltaTime, this);
+        }
     }
     
     protected void updateFixture(){
@@ -221,7 +158,7 @@ public class OpponentCAC2 extends OpponentCAC1{
             Fixture fix = this.physicBody.createFixture(fixtureDef);
             Set<Fixture> setDamage = new HashSet<Fixture>();
             setDamage.add(fix);
-            this.damageActionFixture = new DamageActionFixture(setDamage, 2);
+            this.damageActionFixture = new DamageActionFixture(setDamage, 3);
             
         }else{
             // Part damage zone
@@ -239,7 +176,7 @@ public class OpponentCAC2 extends OpponentCAC1{
             Fixture fix = this.physicBody.createFixture(fixtureDef);
             Set<Fixture> setDamage = new HashSet<Fixture>();
             setDamage.add(fix);
-            this.damageActionFixture = new DamageActionFixture(setDamage, 2);
+            this.damageActionFixture = new DamageActionFixture(setDamage, 3);
         }
         
     }
@@ -247,8 +184,9 @@ public class OpponentCAC2 extends OpponentCAC1{
     @Override
     public boolean applyDamage(int damage, Vector2 dirDamage, Object2D damageOwner){
         
-        damage -= 5;
+        damage -= 10;
         
         return super.applyDamage(damage, dirDamage, damageOwner);
     }
+    
 }

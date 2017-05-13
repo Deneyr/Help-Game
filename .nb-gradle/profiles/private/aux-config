@@ -4,32 +4,7 @@
   <auxiliary>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-      <group>
-        <file>file:/D:/Projects/Help-Game/core/src/triggered/CannonBallTriggeredObject2D.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentDIST1.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/TriggerActionFixture.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/MenuScreen.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/TriggeredObject2D.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/GUIScreen.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/StateAnimationHandler.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/triggered/UpTriggeredObject2D.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/DamageActionFixture.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/CannonCorpus.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/triggered/BulletTriggeredObject2D.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/SmallBox.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/HelpGame.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/ShieldActionFixture.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/triggered/TeethTriggeredObject2D.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/characters/Grandma.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/CannonCorpus.png</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Object2DFactoryPool.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/GameScreen.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/GameWorld.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentCAC1.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Ventilo.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/ActionFixtures.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/ActivableVentilo.java</file>
-      </group>
+      <group/>
     </open-files>
     <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">

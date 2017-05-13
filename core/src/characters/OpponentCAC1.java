@@ -318,12 +318,12 @@ public class OpponentCAC1 extends Character2D{
             }
             
             if(this.canAttack
-                    && this.target.getPosition().y - this.physicBody.getPosition().y > 75 * P2M 
+                    && this.target.getPosition().y - this.physicBody.getPosition().y > 40 * P2M 
                     && this.target.getPosition().y - this.physicBody.getPosition().y < 150 * P2M){
                 this.influences.add(OppInfluence.JUMP);
             }
             
-            if(Math.abs(this.target.getPosition().sub(this.physicBody.getPosition()).len()) <  50 * P2M
+            if(Math.abs(this.target.getPosition().sub(this.physicBody.getPosition()).len()) <  60 * P2M
                     && Math.abs(this.target.getPosition().y - this.physicBody.getPosition().y) < 50 * P2M){
                 this.influences.add(OppInfluence.ATTACK);
             }
@@ -341,6 +341,31 @@ public class OpponentCAC1 extends Character2D{
                 }else{
                     this.influences.add(OppInfluence.GO_RIGHT);
                 }
+            }
+        }
+    }
+    
+    protected void createInfluencesCACElite(){
+        if(this.lifeState == LifeState.DEAD){
+            return;
+        }
+        
+        if(this.target.getPosition().dst(this.physicBody.getPosition()) < MOVE_DIST * 1.5){
+            if(this.target.getPosition().x - this.physicBody.getPosition().x > 0){
+                this.influences.add(OppInfluence.GO_RIGHT);
+            }else{
+                this.influences.add(OppInfluence.GO_LEFT);
+            }
+            
+            if(this.canAttack
+                    && this.target.getPosition().y - this.physicBody.getPosition().y > 50 * P2M 
+                    && this.target.getPosition().y - this.physicBody.getPosition().y < 150 * P2M){
+                this.influences.add(OppInfluence.JUMP);
+            }
+            
+            if(Math.abs(this.target.getPosition().sub(this.physicBody.getPosition()).len()) <  75 * P2M
+                    && Math.abs(this.target.getPosition().y - this.physicBody.getPosition().y) < 50 * P2M){
+                this.influences.add(OppInfluence.ATTACK);
             }
         }
     }
