@@ -29,6 +29,7 @@ import com.mygdx.game.SolidObject2D;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import triggered.CannonBallTriggeredObject2D;
 
@@ -213,6 +214,21 @@ public class CannonCorpus extends SolidObject2D{
             super.removeBody(world);
         }
         
+        @Override
+        public void setInfluenceList(List<String> lInfluences){
+            this.influences.clear();
+            for(String influence : lInfluences){
+                influence = influence.toLowerCase();
+                if(influence.equals("right")){
+                    this.influences.add(CannonInfluence.GO_RIGHT);
+                }else if(influence.equals("left")){
+                    this.influences.add(CannonInfluence.GO_LEFT);
+                }else if(influence.equals("attack")){
+                    this.influences.add(CannonInfluence.ATTACK);
+                }
+            }
+        }
+
         @Override
         public void updateLogic(float deltaTime){       
             super.updateLogic(deltaTime);

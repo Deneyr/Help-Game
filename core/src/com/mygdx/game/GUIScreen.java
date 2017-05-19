@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import guicomponents.GuiText;
+import guicomponents.GuiText.ReferenceCorner;
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,6 +29,8 @@ public class GUIScreen implements Screen{
     
     private ShapeRenderer shapeRenderer;
     
+    private GuiText scoreText;
+    private int currentScore;
     
     public GUIScreen(HelpGame game){
         this.game = game;
@@ -34,6 +38,9 @@ public class GUIScreen implements Screen{
         this.camera = new OrthographicCamera(800, 480);
         
         this.shapeRenderer = new ShapeRenderer();
+        
+        this.scoreText = new GuiText("0 $", 30, ReferenceCorner.RIGHT, ReferenceCorner.LEFT, 0.95f, 1);
+        this.currentScore = -1;
     }
    
     
@@ -78,6 +85,12 @@ public class GUIScreen implements Screen{
                                         lifeBarHero.getScaleX(),lifeBarHero.getScaleY(),
                                         lifeBarHero.getRotation());
         
+        int score = this.game.getGameWorld().getScore();
+        if(this.currentScore < 0 || this.currentScore != score){
+            this.scoreText.setText(String.valueOf(score) + " $", -1);
+            this.currentScore = score;
+        }        
+        this.scoreText.draw(this.game.batch, this.camera, this.shapeRenderer);
         
         this.game.batch.end();
         this.shapeRenderer.end();

@@ -16,7 +16,9 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.game.GameEventListener.EventType;
 import static com.mygdx.game.HelpGame.P2M;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +44,9 @@ public abstract class Object2D implements Disposable{
     
     private float alpha;
     private float scale;
+    
+    // listener
+    WeakReference<GameEventListener> gameEventListener;
     
     public Object2D(){
         this.currentAnimation = -1;
@@ -201,6 +206,19 @@ public abstract class Object2D implements Disposable{
     public void setScale(float scale) {    
         
         this.scale = scale;
+    }
+    
+    // listener
+    public void addGameEventListener(GameEventListener listener){
+        if(listener != null){
+            this.gameEventListener = new WeakReference(listener);
+        }
+    }
+    
+    protected void notifyGameEventListener(EventType type, String details, Vector2 location){
+        if(this.gameEventListener != null && this.gameEventListener.get() != null){
+            this.gameEventListener.get().notifyGameEvent(type, details, location);
+        }
     }
        
 }

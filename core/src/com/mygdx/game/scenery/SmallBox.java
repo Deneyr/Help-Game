@@ -24,6 +24,7 @@ import com.mygdx.game.Object2DStateListener;
 import triggered.UpTriggeredObject2D;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -111,6 +112,11 @@ public class SmallBox extends Character2D{
         
         this.hasLifeBar = false;
         
+    }
+    
+    @Override
+    public void setInfluenceList(List<String> lInfluences){
+        // nothing to do. (it's a box!)
     }
     
     @Override

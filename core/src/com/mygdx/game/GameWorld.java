@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import static com.mygdx.game.HelpGame.P2M;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -24,7 +25,8 @@ import java.util.Set;
  *
  * @author françois
  */
-public class GameWorld implements Disposable, WorldPlane{
+public class GameWorld implements Disposable, WorldPlane, GameEventListener{
+
     private World world;
     
     private List<Object2D> listCurrentObject2D = new ArrayList<Object2D>();
@@ -38,6 +40,10 @@ public class GameWorld implements Disposable, WorldPlane{
     private double screenFOV;
     private float timerOutOfScreen;
     
+    private int score;
+    
+    protected List<WeakReference<GameEventListener>> listEventGameListeners;
+    
     public GameWorld(){
         this.world = new World(new Vector2(0, -20f), true);
         this.hero = null;
@@ -50,6 +56,10 @@ public class GameWorld implements Disposable, WorldPlane{
         
         this.screenFOV = -1d;
         this.timerOutOfScreen = 0;
+        
+        this.score = 0;
+        
+        this.listEventGameListeners = new ArrayList<WeakReference<GameEventListener>>();
     }
     
     @Override
@@ -131,6 +141,8 @@ public class GameWorld implements Disposable, WorldPlane{
     public void addObject2DToWorld(Object2D obj){
         if(obj != null){
             this.listCurrentObject2D.add(obj);
+            
+            obj.addGameEventListener(this);
         }
     }
     public void addObject2DToWorld(Object2D obj, boolean isStateHandled){
@@ -140,6 +152,8 @@ public class GameWorld implements Disposable, WorldPlane{
             if(isStateHandled){
                 obj.addObject2DStateListener(this.stateAnimationHanlder);
             }
+            
+            obj.addGameEventListener(this);
         }
     }
     
@@ -190,6 +204,18 @@ public class GameWorld implements Disposable, WorldPlane{
         this.world.dispose();
         
         assert this.world.getBodyCount() == 0;
+    }
+
+    @Override
+    public void notifyGameEvent(EventType type, String details, Vector2 location) {
+        
+        switch(type){
+            case SCORE:
+                this.setScore(this.score + Integer.parseInt(details));
+                break;
+        }
+        
+        this.notifyGameEventListeners(type, details, location);
     }
     
     private class ScreenQueryCallback implements QueryCallback{
@@ -260,6 +286,42 @@ public class GameWorld implements Disposable, WorldPlane{
                     triggerObj2D.onOutOfScreen(margin);
                 }
             }
+        }
+    }
+    
+    public void addGameEventListener(GameEventListener listener){
+        if(listener != null){
+            this.listEventGameListeners.add(new WeakReference(listener));
+        }
+    }
+    
+    public void clearGameEventListenersList(){
+        this.listEventGameListeners.clear();
+    }
+    
+    public void notifyGameEventListeners(EventType event, String details, Vector2 location){
+        for(WeakReference<GameEventListener> refEventGameListener : this.listEventGameListeners){
+            if(refEventGameListener.get() != null){
+                refEventGameListener.get().notifyGameEvent(event, details, location);
+            }
+        }
+    }
+    
+    /**
+     * @return the score
+     */
+    public int getScore() {
+        return score;
+    }
+
+    /**
+     * @param score the score to set
+     */
+    public void setScore(int score) {
+        this.score = score;
+        
+        if(this.score < 0){
+            this.score = 0;
         }
     }
 }

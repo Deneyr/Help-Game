@@ -29,6 +29,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -157,6 +158,30 @@ public class Grandma extends Character2D{
         /*this.shield = new Shield(this.physicBody, world);
         this.shield.updateSide(this.side);*/
     }
+    
+    @Override
+    public void setInfluenceList(List<String> lInfluences){
+        this.influences.clear();
+        for(String influence : lInfluences){
+            influence = influence.toLowerCase();
+            if(influence.equals("right")){
+                this.influences.add(GrandmaInfluence.GO_RIGHT);
+            }else if(influence.equals("left")){
+                this.influences.add(GrandmaInfluence.GO_LEFT);
+            }else if(influence.equals("attack")){
+                this.influences.add(GrandmaInfluence.ATTACK);
+            }else if(influence.equals("jump")){
+                this.influences.add(GrandmaInfluence.JUMP);
+            }else if(influence.equals("up")){
+                this.influences.add(GrandmaInfluence.UMB_UP);
+            }else if(influence.equals("down")){
+                this.influences.add(GrandmaInfluence.UMB_DOWN);
+            }else if(influence.equals("switch")){
+                this.influences.add(GrandmaInfluence.UMB_SWITCH);
+            }
+        }
+    }
+            
     
     @Override
     public void updateLogic(float deltaTime){
@@ -336,6 +361,10 @@ public class Grandma extends Character2D{
     }
     private void createInfluences(){
         if(this.lifeState == LifeState.DEAD){
+            return;
+        }
+        
+        if(this.isCinematicEntity){
             return;
         }
         

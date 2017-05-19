@@ -48,6 +48,8 @@ public abstract class Character2D extends Object2D{
     
     protected boolean hasLifeBar;
     
+    protected boolean isCinematicEntity;
+    
     public Character2D(int lifePoints){
         super();
         
@@ -72,6 +74,8 @@ public abstract class Character2D extends Object2D{
         this.hasLifeBar = true;
         
         this.listObject2DStateListener = new ArrayList<WeakReference<Object2DStateListener>>();
+        
+        this.isCinematicEntity = false;
     }
     
     public void addStaticObj(){
@@ -305,6 +309,25 @@ public abstract class Character2D extends Object2D{
         super.dispose();
     }
     
+    @Override
+    protected void setCollisionFilterMask(FixtureDef fixtureDef, boolean reset){
+        
+        if(reset){
+            super.setCollisionFilterMask(fixtureDef, true);
+            return;
+        }
+        
+        fixtureDef.filter.categoryBits = 0x0001;
+    }
+    
+    // cinematic
+    
+    public void isCinematicEntity(boolean isCinematic){
+        this.isCinematicEntity = isCinematic;
+    }
+    
+    public abstract void setInfluenceList(List<String> influences);
+    
     // listeners
     
     @Override
@@ -336,17 +359,5 @@ public abstract class Character2D extends Object2D{
                 refObject2DStateListener.get().notifyObject2D2Create(this, obj2DClass, position, speed);
             }
         }
-    }
-    
-    @Override
-    protected void setCollisionFilterMask(FixtureDef fixtureDef, boolean reset){
-        
-        if(reset){
-            super.setCollisionFilterMask(fixtureDef, true);
-            return;
-        }
-        
-        fixtureDef.filter.categoryBits = 0x0001;
-    }
-    
+    } 
 }

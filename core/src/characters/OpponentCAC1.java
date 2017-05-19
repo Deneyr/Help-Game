@@ -25,6 +25,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import triggered.TeethTriggeredObject2D;
 
@@ -133,6 +134,23 @@ public class OpponentCAC1 extends Character2D{
             Set<Fixture> setDamage = new HashSet<Fixture>();
             setDamage.add(fix);
             this.damageActionFixture = new DamageActionFixture(setDamage, 1);
+        }
+    }
+    
+    @Override
+    public void setInfluenceList(List<String> lInfluences){
+        this.influences.clear();
+        for(String influence : lInfluences){
+            influence = influence.toLowerCase();
+            if(influence.equals("right")){
+                this.influences.add(OppInfluence.GO_RIGHT);
+            }else if(influence.equals("left")){
+                this.influences.add(OppInfluence.GO_LEFT);
+            }else if(influence.equals("attack")){
+                this.influences.add(OppInfluence.ATTACK);
+            }else if(influence.equals("jump")){
+                this.influences.add(OppInfluence.JUMP);
+            }
         }
     }
     
@@ -294,6 +312,10 @@ public class OpponentCAC1 extends Character2D{
             return;
         }
         
+        if(this.isCinematicEntity){
+            return;
+        }
+        
         if(this.target.getPosition().dst(this.physicBody.getPosition()) < MOVE_DIST){
             if(this.target.getPosition().x - this.physicBody.getPosition().x > 0){
                 this.influences.add(OppInfluence.GO_RIGHT);
@@ -334,6 +356,10 @@ public class OpponentCAC1 extends Character2D{
             return;
         }
         
+        if(this.isCinematicEntity){
+            return;
+        }
+        
         if(this.target.getPosition().dst(this.physicBody.getPosition()) < MOVE_DIST){
             if(this.target.getPosition().x - this.physicBody.getPosition().x > 0){
                 this.influences.add(OppInfluence.GO_RIGHT);
@@ -365,6 +391,10 @@ public class OpponentCAC1 extends Character2D{
     
     protected void createInfluencesCAC2(){
         if(this.lifeState == LifeState.DEAD){
+            return;
+        }
+        
+        if(this.isCinematicEntity){
             return;
         }
         
@@ -405,6 +435,10 @@ public class OpponentCAC1 extends Character2D{
     
     protected void createInfluencesCACElite(){
         if(this.lifeState == LifeState.DEAD){
+            return;
+        }
+        
+        if(this.isCinematicEntity){
             return;
         }
         
