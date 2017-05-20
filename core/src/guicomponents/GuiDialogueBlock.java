@@ -7,7 +7,10 @@ package guicomponents;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.mygdx.game.Object2D;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import guicomponents.GuiText.ReferenceCorner;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +18,7 @@ import java.util.List;
  *
  * @author Deneyr
  */
-public class GuiDialogueBlock extends Object2D{
+public class GuiDialogueBlock extends GuiComponent{
     
     private GuiPortrait leftPortrait;
     private GuiPortrait rightPortrait;
@@ -35,10 +38,10 @@ public class GuiDialogueBlock extends Object2D{
         
         this.dialogues = new ArrayList(dialogues);
         
-        this.rightPortrait = new GuiPortrait(0.2f, 0.2f);
-        this.leftPortrait = new GuiPortrait(0.8f, 0.2f);
+        this.rightPortrait = new GuiPortrait(ReferenceCorner.RIGHT, 1f, -1f);
+        this.leftPortrait = new GuiPortrait(ReferenceCorner.LEFT, -1f, -1f);
         
-        this.textBlock = new GuiTextBlock(0.5f, 0.5f, 0.2f, 0.5f, 0.2f);
+        this.textBlock = new GuiTextBlock(0.1f, 0f, -0.9f, 1.6f, 0.6f);
         
         this.indexCurrentDialogue = 0;
         this.indexCurrentReply = 0;
@@ -55,8 +58,8 @@ public class GuiDialogueBlock extends Object2D{
     
     public void setCurrentReply(int currentReply){
         Dialogue currentDialogue = this.dialogues.get(this.indexCurrentDialogue);
-        
-        if(currentDialogue.getNbReply() < currentReply){
+
+        if(currentDialogue.getNbReply() > currentReply){
             this.indexCurrentReply = currentReply;
 
             this.textBlock.setText(currentDialogue.get(this.indexCurrentReply));
@@ -72,7 +75,7 @@ public class GuiDialogueBlock extends Object2D{
         Dialogue currentDialogue = this.dialogues.get(this.indexCurrentDialogue);
         
         if(this.textBlock.AllTextPassed()){
-            if(currentDialogue.getNbReply() < this.indexCurrentReply){
+            if(currentDialogue.getNbReply() > this.indexCurrentReply){
                 if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                     this.indexCurrentReply++;
                     this.setCurrentReply(this.indexCurrentReply);
@@ -89,5 +92,21 @@ public class GuiDialogueBlock extends Object2D{
      */
     public boolean IsDialogueFinished() {
         return dialogueFinished;
+    }
+
+    @Override
+    public void drawBatch(Camera camera, Batch batch) {
+        this.textBlock.drawBatch(camera, batch);
+
+        this.leftPortrait.drawBatch(camera, batch);
+        this.rightPortrait.drawBatch(camera, batch);
+    }
+
+    @Override
+    public void drawShapeRenderer(Camera camera, ShapeRenderer shapeRenderer) {
+        this.textBlock.drawShapeRenderer(camera, shapeRenderer);
+
+        this.leftPortrait.drawShapeRenderer(camera, shapeRenderer);
+        this.rightPortrait.drawShapeRenderer(camera, shapeRenderer);
     }
 }

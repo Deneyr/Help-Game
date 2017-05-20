@@ -17,8 +17,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  */
 public class GuiTextBlock extends GuiText{
     
-    private int maxNbLine;
-    
     private float width;
     private float height;
     
@@ -28,9 +26,7 @@ public class GuiTextBlock extends GuiText{
     private String finalText;
     
     public GuiTextBlock(float period2Add, float locX, float locY, float width, float height) {
-        super("", 20, ReferenceCorner.MIDDLE, ReferenceCorner.MIDDLE, locX, locY);
-        
-        this.maxNbLine = 3; // Math.max((int) (height / this.bitmapFont.getCapHeight()), 1);
+        super("", 20, ReferenceCorner.LEFT, ReferenceCorner.LEFT, locX, locY);
         
         this.width = width;
         this.height = height;
@@ -51,26 +47,29 @@ public class GuiTextBlock extends GuiText{
             if(this.text.length() < this.finalText.length()){
             
                 int currentIndex2Add = this.text.length();
-                super.appendChar(this.finalText.charAt(currentIndex2Add), maxNbLine);
+                super.appendChar(this.finalText.charAt(currentIndex2Add));
 
                 // Sound
             }
         }
         
         if(this.text.length() < this.finalText.length()){
-            if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
-                super.setText(this.finalText.substring(0, this.finalText.length() - 2), this.maxNbLine);
+            if(Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+                int currentIndex2Add = this.text.length();
+                super.appendChar(this.finalText.charAt(currentIndex2Add));
             }
             // Sound
         }
     }
     
+    @Override
     public void setText(String text) {
         this.timeElapsed = 0;
         this.finalText = text;
+        super.setText("");
     }
     
-    @Override
+    /*@Override
     public void draw(Batch batch, Camera camera, ShapeRenderer shapeRenderer) {
         
         float posX = camera.position.x + this.getLocation().x * camera.viewportWidth / 2;
@@ -83,6 +82,54 @@ public class GuiTextBlock extends GuiText{
         shapeRenderer.rect(posX, posY, this.width * camera.viewportWidth, this.height * camera.viewportHeight);
         
         super.draw(batch, camera, shapeRenderer);
+    }*/
+
+    @Override
+    public void drawBatch(Camera camera, Batch batch) {
+        float posX = camera.position.x + this.getLocation().x * camera.viewportWidth / 2;
+        float posY = camera.position.y + this.getLocation().y * camera.viewportHeight / 2;
+        
+        switch(this.refCornerWidth){
+            case MIDDLE:
+                
+                posX -= this.glyphLayout.width / 2;
+                
+                break;
+            case RIGHT:
+                
+                posX -= this.glyphLayout.width;
+                
+                break;
+        }
+        
+        switch(this.refCornerHeight){
+            case MIDDLE:
+                
+                posY -= this.glyphLayout.height / 2;
+                
+                break;
+            case RIGHT:
+                
+                posY -= this.glyphLayout.height;
+                
+                break;
+        }
+        
+        posX -= this.width * camera.viewportWidth * 0.7 / 4;
+        posY += this.height * camera.viewportHeight * 1.6 / 4;
+        
+        this.bitmapFont.draw(batch, this.glyphLayout, posX, posY);
+    }
+    
+    @Override
+    public void drawShapeRenderer(Camera camera, ShapeRenderer shapeRenderer) {
+        float posX = camera.position.x + this.getLocation().x * camera.viewportWidth / 2;
+        float posY = camera.position.y + this.getLocation().y * camera.viewportHeight / 2;
+        
+        posX -= this.width * camera.viewportWidth / 4;
+        
+        shapeRenderer.setColor(0, 0, 0, 1);
+        shapeRenderer.rect(posX, posY, this.width * camera.viewportWidth / 2, this.height * camera.viewportHeight / 2);
     }
     
     public boolean AllTextPassed(){

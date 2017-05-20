@@ -5,13 +5,19 @@
  */
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import guicomponents.Dialogue;
+import guicomponents.GuiDialogueBlock;
+import guicomponents.GuiPortrait;
 import guicomponents.GuiText;
 import guicomponents.GuiText.ReferenceCorner;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,6 +38,8 @@ public class GUIScreen implements Screen{
     private GuiText scoreText;
     private int currentScore;
     
+    private GuiDialogueBlock dialogueBlock;
+    
     public GUIScreen(HelpGame game){
         this.game = game;
         
@@ -41,6 +49,20 @@ public class GUIScreen implements Screen{
         
         this.scoreText = new GuiText("0 $", 30, ReferenceCorner.RIGHT, ReferenceCorner.LEFT, 0.95f, 1);
         this.currentScore = -1;
+        
+        
+        Dialogue dialogue = new Dialogue();
+        
+        dialogue.addReply("Hello Pierre !\n Voici une ligne de dialogue.", GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.DEFAULT, GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW);
+        dialogue.addReply("Tu peux appuyer sur ENTRER\n et ainsi faire avance rapide.", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.DEFAULT);
+        dialogue.addReply("C'est cool hein ?", GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT);
+        dialogue.addReply("          \n ... \n ...\n\n Et tu n'as encore rien vu !", GuiPortrait.Character.NONE, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW);
+        
+        List<Dialogue> list = new ArrayList<Dialogue>();
+        list.add(dialogue);
+        
+        this.dialogueBlock = new GuiDialogueBlock(list);
+        this.dialogueBlock.setCurrentDialogue(0);
     }
    
     
@@ -87,14 +109,29 @@ public class GUIScreen implements Screen{
         
         int score = this.game.getGameWorld().getScore();
         if(this.currentScore < 0 || this.currentScore != score){
-            this.scoreText.setText(String.valueOf(score) + " $", -1);
+            this.scoreText.setText(String.valueOf(score) + " $");
             this.currentScore = score;
         }        
-        this.scoreText.draw(this.game.batch, this.camera, this.shapeRenderer);
+        this.scoreText.drawBatch(this.camera, this.game.batch);
         
         this.game.batch.end();
         this.shapeRenderer.end();
-            //System.out.println("position : " + sprite.getX() + "-" + sprite.getY());
+        
+        // Start dialogue     
+        this.shapeRenderer.begin(ShapeType.Filled);
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        this.shapeRenderer.setColor(1f, 1f, 1f, 0.6f);
+        this.shapeRenderer.rect(this.camera.position.x - this.camera.viewportWidth * 1.1f / 2, this.camera.position.y - this.camera.viewportHeight * 1.1f / 2, this.camera.viewportWidth * 1.1f, this.camera.viewportHeight * 1.1f);
+        
+        this.dialogueBlock.drawShapeRenderer(this.camera, this.shapeRenderer);
+        this.shapeRenderer.end();
+        
+        this.game.batch.begin();
+        this.dialogueBlock.drawBatch(this.camera, this.game.batch);
+        this.game.batch.end();
+        
+        this.dialogueBlock.updateLogic(delta);
     }
 
     @Override

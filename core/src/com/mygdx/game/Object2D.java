@@ -81,7 +81,7 @@ public abstract class Object2D implements Disposable{
             sprite = new Sprite(region);  
         }
         
-        if(sprite != null){
+        if(sprite != null && this.physicBody != null){
             sprite.setRotation((float)Math.toDegrees(this.physicBody.getAngle()));
             sprite.setPosition(this.physicBody.getPosition().x / P2M - sprite.getWidth() / 2.f, this.physicBody.getPosition().y / P2M - sprite.getHeight() / 2.f);
         }    

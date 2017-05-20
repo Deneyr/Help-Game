@@ -22,16 +22,16 @@ import java.io.File;
  */
 public class GuiText extends GuiComponent{
 
-    private static FreeTypeFontGenerator staticGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts" + File.separator + "helpFont.ttf"));
+    protected static FreeTypeFontGenerator staticGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts" + File.separator + "helpFont.ttf"));
     
     protected BitmapFont bitmapFont;
     
     protected StringBuffer text;
     
-    private ReferenceCorner refCornerWidth;
-    private ReferenceCorner refCornerHeight;
+    protected ReferenceCorner refCornerWidth;
+    protected ReferenceCorner refCornerHeight;
     
-    private GlyphLayout glyphLayout;
+    protected GlyphLayout glyphLayout;
     
     public GuiText(String str, int size, ReferenceCorner refCornerWidth, ReferenceCorner refCornerHeight, float locX, float locY){
         super();
@@ -39,8 +39,8 @@ public class GuiText extends GuiComponent{
         FreeTypeFontGenerator.FreeTypeFontParameter fontParameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
         fontParameters.size = size;
-        fontParameters.color = Color.WHITE;
-        fontParameters.borderColor = Color.LIGHT_GRAY;
+        fontParameters.color = Color.LIGHT_GRAY;
+        fontParameters.borderColor = Color.DARK_GRAY;
         fontParameters.borderWidth = 2;
         
         this.bitmapFont = staticGenerator.generateFont(fontParameters);
@@ -55,7 +55,7 @@ public class GuiText extends GuiComponent{
         this.location = new Vector2(locX, locY);
     }
     
-    @Override
+    /*@Override
     public void draw(Batch batch, Camera camera, ShapeRenderer shapeRenderer) {
         
         float posX = camera.position.x + this.getLocation().x * camera.viewportWidth / 2;
@@ -88,43 +88,66 @@ public class GuiText extends GuiComponent{
         }
         
         this.bitmapFont.draw(batch, this.glyphLayout, posX, posY);
-    }
+    }*/
     
     /**
      * @param text the text to set
      */
-    public void setText(String text, int maxLine) {
+    public void setText(String text) {
         this.text = new StringBuffer(text);
-        if(maxLine > 0){
-            this.reduceNbLines(maxLine);
-        }
         
         this.glyphLayout.setText(this.bitmapFont, this.text);
     }
     
-    public void appendText(String text, int maxLine) {
+    public void appendText(String text) {
         this.text.append(text);
-        if(maxLine > 0){
-            this.reduceNbLines(maxLine);
-        }
         
         this.glyphLayout.setText(this.bitmapFont, this.text);
     }
     
-    public void appendChar(char character, int maxLine) {
+    public void appendChar(char character) {
         this.text.append(character);
-        if(maxLine > 0){
-            this.reduceNbLines(maxLine);
-        }
         
         this.glyphLayout.setText(this.bitmapFont, this.text);
     }
-    
-    private void reduceNbLines(int maxLine){
-       String[] lines = this.text.toString().split("\r\n|\r|\n");
-       if(lines.length > maxLine){
-           this.text.delete(0, lines[0].length() + 1);
-       }
+
+    @Override
+    public void drawBatch(Camera camera, Batch batch) {
+        float posX = camera.position.x + this.getLocation().x * camera.viewportWidth / 2;
+        float posY = camera.position.y + this.getLocation().y * camera.viewportHeight / 2;
+        
+        switch(this.refCornerWidth){
+            case MIDDLE:
+                
+                posX -= this.glyphLayout.width / 2;
+                
+                break;
+            case RIGHT:
+                
+                posX -= this.glyphLayout.width;
+                
+                break;
+        }
+        
+        switch(this.refCornerHeight){
+            case MIDDLE:
+                
+                posY -= this.glyphLayout.height / 2;
+                
+                break;
+            case LEFT:
+                
+                posY -= this.glyphLayout.height;
+                
+                break;
+        }
+        
+        this.bitmapFont.draw(batch, this.glyphLayout, posX, posY);
+    }
+
+    @Override
+    public void drawShapeRenderer(Camera camera, ShapeRenderer shapeRenderer) {
+        // nothing to do
     }
            
     public enum ReferenceCorner{

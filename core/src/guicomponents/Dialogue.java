@@ -21,11 +21,23 @@ public class Dialogue extends ArrayList<String>{
     private List<Emotion> listEmotionsLeft;
     private List<Emotion> listEmotionsRight;
     
+    public Dialogue(){
+        super();
+        
+        this.listCharactersLeft = new ArrayList<Character>();
+        this.listEmotionsLeft = new ArrayList<Emotion>();
+        
+        this.listCharactersRight = new ArrayList<Character>();
+        this.listEmotionsRight = new ArrayList<Emotion>();
+    }
+    
     public int getNbReply(){
         return this.size();
     }
     
     public void addReply(String reply, Character leftChara, Emotion leftEmotion, Character rightChara, Emotion rightEmotion){
+        this.add(reply);
+        
         this.listCharactersLeft.add(leftChara);
         this.listEmotionsLeft.add(leftEmotion);
         
@@ -37,27 +49,27 @@ public class Dialogue extends ArrayList<String>{
      * @return the listCharacterRight
      */
     public Character getCharacterRight(int index) {
-        return listCharactersRight.get(index);
+        return this.listCharactersRight.get(index);
     }
 
     /**
      * @return the listEmotionsLeft
      */
     public Emotion getEmotionLeft(int index) {
-        return listEmotionsLeft.get(index);
+        return this.listEmotionsLeft.get(index);
     }
 
     /**
      * @return the listEmotionsRight
      */
     public Emotion getEmotionRight(int index) {
-        return listEmotionsRight.get(index);
+        return this.listEmotionsRight.get(index);
     }
 
     /**
      * @return the listCharacterLeft
      */
     public Character getCharacterLeft(int index) {
-        return listCharactersLeft.get(index);
+        return this.listCharactersLeft.get(index);
     }
 }
