@@ -26,12 +26,16 @@ public class GuiPortrait extends GuiComponent{
     
     private GuiText.ReferenceCorner refCornerWidth;
     
+    private boolean isMainCharacter;
+    
     public GuiPortrait(GuiText.ReferenceCorner refCornerWidth, float locX, float locY){
         this.texture = PORTRAITTEXT;
         
         this.refCornerWidth = refCornerWidth;
         
         this.location = new Vector2(locX, locY);
+        
+        this.isMainCharacter = true;
         
         // Part graphic
         TextureRegion[][] tmp = TextureRegion.split(this.texture, 120, 120);
@@ -70,6 +74,8 @@ public class GuiPortrait extends GuiComponent{
         
     }*/
     
+    
+    
     public void setCharacterPortrait(Character character, Emotion emotion){
         this.changeAnimation(character.getValue(), true, emotion.getValue());
     }
@@ -81,7 +87,13 @@ public class GuiPortrait extends GuiComponent{
               
         Sprite portrait = this.createCurrentSprite(camera); 
       
+        
+        
         if(portrait != null){
+            
+            if(!this.isMainCharacter){
+                portrait.setAlpha(portrait.getColor().a * 0.5f);
+            }
             
             switch(this.refCornerWidth){
                 case MIDDLE:
@@ -168,5 +180,19 @@ public class GuiPortrait extends GuiComponent{
         public int getValue() {
             return this.value;
         }
+    }
+
+    /**
+     * @return the isMainCharacter
+     */
+    public boolean isIsMainCharacter() {
+        return this.isMainCharacter;
+    }
+
+    /**
+     * @param isMainCharacter the isMainCharacter to set
+     */
+    public void setIsMainCharacter(boolean isMainCharacter) {
+        this.isMainCharacter = isMainCharacter;
     }
 }

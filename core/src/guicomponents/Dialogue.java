@@ -16,10 +16,14 @@ import java.util.List;
  */
 public class Dialogue extends ArrayList<String>{
 
+    
+
     private List<Character> listCharactersLeft;
     private List<Character> listCharactersRight;
     private List<Emotion> listEmotionsLeft;
     private List<Emotion> listEmotionsRight;
+    
+    private List<Integer> listMainCharacter;
     
     public Dialogue(){
         super();
@@ -29,13 +33,15 @@ public class Dialogue extends ArrayList<String>{
         
         this.listCharactersRight = new ArrayList<Character>();
         this.listEmotionsRight = new ArrayList<Emotion>();
+        
+        this.listMainCharacter = new ArrayList<Integer>();
     }
     
     public int getNbReply(){
         return this.size();
     }
     
-    public void addReply(String reply, Character leftChara, Emotion leftEmotion, Character rightChara, Emotion rightEmotion){
+    public void addReply(String reply, Character leftChara, Emotion leftEmotion, Character rightChara, Emotion rightEmotion, int mainChara){
         this.add(reply);
         
         this.listCharactersLeft.add(leftChara);
@@ -43,6 +49,8 @@ public class Dialogue extends ArrayList<String>{
         
         this.listCharactersRight.add(rightChara);
         this.listEmotionsRight.add(rightEmotion);
+        
+        this.listMainCharacter.add(mainChara);
     }
     
     /**
@@ -71,5 +79,12 @@ public class Dialogue extends ArrayList<String>{
      */
     public Character getCharacterLeft(int index) {
         return this.listCharactersLeft.get(index);
+    }
+    
+    /**
+     * @return the listMainCharacter
+     */
+    public int getMainCharacter(int index) {
+        return this.listMainCharacter.get(index);
     }
 }

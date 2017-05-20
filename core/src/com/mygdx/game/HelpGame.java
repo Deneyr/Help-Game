@@ -29,10 +29,15 @@ import com.mygdx.game.scenery.Poutrelle;
 import com.mygdx.game.scenery.SmallBox;
 import com.mygdx.game.scenery.TreeWithoutLeaf;
 import com.mygdx.game.scenery.Ventilo;
+import guicomponents.CharacterTimeline;
+import guicomponents.CinematicManager;
+import guicomponents.Dialogue;
+import guicomponents.GuiPortrait;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import triggered.EventTriggeredObject2D;
 
 /**
  *
@@ -278,6 +283,37 @@ public class HelpGame extends Game{
         
         cannon = new CannonCorpus(this.getGameWorld().getWorld(), hero.physicBody, -3800f, 20f, (float) -Math.PI / 2);
         this.getGameWorld().addObject2DToWorld(cannon, true);
+        
+        
+        // Cinematics
+        
+        Dialogue dialogue = new Dialogue();
+        
+        dialogue.addReply("Hello Pierre !\n Voici une ligne de dialogue.", GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.DEFAULT, GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, 0);
+        dialogue.addReply("Tu peux appuyer sur ENTRER\n et ainsi faire avance rapide.", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.DEFAULT, 1);
+        dialogue.addReply("C'est cool hein ?", GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("          \n ... \n ...\n\n Et tu n'as encore rien vu !", GuiPortrait.Character.NONE, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, 1);
+        
+        List<Dialogue> list = new ArrayList<Dialogue>();
+        list.add(dialogue);
+        
+        CinematicManager cin1 = new CinematicManager("roof", list);
+        
+        cin1.addDialogueTimeline(3f, 0);
+        
+        CharacterTimeline charaTimeline = new CharacterTimeline(hero);
+        charaTimeline.addEntry(0f, "per_right");
+        charaTimeline.addEntry(2f, "per_right");
+        
+        charaTimeline.addEntry(1f, "jump");
+        charaTimeline.addEntry(3.1f, "attack");
+        
+        cin1.addCharacterTimeline(charaTimeline);
+        
+        this.getGameWorld().addCinematicManager(cin1);
+        
+        EventTriggeredObject2D trigger = new EventTriggeredObject2D(this.getGameWorld().getWorld(), -5000f, 0, GameEventListener.EventType.CINEMATIC, "roof", 800);
+        this.getGameWorld().addObject2DToWorld(trigger);
     }
 
     /**

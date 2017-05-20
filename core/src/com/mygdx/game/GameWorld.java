@@ -6,19 +6,25 @@
 package com.mygdx.game;
 
 import characters.Grandma;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import static com.mygdx.game.HelpGame.P2M;
+import guicomponents.CinematicManager;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -35,14 +41,18 @@ public class GameWorld implements Disposable, WorldPlane, GameEventListener{
     
     private Set<Object2D> object2D2Flush;
     
-    private StateAnimationHandler stateAnimationHanlder;
-    
     private double screenFOV;
     private float timerOutOfScreen;
     
     private int score;
     
     protected List<WeakReference<GameEventListener>> listEventGameListeners;
+    
+    // Aux module
+    
+    private StateAnimationHandler stateAnimationHanlder;
+    
+    private Map<String, CinematicManager> listCinematicManagers;
     
     public GameWorld(){
         this.world = new World(new Vector2(0, -20f), true);
@@ -52,14 +62,32 @@ public class GameWorld implements Disposable, WorldPlane, GameEventListener{
         
         this.object2D2Flush = new HashSet<Object2D>();
         
-        this.stateAnimationHanlder = new StateAnimationHandler(this);
-        
         this.screenFOV = -1d;
         this.timerOutOfScreen = 0;
         
         this.score = 0;
         
         this.listEventGameListeners = new ArrayList<WeakReference<GameEventListener>>();
+        
+        
+        this.stateAnimationHanlder = new StateAnimationHandler(this);
+        
+        this.listCinematicManagers = new HashMap<String, CinematicManager>();
+    }
+    
+    public void addCinematicManager(CinematicManager cinematicManager){
+        this.listCinematicManagers.put(cinematicManager.getId(), cinematicManager);
+    }
+    
+    public void drawBatch(Camera camera, Batch batch){
+        for(CinematicManager cinematicManager : this.listCinematicManagers.values()){
+            cinematicManager.drawBatch(camera, batch);
+        }
+    }
+    public void drawShapeRenderer(Camera camera, ShapeRenderer shapeRenderer){
+        for(CinematicManager cinematicManager : this.listCinematicManagers.values()){
+            cinematicManager.drawShapeRenderer(camera, shapeRenderer);
+        }
     }
     
     @Override
@@ -121,6 +149,9 @@ public class GameWorld implements Disposable, WorldPlane, GameEventListener{
             this.stateAnimationHanlder.scheduleTask();
         }
         
+        for(CinematicManager cinematicManager : this.listCinematicManagers.values()){
+            cinematicManager.updateLogic(delta);
+        }
         
         List<Object2D> copyListCurrentObject2D = new ArrayList<Object2D>(this.listCurrentObject2D);      
         for(Object2D obj : copyListCurrentObject2D)
@@ -203,6 +234,8 @@ public class GameWorld implements Disposable, WorldPlane, GameEventListener{
         }
         this.world.dispose();
         
+        this.listCinematicManagers.clear();
+        
         assert this.world.getBodyCount() == 0;
     }
 
@@ -212,6 +245,12 @@ public class GameWorld implements Disposable, WorldPlane, GameEventListener{
         switch(type){
             case SCORE:
                 this.setScore(this.score + Integer.parseInt(details));
+                break;
+            case CINEMATIC:
+                if(this.listCinematicManagers.containsKey(details)){
+                    CinematicManager cinematicManager = this.listCinematicManagers.get(details);
+                    cinematicManager.reset();
+                }
                 break;
         }
         

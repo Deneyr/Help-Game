@@ -22,139 +22,134 @@ import java.util.TreeMap;
  * @author Deneyr
  */
 public class CinematicManager {
+  
+    private String id;
     
-    private CinematicState state;
+    private CinematicState cinematicState;
     
     private float currentTime;
     
     private final List<CharacterTimeline> charactersTimeline;
     
-    private TreeMap<Float, String> dialogueTimeline;
+    private TreeMap<Float, Integer> dialogueTimeline;
+    private Float currentKeyDialogue;
+    // Part dialogue
+    private GuiDialogueBlock dialogueBlock;
     
-    public CinematicManager(){
+    public CinematicManager(String id, List<Dialogue> dialogues){
+        this.id = id;
+        
         this.currentTime = 0;
         
-        this.state = CinematicState.START;
+        this.cinematicState = CinematicState.STOP;
         
         this.charactersTimeline = new ArrayList<CharacterTimeline>();
+        
+        this.dialogueTimeline = new TreeMap<Float, Integer>();
+        
+        this.currentKeyDialogue = null;
+        
+        this.dialogueBlock = new GuiDialogueBlock(dialogues);
+    }
+    
+    public void addCharacterTimeline(CharacterTimeline characterTimeline){
+        this.charactersTimeline.add(characterTimeline);
+    }
+    
+    public void addDialogueTimeline(float time, int indexDialogue){
+        this.dialogueTimeline.put(time, indexDialogue);
+    }
+    
+    public void reset(){
+        this.currentTime = 0;
+        this.cinematicState = CinematicState.START;
+        
+        this.currentKeyDialogue = null;
+        for(CharacterTimeline timeline : this.charactersTimeline){
+            timeline.reset();
+        }
     }
     
     public void updateLogic(float deltaTime){
-        if(this.state == CinematicState.START){
-            this.currentTime = 0;
-            this.state = CinematicState.RUNNING;
+        if(this.getCinematicState() == CinematicState.STOP){
+            return;
+        }
+        
+        if(this.getCinematicState() == CinematicState.END){
+            for(CharacterTimeline timeline : this.charactersTimeline){
+                timeline.getCharacter().isCinematicEntity(false);
+            }
+            this.cinematicState = CinematicState.STOP;
+        }
+        
+        if(this.getCinematicState() == CinematicState.START){
+            this.cinematicState = CinematicState.RUNNING;
             for(CharacterTimeline timeline : this.charactersTimeline){
                 timeline.getCharacter().isCinematicEntity(true);
             }
         }
+
+        int nextDialogue = this.getNextDialogue();
+        if(nextDialogue >= 0){
+            this.dialogueBlock.setCurrentDialogue(nextDialogue);
+        }
         
-        this.currentTime += deltaTime;
+        this.dialogueBlock.updateLogic(deltaTime);
+        
+        if(this.dialogueBlock.getDialogueState() == CinematicState.STOP){
+            this.currentTime += deltaTime;
+        }
         
         boolean hasEnded = true;
         
         for(CharacterTimeline timeline : this.charactersTimeline){
-            hasEnded |= timeline.updateTimeline(this.currentTime);
+            hasEnded &= timeline.updateTimeline(this.currentTime);
         }
         
-        if(hasEnded){
-            this.state = CinematicState.END;
-            for(CharacterTimeline timeline : this.charactersTimeline){
-                timeline.getCharacter().isCinematicEntity(false);
-            }
+        if(hasEnded &&
+                (this.dialogueTimeline.lastEntry() == null 
+                || (this.currentKeyDialogue == this.dialogueTimeline.lastEntry().getKey() && this.dialogueBlock.getDialogueState() == CinematicState.STOP))){
+            this.cinematicState = CinematicState.END;
         }
         
     }
     
-    public void draw(Batch batch, Camera camera, ShapeRenderer shapeRenderer){
-        
+    /**
+     * @return the cinematicState
+     */
+    public CinematicState getCinematicState() {
+        return cinematicState;
     }
     
-    public class CharacterTimeline{
+    public int getNextDialogue(){
+        Entry<Float, Integer> entry = this.dialogueTimeline.floorEntry(this.currentTime);
         
-        private final Character2D character;
-        
-        private final TreeMap<Float, String> timeline;
-        
-        private Entry<Float, String> currentEntry;
-        
-        private final Set<String> persistentInfluences;
-        
-        public CharacterTimeline(Character2D character){
-            
-            this.character = character;
-            
-            this.timeline = new TreeMap<Float, String>();
-            
-            this.currentEntry = null;
-            
-            this.persistentInfluences = new HashSet();
-        }
-        
-        public void addEntry(float key, String value){
-            this.timeline.put(key, value);
-        }
-        
-        public String getValueAt(float key){
-            Entry<Float, String> lowerEntry = this.timeline.floorEntry(key);
-            
-            if(lowerEntry != null &&
-                    (this.currentEntry == null || this.currentEntry != lowerEntry)){
-                this.currentEntry = lowerEntry;
-                
-                String result = this.currentEntry.getValue();
-                
-                if(result.contains("per_")){
-                    
-                    result = result.replaceAll("per_", "");
-                    
-                    if(this.persistentInfluences.contains(result)){
-                        this.persistentInfluences.remove(result);
-                    }else{
-                        this.persistentInfluences.add(result);
-                    }
-                }
-                
-                return result;
+        if(entry != null){
+            if(this.currentKeyDialogue == null || this.currentKeyDialogue != entry.getKey()){
+                this.currentKeyDialogue = entry.getKey();
+                return entry.getValue();
             }
-            return null;
         }
-        
-        
-        public boolean updateTimeline(float time){
-            boolean result = false;
-            
-            String influence = this.getValueAt(time);
-            
-            List<String> influences = new ArrayList<String>();
-            
-            if(influence != null){
-                if(this.timeline.lastEntry() == null || this.currentEntry == this.timeline.lastEntry()){
-                    result = true;
-                }
-                
-               influences.add(influence);
-            }
-            
-            influences.addAll(this.persistentInfluences);
-            
-            this.character.setInfluenceList(influences);
-            
-            return result;
-        }
-        
-        public Set<String> getPersistentInfluences(){
-            return this.persistentInfluences;
-        }
-
-        /**
-         * @return the character
-         */
-        public Character2D getCharacter() {
-            return character;
-        }
+        return -1;
+    }
+    
+    public void drawBatch(Camera camera, Batch batch){
+        this.dialogueBlock.drawBatch(camera, batch);
+    }
+    
+    public void drawShapeRenderer(Camera camera, ShapeRenderer shapeRenderer){
+        this.dialogueBlock.drawShapeRenderer(camera, shapeRenderer);
     }
      
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
+    
     public enum CinematicState{
+        STOP,
         START,
         RUNNING,
         END
