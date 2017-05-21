@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 /**
@@ -18,6 +19,8 @@ import java.util.TreeMap;
  * @author Deneyr
  */
 public class CharacterTimeline{
+
+    
         
         private final Character2D character;
         
@@ -27,9 +30,9 @@ public class CharacterTimeline{
         
         private final Set<String> persistentInfluences;
        
-        private boolean isPureCinematic;
+        private CinematicStatus cinematicStatus;
         
-        public CharacterTimeline(Character2D character, boolean isPureCinematic){
+        public CharacterTimeline(Character2D character, CinematicStatus cinematicStatus){
             
             this.character = character;
             
@@ -39,9 +42,12 @@ public class CharacterTimeline{
             
             this.persistentInfluences = new HashSet();
             
-            this.isPureCinematic = isPureCinematic;
-            if(this.isPureCinematic){
-                character.isCinematicEntity(true);
+            this.cinematicStatus = cinematicStatus;
+            switch(this.cinematicStatus){
+                case START_CINEMATIC:
+                case END_CINEMATIC:
+                    character.isCinematicEntity(true);
+                    break;
             }
         }
         
@@ -53,23 +59,36 @@ public class CharacterTimeline{
             this.timeline.put(key, value);
         }
         
-        public String getValueAt(float key){
+        public List<String> getValueAt(float key){
             Map.Entry<Float, String> lowerEntry = this.timeline.floorEntry(key);
             
             if(lowerEntry != null &&
                     (this.currentKey == null || this.currentKey != lowerEntry.getKey())){
+                
+                SortedMap<Float, String> subMap;
+                if(this.currentKey == null){
+                    subMap = new TreeMap();
+                    subMap.put(lowerEntry.getKey(), lowerEntry.getValue());
+                }else{
+                    subMap = this.timeline.subMap(this.currentKey, false, lowerEntry.getKey(), true);
+                }
+                
                 this.currentKey = lowerEntry.getKey();
                 
-                String result = lowerEntry.getValue();
-                
-                if(result.contains("per_")){
+                List<String> result = new ArrayList<String>();
+                for(String value : subMap.values()){
 
-                    result = result.replaceAll("per_", "");
-                    
-                    if(this.persistentInfluences.contains(result)){
-                        this.persistentInfluences.remove(result);
+                    if(value.contains("per_")){
+
+                        value = value.replaceAll("per_", "");
+
+                        if(this.persistentInfluences.contains(value)){
+                            this.persistentInfluences.remove(value);
+                        }else{
+                            this.persistentInfluences.add(value);
+                        }
                     }else{
-                        this.persistentInfluences.add(result);
+                        result.add(value);
                     }
                 }
                 
@@ -82,13 +101,13 @@ public class CharacterTimeline{
         public boolean updateTimeline(float time){
             boolean result = false;
             
-            String influence = this.getValueAt(time);
+            List<String> influencesPunctual = this.getValueAt(time);
             
             List<String> influences = new ArrayList<String>();
             
-            if(influence != null){
+            if(influencesPunctual != null){
                 
-               influences.add(influence);
+               influences.addAll(influencesPunctual);
             }
             
             influences.addAll(this.persistentInfluences);
@@ -111,5 +130,17 @@ public class CharacterTimeline{
          */
         public Character2D getCharacter() {
             return character;
+        }
+        /**
+        * @return the cinematicStatus
+        */
+       public CinematicStatus getCinematicStatus() {
+           return cinematicStatus;
+       }
+        
+        public enum CinematicStatus{
+            START_CINEMATIC,
+            NORMAL,
+            END_CINEMATIC
         }
     }

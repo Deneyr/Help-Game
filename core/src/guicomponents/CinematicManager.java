@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.Character2D;
+import com.mygdx.game.Object2D;
+import com.mygdx.game.Object2DStateListener;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -36,6 +39,10 @@ public class CinematicManager {
     // Part dialogue
     private GuiDialogueBlock dialogueBlock;
     
+    // Event part
+    
+    private WeakReference<Object2DStateListener> stateListener;
+    
     public CinematicManager(String id, List<Dialogue> dialogues){
         this.id = id;
         
@@ -50,6 +57,12 @@ public class CinematicManager {
         this.currentKeyDialogue = null;
         
         this.dialogueBlock = new GuiDialogueBlock(dialogues);
+    }
+    
+    public void setStateListener(Object2DStateListener stateListener){
+        if(stateListener != null){
+            this.stateListener = new WeakReference<Object2DStateListener>(stateListener);     
+        }
     }
     
     public void addCharacterTimeline(CharacterTimeline characterTimeline){
@@ -72,6 +85,12 @@ public class CinematicManager {
         }
     }
     
+    public void notifyListenerObj2Removed(Object2D obj){
+        if(this.stateListener.get() != null){
+            this.stateListener.get().notifyStateChanged(obj, Object2DStateListener.Object2DState.DEATH, 0);
+        }
+    }
+    
     public void updateLogic(float deltaTime){
         if(this.getCinematicState() == CinematicState.STOP){
             return;
@@ -81,6 +100,11 @@ public class CinematicManager {
             
             for(CharacterTimeline timeline : this.charactersTimeline){
                 timeline.getCharacter().isCinematicEntity(false);
+                switch(timeline.getCinematicStatus()){
+                    case END_CINEMATIC:
+                        this.notifyListenerObj2Removed(timeline.getCharacter());
+                        break;
+                }
             }
             this.cinematicState = CinematicState.STOP;
         }

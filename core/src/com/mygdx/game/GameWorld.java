@@ -76,6 +76,7 @@ public class GameWorld implements Disposable, WorldPlane, GameEventListener{
     }
     
     public void addCinematicManager(CinematicManager cinematicManager){
+        cinematicManager.setStateListener(this.stateAnimationHanlder);
         this.listCinematicManagers.put(cinematicManager.getId(), cinematicManager);
     }
     

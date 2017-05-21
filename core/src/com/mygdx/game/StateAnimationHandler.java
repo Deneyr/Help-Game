@@ -119,6 +119,12 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
         }
     }
 
+    public void removeObject2D(Object2D obj){
+        if(this.gameWorld.get() != null){
+            this.gameWorld.get().addObject2D2Flush(obj);
+        }
+    }
+    
     @Override
     public void dispose() {
         this.mainTask.cancel();
@@ -130,14 +136,32 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
 
     @Override
     public void notifyStateChanged(Object2D notifier, Object2DState state, int animCounter) {
-        this.currentAnimatedObjectsCounter.put(notifier, animCounter);
-        this.currentAnimatedObjectsState.put(notifier, state);
+        if(state != Object2DState.DEATH || animCounter > 0){
+            this.currentAnimatedObjectsCounter.put(notifier, animCounter);
+            this.currentAnimatedObjectsState.put(notifier, state);
+        }else{
+            this.removeObject2D(notifier);
+            if(this.currentAnimatedObjectsCounter.containsKey(notifier)){
+                
+                this.currentAnimatedObjectsCounter.remove(notifier);
+                this.currentAnimatedObjectsState.remove(notifier);
+            }
+        }
     }
     
     @Override
     public void notifyStateChanged(Object2D notifier, Object2DState state, int animCounter, boolean canReplace){
         if(!this.IsObject2DHandled(notifier) || canReplace){
-            this.notifyStateChanged(notifier, state, animCounter);
+            if(state != Object2DState.DEATH || animCounter > 0){
+                this.notifyStateChanged(notifier, state, animCounter);
+            }else{
+                this.removeObject2D(notifier);
+                if(this.currentAnimatedObjectsCounter.containsKey(notifier)){
+
+                    this.currentAnimatedObjectsCounter.remove(notifier);
+                    this.currentAnimatedObjectsState.remove(notifier);
+                }
+            }
         }
     }
     

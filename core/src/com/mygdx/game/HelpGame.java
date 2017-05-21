@@ -31,6 +31,7 @@ import com.mygdx.game.scenery.SmallBox;
 import com.mygdx.game.scenery.TreeWithoutLeaf;
 import com.mygdx.game.scenery.Ventilo;
 import guicomponents.CharacterTimeline;
+import guicomponents.CharacterTimeline.CinematicStatus;
 import guicomponents.CinematicManager;
 import guicomponents.Dialogue;
 import guicomponents.GuiPortrait;
@@ -315,14 +316,14 @@ public class HelpGame extends Game{
         cin1.addDialogueTimeline(1f, 0);
         cin1.addDialogueTimeline(2f, 1);
         
-        CharacterTimeline charaTimeline = new CharacterTimeline(hero, false);
+        CharacterTimeline charaTimeline = new CharacterTimeline(hero, CinematicStatus.NORMAL);
         
         charaTimeline.addEntry(1.5f, "per_right");
         charaTimeline.addEntry(2f, "per_right");
         charaTimeline.addEntry(1.6f, "attack");     
         cin1.addCharacterTimeline(charaTimeline);
         
-        charaTimeline = new CharacterTimeline(thief, true);
+        charaTimeline = new CharacterTimeline(thief, CinematicStatus.END_CINEMATIC);
 
         charaTimeline.addEntry(0f, "per_left");
         charaTimeline.addEntry(1f, "per_left");
