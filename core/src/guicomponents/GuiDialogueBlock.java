@@ -113,9 +113,11 @@ public class GuiDialogueBlock extends GuiComponent{
                 if(currentDialogue.getNbReply() > this.indexCurrentReply){
                     this.indexCurrentReply++;
                     this.setCurrentReply(this.indexCurrentReply);
-                }else{
-                    System.out.println("test");
-                    this.dialogueState = CinematicState.END;
+                }
+                if(currentDialogue.getNbReply() == this.indexCurrentReply){
+                    if(this.dialogueState != CinematicState.STOP){
+                        this.dialogueState = CinematicState.END;
+                    }
                 }
             }
         }

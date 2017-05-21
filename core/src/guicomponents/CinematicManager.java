@@ -61,12 +61,14 @@ public class CinematicManager {
     }
     
     public void reset(){
+
         this.currentTime = 0;
         this.cinematicState = CinematicState.START;
         
         this.currentKeyDialogue = null;
         for(CharacterTimeline timeline : this.charactersTimeline){
             timeline.reset();
+            timeline.getCharacter().resetSpeed();
         }
     }
     
@@ -76,6 +78,7 @@ public class CinematicManager {
         }
         
         if(this.getCinematicState() == CinematicState.END){
+            
             for(CharacterTimeline timeline : this.charactersTimeline){
                 timeline.getCharacter().isCinematicEntity(false);
             }
@@ -109,7 +112,9 @@ public class CinematicManager {
         if(hasEnded &&
                 (this.dialogueTimeline.lastEntry() == null 
                 || (this.currentKeyDialogue == this.dialogueTimeline.lastEntry().getKey() && this.dialogueBlock.getDialogueState() == CinematicState.STOP))){
-            this.cinematicState = CinematicState.END;
+            if(this.getCinematicState() != CinematicState.STOP){
+                this.cinematicState = CinematicState.END;
+            }
         }
         
     }
@@ -118,7 +123,7 @@ public class CinematicManager {
      * @return the cinematicState
      */
     public CinematicState getCinematicState() {
-        return cinematicState;
+        return this.cinematicState;
     }
     
     public int getNextDialogue(){

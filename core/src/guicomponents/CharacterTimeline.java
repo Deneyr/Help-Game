@@ -26,8 +26,10 @@ public class CharacterTimeline{
         private Float currentKey;
         
         private final Set<String> persistentInfluences;
+       
+        private boolean isPureCinematic;
         
-        public CharacterTimeline(Character2D character){
+        public CharacterTimeline(Character2D character, boolean isPureCinematic){
             
             this.character = character;
             
@@ -36,6 +38,11 @@ public class CharacterTimeline{
             this.currentKey = null;
             
             this.persistentInfluences = new HashSet();
+            
+            this.isPureCinematic = isPureCinematic;
+            if(this.isPureCinematic){
+                character.isCinematicEntity(true);
+            }
         }
         
         public void reset(){
@@ -80,9 +87,6 @@ public class CharacterTimeline{
             List<String> influences = new ArrayList<String>();
             
             if(influence != null){
-                if(this.timeline.lastEntry() == null || this.currentKey == this.timeline.lastEntry().getKey()){
-                    result = true;
-                }
                 
                influences.add(influence);
             }
@@ -90,6 +94,10 @@ public class CharacterTimeline{
             influences.addAll(this.persistentInfluences);
             
             this.character.setInfluenceList(influences);
+            
+            if(this.timeline.lastEntry() == null || this.currentKey == this.timeline.lastEntry().getKey()){
+                result = true;
+            }
             
             return result;
         }

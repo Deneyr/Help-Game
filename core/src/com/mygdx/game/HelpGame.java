@@ -14,6 +14,7 @@ import characters.Grandma;
 import characters.OpponentCAC2;
 import characters.OpponentCACElite;
 import characters.OpponentDIST1;
+import characters.OpponentThief;
 import com.mygdx.game.scenery.Orphanage;
 import com.mygdx.game.scenery.TestMarioStage;
 import com.badlogic.gdx.Game;
@@ -188,15 +189,17 @@ public class HelpGame extends Game{
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, -1300, 100);
         this.getGameWorld().addObject2DToWorld(opp, true);
         
-        
+        /*
         opp = new OpponentDIST1(this.getGameWorld().getWorld(), hero.physicBody, -200, 100);
         this.getGameWorld().addObject2DToWorld(opp, true);
+        
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, -150, 100);
         this.getGameWorld().addObject2DToWorld(opp, true);
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, -100, 100);
         this.getGameWorld().addObject2DToWorld(opp, true);
+        
         
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, -50, 100);
         this.getGameWorld().addObject2DToWorld(opp, true);
@@ -214,10 +217,15 @@ public class HelpGame extends Game{
         opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, 200, 100);
         this.getGameWorld().addObject2DToWorld(opp, true);
         
-        opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, 250, 100);
+        */
+        
+        OpponentThief thief = new OpponentThief(this.getGameWorld().getWorld(), hero.physicBody, 150, 100);
+        this.getGameWorld().addObject2DToWorld(thief, false);
+        
+        opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, 500, 100);
         this.getGameWorld().addObject2DToWorld(opp, true);
         
-        opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, 300, 100);
+        opp = new OpponentCAC1(this.getGameWorld().getWorld(), hero.physicBody, 600, 100);
         this.getGameWorld().addObject2DToWorld(opp, true);
         
         
@@ -289,30 +297,45 @@ public class HelpGame extends Game{
         
         Dialogue dialogue = new Dialogue();
         
-        dialogue.addReply("Hello Pierre !\n Voici une ligne de dialogue.", GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.DEFAULT, GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, 0);
-        dialogue.addReply("Tu peux appuyer sur ENTRER\n et ainsi faire avance rapide.", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.DEFAULT, 1);
-        dialogue.addReply("C'est cool hein ?", GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
-        dialogue.addReply("          \n ... \n ...\n\n Et tu n'as encore rien vu !", GuiPortrait.Character.NONE, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, 1);
+        dialogue.addReply("Reviens immédiatement,\nespèce de sale voleur !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("De l'air la vielle,\nretourne chez toi !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.DEFAULT, 1);
+        dialogue.addReply("Petit morveux,\nje vais t'apprendre ce qu'il\nen coûte de s'attaquer\naux honnètes gens !!", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.HAPPY, 0);
+        dialogue.addReply("Blablabla bla\nTchaa vielle peau !\n\nHahahahaha", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.ANGRY, 1);
         
         List<Dialogue> list = new ArrayList<Dialogue>();
         list.add(dialogue);
         
+        dialogue = new Dialogue();   
+        dialogue.addReply("Haaaaaaaaa !!\nJe vais lui exploser\nsa petite tête\n à coup de parapluie !!", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("Ca va chauffer !!", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
+        list.add(dialogue);
+        
         CinematicManager cin1 = new CinematicManager("roof", list);
         
-        cin1.addDialogueTimeline(3f, 0);
+        cin1.addDialogueTimeline(1f, 0);
+        cin1.addDialogueTimeline(2f, 1);
         
-        CharacterTimeline charaTimeline = new CharacterTimeline(hero);
-        charaTimeline.addEntry(0f, "per_right");
+        CharacterTimeline charaTimeline = new CharacterTimeline(hero, false);
+        
+        charaTimeline.addEntry(1.5f, "per_right");
         charaTimeline.addEntry(2f, "per_right");
+        charaTimeline.addEntry(1.6f, "attack");     
+        cin1.addCharacterTimeline(charaTimeline);
         
-        charaTimeline.addEntry(1f, "jump");
-        charaTimeline.addEntry(3.1f, "attack");
+        charaTimeline = new CharacterTimeline(thief, true);
+
+        charaTimeline.addEntry(0f, "per_left");
+        charaTimeline.addEntry(1f, "per_left");
         
+        charaTimeline.addEntry(1.1f, "per_right");
+        charaTimeline.addEntry(3f, "per_right");
+        charaTimeline.addEntry(1.5f, "per_jump");
+        charaTimeline.addEntry(2f, "per_jump");
         cin1.addCharacterTimeline(charaTimeline);
         
         this.getGameWorld().addCinematicManager(cin1);
         
-        EventTriggeredObject2D trigger = new EventTriggeredObject2D(this.getGameWorld().getWorld(), -5000f, 0, GameEventListener.EventType.CINEMATIC, "roof", 800);
+        EventTriggeredObject2D trigger = new EventTriggeredObject2D(this.getGameWorld().getWorld(), -50f, 180f, GameEventListener.EventType.CINEMATIC, "roof", 100);
         this.getGameWorld().addObject2DToWorld(trigger);
     }
 

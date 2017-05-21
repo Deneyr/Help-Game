@@ -326,6 +326,12 @@ public abstract class Character2D extends Object2D{
         this.isCinematicEntity = isCinematic;
     }
     
+    public void resetSpeed(){
+        if(this.physicBody != null){
+            this.physicBody.setLinearVelocity(0, 0);
+        }
+    }
+    
     public abstract void setInfluenceList(List<String> influences);
     
     // listeners
