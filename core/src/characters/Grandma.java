@@ -21,6 +21,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Character2D;
+import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DStateListener;
@@ -133,6 +134,17 @@ public class Grandma extends Character2D{
         // open umbrella
         array = new Array<TextureRegion>(tmp[10]);
         array.removeRange(3, 7);
+        this.listAnimations.add(new Animation(0.3f, array));
+        array = new Array<TextureRegion>(tmp[10]);
+        array.removeRange(6, 7);
+        array.removeRange(0, 2);
+        this.listAnimations.add(new Animation(0.3f, array));
+        //death
+        array = new Array<TextureRegion>(tmp[12]);
+        array.removeRange(4, 7);
+        this.listAnimations.add(new Animation(0.3f, array));
+        array = new Array<TextureRegion>(tmp[12]);
+        array.removeRange(0, 3);
         this.listAnimations.add(new Animation(0.3f, array));
         
         this.changeAnimation(0, true);
@@ -549,6 +561,11 @@ public class Grandma extends Character2D{
         return isDamageApplied;
     }
     
+    @Override
+    public void onDeath(){
+        this.notifyGameEventListener(GameEventListener.EventType.GAMEOVER, "dead", new Vector2(this.getPositionBody()));
+    }
+    
     /*
     private class Shield extends SolidObject2D{
         
@@ -908,6 +925,17 @@ public class Grandma extends Character2D{
         // Part animation
         
         public int getCurrentAnimation(){
+            
+            if(Grandma.this.lifeState == LifeState.DEAD){
+                this.pauseAnimation = 0;
+                this.restartAnimation = true;
+                if(Grandma.this.side == SideCharacter.RIGHT){
+                    return 18;
+                }else{
+                    return 19;
+                }
+            }
+            
             switch(this.stateNode){
                 case JUMP_FOLDED :
                     return getJumpFoldedAnimation();
@@ -1138,8 +1166,9 @@ public class Grandma extends Character2D{
                 }
                 
                 Fixture fix = Grandma.this.collisionFixture.get(0);
-                if(fix.getRestitution() > 0.1f)
+                if(fix.getRestitution() > 0.1f){
                     fix.setRestitution(0.1f);
+                }
                 
             }else{
                 Iterator<GrandmaInfluence> it = Grandma.this.influences.iterator();             
@@ -1156,8 +1185,9 @@ public class Grandma extends Character2D{
                 }
                 
                 Fixture fix = Grandma.this.collisionFixture.get(0);
-                if(fix.getRestitution() < 0.8f)
-                    fix.setRestitution(0.8f);
+                if(fix.getRestitution() < 0.8f){
+                    fix.setRestitution(2.5f);
+                }
             }
           
             if((this.stateNode == GrandmaState.JUMP_UNFOLDED_UP  || this.stateNode == GrandmaState.UNFOLDED_UMBRELLA_UP)
@@ -1191,8 +1221,8 @@ public class Grandma extends Character2D{
                 velocity.x = 6.f * (float)Math.signum(velocity.x);
             }
             
-            if(Math.abs(velocity.y) > 13.f){
-                velocity.y = 13.f * (float)Math.signum(velocity.y);
+            if(Math.abs(velocity.y) > 15.f){
+                velocity.y = 15.f * (float)Math.signum(velocity.y);
             }
             
             Grandma.this.physicBody.setLinearVelocity(velocity);
