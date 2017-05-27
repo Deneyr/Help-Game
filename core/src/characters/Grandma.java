@@ -369,7 +369,7 @@ public class Grandma extends Character2D{
         }
         
         // Control hero
-        if(Gdx.input.isKeyPressed(Input.Keys.Q)){
+        /*if(Gdx.input.isKeyPressed(Input.Keys.Q)){
             this.influences.add(GrandmaInfluence.GO_LEFT);
         }else if(Gdx.input.isKeyPressed(Input.Keys.D)){
             this.influences.add(GrandmaInfluence.GO_RIGHT);    
@@ -396,9 +396,10 @@ public class Grandma extends Character2D{
         
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
             this.influences.add(GrandmaInfluence.JUMP);  
-        }
+        }*/
         
-        /*if(Gdx.input.isKeyPressed(Input.Keys.Q)){
+        // main controls
+        if(Gdx.input.isKeyPressed(Input.Keys.Q)){
             this.influences.add(GrandmaInfluence.GO_LEFT);
         }else if(Gdx.input.isKeyPressed(Input.Keys.D)){
             this.influences.add(GrandmaInfluence.GO_RIGHT);    
@@ -425,7 +426,7 @@ public class Grandma extends Character2D{
         
         if(Gdx.input.isKeyPressed(Input.Keys.Z)){
             this.influences.add(GrandmaInfluence.JUMP);  
-        }*/
+        }
     }
     
     private void influences2Actions(){

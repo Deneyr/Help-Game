@@ -19,6 +19,7 @@ import com.mygdx.game.scenery.Orphanage;
 import com.mygdx.game.scenery.TestMarioStage;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.scenery.Abribus;
@@ -39,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import triggered.ActivableTriggeredObject2D;
 import triggered.EventTriggeredObject2D;
 
 /**
@@ -301,7 +303,7 @@ public class HelpGame extends Game{
         dialogue.addReply("Reviens immédiatement,\nespèce de sale voleur !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.DEFAULT, 0);
         dialogue.addReply("De l'air la vielle,\nretourne chez toi !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.DEFAULT, 1);
         dialogue.addReply("Petit morveux,\nje vais t'apprendre ce qu'il\nen coûte de s'attaquer\naux honnètes gens !!", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.HAPPY, 0);
-        dialogue.addReply("Blablabla bla\nTchaa vielle peau !\n\nHahahahaha", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.ANGRY, 1);
+        dialogue.addReply("Blablabla bla\nTchao vielle peau !\n\nHahahahaha", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.ANGRY, 1);
         
         List<Dialogue> list = new ArrayList<Dialogue>();
         list.add(dialogue);
@@ -338,6 +340,33 @@ public class HelpGame extends Game{
         
         EventTriggeredObject2D trigger = new EventTriggeredObject2D(this.getGameWorld().getWorld(), -50f, 180f, GameEventListener.EventType.CINEMATIC, "roof", 100);
         this.getGameWorld().addObject2DToWorld(trigger);
+        
+        // activable areas
+        
+        dialogue = new Dialogue();
+        
+        dialogue.addReply("Au loin, le soleil se couche. ", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("Il va falloir faire vite !\nNul n'est sensé se retrouver dehors\naprès le couvre-feu ...", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
+        
+        list = new ArrayList<Dialogue>();
+        list.add(dialogue);
+        
+        dialogue = new Dialogue();
+        dialogue.addReply("Pourquoi ces petits morveux\nse complaisent dans le mal ? ", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("Tous cela est bien triste ...", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
+        list.add(dialogue);
+        
+        CinematicManager cin2 = new CinematicManager("question", list);
+        
+        charaTimeline = new CharacterTimeline(hero, CinematicStatus.NORMAL);
+        cin2.addCharacterTimeline(charaTimeline);
+        
+        cin2.addDialogueTimeline(0f, 0);
+        cin2.addDialogueTimeline(0.4f, 1);
+        this.getGameWorld().addCinematicManager(cin2);
+        
+        ActivableTriggeredObject2D acti = new ActivableTriggeredObject2D(this.getGameWorld().getWorld(), 300f, 50f, Input.Keys.ENTER, GameEventListener.EventType.CINEMATIC, "question", 200);
+        this.getGameWorld().addObject2DToWorld(acti);
     }
 
     /**

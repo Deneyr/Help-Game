@@ -27,7 +27,7 @@ public abstract class TriggeredObject2D extends Object2D{
     protected WeakReference<Object2DStateListener> object2DStateListener;
     // end part listeners
     
-    private TriggerActionFixture triggerActionFixture;
+    protected TriggerActionFixture triggerActionFixture;
     
     protected boolean isTriggered;
     
@@ -36,6 +36,14 @@ public abstract class TriggeredObject2D extends Object2D{
         
         this.priority = 3;
         this.isTriggered = false;
+    }
+    
+    public void onObj2DEnteredArea(Object2D obj){
+        // nothing to do
+    }
+    
+    public void onObj2DExitedArea(Object2D obj){
+        // nothing to do
     }
     
     public void setObject2DStateListener(Object2DStateListener obj){

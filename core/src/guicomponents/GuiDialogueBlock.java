@@ -86,6 +86,13 @@ public class GuiDialogueBlock extends GuiComponent{
                 this.leftPortrait.setIsMainCharacter(true);
                 this.rightPortrait.setIsMainCharacter(true);
             }
+            
+            if(!currentDialogue.getCharacterLeft(this.indexCurrentReply).isCharacter()
+                    && !currentDialogue.getCharacterRight(this.indexCurrentReply).isCharacter()){
+                this.textBlock.setIsDialogue(false);
+            }else{
+                this.textBlock.setIsDialogue(true);
+            }
         }
     }
     

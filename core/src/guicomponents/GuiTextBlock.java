@@ -16,7 +16,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  * @author Deneyr
  */
 public class GuiTextBlock extends GuiText{
-    
+  
     private float width;
     private float height;
     
@@ -24,6 +24,8 @@ public class GuiTextBlock extends GuiText{
     private float timeElapsed;
     
     private String finalText;
+    
+    private boolean isDialogue;
     
     public GuiTextBlock(float period2Add, float locX, float locY, float width, float height) {
         super("", 20, ReferenceCorner.LEFT, ReferenceCorner.LEFT, locX, locY);
@@ -35,6 +37,8 @@ public class GuiTextBlock extends GuiText{
         this.timeElapsed = 0;
         
         this.finalText = new String();
+        
+        this.isDialogue = true;
     }
     
     @Override
@@ -115,7 +119,11 @@ public class GuiTextBlock extends GuiText{
                 break;
         }
         
-        posX -= this.width * camera.viewportWidth * 0.7 / 4;
+        if(this.isDialogue){
+            posX -= this.width * camera.viewportWidth * 0.7 / 4;
+        }else{
+            posX -= this.width * camera.viewportWidth * 0.9 / 4;
+        }
         posY += this.height * camera.viewportHeight * 1.6 / 4;
         
         this.bitmapFont.draw(batch, this.glyphLayout, posX, posY);
@@ -134,5 +142,12 @@ public class GuiTextBlock extends GuiText{
     
     public boolean AllTextPassed(){
         return this.text.length() == this.finalText.length();
+    }
+    
+    /**
+     * @param isDialogue the isDialogue to set
+     */
+    public void setIsDialogue(boolean isDialogue) {
+        this.isDialogue = isDialogue;
     }
 }

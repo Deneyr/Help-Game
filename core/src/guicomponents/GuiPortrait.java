@@ -162,6 +162,10 @@ public class GuiPortrait extends GuiComponent{
         public int getValue() {
             return this.value;
         }
+        
+        public boolean isCharacter(){
+            return this != NONE;
+        }
     }
    
     

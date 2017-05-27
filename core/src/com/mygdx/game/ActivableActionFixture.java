@@ -5,28 +5,33 @@
  */
 package com.mygdx.game;
 
+import characters.Grandma;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.mygdx.game.scenery.Ventilo;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  *
- * @author françois
+ * @author Deneyr
  */
-public class TriggerActionFixture extends ActionFixtures{
+public class ActivableActionFixture extends TriggerActionFixture{
     
-    public TriggerActionFixture(Set<Fixture> fixtures) {
+    private final int activableKey;
+    
+    public ActivableActionFixture(Set<Fixture> fixtures, int activableKey) {
         super(fixtures);
+        
+        this.activableKey = activableKey;
     }
-    
     
     @Override
     public void applyAction(float deltaTime, final Object2D owner) {
-        
         HashSet<Object2D> prevSetObject2DInside = new HashSet<Object2D>(this.setObject2DInside);
 
-        super.applyAction(deltaTime, owner);
+        this.applyDefaultAction();
         
         HashSet<Object2D> afterSetObject2DInside = new HashSet<Object2D>(this.setObject2DInside);
         
@@ -44,9 +49,11 @@ public class TriggerActionFixture extends ActionFixtures{
                 triggerObj.onObj2DExitedArea(obj);
             }
             
-            for(Object2D obj : this.setObject2DInside){
-                if(obj != owner){
-                    triggerObj.trigger(obj);
+            if(Gdx.input.isKeyJustPressed(this.activableKey)){
+                for(Object2D obj : this.setObject2DInside){
+                    if(obj != owner && obj instanceof Grandma){
+                        triggerObj.trigger(obj);
+                    }
                 }
             }
         }

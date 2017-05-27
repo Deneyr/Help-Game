@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import static com.mygdx.game.HelpGame.P2M;
 import guicomponents.CinematicManager;
+import guicomponents.CinematicManager.CinematicState;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -52,7 +53,7 @@ public class GameWorld implements Disposable, WorldPlane, GameEventListener{
     
     private StateAnimationHandler stateAnimationHanlder;
     
-    private Map<String, CinematicManager> listCinematicManagers;
+    private Map<String, CinematicManager> mapCinematicManagers;
     
     public GameWorld(){
         this.world = new World(new Vector2(0, -20f), true);
@@ -72,21 +73,21 @@ public class GameWorld implements Disposable, WorldPlane, GameEventListener{
         
         this.stateAnimationHanlder = new StateAnimationHandler(this);
         
-        this.listCinematicManagers = new HashMap<String, CinematicManager>();
+        this.mapCinematicManagers = new HashMap<String, CinematicManager>();
     }
     
     public void addCinematicManager(CinematicManager cinematicManager){
         cinematicManager.setStateListener(this.stateAnimationHanlder);
-        this.listCinematicManagers.put(cinematicManager.getId(), cinematicManager);
+        this.mapCinematicManagers.put(cinematicManager.getId(), cinematicManager);
     }
     
     public void drawBatch(Camera camera, Batch batch){
-        for(CinematicManager cinematicManager : this.listCinematicManagers.values()){
+        for(CinematicManager cinematicManager : this.mapCinematicManagers.values()){
             cinematicManager.drawBatch(camera, batch);
         }
     }
     public void drawShapeRenderer(Camera camera, ShapeRenderer shapeRenderer){
-        for(CinematicManager cinematicManager : this.listCinematicManagers.values()){
+        for(CinematicManager cinematicManager : this.mapCinematicManagers.values()){
             cinematicManager.drawShapeRenderer(camera, shapeRenderer);
         }
     }
@@ -150,7 +151,7 @@ public class GameWorld implements Disposable, WorldPlane, GameEventListener{
             this.stateAnimationHanlder.scheduleTask();
         }
         
-        for(CinematicManager cinematicManager : this.listCinematicManagers.values()){
+        for(CinematicManager cinematicManager : this.mapCinematicManagers.values()){
             cinematicManager.updateLogic(delta);
         }
         
@@ -235,7 +236,7 @@ public class GameWorld implements Disposable, WorldPlane, GameEventListener{
         }
         this.world.dispose();
         
-        this.listCinematicManagers.clear();
+        this.mapCinematicManagers.clear();
         
         assert this.world.getBodyCount() == 0;
     }
@@ -248,14 +249,23 @@ public class GameWorld implements Disposable, WorldPlane, GameEventListener{
                 this.setScore(this.score + Integer.parseInt(details));
                 break;
             case CINEMATIC:
-                if(this.listCinematicManagers.containsKey(details)){
-                    CinematicManager cinematicManager = this.listCinematicManagers.get(details);
+                if(this.mapCinematicManagers.containsKey(details) && this.isCinematicManagersFree(details)){
+                    CinematicManager cinematicManager = this.mapCinematicManagers.get(details);
                     cinematicManager.reset();
                 }
                 break;
         }
         
         this.notifyGameEventListeners(type, details, location);
+    }
+    
+    private boolean isCinematicManagersFree(String key){
+        for(CinematicManager cinematicManager : this.mapCinematicManagers.values()){
+            if(cinematicManager.getCinematicState() != CinematicState.STOP){
+                return false;
+            }
+        }
+        return true;
     }
     
     private class ScreenQueryCallback implements QueryCallback{
