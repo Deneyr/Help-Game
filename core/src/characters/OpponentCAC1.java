@@ -212,6 +212,44 @@ public class OpponentCAC1 extends Character2D{
         this.changeAnimation(0, true);
     }
     
+    public final void initializeSimpleGraphic(){
+        // Part graphic
+        TextureRegion[][] tmp = TextureRegion.split(this.texture, 76, 76);
+        // walk
+        Array<TextureRegion> array = new Array<TextureRegion>(tmp[1]);
+        array.removeRange(4, 4);
+        array.add(tmp[1][2]);
+        array.add(tmp[1][1]);
+        this.listAnimations.add(new Animation(0.15f, array));
+        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
+        array = new Array<TextureRegion>(tmp[0]);
+        array.removeRange(4, 4);
+        array.add(tmp[0][2]);
+        array.add(tmp[0][1]);
+        this.listAnimations.add(new Animation(0.15f, array));
+        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
+        // attack
+        array = new Array<TextureRegion>(tmp[2]);
+        this.listAnimations.add(new Animation(0.3f, array));
+        array = new Array<TextureRegion>(tmp[3]);
+        this.listAnimations.add(new Animation(0.3f, array));
+        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.REVERSED);
+        // death
+        array = new Array<TextureRegion>(tmp[3]);
+        this.listAnimations.add(new Animation(0.3f, array));
+        array = new Array<TextureRegion>(tmp[3]);
+        this.listAnimations.add(new Animation(0.3f, array));
+        // flying
+        array = new Array<TextureRegion>(tmp[3]);
+        array.removeRange(0, 2);
+        this.listAnimations.add(new Animation(0.2f, array));
+        array = new Array<TextureRegion>(tmp[2]);
+        array.removeRange(0, 2);
+        this.listAnimations.add(new Animation(0.2f, array));
+        
+        this.changeAnimation(0, true);
+    }
+    
     protected final void initializePhysicCAC1(World world, float posX, float posY){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -370,6 +408,39 @@ public class OpponentCAC1 extends Character2D{
             if(Math.abs(this.target.getPosition().sub(this.physicBody.getPosition()).len()) <  50 * P2M
                     && Math.abs(this.target.getPosition().y - this.physicBody.getPosition().y) < 50 * P2M){
                 this.influences.add(OppInfluence.ATTACK);
+            }
+        }else{
+            double rand = Math.random()*100;
+            if(rand > 10){
+                if(this.side == SideCharacter.RIGHT){
+                    this.influences.add(OppInfluence.GO_RIGHT);
+                }else{
+                    this.influences.add(OppInfluence.GO_LEFT);
+                }
+            }else if(rand > 8){
+                if(this.side == SideCharacter.RIGHT){
+                    this.influences.add(OppInfluence.GO_LEFT);
+                }else{
+                    this.influences.add(OppInfluence.GO_RIGHT);
+                }
+            }
+        }
+    }
+    
+    protected void createInfluencesTemeri(){
+        if(this.lifeState == LifeState.DEAD){
+            return;
+        }
+        
+        if(this.isCinematicEntity){
+            return;
+        }
+        
+        if(this.target.getPosition().dst(this.physicBody.getPosition()) < MOVE_DIST){
+            if(this.target.getPosition().x - this.physicBody.getPosition().x > 0){
+                this.influences.add(OppInfluence.GO_RIGHT);
+            }else{
+                this.influences.add(OppInfluence.GO_LEFT);
             }
         }else{
             double rand = Math.random()*100;

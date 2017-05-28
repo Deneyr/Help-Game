@@ -227,6 +227,11 @@ public class Grandma extends Character2D{
     }
     
     private void updateShield(float deltaTime){
+        
+        if(this.lifeState == LifeState.DEAD){
+            return;
+        }
+        
         if(this.currentStateNode.stateNode == GrandmaState.UNFOLDED_UMBRELLA_MIDDLE || this.currentStateNode.stateNode == GrandmaState.UNFOLDED_UMBRELLA_UP){
             this.damageZone.setApplyDamage(false);
             this.damageZone.applyAction(deltaTime, this);
@@ -240,6 +245,12 @@ public class Grandma extends Character2D{
         
         if(this.feetFixture != null)
             this.physicBody.destroyFixture(this.feetFixture);
+        
+        float restitution = 0.1f;
+        if(Grandma.this.collisionFixture.size() > 0){
+            Fixture fix = Grandma.this.collisionFixture.get(0);
+            restitution = fix.getRestitution();
+        }
         
         for(Fixture fix : this.collisionFixture){
             this.physicBody.destroyFixture(fix);
@@ -268,7 +279,7 @@ public class Grandma extends Character2D{
             fixtureDef.shape = circleLeft;
             fixtureDef.density = 1f; 
             fixtureDef.friction = 0.1f;
-            fixtureDef.restitution = 0.1f; 
+            fixtureDef.restitution = restitution; 
             
             Fixture fix = this.physicBody.createFixture(fixtureDef);
         
@@ -325,7 +336,7 @@ public class Grandma extends Character2D{
             fixtureDef.shape = circleRight;
             fixtureDef.density = 1f; 
             fixtureDef.friction = 0.1f;
-            fixtureDef.restitution = 0.1f; 
+            fixtureDef.restitution = restitution; 
             
             Fixture fix = this.physicBody.createFixture(fixtureDef);
         

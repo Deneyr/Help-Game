@@ -9,6 +9,7 @@ import backgrounds.CityBackground;
 import backgrounds.FarBackground;
 import backgrounds.HillBackground;
 import backgrounds.NearBackground;
+import characters.AllyTemeri;
 import characters.OpponentCAC1;
 import characters.Grandma;
 import characters.OpponentCAC2;
@@ -241,6 +242,9 @@ public class HelpGame extends Game{
         
         opp = new OpponentCACElite(this.getGameWorld().getWorld(), hero.physicBody, -1500, 100);
         this.getGameWorld().addObject2DToWorld(opp, true);
+        
+        AllyTemeri temeri = new AllyTemeri(this.getGameWorld().getWorld(), hero.physicBody, -1800, 100);
+        this.getGameWorld().addObject2DToWorld(temeri, true);
         
         // init scenary
         Orphanage orph = new Orphanage(this.getGameWorld().getWorld(), 0f, 0f);
