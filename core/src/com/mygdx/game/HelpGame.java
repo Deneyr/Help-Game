@@ -243,7 +243,7 @@ public class HelpGame extends Game{
         opp = new OpponentCACElite(this.getGameWorld().getWorld(), hero.physicBody, -1500, 100);
         this.getGameWorld().addObject2DToWorld(opp, true);
         
-        AllyTemeri temeri = new AllyTemeri(this.getGameWorld().getWorld(), hero.physicBody, -1800, 100);
+        AllyTemeri temeri = new AllyTemeri(this.getGameWorld().getWorld(), hero.physicBody, -800, 100);
         this.getGameWorld().addObject2DToWorld(temeri, true);
         
         // init scenary
@@ -349,15 +349,26 @@ public class HelpGame extends Game{
         
         dialogue = new Dialogue();
         
-        dialogue.addReply("Au loin, le soleil se couche. ", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
-        dialogue.addReply("Il va falloir faire vite !\nNul n'est sensé se retrouver dehors\naprès le couvre-feu ...", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("Une jeune fille se tiens devant vous,\nelle semble attendre quelqu'un ...", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
+        //dialogue.addReply("Il va falloir faire vite !\nNul n'est sensé se retrouver dehors\naprès le couvre-feu ...", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
         
         list = new ArrayList<Dialogue>();
         list.add(dialogue);
         
         dialogue = new Dialogue();
-        dialogue.addReply("Pourquoi ces petits morveux\nse complaisent dans le mal ? ", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
-        dialogue.addReply("Tous cela est bien triste ...", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("Que fais tu dehors à cette heure\nma petite ?\nLe couvre feu ne va pas tarder", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("Je pourrais vous demander\nla même chose madame ...\n Vous semblez essouflé\ntout va bien ?", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.HAPPY, 1);
+        dialogue.addReply("Oui ... non ...\nen fait un petit voyou\nm'a volé mon sac.", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("Lorsque je le retrouverais\nje lui ferais passer\nl'envie de nuir\naux honnètes gens !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.DEFAULT, 0);
+        list.add(dialogue);
+        
+        dialogue = new Dialogue();
+        dialogue.addReply("La jeune fille sourit gentillement ...", GuiPortrait.Character.NONE, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("Je vois ...\nEt bien je vous souhaite\n bonne chance !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.HAPPY, 1);
+        dialogue.addReply("Néanmoins ...", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.HAPPY, 1);
+        dialogue.addReply("Qui a t'il ?", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.HAPPY, 0);
+        dialogue.addReply("Rien ...\nmais si vous le retrouvez,\nsoyez indulgente\ns'il vous plait ...", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.SORROW, 1);
+        dialogue.addReply("Certainement pas !\nPas de pitié pour\nles petits voyous !!", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.SORROW, 0);
         list.add(dialogue);
         
         CinematicManager cin2 = new CinematicManager("question", list);
@@ -367,9 +378,10 @@ public class HelpGame extends Game{
         
         cin2.addDialogueTimeline(0f, 0);
         cin2.addDialogueTimeline(0.4f, 1);
+        cin2.addDialogueTimeline(0.8f, 2);
         this.getGameWorld().addCinematicManager(cin2);
         
-        ActivableTriggeredObject2D acti = new ActivableTriggeredObject2D(this.getGameWorld().getWorld(), 300f, 50f, Input.Keys.ENTER, GameEventListener.EventType.CINEMATIC, "question", 200);
+        ActivableTriggeredObject2D acti = new ActivableTriggeredObject2D(this.getGameWorld().getWorld(), temeri, Input.Keys.ENTER, GameEventListener.EventType.CINEMATIC, "question", 50);
         this.getGameWorld().addObject2DToWorld(acti);
     }
 

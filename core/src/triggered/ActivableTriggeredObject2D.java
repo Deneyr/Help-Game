@@ -19,11 +19,13 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.ActivableActionFixture;
+import com.mygdx.game.Character2D;
 import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.TriggeredObject2D;
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -45,8 +47,12 @@ public class ActivableTriggeredObject2D extends TriggeredObject2D{
     private GameEventListener.EventType eventType;
     private String details;
     
+    private WeakReference<Character2D> parentCharacter;
+    
     public ActivableTriggeredObject2D(World world, float posX, float posY, int activableKey, GameEventListener.EventType eventType, String details, float radius){
         super();
+        
+        this.priority = 5;
         
         this.radius = radius;
         
@@ -64,7 +70,41 @@ public class ActivableTriggeredObject2D extends TriggeredObject2D{
         TextureRegion[][] tmp = TextureRegion.split(this.texture, 50, 37);
         // walk folded
         Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
+        this.listAnimations.add(new Animation(0.4f, array, Animation.PlayMode.LOOP));
+        
+        this.parentCharacter = null;
+    }
+    
+    public ActivableTriggeredObject2D(World world, Character2D parent, int activableKey, GameEventListener.EventType eventType, String details, float radius){
+        super();
+        
+        this.priority = 5;
+        
+        this.radius = radius;
+        
+        this.activableKey = activableKey;
+        
+        Vector2 position;
+        if(parent != null){
+            position = new Vector2(parent.getPositionBody());
+        }else{
+            position = new Vector2(0, 0);
+        }
+        this.initialize(world, position, Vector2.Zero);
+        
+        this.eventType = eventType;
+        this.details = details;
+        
+        this.target = null;
+        
+        // Part graphic
+        this.texture = ACTIVABLETEXTURE;
+        TextureRegion[][] tmp = TextureRegion.split(this.texture, 50, 37);
+        // walk folded
+        Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
         this.listAnimations.add(new Animation(0.5f, array, Animation.PlayMode.LOOP));
+        
+        this.parentCharacter = new WeakReference(parent);
     }
     
     @Override
@@ -152,6 +192,17 @@ public class ActivableTriggeredObject2D extends TriggeredObject2D{
         if(obj instanceof Grandma){
             this.target = null;
         }
+    }
+    
+    @Override
+    public void updateLogic(float deltaTime){
+        if(this.parentCharacter != null && this.parentCharacter.get() != null){
+            Character2D parent = this.parentCharacter.get();
+            
+            this.physicBody.setTransform(parent.getPositionBody().x, parent.getPositionBody().y, 0);
+        }
+        
+        super.updateLogic(deltaTime);
     }
     
     @Override

@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import static com.mygdx.game.HelpGame.P2M;
+import com.mygdx.game.Object2D;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -34,9 +35,11 @@ public class AllyTemeri extends OpponentCAC1{
     public AllyTemeri(World world, Body target, float posX, float posY) {
         super(100, target);
         
+        this.hasLifeBar = false;
+        
         this.texture = TEMERITEXT;
         
-        this.maxSpeed = 4f;
+        this.maxSpeed = 3f;
         
         this.initializeSimpleGraphic();
         this.listAnimations.get(2).setFrameDuration(0.1f);
@@ -47,6 +50,17 @@ public class AllyTemeri extends OpponentCAC1{
         this.updateFixture();
         
         this.previousSide = this.side;
+    }
+    
+    @Override
+    public boolean applyDamage(int damage, Vector2 dirDamage, Object2D damageOwner){
+        // nothing to do.
+        return false;
+    }
+    
+    @Override
+    public void applyBounce(Vector2 bounceVector, Object2D bounceOwner){
+        // nothing to do.
     }
     
     @Override

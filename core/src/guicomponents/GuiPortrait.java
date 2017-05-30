@@ -43,7 +43,7 @@ public class GuiPortrait extends GuiComponent{
         Array<TextureRegion> array;
         for(TextureRegion[] listTextureRegion : tmp){
             array = new Array<TextureRegion>(listTextureRegion);
-            this.listAnimations.add(new Animation(0.2f, array));
+            this.listAnimations.add(new Animation(1f, array));
         }
         this.setCharacterPortrait(Character.GRANDMA, Emotion.DEFAULT);
     }

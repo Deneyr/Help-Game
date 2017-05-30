@@ -438,9 +438,13 @@ public class OpponentCAC1 extends Character2D{
         
         if(this.target.getPosition().dst(this.physicBody.getPosition()) < MOVE_DIST){
             if(this.target.getPosition().x - this.physicBody.getPosition().x > 0){
-                this.influences.add(OppInfluence.GO_RIGHT);
+                if(this.side == SideCharacter.LEFT){
+                    this.influences.add(OppInfluence.GO_RIGHT);
+                }
             }else{
-                this.influences.add(OppInfluence.GO_LEFT);
+                if(this.side == SideCharacter.RIGHT){
+                    this.influences.add(OppInfluence.GO_LEFT);
+                }
             }
         }else{
             double rand = Math.random()*100;
