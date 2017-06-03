@@ -21,12 +21,14 @@ import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.Character2D;
 import com.mygdx.game.DamageActionFixture;
 import static com.mygdx.game.HelpGame.P2M;
+import com.mygdx.game.Object2D;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import ressourcesmanagers.TextureManager;
 import triggered.TeethTriggeredObject2D;
 
 /**
@@ -35,7 +37,7 @@ import triggered.TeethTriggeredObject2D;
  */
 public class OpponentCAC1 extends Character2D{
 
-    private static final Texture OPPCAC1TEXT = new Texture("character" + File.separator + "opponentCAC1.png");
+    private static final String OPPCAC1TEXT = "character" + File.separator + "opponentCAC1.png";
     private static final float ATT_DIST = P2M * 70;
     private static final float MOVE_DIST = P2M * 200;
     
@@ -43,7 +45,7 @@ public class OpponentCAC1 extends Character2D{
     
     protected Set<OppInfluence> influences = new HashSet<OppInfluence>();
     
-    protected final Body target;
+    protected final Object2D target;
     
     protected DamageActionFixture damageActionFixture;
     
@@ -53,7 +55,7 @@ public class OpponentCAC1 extends Character2D{
     
     protected SideCharacter previousSide;
     
-    public OpponentCAC1(int lifePoint, Body target){
+    public OpponentCAC1(int lifePoint, Object2D target){
         super(lifePoint);
         
         this.side = SideCharacter.RIGHT;
@@ -67,7 +69,7 @@ public class OpponentCAC1 extends Character2D{
         this.maxSpeed = 2f;
     }
     
-    public OpponentCAC1(World world, Body target, float posX, float posY) {
+    public OpponentCAC1(World world, Object2D target, float posX, float posY) {
         super(100);
         this.target = target;
         
@@ -79,10 +81,8 @@ public class OpponentCAC1 extends Character2D{
         
         this.maxSpeed = 2f;
         
-        // Part graphic
-        this.texture = OPPCAC1TEXT;
-        
-        this.initializeGraphic();
+        this.assignTextures();
+
         this.listAnimations.get(2).setFrameDuration(0.15f);
         this.listAnimations.get(3).setFrameDuration(0.15f);
         
@@ -211,6 +211,16 @@ public class OpponentCAC1 extends Character2D{
         
         this.changeAnimation(0, true);
     }
+    
+    @Override
+    public void assignTextures(){
+        
+        this.texture = TextureManager.getInstance().getTexture(OPPCAC1TEXT, this);
+        
+        if(this.texture != null){
+            this.initializeGraphic();
+        }
+    } 
     
     public final void initializeSimpleGraphic(){
         // Part graphic
@@ -354,21 +364,21 @@ public class OpponentCAC1 extends Character2D{
             return;
         }
         
-        if(this.target.getPosition().dst(this.physicBody.getPosition()) < MOVE_DIST){
-            if(this.target.getPosition().x - this.physicBody.getPosition().x > 0){
+        if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
+            if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
                 this.influences.add(OppInfluence.GO_RIGHT);
             }else{
                 this.influences.add(OppInfluence.GO_LEFT);
             }
             
             if(this.canAttack
-                    && this.target.getPosition().y - this.physicBody.getPosition().y > 75 * P2M 
-                    && this.target.getPosition().y - this.physicBody.getPosition().y < 150 * P2M){
+                    && this.target.getPositionBody().y - this.physicBody.getPosition().y > 75 * P2M 
+                    && this.target.getPositionBody().y - this.physicBody.getPosition().y < 150 * P2M){
                 this.influences.add(OppInfluence.JUMP);
             }
             
-            if(Math.abs(this.target.getPosition().sub(this.physicBody.getPosition()).len()) <  300 * P2M
-                    && Math.abs(this.target.getPosition().y - this.physicBody.getPosition().y) < 50 * P2M){
+            if(Math.abs(this.target.getPositionBody().sub(this.physicBody.getPosition()).len()) <  300 * P2M
+                    && Math.abs(this.target.getPositionBody().y - this.physicBody.getPosition().y) < 50 * P2M){
                 this.influences.add(OppInfluence.ATTACK);
             }
         }else{
@@ -398,15 +408,15 @@ public class OpponentCAC1 extends Character2D{
             return;
         }
         
-        if(this.target.getPosition().dst(this.physicBody.getPosition()) < MOVE_DIST){
-            if(this.target.getPosition().x - this.physicBody.getPosition().x > 0){
+        if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
+            if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
                 this.influences.add(OppInfluence.GO_RIGHT);
             }else{
                 this.influences.add(OppInfluence.GO_LEFT);
             }
             
-            if(Math.abs(this.target.getPosition().sub(this.physicBody.getPosition()).len()) <  50 * P2M
-                    && Math.abs(this.target.getPosition().y - this.physicBody.getPosition().y) < 50 * P2M){
+            if(Math.abs(this.target.getPositionBody().sub(this.physicBody.getPosition()).len()) <  50 * P2M
+                    && Math.abs(this.target.getPositionBody().y - this.physicBody.getPosition().y) < 50 * P2M){
                 this.influences.add(OppInfluence.ATTACK);
             }
         }else{
@@ -436,8 +446,8 @@ public class OpponentCAC1 extends Character2D{
             return;
         }
         
-        if(this.target.getPosition().dst(this.physicBody.getPosition()) < MOVE_DIST){
-            if(this.target.getPosition().x - this.physicBody.getPosition().x > 0){
+        if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
+            if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
                 if(this.side == SideCharacter.LEFT){
                     this.influences.add(OppInfluence.GO_RIGHT);
                 }
@@ -473,21 +483,21 @@ public class OpponentCAC1 extends Character2D{
             return;
         }
         
-        if(this.target.getPosition().dst(this.physicBody.getPosition()) < MOVE_DIST){
-            if(this.target.getPosition().x - this.physicBody.getPosition().x > 0){
+        if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
+            if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
                 this.influences.add(OppInfluence.GO_RIGHT);
             }else{
                 this.influences.add(OppInfluence.GO_LEFT);
             }
             
             if(this.canAttack
-                    && this.target.getPosition().y - this.physicBody.getPosition().y > 40 * P2M 
-                    && this.target.getPosition().y - this.physicBody.getPosition().y < 150 * P2M){
+                    && this.target.getPositionBody().y - this.physicBody.getPosition().y > 40 * P2M 
+                    && this.target.getPositionBody().y - this.physicBody.getPosition().y < 150 * P2M){
                 this.influences.add(OppInfluence.JUMP);
             }
             
-            if(Math.abs(this.target.getPosition().sub(this.physicBody.getPosition()).len()) <  60 * P2M
-                    && Math.abs(this.target.getPosition().y - this.physicBody.getPosition().y) < 50 * P2M){
+            if(Math.abs(this.target.getPositionBody().sub(this.physicBody.getPosition()).len()) <  60 * P2M
+                    && Math.abs(this.target.getPositionBody().y - this.physicBody.getPosition().y) < 50 * P2M){
                 this.influences.add(OppInfluence.ATTACK);
             }
         }else{
@@ -517,21 +527,21 @@ public class OpponentCAC1 extends Character2D{
             return;
         }
         
-        if(this.target.getPosition().dst(this.physicBody.getPosition()) < MOVE_DIST * 1.5){
-            if(this.target.getPosition().x - this.physicBody.getPosition().x > 0){
+        if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST * 1.5){
+            if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
                 this.influences.add(OppInfluence.GO_RIGHT);
             }else{
                 this.influences.add(OppInfluence.GO_LEFT);
             }
             
             if(this.canAttack
-                    && this.target.getPosition().y - this.physicBody.getPosition().y > 50 * P2M 
-                    && this.target.getPosition().y - this.physicBody.getPosition().y < 150 * P2M){
+                    && this.target.getPositionBody().y - this.physicBody.getPosition().y > 50 * P2M 
+                    && this.target.getPositionBody().y - this.physicBody.getPosition().y < 150 * P2M){
                 this.influences.add(OppInfluence.JUMP);
             }
             
-            if(Math.abs(this.target.getPosition().sub(this.physicBody.getPosition()).len()) <  60 * P2M
-                    && Math.abs(this.target.getPosition().y - this.physicBody.getPosition().y) < 50 * P2M){
+            if(Math.abs(this.target.getPositionBody().sub(this.physicBody.getPosition()).len()) <  60 * P2M
+                    && Math.abs(this.target.getPositionBody().y - this.physicBody.getPosition().y) < 50 * P2M){
                 this.influences.add(OppInfluence.ATTACK);
             }
         }

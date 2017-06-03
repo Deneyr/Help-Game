@@ -9,10 +9,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 /**
  *
@@ -22,15 +25,23 @@ public class BackgroundScreen implements Screen{
 
     private final float P2M = 1.5f/64; 
     
-    private final HelpGame game;
+    private final Batch batch;
     
-    private OrthographicCamera camera;
+    private final TreeMap<Float, WorldPlane> mapBackgroundPlanes;
+    
+    private final OrthographicCamera camera;
+    
+    private Vector2 targetCameraPosition;
     
     
-    public BackgroundScreen(HelpGame game){
-        this.game = game;
+    public BackgroundScreen(Batch batch, TreeMap<Float, WorldPlane> mapBackgroundPlanes){
+        this.batch = batch;
+        
+        this.mapBackgroundPlanes = mapBackgroundPlanes;
         
         this.camera = new OrthographicCamera(800, 480);
+        
+        this.targetCameraPosition = new Vector2();
     }
     
     @Override
@@ -38,19 +49,21 @@ public class BackgroundScreen implements Screen{
         
     }
 
+    
+    
     @Override
     public void render(float f) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        for(Entry<Float, WorldPlane> plane : this.game.getMapBackgroundPlanes().entrySet()){
+        for(Entry<Float, WorldPlane> plane : this.mapBackgroundPlanes.entrySet()){
 
             // Update camera (center on hero)
-            this.getCamera().position.set(this.game.getGameWorld().getHeroPosition().x / P2M * plane.getKey(), this.game.getGameWorld().getHeroPosition().y / P2M /** plane.getKey() WIP */, 0);
+            this.getCamera().position.set(this.targetCameraPosition.x * plane.getKey(), this.targetCameraPosition.y /** plane.getKey() WIP */, 0);
             this.getCamera().update();
-            this.game.batch.setProjectionMatrix(this.getCamera().combined);
+            this.batch.setProjectionMatrix(this.getCamera().combined);
             
-            this.game.batch.begin();    
+            this.batch.begin();    
 
             // Start render
             List<Sprite> listSprites = plane.getValue().getSpritesInRegion((this.getCamera().position.x - this.getCamera().viewportWidth / 2.f * 1.1f) * P2M,
@@ -62,8 +75,8 @@ public class BackgroundScreen implements Screen{
             while(it.hasNext()){
                 Sprite sprite = it.next();
                 if(sprite != null){
-                    this.game.batch.setColor(sprite.getColor());
-                    this.game.batch.draw(sprite, 
+                    this.batch.setColor(sprite.getColor());
+                    this.batch.draw(sprite, 
                                             sprite.getX(), sprite.getY(),
                                             sprite.getOriginX(), sprite.getOriginY(),
                                             sprite.getWidth(),sprite.getHeight(),
@@ -73,8 +86,8 @@ public class BackgroundScreen implements Screen{
                 //System.out.println("position : " + sprite.getX() + "-" + sprite.getY());
             }
             
-            this.game.batch.setColor(1f, 1f, 1f, 1f);
-            this.game.batch.end();
+            this.batch.setColor(1f, 1f, 1f, 1f);
+            this.batch.end();
         }
     }
 
@@ -108,5 +121,10 @@ public class BackgroundScreen implements Screen{
      */
     public OrthographicCamera getCamera() {
         return camera;
+    }
+    
+    
+    public void setTargetCameraPosition(float posX, float posY) {
+        this.targetCameraPosition = new Vector2(posX, posY);
     }
 }

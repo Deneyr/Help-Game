@@ -346,7 +346,7 @@ public abstract class Character2D extends Object2D{
     protected void notifyObject2DStateListener(Object2DStateListener.Object2DState state, int animCounter){
         for(WeakReference<Object2DStateListener> refObject2DStateListener : this.listObject2DStateListener){
             if(refObject2DStateListener.get() != null){
-                refObject2DStateListener.get().notifyStateChanged(this, state, animCounter);
+                refObject2DStateListener.get().onStateChanged(this, state, animCounter);
             }
         }
     }
@@ -354,7 +354,7 @@ public abstract class Character2D extends Object2D{
     protected void notifyObject2DStateListener(Object2DStateListener.Object2DState state, int animCounter, boolean canReplace){
         for(WeakReference<Object2DStateListener> refObject2DStateListener : this.listObject2DStateListener){
             if(refObject2DStateListener.get() != null){
-                refObject2DStateListener.get().notifyStateChanged(this, state, animCounter, canReplace);
+                refObject2DStateListener.get().onStateChanged(this, state, animCounter, canReplace);
             }
         }
     }
@@ -362,7 +362,7 @@ public abstract class Character2D extends Object2D{
     protected void notifyObject2D2CreateListener(Class obj2DClass, Vector2 position, Vector2 speed){
         for(WeakReference<Object2DStateListener> refObject2DStateListener : this.listObject2DStateListener){
             if(refObject2DStateListener.get() != null){
-                refObject2DStateListener.get().notifyObject2D2Create(this, obj2DClass, position, speed);
+                refObject2DStateListener.get().onObject2D2Create(this, obj2DClass, position, speed);
             }
         }
     } 

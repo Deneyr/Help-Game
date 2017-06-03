@@ -8,6 +8,7 @@ package characters;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.Object2D;
 import java.io.File;
 
 /**
@@ -17,11 +18,11 @@ import java.io.File;
 public class OpponentThief extends OpponentCAC1{
     private static final Texture OPPTHIEFTEXT = new Texture("character" + File.separator + "spritemapkairaVoleur-01.png");
     
-    public OpponentThief(World world, Body target){
+    public OpponentThief(World world, Object2D target){
         super(100, target);
     }
     
-    public OpponentThief(World world, Body target, float posX, float posY){
+    public OpponentThief(World world, Object2D target, float posX, float posY){
         super(100, target);
         
         this.texture = OPPTHIEFTEXT;

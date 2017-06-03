@@ -32,11 +32,11 @@ public class OpponentCAC2 extends OpponentCAC1{
     
     private static final Texture OPPCAC2TEXT = new Texture("character" + File.separator + "spritemapkaira_batte-01.png");
     
-    public OpponentCAC2(World world, Body target){
+    public OpponentCAC2(World world, Object2D target){
         super(100, target);
     }
     
-    public OpponentCAC2(World world, Body target, float posX, float posY){
+    public OpponentCAC2(World world, Object2D target, float posX, float posY){
         super(100, target);
         
         this.texture = OPPCAC2TEXT;

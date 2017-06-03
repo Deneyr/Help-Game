@@ -21,12 +21,13 @@ import static com.mygdx.game.HelpGame.P2M;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import ressourcesmanagers.GraphicalComponent;
 
 /**
  *
  * @author françois
  */
-public abstract class Object2D implements Disposable{
+public abstract class Object2D implements Disposable, GraphicalComponent{
     // end collision mask
     
     protected int priority;
@@ -148,6 +149,11 @@ public abstract class Object2D implements Disposable{
         return this.listAnimations.get(this.currentAnimation).isAnimationFinished(this.animationTime);
     }
    
+    @Override
+    public void assignTextures(){
+        // nothing to do;
+    }
+    
     // dispose function
     @Override
     public void dispose(){
@@ -181,9 +187,7 @@ public abstract class Object2D implements Disposable{
 
     }
     
-    public void addObject2DStateListener(Object2DStateListener object2DStateListener){
-        // nothing to do
-    }
+    
     
     protected void setCollisionFilterMask(FixtureDef fixtureDef, boolean reset){
         if(reset){
@@ -217,8 +221,12 @@ public abstract class Object2D implements Disposable{
     
     protected void notifyGameEventListener(EventType type, String details, Vector2 location){
         if(this.gameEventListener != null && this.gameEventListener.get() != null){
-            this.gameEventListener.get().notifyGameEvent(type, details, location);
+            this.gameEventListener.get().onGameEvent(type, details, location);
         }
+    }
+    
+    public void addObject2DStateListener(Object2DStateListener object2DStateListener){
+        // nothing to do
     }
        
 }

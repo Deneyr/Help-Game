@@ -111,7 +111,7 @@ public class BulletTriggeredObject2D extends TriggeredObject2D{
     @Override
     public void onOutOfScreen(double dist){
         if(this.object2DStateListener.get() != null){
-            this.object2DStateListener.get().notifyStateChanged(this, Object2DStateListener.Object2DState.DEATH, 0);
+            this.object2DStateListener.get().onStateChanged(this, Object2DStateListener.Object2DState.DEATH, 0);
         }
     }
     

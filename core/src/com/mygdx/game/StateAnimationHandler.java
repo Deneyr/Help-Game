@@ -135,7 +135,7 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
     }
 
     @Override
-    public void notifyStateChanged(Object2D notifier, Object2DState state, int animCounter) {
+    public void onStateChanged(Object2D notifier, Object2DState state, int animCounter) {
         if(state != Object2DState.DEATH || animCounter > 0){
             this.currentAnimatedObjectsCounter.put(notifier, animCounter);
             this.currentAnimatedObjectsState.put(notifier, state);
@@ -150,10 +150,10 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
     }
     
     @Override
-    public void notifyStateChanged(Object2D notifier, Object2DState state, int animCounter, boolean canReplace){
+    public void onStateChanged(Object2D notifier, Object2DState state, int animCounter, boolean canReplace){
         if(!this.IsObject2DHandled(notifier) || canReplace){
             if(state != Object2DState.DEATH || animCounter > 0){
-                this.notifyStateChanged(notifier, state, animCounter);
+                this.onStateChanged(notifier, state, animCounter);
             }else{
                 this.removeObject2D(notifier);
                 if(this.currentAnimatedObjectsCounter.containsKey(notifier)){
@@ -166,7 +166,7 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
     }
     
     @Override
-    public void notifyObject2D2Create(Object2D notifier, Class obj2DClass, Vector2 position, Vector2 speed){
+    public void onObject2D2Create(Object2D notifier, Class obj2DClass, Vector2 position, Vector2 speed){
         
         if(this.Object2DFactoryPools.containsKey(obj2DClass) && this.gameWorld.get() != null){
             FactoryPool factoryPool = this.Object2DFactoryPools.get(obj2DClass);

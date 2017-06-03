@@ -93,8 +93,8 @@ public class HelpGame extends Game{
             plane.getValue().step(Gdx.graphics.getDeltaTime());
         }
         
-        for(Screen screen : this.screensDisplayed){
-            this.setScreen(screen);
+        for(Screen screenDisplayed : this.screensDisplayed){
+            this.setScreen(screenDisplayed);
             super.render();
         }
     }
@@ -143,11 +143,11 @@ public class HelpGame extends Game{
     }
     
     public void initTestLvl(){
-         // --- init screen ---
+        // --- init screen ---
         this.isTherePhysic = true;
         
         this.screensDisplayed.clear();
-        this.screensDisplayed.add(new BackgroundScreen(this));
+        //this.screensDisplayed.add(new BackgroundScreen(this));
         this.screensDisplayed.add(this.gameScreen);
         this.screensDisplayed.add(new GUIScreen(this));
         

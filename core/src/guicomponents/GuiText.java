@@ -155,4 +155,13 @@ public class GuiText extends GuiComponent{
         MIDDLE,
         RIGHT
     }
+    
+    @Override
+    public void dispose(){
+        if(this.bitmapFont != null){
+            this.bitmapFont.dispose();
+        }
+        
+        super.dispose();
+    }
 }

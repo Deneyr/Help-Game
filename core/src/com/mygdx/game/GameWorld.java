@@ -242,7 +242,7 @@ public class GameWorld implements Disposable, WorldPlane, GameEventListener{
     }
 
     @Override
-    public void notifyGameEvent(EventType type, String details, Vector2 location) {
+    public void onGameEvent(EventType type, String details, Vector2 location) {
         
         switch(type){
             case SCORE:
@@ -352,7 +352,7 @@ public class GameWorld implements Disposable, WorldPlane, GameEventListener{
     public void notifyGameEventListeners(EventType event, String details, Vector2 location){
         for(WeakReference<GameEventListener> refEventGameListener : this.listEventGameListeners){
             if(refEventGameListener.get() != null){
-                refEventGameListener.get().notifyGameEvent(event, details, location);
+                refEventGameListener.get().onGameEvent(event, details, location);
             }
         }
     }

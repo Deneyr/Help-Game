@@ -16,12 +16,13 @@ import java.util.Map.Entry;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 import java.util.Random;
+import ressourcesmanagers.GraphicalComponent;
 
 /**
  *
  * @author françois
  */
-public abstract class BackgroundWorld implements WorldPlane{
+public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
 
     protected TreeMap<Float, BackgroundPart> backgroundPartList;
     
@@ -64,6 +65,11 @@ public abstract class BackgroundWorld implements WorldPlane{
         return spriteList;
     }
 
+    @Override
+    public void assignTextures(){
+        // Nothing to do 
+    }
+    
     @Override
     public void flushWorld() {
         this.backgroundPartList.clear();

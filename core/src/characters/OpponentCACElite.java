@@ -34,7 +34,7 @@ public class OpponentCACElite extends OpponentCAC2{
     
     protected ShieldActionFixture shieldActionFixture;
     
-    public OpponentCACElite(World world, Body target, float posX, float posY) {
+    public OpponentCACElite(World world, Object2D target, float posX, float posY) {
         super(world, target);
         
         this.texture = OPPCACELITETEXT;

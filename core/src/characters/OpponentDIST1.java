@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 import static com.mygdx.game.HelpGame.P2M;
+import com.mygdx.game.Object2D;
 import java.io.File;
 import java.util.ArrayList;
 import triggered.BulletTriggeredObject2D;
@@ -28,7 +29,7 @@ public class OpponentDIST1 extends OpponentCAC1{
     
     private static final Texture OPPDIST1TEXT = new Texture("character" + File.separator + "spritemapkairaTir-01.png");
     
-    public OpponentDIST1(World world, Body target, float posX, float posY){
+    public OpponentDIST1(World world, Object2D target, float posX, float posY){
         super(100, target);
         
         this.texture = OPPDIST1TEXT;

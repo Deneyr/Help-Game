@@ -48,7 +48,7 @@ public class CannonCorpus extends SolidObject2D{
     protected Cannon cannon;
     
     
-    public CannonCorpus(World world, Body target, float posX, float posY, float angle){
+    public CannonCorpus(World world, Object2D target, float posX, float posY, float angle){
         this.texture = CANNONCORPUSTEXT;
         
         // Part physic
@@ -130,7 +130,7 @@ public class CannonCorpus extends SolidObject2D{
         
         private int angularDir = -1;
         
-        private Body target;
+        private Object2D target;
         
         private float timerFire;
         
@@ -139,7 +139,7 @@ public class CannonCorpus extends SolidObject2D{
         
         private boolean canAttack;
         
-        public Cannon(Body ownerBody, Body target, World world, float posX, float posY) {
+        public Cannon(Body ownerBody, Object2D target, World world, float posX, float posY) {
             super(100);
             
             this.target = target;
@@ -240,9 +240,9 @@ public class CannonCorpus extends SolidObject2D{
         }
         
         private void createInfluences(){
-            if(this.target.getPosition().sub(this.getPositionBody()).len() < 400 * P2M){
+            if(this.target.getPositionBody().sub(this.getPositionBody()).len() < 400 * P2M){
                 Vector2 dirCannon = new Vector2(-1, 0).rotate((float) (this.physicBody.getAngle() * 180 / Math.PI));
-                Vector2 dirTarget = new Vector2(Cannon.this.target.getPosition().sub(Cannon.this.getPositionBody())).nor();
+                Vector2 dirTarget = new Vector2(Cannon.this.target.getPositionBody().sub(Cannon.this.getPositionBody())).nor();
                 if(dirTarget.crs(dirCannon) > 0){
                     this.influences.add(CannonInfluence.GO_RIGHT);
                 }else{

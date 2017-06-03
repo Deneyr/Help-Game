@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public interface GameEventListener {
     
-    public void notifyGameEvent(EventType type, String details, Vector2 location);
+    public void onGameEvent(EventType type, String details, Vector2 location);
     
     public enum EventType{
         SCORE,

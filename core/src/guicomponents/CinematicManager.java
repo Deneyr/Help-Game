@@ -87,7 +87,7 @@ public class CinematicManager {
     
     public void notifyListenerObj2Removed(Object2D obj){
         if(this.stateListener.get() != null){
-            this.stateListener.get().notifyStateChanged(obj, Object2DStateListener.Object2DState.DEATH, 0);
+            this.stateListener.get().onStateChanged(obj, Object2DStateListener.Object2DState.DEATH, 0);
         }
     }
     

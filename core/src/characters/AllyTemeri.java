@@ -28,11 +28,11 @@ public class AllyTemeri extends OpponentCAC1{
     
     private static final Texture TEMERITEXT = new Texture("character" + File.separator + "spritemapTemeri.png");
     
-    public AllyTemeri(World world, Body target){
+    public AllyTemeri(World world, Object2D target){
         super(100, target);
     }
     
-    public AllyTemeri(World world, Body target, float posX, float posY) {
+    public AllyTemeri(World world, Object2D target, float posX, float posY) {
         super(100, target);
         
         this.hasLifeBar = false;
