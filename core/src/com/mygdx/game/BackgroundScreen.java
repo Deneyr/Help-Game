@@ -29,19 +29,19 @@ public class BackgroundScreen implements Screen{
     
     private final TreeMap<Float, WorldPlane> mapBackgroundPlanes;
     
+    private final GameWorld gameWorld;
+    
     private final OrthographicCamera camera;
     
-    private Vector2 targetCameraPosition;
     
-    
-    public BackgroundScreen(Batch batch, TreeMap<Float, WorldPlane> mapBackgroundPlanes){
+    public BackgroundScreen(Batch batch, GameWorld gameWorld, TreeMap<Float, WorldPlane> mapBackgroundPlanes){
         this.batch = batch;
+        
+        this.gameWorld = gameWorld;
         
         this.mapBackgroundPlanes = mapBackgroundPlanes;
         
         this.camera = new OrthographicCamera(800, 480);
-        
-        this.targetCameraPosition = new Vector2();
     }
     
     @Override
@@ -59,7 +59,7 @@ public class BackgroundScreen implements Screen{
         for(Entry<Float, WorldPlane> plane : this.mapBackgroundPlanes.entrySet()){
 
             // Update camera (center on hero)
-            this.getCamera().position.set(this.targetCameraPosition.x * plane.getKey(), this.targetCameraPosition.y /** plane.getKey() WIP */, 0);
+            this.getCamera().position.set(this.gameWorld.getHeroPosition().x / P2M * plane.getKey(), this.gameWorld.getHeroPosition().y / P2M /** plane.getKey() WIP */, 0);
             this.getCamera().update();
             this.batch.setProjectionMatrix(this.getCamera().combined);
             
@@ -121,10 +121,5 @@ public class BackgroundScreen implements Screen{
      */
     public OrthographicCamera getCamera() {
         return camera;
-    }
-    
-    
-    public void setTargetCameraPosition(float posX, float posY) {
-        this.targetCameraPosition = new Vector2(posX, posY);
     }
 }

@@ -37,7 +37,10 @@ import triggered.TeethTriggeredObject2D;
  */
 public class OpponentCAC1 extends Character2D{
 
-    private static final String OPPCAC1TEXT = "character" + File.separator + "opponentCAC1.png";
+    //private static final String OPPCAC1TEXT = "character" + File.separator + "opponentCAC1.png";
+    private static final String OPPCAC1TEXT = "character/opponentCAC1.png";
+    
+    
     private static final float ATT_DIST = P2M * 70;
     private static final float MOVE_DIST = P2M * 200;
     
@@ -82,9 +85,6 @@ public class OpponentCAC1 extends Character2D{
         this.maxSpeed = 2f;
         
         this.assignTextures();
-
-        this.listAnimations.get(2).setFrameDuration(0.15f);
-        this.listAnimations.get(3).setFrameDuration(0.15f);
         
         // Part Physic
         this.initializePhysicCAC1(world, posX, posY);
@@ -210,6 +210,9 @@ public class OpponentCAC1 extends Character2D{
         this.listAnimations.add(new Animation(10, array));
         
         this.changeAnimation(0, true);
+        
+        this.listAnimations.get(2).setFrameDuration(0.15f);
+        this.listAnimations.get(3).setFrameDuration(0.15f);
     }
     
     @Override

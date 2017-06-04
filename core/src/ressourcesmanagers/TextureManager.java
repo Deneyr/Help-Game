@@ -5,8 +5,14 @@
  */
 package ressourcesmanagers;
 
+import characters.OpponentCAC1;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.assets.AssetErrorListener;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.Object2D;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +21,7 @@ import java.util.List;
  *
  * @author Deneyr
  */
-public class TextureManager extends ResourceManager{
+public class TextureManager extends ResourceManager implements AssetErrorListener{
 
     
     private static TextureManager instance;
@@ -26,6 +32,10 @@ public class TextureManager extends ResourceManager{
         super();
         
         this.waitingObject2D = new ArrayList<GraphicalComponent>();
+        
+        ResourceManager.addGameEventListener(this);
+        
+        this.assetManager.setErrorListener(this);
     }
     
     
@@ -46,9 +56,11 @@ public class TextureManager extends ResourceManager{
     
     public Texture getTexture(String path, GraphicalComponent graphicalComponent){
         synchronized(this){
-            if(ResourceManager.hasFinishedLoading()){
+            if(!ResourceManager.isLoading){
                 return ResourceManager.assetManager.get(path);
             }else{
+                this.registerResource(path);
+                
                 this.waitingObject2D.add(graphicalComponent);
             }
         }
@@ -62,6 +74,11 @@ public class TextureManager extends ResourceManager{
                 graphicalComponent.assignTextures();
             }
         }
+    }
+    
+    @Override
+    public void error(AssetDescriptor asset, java.lang.Throwable throwable){
+        System.out.println("error : " + asset.toString());
     }
     
 }

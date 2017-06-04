@@ -5,19 +5,16 @@
  */
 package menu;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.BackgroundScreen;
 import com.mygdx.game.GUIScreen;
 import com.mygdx.game.GameEventListener;
 import com.mygdx.game.GameScreen;
-import com.mygdx.game.GameWorld;
 import com.mygdx.game.HelpGame;
-import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.WorldPlane;
 import java.util.Map;
-import java.util.TreeMap;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
@@ -35,9 +32,11 @@ public abstract class LvlGameNode extends GameNode implements GameEventListener{
         
         // --- init screen ---
         this.screensDisplayed.clear();
-        this.screensDisplayed.add(new BackgroundScreen(batch, game.getMapBackgroundPlanes()));
-        this.screensDisplayed.add(new GameScreen());
-        this.screensDisplayed.add(new GUIScreen());
+        this.screensDisplayed.add(new BackgroundScreen(batch, game.getGameWorld(), game.getMapBackgroundPlanes()));
+        this.screensDisplayed.add(new GameScreen(batch, game.getGameWorld()));
+        this.screensDisplayed.add(new GUIScreen(batch, game.getGameWorld()));
+        
+        
         
     }
     
@@ -52,7 +51,7 @@ public abstract class LvlGameNode extends GameNode implements GameEventListener{
         game.getGameWorld().step(deltaTime);
     }
     
-    @Override
+    /*@Override
     public void renderScreens(HelpGame game, float deltaTime){
         
         for(Screen screenDisplayed : this.screensDisplayed){
@@ -64,29 +63,35 @@ public abstract class LvlGameNode extends GameNode implements GameEventListener{
         }
         
         super.renderScreens(game, deltaTime);
-    }
+    }*/
     
     protected abstract void initializeLevel(HelpGame game);
     
-    protected void flushLevel(){
-        
+    protected void flushLevel(HelpGame game){
+        game.getGameWorld().flushWorld();
     }
     
     @Override
-    public void onStartingNode(HelpGame game){
+    public boolean onStartingNode(HelpGame game){
+        TextureManager.getInstance().resetLoadedResources();
+        // TODO : Add each manager
+        
         this.initializeLevel(game);
+        
+        TextureManager.getInstance().UpdateResources();
+        // TODO : Add each manager
+        
+        return true;
     }
     
     @Override
     public void onEndingNode(HelpGame game){
-        this.flushLevel();
+        this.flushLevel(game);
     }
 
     @Override
     public void onGameEvent(EventType type, String details, Vector2 location) {
 
     }
-    
-    // List init levels.
     
 }

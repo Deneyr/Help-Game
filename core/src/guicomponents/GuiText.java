@@ -51,6 +51,7 @@ public class GuiText extends GuiComponent{
         this.refCornerHeight = refCornerHeight;
         
         this.glyphLayout = new GlyphLayout();
+        this.glyphLayout.setText(this.bitmapFont, this.text);
         
         this.location = new Vector2(locX, locY);
     }

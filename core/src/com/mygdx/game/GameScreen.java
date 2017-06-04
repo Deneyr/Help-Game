@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import java.util.Iterator;
@@ -22,15 +23,19 @@ public class GameScreen implements Screen{
 
     private final float P2M = 1.5f/64; 
     
-    private final HelpGame game;
+    private final GameWorld gameWorld;
+    
+    private final Batch batch;
     
     private OrthographicCamera camera;
     
     private ShapeRenderer shapeRenderer;
     
     
-    public GameScreen(HelpGame game){
-        this.game = game;
+    public GameScreen(Batch batch, GameWorld gameWorld){
+        this.gameWorld = gameWorld;
+        
+        this.batch = batch;
         
         this.camera = new OrthographicCamera(800, 480);
         
@@ -49,11 +54,11 @@ public class GameScreen implements Screen{
         
         
         // Update camera (center on hero)
-        this.getCamera().position.set(this.game.getGameWorld().getHeroPosition().x / P2M, this.game.getGameWorld().getHeroPosition().y / P2M, 0);
+        this.getCamera().position.set(this.gameWorld.getHeroPosition().x / P2M, this.gameWorld.getHeroPosition().y / P2M, 0);
         this.getCamera().update();
-        this.game.batch.setProjectionMatrix(this.getCamera().combined);
+        this.batch.setProjectionMatrix(this.getCamera().combined);
        
-        //this.game.batch.enableBlending();
+        //this.batch.enableBlending();
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         this.shapeRenderer.setProjectionMatrix(camera.combined);
@@ -63,10 +68,10 @@ public class GameScreen implements Screen{
         this.shapeRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
         
-        this.game.batch.begin();
+        this.batch.begin();
 
         // Start render
-        List<Sprite> listSprites = this.game.getGameWorld().getSpritesInRegion((this.getCamera().position.x - this.getCamera().viewportWidth / 2.f * 1.1f) * P2M,
+        List<Sprite> listSprites = this.gameWorld.getSpritesInRegion((this.getCamera().position.x - this.getCamera().viewportWidth / 2.f * 1.1f) * P2M,
                                                                            (this.getCamera().position.y - this.getCamera().viewportHeight / 2.f * 1.1f) * P2M,
                                                                            (this.getCamera().position.x + this.getCamera().viewportWidth / 2.f * 1.1f) * P2M,
                                                                            (this.getCamera().position.y + this.getCamera().viewportHeight / 2.f * 1.1f) * P2M);
@@ -75,8 +80,8 @@ public class GameScreen implements Screen{
         while(it.hasNext()){
             Sprite sprite = it.next();
             if(sprite != null){
-                this.game.batch.setColor(sprite.getColor());
-                this.game.batch.draw(sprite, 
+                this.batch.setColor(sprite.getColor());
+                this.batch.draw(sprite, 
                                         sprite.getX(), sprite.getY(),
                                         sprite.getOriginX(), sprite.getOriginY(),
                                         sprite.getWidth(),sprite.getHeight(),
@@ -85,7 +90,7 @@ public class GameScreen implements Screen{
             }
             //System.out.println("position : " + sprite.getX() + "-" + sprite.getY());
         }
-        this.game.batch.end();
+        this.batch.end();
     }
 
     @Override

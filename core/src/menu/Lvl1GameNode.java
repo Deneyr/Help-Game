@@ -18,8 +18,6 @@ import characters.OpponentDIST1;
 import characters.OpponentThief;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.mygdx.game.BackgroundScreen;
-import com.mygdx.game.GUIScreen;
 import com.mygdx.game.GameEventListener;
 import com.mygdx.game.HelpGame;
 import com.mygdx.game.scenery.Abribus;

@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  *
@@ -34,7 +35,7 @@ public abstract class ResourceManager implements WorldPlane, Disposable, Resourc
     
     protected Map<String, Boolean> mapLoadRessourceAgain;
     
-    protected List<String> ressources2Load;
+    protected Set<String> ressources2Load;
     
     protected static boolean isLoading;
     
@@ -56,7 +57,7 @@ public abstract class ResourceManager implements WorldPlane, Disposable, Resourc
         
         this.mapLoadRessourceAgain = new HashMap<String, Boolean>();
         
-        this.ressources2Load = new ArrayList<String>();
+        this.ressources2Load = new HashSet<String>();
 
         this.isLoading = false;
     }
@@ -101,20 +102,19 @@ public abstract class ResourceManager implements WorldPlane, Disposable, Resourc
             entryLoadRessourceAgain.setValue(false);
         }
         this.ressources2Load.clear();
+        
+        ResourceManager.isLoading = true;
     }
     
-    public boolean registerResource(String path){
-        if(this.mapLoadRessourceAgain.containsKey(path)){
+    public void registerResource(String path){
+        if(!this.mapLoadRessourceAgain.containsKey(path)){
+            this.ressources2Load.add(path);
+        }else{
             this.mapLoadRessourceAgain.put(path, true);
-            return true;
         }
-        this.ressources2Load.add(path);
-        return false;
     }
     
     public void UpdateResources(){
-
-        ResourceManager.isLoading = true;
         
         HashSet<Entry<String, Boolean>> entryLoadRessourcesAgain = new HashSet<Entry<String, Boolean>>(this.mapLoadRessourceAgain.entrySet());
         for(Entry<String, Boolean> entryLoadRessourceAgain : entryLoadRessourcesAgain){
@@ -137,9 +137,7 @@ public abstract class ResourceManager implements WorldPlane, Disposable, Resourc
     
     
     @Override
-    public void onResourcesLoaded(){
-        // Nothing to do.
-    }
+    public abstract void onResourcesLoaded();
     
     // Part loading screen
     
@@ -160,14 +158,12 @@ public abstract class ResourceManager implements WorldPlane, Disposable, Resourc
     }
     
     public void updateLogic(float deltaTime){
-        ResourceManager.loadingScreenSprite.setRotation(deltaTime * 10 * ResourceManager.loadingScreenSprite.getRotation());
         
+        ResourceManager.loadingScreenSprite.setRotation(-deltaTime * 100  + ResourceManager.loadingScreenSprite.getRotation());
         
         if(ResourceManager.hasFinishedLoading()){
             if(ResourceManager.isLoading){
                 ResourceManager.isLoading = false;
-                
-                this.onResourcesLoaded();
                 
                 ResourceManager.notifyResourcesLoaded();
             }
@@ -180,7 +176,7 @@ public abstract class ResourceManager implements WorldPlane, Disposable, Resourc
     public List<Sprite> getSpritesInRegion(float lowerX, float lowerY, float upperX, float upperY){
         ArrayList<Sprite> listSprites = new ArrayList<Sprite>();
                 
-        ResourceManager.loadingScreenSprite.setPosition(lowerX + (upperX - lowerX) * 4/5, lowerY + (upperY - lowerY) * 4/5);
+        ResourceManager.loadingScreenSprite.setPosition(lowerX + (upperX - lowerX) * 3.8f/5, lowerY + (upperY - lowerY) * 0.5f/5);
         
         listSprites.add(loadingScreenSprite);
         

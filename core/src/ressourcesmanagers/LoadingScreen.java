@@ -5,7 +5,9 @@
  */
 package ressourcesmanagers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -25,9 +27,7 @@ public class LoadingScreen implements Screen{
     
     private Batch batch;
     
-    private OrthographicCamera camera;
-    
-    private ShapeRenderer shapeRenderer;
+    private OrthographicCamera camera; 
     
     private GuiText loadingText;
     
@@ -36,9 +36,7 @@ public class LoadingScreen implements Screen{
         
         this.batch = batch;
         
-        this.shapeRenderer = new ShapeRenderer();
-        
-        this.loadingText = new GuiText("Chargement ...", 40, GuiText.ReferenceCorner.RIGHT, GuiText.ReferenceCorner.LEFT, 0.95f, 1);
+        this.loadingText = new GuiText("Chargement ...", 30, GuiText.ReferenceCorner.LEFT, GuiText.ReferenceCorner.MIDDLE, -0.5f, -0.5f);
     }
    
     
@@ -49,10 +47,10 @@ public class LoadingScreen implements Screen{
 
     @Override
     public void render(float delta) {
-
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
         this.camera.update();
-        this.shapeRenderer.setProjectionMatrix(camera.combined);
-        this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         
         this.batch.setProjectionMatrix(this.camera.combined);
         this.batch.begin();
