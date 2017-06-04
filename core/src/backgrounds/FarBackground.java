@@ -5,11 +5,13 @@
  */
 package backgrounds;
 
+import static backgrounds.CityBackground.BUILDING;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.BackgroundWorld;
 import static com.mygdx.game.HelpGame.P2M;
 import java.io.File;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
@@ -17,21 +19,31 @@ import java.io.File;
  */
 public class FarBackground extends BackgroundWorld{
 
-    public static final Texture FARBACKGROUND = new Texture("background" + File.separator + "cityBackground.jpg");
+    public static final String FARBACKGROUND = "background/cityBackground.jpg";
     
     
     public FarBackground(int seed){
-        super();
+        super(seed);
         
         this.ratioDist = 0.001f;
         
-        BackgroundPart part = new BackgroundPart(1000 * P2M, new Vector2(0 * P2M, 100 * P2M),  new Vector2(1000 * P2M, 100 * P2M), 3f);
-        
-        part.addObject2D2Scenary(FARBACKGROUND, 100);
-        part.createSpriteList(seed);
-        
-        this.backgroundPartList.put(part.getStartPart().x, part);
+        this.assignTextures();
     }
+    
+    @Override
+    public void assignTextures(){
+        
+        Texture farBackground = TextureManager.getInstance().getTexture(FARBACKGROUND, this);
+        
+        if(farBackground != null){
+            BackgroundPart part = new BackgroundPart(1000 * P2M, new Vector2(0 * P2M, 100 * P2M),  new Vector2(1000 * P2M, 100 * P2M), 3f);
+        
+            part.addObject2D2Scenary(farBackground, 100);
+            part.createSpriteList(this.seed);
+
+            this.backgroundPartList.put(part.getStartPart().x, part);
+        }
+    } 
     
     @Override
     public void step(float delta) {

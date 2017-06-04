@@ -14,7 +14,9 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -26,14 +28,14 @@ public class TextureManager extends ResourceManager implements AssetErrorListene
     
     private static TextureManager instance;
     
-    private List<GraphicalComponent> waitingObject2D;
+    private Set<GraphicalComponent> waitingObject2D;
        
     private TextureManager(){
         super();
         
-        this.waitingObject2D = new ArrayList<GraphicalComponent>();
-        
         ResourceManager.addGameEventListener(this);
+        
+        this.waitingObject2D = new HashSet<GraphicalComponent>();
         
         this.assetManager.setErrorListener(this);
     }
@@ -47,6 +49,13 @@ public class TextureManager extends ResourceManager implements AssetErrorListene
     }
 
     @Override
+    public void resetLoadedResources(){
+        super.resetLoadedResources();
+        
+        this.waitingObject2D.clear();
+    }
+    
+    @Override
     public void LoadNewResources() {
         for(String resourcePath : this.ressources2Load){
             ResourceManager.assetManager.load(resourcePath, Texture.class);
@@ -56,11 +65,10 @@ public class TextureManager extends ResourceManager implements AssetErrorListene
     
     public Texture getTexture(String path, GraphicalComponent graphicalComponent){
         synchronized(this){
-            if(!ResourceManager.isLoading){
+            this.registerResource(path);
+            if(ResourceManager.assetManager.isLoaded(path)){
                 return ResourceManager.assetManager.get(path);
-            }else{
-                this.registerResource(path);
-                
+            }else{               
                 this.waitingObject2D.add(graphicalComponent);
             }
         }

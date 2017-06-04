@@ -28,9 +28,13 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
     
     protected float ratioDist; 
     
+    protected int seed;
     
-    public BackgroundWorld(){
+    
+    public BackgroundWorld(int seed){
         this.backgroundPartList = new TreeMap<Float, BackgroundPart>();
+        
+        this.seed = seed;
     }
     
     @Override

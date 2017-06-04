@@ -16,6 +16,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
@@ -25,10 +26,10 @@ public class HillBackground extends BackgroundWorld{
 
     private static final int NB_ELEM = 15; 
     
-    public static final Texture HILL = new Texture("background" + File.separator + "Decors_FondFond_Colline.png");
+    public static final String HILL = "background/Decors_FondFond_Colline.png";
     
-    public static final Texture CLOUD = new Texture("background" + File.separator + "Nuage_Test2.png");
-    public static final Texture BIRD = new Texture("background" + File.separator + "SpritemapOiseau.png");
+    public static final String CLOUD = "background/Nuage_Test2.png";
+    public static final String BIRD = "background/SpritemapOiseau.png";
     
     
     private DynamicElemLogic cloudsLogic;
@@ -41,28 +42,46 @@ public class HillBackground extends BackgroundWorld{
     private float upperY;
     
     public HillBackground(int seed){
-        super();
+        super(seed);
         
         this.ratioDist = 0.8f;
         
-        BackgroundPart part = new BackgroundPart(200 * P2M, new Vector2(-2000 * P2M, -235 * P2M),  new Vector2(0 * P2M, -235 * P2M), 1f);
-        
-        part.addObject2D2Scenary(HILL, 30);
-        part.addObject2D2Scenary(CityBackground.BUILDING, 30);
-        part.createSpriteList(seed);
-        
-        this.backgroundPartList.put(part.getStartPart().x, part);
-        
-        // Dynamic elem
-        
-        this.cloudsLogic = new CloudDynamicElemLogic(1, -2000 * P2M, 0 * P2M, 20);
-        this.birdsLogic = new BirdsDynamicElemLogic(2, -2000 * P2M, 0 * P2M, 4);
+        this.assignTextures();
         
         this.lowerX = 0;
         this.lowerY = 0;
         this.upperX = 0;
         this.upperY = 0;
     }
+    
+    @Override
+    public void assignTextures(){
+        
+        Texture building = TextureManager.getInstance().getTexture(CityBackground.BUILDING, this);
+        Texture hill = TextureManager.getInstance().getTexture(HILL, this);
+        Texture cloud = TextureManager.getInstance().getTexture(CLOUD, this);
+        Texture bird = TextureManager.getInstance().getTexture(BIRD, this);
+        
+        if(building != null
+                && hill != null
+                && cloud != null
+                && bird != null){
+            
+            BackgroundPart part = new BackgroundPart(200 * P2M, new Vector2(-2000 * P2M, -235 * P2M),  new Vector2(0 * P2M, -235 * P2M), 1f);
+        
+            part.addObject2D2Scenary(hill, 30);
+            part.addObject2D2Scenary(building, 30);
+            part.createSpriteList(seed);
+
+            this.backgroundPartList.put(part.getStartPart().x, part);
+
+            // Dynamic elem
+
+            this.cloudsLogic = new CloudDynamicElemLogic(cloud, 1, -2000 * P2M, 0 * P2M, 20);
+            this.birdsLogic = new BirdsDynamicElemLogic(bird, 2, -2000 * P2M, 0 * P2M, 4);
+        }
+        
+    } 
     
     @Override
     public List<Sprite> getSpritesInRegion(float lowerX, float lowerY, float upperX, float upperY) {
@@ -115,8 +134,12 @@ public class HillBackground extends BackgroundWorld{
         
         private final float spaceLevelArea;
         
-        public CloudDynamicElemLogic(int indexBehaviour, float startArea, float endArea, int nbSpriteIntoBox) {
+        private Texture texture;
+        
+        public CloudDynamicElemLogic(Texture texture, int indexBehaviour, float startArea, float endArea, int nbSpriteIntoBox) {
             super(indexBehaviour, startArea, endArea, nbSpriteIntoBox);
+            
+            this.texture = texture;
             
             this.levelArea = 7f;
             this.spaceLevelArea = 2f;
@@ -125,7 +148,7 @@ public class HillBackground extends BackgroundWorld{
         
         @Override
         protected void addSprite(boolean isRight, float startArea, float endArea){
-            Sprite newSprite = new Sprite(HillBackground.CLOUD);
+            Sprite newSprite = new Sprite(this.texture);
             
             
             float scale = (float) (0.5 * Math.random() + 1);
@@ -151,10 +174,10 @@ public class HillBackground extends BackgroundWorld{
         
         private List<Animation> animList; 
         
-        public BirdsDynamicElemLogic(int indexBehaviour, float startArea, float endArea, int nbSpriteIntoBox) {
+        public BirdsDynamicElemLogic(Texture bird, int indexBehaviour, float startArea, float endArea, int nbSpriteIntoBox) {
             super(indexBehaviour, startArea, endArea, nbSpriteIntoBox);
             
-            TextureRegion[][] tmp = TextureRegion.split(HillBackground.BIRD, 76, 76);
+            TextureRegion[][] tmp = TextureRegion.split(bird, 76, 76);
             
             this.animList = new ArrayList<Animation>();
             

@@ -210,9 +210,6 @@ public class OpponentCAC1 extends Character2D{
         this.listAnimations.add(new Animation(10, array));
         
         this.changeAnimation(0, true);
-        
-        this.listAnimations.get(2).setFrameDuration(0.15f);
-        this.listAnimations.get(3).setFrameDuration(0.15f);
     }
     
     @Override
@@ -222,6 +219,9 @@ public class OpponentCAC1 extends Character2D{
         
         if(this.texture != null){
             this.initializeGraphic();
+            
+            this.listAnimations.get(2).setFrameDuration(0.15f);
+            this.listAnimations.get(3).setFrameDuration(0.15f);
         }
     } 
     
