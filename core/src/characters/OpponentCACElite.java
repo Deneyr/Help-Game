@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
@@ -30,26 +31,35 @@ import java.util.Set;
  */
 public class OpponentCACElite extends OpponentCAC2{
     
-    private static final Texture OPPCACELITETEXT = new Texture("character" + File.separator + "spritemapkairaBrute-01.png");
+    private static final String OPPCACELITETEXT = "character/spritemapkairaBrute-01.png";
     
     protected ShieldActionFixture shieldActionFixture;
     
     public OpponentCACElite(World world, Object2D target, float posX, float posY) {
         super(world, target);
         
-        this.texture = OPPCACELITETEXT;
-        
         this.maxSpeed = 6f;
         
-        this.initializeGraphic();
-        this.listAnimations.get(2).setFrameDuration(0.2f);
-        this.listAnimations.get(3).setFrameDuration(0.2f);
+        // Part graphic
+        this.assignTextures();
         
         this.initializePhysicCACElite(world, posX, posY);
         
         this.updateFixture();
         
         this.previousSide = this.side;
+    }
+    
+    @Override
+    public void assignTextures(){
+        
+        this.texture = TextureManager.getInstance().getTexture(OPPCACELITETEXT, this);
+        
+        if(this.texture != null){
+            this.initializeGraphic();
+            this.listAnimations.get(2).setFrameDuration(0.2f);
+            this.listAnimations.get(3).setFrameDuration(0.2f);
+        }
     }
     
     protected final void initializePhysicCACElite(World world, float posX, float posY){

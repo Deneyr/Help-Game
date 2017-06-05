@@ -19,6 +19,7 @@ import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import java.io.File;
 import java.util.ArrayList;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
@@ -26,7 +27,7 @@ import java.util.ArrayList;
  */
 public class AllyTemeri extends OpponentCAC1{
     
-    private static final Texture TEMERITEXT = new Texture("character" + File.separator + "spritemapTemeri.png");
+    private static final String TEMERITEXT = "character/spritemapTemeri.png";
     
     public AllyTemeri(World world, Object2D target){
         super(100, target);
@@ -37,19 +38,27 @@ public class AllyTemeri extends OpponentCAC1{
         
         this.hasLifeBar = false;
         
-        this.texture = TEMERITEXT;
-        
         this.maxSpeed = 3f;
         
-        this.initializeSimpleGraphic();
-        this.listAnimations.get(2).setFrameDuration(0.1f);
-        this.listAnimations.get(3).setFrameDuration(0.1f);
+        // Part graphic
+        this.assignTextures();
         
         this.initializePhysicTemeri(world, posX, posY);
         
         this.updateFixture();
         
         this.previousSide = this.side;
+    }
+    
+    @Override
+    public void assignTextures(){
+        this.texture = TextureManager.getInstance().getTexture(TEMERITEXT, this);
+        
+        if(this.texture != null){
+            this.initializeSimpleGraphic();
+            this.listAnimations.get(2).setFrameDuration(0.1f);
+            this.listAnimations.get(3).setFrameDuration(0.1f);
+        }
     }
     
     @Override

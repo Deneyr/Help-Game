@@ -19,6 +19,7 @@ import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import java.io.File;
 import java.util.ArrayList;
+import ressourcesmanagers.TextureManager;
 import triggered.BulletTriggeredObject2D;
 
 /**
@@ -27,16 +28,25 @@ import triggered.BulletTriggeredObject2D;
  */
 public class OpponentDIST1 extends OpponentCAC1{
     
-    private static final Texture OPPDIST1TEXT = new Texture("character" + File.separator + "spritemapkairaTir-01.png");
+    private static final String OPPDIST1TEXT = "character/spritemapkairaTir-01.png";
     
     public OpponentDIST1(World world, Object2D target, float posX, float posY){
         super(100, target);
-        
-        this.texture = OPPDIST1TEXT;
-        
-        this.initializeGraphic();
+       
+        // Part graphic
+        this.assignTextures();
         
         this.initializePhysicDIST1(world, posX, posY);
+    }
+    
+    @Override
+    public void assignTextures(){
+        
+        this.texture = TextureManager.getInstance().getTexture(OPPDIST1TEXT, this);
+        
+        if(this.texture != null){
+            this.initializeGraphic();
+        }
     }
     
     @Override

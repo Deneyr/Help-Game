@@ -32,6 +32,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
@@ -41,9 +42,9 @@ public class Grandma extends Character2D{
     
     public static final int LEFT_RIGHT_DIST = 18;
     
-    private static final Texture GRANDMATEXT = new Texture("character" + File.separator + "spritemapmeme.png");
+    private static final String GRANDMATEXT = "character/spritemapmeme.png";
     
-    private static final Texture DENTIER = new Texture("spritemapdentierV2-01.png");
+    private static final String DENTIERTEXT = "spritemapdentierV2-01.png";
     TextureRegion[][] lifeSprites;
     
     /*
@@ -76,78 +77,7 @@ public class Grandma extends Character2D{
         this.previousStateNode = this.currentStateNode;
         
         // Part graphic
-        this.texture = GRANDMATEXT; 
-        TextureRegion[][] tmp = TextureRegion.split(this.texture, 76, 76);
-        // walk folded
-        this.listAnimations.add(new Animation(0.2f, tmp[0]));
-        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
-        this.listAnimations.add(new Animation(0.2f, tmp[1]));
-        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
-        // attack
-        Array<TextureRegion> array = new Array<TextureRegion>(tmp[2]);
-        array.removeRange(3, 7);
-        this.listAnimations.add(new Animation(0.1f, array));
-        array = new Array<TextureRegion>(tmp[2]);
-        array.removeRange(0, 4);
-        this.listAnimations.add(new Animation(0.1f, array));
-        // walk unfolded side
-        this.listAnimations.add(new Animation(0.2f, tmp[3]));
-        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
-        this.listAnimations.add(new Animation(0.2f, tmp[4]));
-        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
-        // flying
-        array = new Array<TextureRegion>(tmp[5]);
-        array.removeRange(0, 0);
-        this.listAnimations.add(new Animation(0.2f, array));
-        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
-        array = new Array<TextureRegion>(tmp[6]);
-        array.removeRange(0, 0);
-        this.listAnimations.add(new Animation(0.2f, array));
-        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
-        // walk unfolded up
-        this.listAnimations.add(new Animation(0.2f, tmp[7]));
-        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
-        this.listAnimations.add(new Animation(0.2f, tmp[8]));
-        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
-        // jump
-        array = new Array<TextureRegion>(tmp[9]);
-        array.removeRange(3, 7);
-        this.listAnimations.add(new Animation(0.1f, array));
-        array = new Array<TextureRegion>(tmp[9]);
-        array.removeRange(0, 4);
-        this.listAnimations.add(new Animation(0.1f, array));
-        // swing
-        array = new Array<TextureRegion>(tmp[10]);
-        array.removeRange(0, 5);
-        array.removeRange(1, 1);
-        this.listAnimations.add(new Animation(0.3f, array));
-        array = new Array<TextureRegion>(tmp[10]);
-        array.removeRange(0, 6);
-        this.listAnimations.add(new Animation(0.3f, array));        
-        // Jump unfolded
-        array = new Array<TextureRegion>(tmp[11]);
-        array.removeRange(3, 7);
-        this.listAnimations.add(new Animation(0.1f, array));
-        array = new Array<TextureRegion>(tmp[11]);
-        array.removeRange(0, 4);
-        this.listAnimations.add(new Animation(0.1f, array)); 
-        // open umbrella
-        array = new Array<TextureRegion>(tmp[10]);
-        array.removeRange(3, 7);
-        this.listAnimations.add(new Animation(0.3f, array));
-        array = new Array<TextureRegion>(tmp[10]);
-        array.removeRange(6, 7);
-        array.removeRange(0, 2);
-        this.listAnimations.add(new Animation(0.3f, array));
-        //death
-        array = new Array<TextureRegion>(tmp[12]);
-        array.removeRange(4, 7);
-        this.listAnimations.add(new Animation(0.3f, array));
-        array = new Array<TextureRegion>(tmp[12]);
-        array.removeRange(0, 3);
-        this.listAnimations.add(new Animation(0.3f, array));
-        
-        this.changeAnimation(0, true);
+        this.assignTextures();
         
         // Part Physic
         BodyDef bodyDef = new BodyDef();
@@ -161,14 +91,92 @@ public class Grandma extends Character2D{
         this.collisionFixture = new ArrayList<Fixture>();
         
         updateFixture();
+    }
+    
+    @Override
+    public void assignTextures(){
+        this.texture = TextureManager.getInstance().getTexture(GRANDMATEXT, this);
         
-        // Life sprite
-        this.lifeSprites = TextureRegion.split(DENTIER, 76, 76);
+        Texture dentier = TextureManager.getInstance().getTexture(DENTIERTEXT, this);
         
-        // Part shield
-        
-        /*this.shield = new Shield(this.physicBody, world);
-        this.shield.updateSide(this.side);*/
+        if(this.texture != null
+                && dentier != null){
+            
+            TextureRegion[][] tmp = TextureRegion.split(this.texture, 76, 76);
+            // walk folded
+            this.listAnimations.add(new Animation(0.2f, tmp[0]));
+            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
+            this.listAnimations.add(new Animation(0.2f, tmp[1]));
+            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
+            // attack
+            Array<TextureRegion> array = new Array<TextureRegion>(tmp[2]);
+            array.removeRange(3, 7);
+            this.listAnimations.add(new Animation(0.1f, array));
+            array = new Array<TextureRegion>(tmp[2]);
+            array.removeRange(0, 4);
+            this.listAnimations.add(new Animation(0.1f, array));
+            // walk unfolded side
+            this.listAnimations.add(new Animation(0.2f, tmp[3]));
+            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
+            this.listAnimations.add(new Animation(0.2f, tmp[4]));
+            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
+            // flying
+            array = new Array<TextureRegion>(tmp[5]);
+            array.removeRange(0, 0);
+            this.listAnimations.add(new Animation(0.2f, array));
+            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
+            array = new Array<TextureRegion>(tmp[6]);
+            array.removeRange(0, 0);
+            this.listAnimations.add(new Animation(0.2f, array));
+            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
+            // walk unfolded up
+            this.listAnimations.add(new Animation(0.2f, tmp[7]));
+            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
+            this.listAnimations.add(new Animation(0.2f, tmp[8]));
+            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
+            // jump
+            array = new Array<TextureRegion>(tmp[9]);
+            array.removeRange(3, 7);
+            this.listAnimations.add(new Animation(0.1f, array));
+            array = new Array<TextureRegion>(tmp[9]);
+            array.removeRange(0, 4);
+            this.listAnimations.add(new Animation(0.1f, array));
+            // swing
+            array = new Array<TextureRegion>(tmp[10]);
+            array.removeRange(0, 5);
+            array.removeRange(1, 1);
+            this.listAnimations.add(new Animation(0.3f, array));
+            array = new Array<TextureRegion>(tmp[10]);
+            array.removeRange(0, 6);
+            this.listAnimations.add(new Animation(0.3f, array));        
+            // Jump unfolded
+            array = new Array<TextureRegion>(tmp[11]);
+            array.removeRange(3, 7);
+            this.listAnimations.add(new Animation(0.1f, array));
+            array = new Array<TextureRegion>(tmp[11]);
+            array.removeRange(0, 4);
+            this.listAnimations.add(new Animation(0.1f, array)); 
+            // open umbrella
+            array = new Array<TextureRegion>(tmp[10]);
+            array.removeRange(3, 7);
+            this.listAnimations.add(new Animation(0.3f, array));
+            array = new Array<TextureRegion>(tmp[10]);
+            array.removeRange(6, 7);
+            array.removeRange(0, 2);
+            this.listAnimations.add(new Animation(0.3f, array));
+            //death
+            array = new Array<TextureRegion>(tmp[12]);
+            array.removeRange(4, 7);
+            this.listAnimations.add(new Animation(0.3f, array));
+            array = new Array<TextureRegion>(tmp[12]);
+            array.removeRange(0, 3);
+            this.listAnimations.add(new Animation(0.3f, array));
+
+            this.changeAnimation(0, true);
+
+            // Life sprite
+            this.lifeSprites = TextureRegion.split(dentier, 76, 76);
+        }
     }
     
     @Override

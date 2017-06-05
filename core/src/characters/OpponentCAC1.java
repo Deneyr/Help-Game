@@ -84,6 +84,7 @@ public class OpponentCAC1 extends Character2D{
         
         this.maxSpeed = 2f;
         
+        // Part graphic
         this.assignTextures();
         
         // Part Physic

@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import triggered.BulletTriggeredObject2D;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
@@ -30,7 +30,7 @@ import triggered.BulletTriggeredObject2D;
  */
 public class OpponentCAC2 extends OpponentCAC1{
     
-    private static final Texture OPPCAC2TEXT = new Texture("character" + File.separator + "spritemapkaira_batte-01.png");
+    private static final String OPPCAC2TEXT = "character/spritemapkaira_batte-01.png";
     
     public OpponentCAC2(World world, Object2D target){
         super(100, target);
@@ -39,19 +39,28 @@ public class OpponentCAC2 extends OpponentCAC1{
     public OpponentCAC2(World world, Object2D target, float posX, float posY){
         super(100, target);
         
-        this.texture = OPPCAC2TEXT;
-        
         this.maxSpeed = 4f;
         
-        this.initializeGraphic();
-        this.listAnimations.get(2).setFrameDuration(0.2f);
-        this.listAnimations.get(3).setFrameDuration(0.2f);
+        // Part graphic
+        this.assignTextures();
         
         this.initializePhysicCAC2(world, posX, posY);
         
         this.updateFixture();
         
         this.previousSide = this.side;
+    }
+    
+    @Override
+    public void assignTextures(){
+        
+        this.texture = TextureManager.getInstance().getTexture(OPPCAC2TEXT, this);
+        
+        if(this.texture != null){
+            this.initializeGraphic();
+            this.listAnimations.get(2).setFrameDuration(0.2f);
+            this.listAnimations.get(3).setFrameDuration(0.2f);
+        }
     }
     
     @Override
