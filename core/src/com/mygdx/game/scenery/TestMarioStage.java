@@ -17,18 +17,19 @@ import com.badlogic.gdx.physics.box2d.World;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.SolidObject2D;
 import java.util.ArrayList;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
  * @author françois
  */
 public class TestMarioStage extends SolidObject2D{
-    private static final Texture MARIOSTAGETEXT = new Texture("decor.jpeg");
+    private static final String MARIOSTAGETEXT = "decor.jpeg";
     
     public TestMarioStage(World world, float posX, float posY){
         
         // Part graphic
-        this.texture = MARIOSTAGETEXT;
+        this.assignTextures();
         
         // Part physic
         
@@ -114,5 +115,10 @@ public class TestMarioStage extends SolidObject2D{
 
         this.physicBody = groundBody;
       
+    }
+    
+    @Override
+    public void assignTextures(){
+        this.texture = TextureManager.getInstance().getTexture(MARIOSTAGETEXT, this);      
     }
 }

@@ -18,13 +18,14 @@ import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.SolidObject2D;
 import java.io.File;
 import java.util.ArrayList;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
  * @author françois
  */
 public class TreeWithoutLeaf extends SolidObject2D{
-    private static final Texture TREETEXT = new Texture("tree" + File.separator + "Decors_Arbre1.png");
+    private static final String TREETEXT = "tree/Decors_Arbre1.png";
     
     private static final float SCALE_X = 1f;
     private static final float SCALE_Y = 1f;
@@ -32,7 +33,7 @@ public class TreeWithoutLeaf extends SolidObject2D{
     public TreeWithoutLeaf(World world, float posX, float posY){
         
         // Part graphic
-        this.texture = TREETEXT;
+        this.assignTextures();
         
         // Part physic
         
@@ -85,6 +86,11 @@ public class TreeWithoutLeaf extends SolidObject2D{
 
         this.physicBody = groundBody;
         //this.physicBody.setLinearVelocity(new Vector2(0.5f, 0));
+    }
+    
+    @Override
+    public void assignTextures(){
+        this.texture = TextureManager.getInstance().getTexture(TREETEXT, this);      
     }
     
     @Override

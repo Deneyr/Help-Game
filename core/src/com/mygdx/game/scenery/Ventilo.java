@@ -28,13 +28,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
  * @author françois
  */
 public class Ventilo extends SolidObject2D{
-    private static final Texture VENTILOTEXT = new Texture("destroyable" + File.separator + "spritemapVentilloV3-01.png");
+    private static final String VENTILOTEXT = "destroyable/spritemapVentilloV3-01.png";
     
     protected static final float SCALE_X = 1f;
     protected static final float SCALE_Y = 1f;
@@ -43,7 +44,7 @@ public class Ventilo extends SolidObject2D{
     
     private float strength;
     
-    protected List<WindObject2D> wind = new ArrayList<WindObject2D>();
+    protected List<WindObject2D> wind;
     
     protected boolean isWorking;
     
@@ -52,23 +53,9 @@ public class Ventilo extends SolidObject2D{
         this.strength = strength;
         
         // Part graphic
-        this.texture = VENTILOTEXT;
-
-        TextureRegion[][] tmp = TextureRegion.split(this.texture, 152, 152);
-        // walk folded
-        Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
-        this.listAnimations.add(new Animation(0.2f, array));
-        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.NORMAL);
+        this.assignTextures();
         
-        array = new Array<TextureRegion>(tmp[0]);
-        array.removeRange(0, 2);
-        this.listAnimations.add(new Animation(0.2f, array));
-        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.NORMAL);
-        
-        this.changeAnimation(1, false);
-        
-        // Part physic
-        
+        // Part physic    
         BodyDef groundBodyDef = new BodyDef();  
         // Set its world position
         groundBodyDef.position.set(new Vector2(posX * P2M, posY * P2M));  
@@ -117,10 +104,9 @@ public class Ventilo extends SolidObject2D{
         setFixtures.add(fix);
         this.windActionFixture = new WindActionFixture(setFixtures, this.strength);
         
-        // Child
-        array = new Array<TextureRegion>(tmp[1]);
-        this.wind.add(new WindObject2D( this.physicBody, world, array, posX + (152 * SCALE_X), posY, 152 * SCALE_X));
-        this.wind.add(new WindObject2D( this.physicBody, world, array, posX + (152*2 * SCALE_X), posY, 152 * 2 * SCALE_X));
+        this.wind = new ArrayList<WindObject2D>();
+        this.wind.add(new WindObject2D( this.physicBody, world, posX + (152 * SCALE_X), posY, 152 * SCALE_X));
+        this.wind.add(new WindObject2D( this.physicBody, world, posX + (152*2 * SCALE_X), posY, 152 * 2 * SCALE_X));        
         
         // Transform
         if(angle != 0){
@@ -128,6 +114,32 @@ public class Ventilo extends SolidObject2D{
         }
         
         this.isWorking = true;
+    }
+    
+    @Override
+    public void assignTextures(){
+        this.texture = TextureManager.getInstance().getTexture(VENTILOTEXT, this);
+        
+        if(this.texture != null){
+            
+            TextureRegion[][] tmp = TextureRegion.split(this.texture, 152, 152);
+            // walk folded
+            Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
+            this.listAnimations.add(new Animation(0.2f, array));
+            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.NORMAL);
+
+            array = new Array<TextureRegion>(tmp[0]);
+            array.removeRange(0, 2);
+            this.listAnimations.add(new Animation(0.2f, array));
+            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.NORMAL);
+
+            this.changeAnimation(1, false);  
+            
+            // Child
+            for(WindObject2D wind : this.wind){
+                wind.assignTextures(this.texture);
+            }
+        }
     }
     
     @Override
@@ -163,13 +175,9 @@ public class Ventilo extends SolidObject2D{
         
         private Joint joint;
         
-        public WindObject2D(Body ownerBody, World world, Array<TextureRegion> array, float posX, float posY, float offsetX){
-            this.listAnimations.add(new Animation(0.1f, new Array(array)));
-            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
+        public WindObject2D(Body ownerBody, World world, float posX, float posY, float offsetX){
             
-            this.changeAnimation(0, false);
-            
-            this.priority = 1;
+            this.priority = 1;          
             
             // Part physic
             BodyDef groundBodyDef = new BodyDef();    
@@ -208,6 +216,18 @@ public class Ventilo extends SolidObject2D{
            
         }
         
+        public void assignTextures(Texture texture){
+
+            if(texture != null){
+                 TextureRegion[][] tmp = TextureRegion.split(texture, 152, 152);
+                
+                this.listAnimations.add(new Animation(0.1f, new Array(tmp[1])));
+                this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
+
+                this.changeAnimation(0, false);
+            }
+        }
+        
         @Override
         public void removeBody(World world){
 
@@ -215,6 +235,5 @@ public class Ventilo extends SolidObject2D{
             
             super.removeBody(world);
         }
-        
     }
 }

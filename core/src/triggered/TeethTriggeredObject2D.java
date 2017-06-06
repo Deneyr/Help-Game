@@ -16,6 +16,7 @@ import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.TriggeredObject2D;
 import java.util.ArrayList;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
@@ -23,14 +24,14 @@ import java.util.ArrayList;
  */
 public class TeethTriggeredObject2D extends TriggeredObject2D{
 
-    private static final Texture UPTEXTURE = new Texture("Collectible_Dent.png");
+    public static final String UPTEXTURE = "Collectible_Dent.png";
     
     
     public TeethTriggeredObject2D(){
         super();
         
         // Part graphic
-        this.texture = UPTEXTURE;     
+        this.assignTextures();
     }
     
     @Override
@@ -60,6 +61,11 @@ public class TeethTriggeredObject2D extends TriggeredObject2D{
         this.collisionFixture.add(fix);
         fix.setUserData(this);
         
+    }
+    
+    @Override
+    public void assignTextures(){
+        this.texture = TextureManager.getInstance().getTexture(UPTEXTURE, this);
     }
     
     @Override

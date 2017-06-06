@@ -22,13 +22,14 @@ import com.mygdx.game.Object2DStateListener;
 import com.mygdx.game.SolidObject2D;
 import com.mygdx.game.TriggeredObject2D;
 import java.util.ArrayList;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
  * @author Deneyr
  */
 public class BulletTriggeredObject2D extends TriggeredObject2D{
-    private static final Texture BULLETTEXTURE = new Texture("Bullet.png");
+    public static final String BULLETTEXTURE = "Bullet.png";
     
     private int damageInflicted;
     
@@ -40,16 +41,24 @@ public class BulletTriggeredObject2D extends TriggeredObject2D{
         this.damageInflicted = 3;
         
         // Part graphic
-        this.texture = BULLETTEXTURE;
-        TextureRegion[][] tmp = TextureRegion.split(this.texture, 20, 20);
-        // walk folded
-        Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
-        array.removeRange(1, 3);
-        this.listAnimations.add(new Animation(0.2f, array));
+        this.assignTextures();
+    }
+    
+    @Override
+    public void assignTextures(){
+        this.texture = TextureManager.getInstance().getTexture(BULLETTEXTURE, this);
         
-        array = new Array<TextureRegion>(tmp[0]);
-        array.removeRange(0, 0);
-        this.listAnimations.add(new Animation(0.2f, array));
+        if(this.texture != null){
+            TextureRegion[][] tmp = TextureRegion.split(this.texture, 20, 20);
+            // walk folded
+            Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
+            array.removeRange(1, 3);
+            this.listAnimations.add(new Animation(0.2f, array));
+
+            array = new Array<TextureRegion>(tmp[0]);
+            array.removeRange(0, 0);
+            this.listAnimations.add(new Animation(0.2f, array));
+        }
     }
     
     @Override

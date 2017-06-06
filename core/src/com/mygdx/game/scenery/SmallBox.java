@@ -25,6 +25,7 @@ import triggered.UpTriggeredObject2D;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
@@ -32,7 +33,7 @@ import java.util.List;
  */
 public class SmallBox extends Character2D{
 
-    private static final Texture SMALLBOXTEXT = new Texture("destroyable" + File.separator + "SpritemapCaisse.png");
+    private static final String SMALLBOXTEXT = "destroyable/SpritemapCaisse.png";
     
     public SmallBox(World world, float posX, float posY) {
         super(3);
@@ -40,28 +41,7 @@ public class SmallBox extends Character2D{
         this.side = SideCharacter.RIGHT;   
         
         // Part graphic
-        this.texture = SMALLBOXTEXT;
-        TextureRegion[][] tmp = TextureRegion.split(this.texture, 40, 37);
-        // walk folded
-        Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
-        array.removeRange(1, 3);
-        this.listAnimations.add(new Animation(0.2f, array));
-
-        array = new Array<TextureRegion>(tmp[0]);
-        array.removeRange(0, 0);
-        array.removeRange(1, 2);
-        this.listAnimations.add(new Animation(0.2f, array));
-
-        array = new Array<TextureRegion>(tmp[0]);
-        array.removeRange(0, 1);
-        array.removeRange(1, 1);
-        this.listAnimations.add(new Animation(0.2f, array));
-        
-        array = new Array<TextureRegion>(tmp[0]);
-        array.removeRange(0, 2);
-        this.listAnimations.add(new Animation(0.2f, array));
-        
-        this.changeAnimation(0, true);
+        this.assignTextures();
         
         // Part Physic
         BodyDef bodyDef = new BodyDef();
@@ -112,6 +92,35 @@ public class SmallBox extends Character2D{
         
         this.hasLifeBar = false;
         
+    }
+    
+    @Override
+    public void assignTextures(){
+        this.texture = TextureManager.getInstance().getTexture(SMALLBOXTEXT, this);
+        
+        if(this.texture != null){
+            TextureRegion[][] tmp = TextureRegion.split(this.texture, 40, 37);
+            // walk folded
+            Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
+            array.removeRange(1, 3);
+            this.listAnimations.add(new Animation(0.2f, array));
+
+            array = new Array<TextureRegion>(tmp[0]);
+            array.removeRange(0, 0);
+            array.removeRange(1, 2);
+            this.listAnimations.add(new Animation(0.2f, array));
+
+            array = new Array<TextureRegion>(tmp[0]);
+            array.removeRange(0, 1);
+            array.removeRange(1, 1);
+            this.listAnimations.add(new Animation(0.2f, array));
+
+            array = new Array<TextureRegion>(tmp[0]);
+            array.removeRange(0, 2);
+            this.listAnimations.add(new Animation(0.2f, array));
+
+            this.changeAnimation(0, true);
+        }
     }
     
     @Override

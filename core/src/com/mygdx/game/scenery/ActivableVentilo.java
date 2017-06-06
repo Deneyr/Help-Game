@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
@@ -33,22 +34,30 @@ public class ActivableVentilo extends Ventilo{
     public ActivableVentilo(World world, float posX, float posY, float strength, float angle, boolean start) {
         super(world, posX, posY, strength, angle, start);
         
-        TextureRegion[][] tmp = TextureRegion.split(this.texture, 152, 152);
-        
-        Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
-        array.removeRange(2, 2);
-        this.listAnimations.add(new Animation(0.2f, array));
-        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.NORMAL);
-        
-        this.listAnimations.add(new Animation(0.2f, array));
-        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.REVERSED);
-        
         this.button = new ButtonObject2D(this, world, posX + (40 * SCALE_X), posY, 40 * SCALE_X);
-        
-        this.changeAnimation(1, false);
+
         this.isWorking = true;
         
         this.canBeActivated = true;
+    }
+    
+    @Override
+    public void assignTextures(){
+        super.assignTextures();
+        
+        if(this.texture != null){
+            TextureRegion[][] tmp = TextureRegion.split(this.texture, 152, 152);
+        
+            Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
+            array.removeRange(2, 2);
+            this.listAnimations.add(new Animation(0.2f, array));
+            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.NORMAL);
+
+            this.listAnimations.add(new Animation(0.2f, array));
+            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.REVERSED);
+            
+            this.changeAnimation(1, false);
+        }
     }
     
     public void activateVentilo(){

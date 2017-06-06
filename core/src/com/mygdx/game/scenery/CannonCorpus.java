@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import ressourcesmanagers.TextureManager;
 import triggered.CannonBallTriggeredObject2D;
 
 /**
@@ -39,8 +40,8 @@ import triggered.CannonBallTriggeredObject2D;
  */
 public class CannonCorpus extends SolidObject2D{
     
-    private static final Texture CANNONCORPUSTEXT = new Texture("CannonCorpus.png");
-    private static final Texture CANNONTEXT = new Texture("Cannon.png");
+    private static final String CANNONCORPUSTEXT = "CannonCorpus.png";
+    private static final String CANNONTEXT = "Cannon.png";
     
     protected static final float SCALE_X = 1f;
     protected static final float SCALE_Y = 1f;
@@ -49,10 +50,11 @@ public class CannonCorpus extends SolidObject2D{
     
     
     public CannonCorpus(World world, Object2D target, float posX, float posY, float angle){
-        this.texture = CANNONCORPUSTEXT;
         
-        // Part physic
+        // Part graphic
+        this.assignTextures();
         
+        // Part physic   
         BodyDef groundBodyDef = new BodyDef();  
         // Set its world position
         groundBodyDef.position.set(new Vector2(posX * P2M, posY * P2M));  
@@ -96,7 +98,19 @@ public class CannonCorpus extends SolidObject2D{
         // Child
         this.cannon = new Cannon(this.physicBody, target, world, posX , posY);
     }   
+         
+    @Override
+    public void assignTextures(){
+        this.texture = TextureManager.getInstance().getTexture(CANNONCORPUSTEXT, this);
+        Texture cannon = TextureManager.getInstance().getTexture(CANNONTEXT, this);
+        
+        if(this.texture != null
+                && cannon != null){
             
+            this.cannon.assignTextures(cannon);
+        }
+    }
+    
     @Override
     public Sprite createCurrentSprite(){
         Sprite sprite = super.createCurrentSprite();
@@ -144,8 +158,6 @@ public class CannonCorpus extends SolidObject2D{
             
             this.target = target;
             
-            this.texture = CANNONTEXT;
-            
             this.isInvulnerable = true;
             this.hasLifeBar = false;
             
@@ -154,15 +166,6 @@ public class CannonCorpus extends SolidObject2D{
             this.currentStateNode = new StateNode(CannonState.STOP);
             
             this.canAttack = true;
-            
-            // Part graphic
-            TextureRegion[][] tmp = TextureRegion.split(this.texture, 152, 153);
-            // walk
-            Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
-            array.removeRange(1, 4);
-            this.listAnimations.add(new Animation(0.2f, array));
-            array = new Array<TextureRegion>(tmp[0]);
-            this.listAnimations.add(new Animation(0.1f, array));
             
             // Part physic
             BodyDef groundBodyDef = new BodyDef();    
@@ -202,8 +205,23 @@ public class CannonCorpus extends SolidObject2D{
             this.physicBody.setTransform(this.getPositionBody(), (float) (ownerBody.getAngle() - Math.PI / 4));
             
             this.joint = world.createJoint(jointDef);
-                       
-            this.changeAnimation(0, false);
+        }
+        
+        public void assignTextures(Texture texture){
+
+            if(texture != null){
+                this.texture = texture;
+                
+                TextureRegion[][] tmp = TextureRegion.split(this.texture, 152, 153);
+
+                Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
+                array.removeRange(1, 4);
+                this.listAnimations.add(new Animation(0.2f, array));
+                array = new Array<TextureRegion>(tmp[0]);
+                this.listAnimations.add(new Animation(0.1f, array));        
+                
+                this.changeAnimation(0, false);
+            }
         }
     
         @Override

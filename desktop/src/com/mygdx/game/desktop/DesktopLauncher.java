@@ -8,8 +8,10 @@ import com.mygdx.game.HelpGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
             LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+            
             config.title = "HELP - A Grandma Odyssey";
             config.addIcon("HelpIcon.png", Files.FileType.Internal);
-            new LwjglApplication(new HelpGame(), config);
+            
+            LwjglApplication lwjglApplication = new LwjglApplication(new HelpGame(), config);
 	}
 }

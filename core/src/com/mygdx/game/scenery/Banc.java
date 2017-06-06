@@ -18,13 +18,14 @@ import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.SolidObject2D;
 import java.io.File;
 import java.util.ArrayList;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
  * @author françois
  */
 public class Banc extends SolidObject2D{
-    private static final Texture BANCTEXT = new Texture("urbanObj" + File.separator + "Obstacle_banc.png");
+    private static final String BANCTEXT = "urbanObj/Obstacle_banc.png";
     
     private static final float SCALE_X = 0.3f;
     private static final float SCALE_Y = 0.3f;
@@ -32,7 +33,7 @@ public class Banc extends SolidObject2D{
     public Banc(World world, float posX, float posY){
         
         // Part graphic
-        this.texture = BANCTEXT;
+        this.assignTextures();
         
         // Part physic
         
@@ -70,6 +71,11 @@ public class Banc extends SolidObject2D{
 
         this.physicBody = groundBody;
         //this.physicBody.setLinearVelocity(new Vector2(0.5f, 0));
+    }
+    
+    @Override
+    public void assignTextures(){
+        this.texture = TextureManager.getInstance().getTexture(BANCTEXT, this);
     }
     
     @Override

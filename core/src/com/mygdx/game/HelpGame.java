@@ -9,10 +9,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.TreeMap;
-import menu.GameNode;
-import menu.GameNodeManager;
-import menu.Lvl1GameNode;
-import ressourcesmanagers.TextureManager;
+import gamenode.GameNode;
+import gamenode.GameNodeManager;
+import gamenode.Lvl1GameNode;
 
 
 

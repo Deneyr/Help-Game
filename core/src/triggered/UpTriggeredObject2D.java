@@ -20,6 +20,7 @@ import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.TriggeredObject2D;
 import java.util.ArrayList;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
@@ -27,24 +28,32 @@ import java.util.ArrayList;
  */
 public class UpTriggeredObject2D extends TriggeredObject2D{
 
-    private static final Texture UPTEXTURE = new Texture("Collectible_Piece_spritemap.png");
+    public static final String UPTEXTURE = "Collectible_Piece_spritemap.png";
     
     public UpTriggeredObject2D(){
         super();
         
         // Part graphic
-        this.texture = UPTEXTURE;
-        TextureRegion[][] tmp = TextureRegion.split(this.texture, 36, 34);
-        // walk folded
-        Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
-        this.listAnimations.add(new Animation(0.2f, array));
-        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
+        this.assignTextures();
+        
+    }
+    
+    @Override
+    public void assignTextures(){
+        this.texture = TextureManager.getInstance().getTexture(UPTEXTURE, this);
+        
+        if(this.texture != null){
+            TextureRegion[][] tmp = TextureRegion.split(this.texture, 36, 34);
+            // walk folded
+            Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
+            this.listAnimations.add(new Animation(0.2f, array));
+            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
 
-        
-        array = new Array<TextureRegion>(tmp[1]);
-        array.removeRange(4, 7);
-        this.listAnimations.add(new Animation(0.2f, array));
-        
+
+            array = new Array<TextureRegion>(tmp[1]);
+            array.removeRange(4, 7);
+            this.listAnimations.add(new Animation(0.2f, array));
+        }
     }
     
     @Override

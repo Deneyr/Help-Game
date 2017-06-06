@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.WorldPlane;
 import java.lang.ref.WeakReference;
@@ -97,7 +96,6 @@ public abstract class ResourceManager implements WorldPlane, Disposable, Resourc
     }
     
     public void resetLoadedResources(){
-        
         for(Entry<String, Boolean> entryLoadRessourceAgain : this.mapLoadRessourceAgain.entrySet()){
             entryLoadRessourceAgain.setValue(false);
         }
@@ -120,6 +118,11 @@ public abstract class ResourceManager implements WorldPlane, Disposable, Resourc
         for(Entry<String, Boolean> entryLoadRessourceAgain : entryLoadRessourcesAgain){
             if(!entryLoadRessourceAgain.getValue()){
                 ResourceManager.assetManager.unload(entryLoadRessourceAgain.getKey());
+                if(ResourceManager.assetManager.isLoaded(entryLoadRessourceAgain.getKey()) == true){
+                    System.out.println("NONNNN !");
+                }else{
+                    System.out.println("OUIII !");
+                }
                 this.mapLoadRessourceAgain.remove(entryLoadRessourceAgain.getKey());
             }
         }

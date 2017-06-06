@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package menu;
+package gamenode;
 
 import backgrounds.CityBackground;
 import backgrounds.FarBackground;
@@ -36,8 +36,13 @@ import guicomponents.Dialogue;
 import guicomponents.GuiPortrait;
 import java.util.ArrayList;
 import java.util.List;
+import ressourcesmanagers.TextureManager;
 import triggered.ActivableTriggeredObject2D;
+import triggered.BulletTriggeredObject2D;
+import triggered.CannonBallTriggeredObject2D;
 import triggered.EventTriggeredObject2D;
+import triggered.TeethTriggeredObject2D;
+import triggered.UpTriggeredObject2D;
 
 /**
  *
@@ -55,8 +60,16 @@ public class Lvl1GameNode extends LvlGameNode{
         
         // --- init stage ---
         
-        // init background
+        // import dynamic resources (created at runtime).
+        TextureManager.getInstance().getTexture(BulletTriggeredObject2D.BULLETTEXTURE, null);
         
+        TextureManager.getInstance().getTexture(CannonBallTriggeredObject2D.CANNONBALLTEXTURE, null);
+        
+        TextureManager.getInstance().getTexture(TeethTriggeredObject2D.UPTEXTURE, null);
+        
+        TextureManager.getInstance().getTexture(UpTriggeredObject2D.UPTEXTURE, null);
+        
+        // init background
         int seed = 100;
         
         CityBackground cityBackground = new CityBackground(seed);

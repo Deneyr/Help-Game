@@ -23,23 +23,24 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
  * @author françois
  */
 public class Poutrelle extends SolidObject2D{
-    private static final Texture POUTRELLETEXT = new Texture("urbanObj" + File.separator + "Obstacle_Poutrelle.png");
+    private static final String POUTRELLETEXT = "urbanObj/Obstacle_Poutrelle.png";
     
     private static final float SCALE_X = 1f;
     private static final float SCALE_Y = 1f;
     
-    private ActionFixtures upActionFixture;
+    private KinematicActionFixtures kinematicActionFixture;
     
     public Poutrelle(World world, float posX, float posY){
         
         // Part graphic
-        this.texture = POUTRELLETEXT;
+        this.assignTextures();
         
         // Part physic
         
@@ -93,8 +94,13 @@ public class Poutrelle extends SolidObject2D{
         ground.setAsBox(382 * P2M * SCALE_X, 117 / 8f * P2M * SCALE_Y, new Vector2(0, (117 * 3/ 8f + 3)  * P2M * SCALE_Y), 0);
         fix = groundBody.createFixture(fixtureDef); 
         setFixtures.add(fix);
-        this.upActionFixture = new KinematicActionFixtures(setFixtures);
+        this.kinematicActionFixture = new KinematicActionFixtures(setFixtures);
         
+    }
+    
+    @Override
+    public void assignTextures(){
+        this.texture = TextureManager.getInstance().getTexture(POUTRELLETEXT, this);
     }
     
     @Override
@@ -113,6 +119,11 @@ public class Poutrelle extends SolidObject2D{
             this.physicBody.setLinearVelocity(new Vector2(4f, 0));
         }
         
-        this.upActionFixture.applyAction(deltaTime, this);
+        this.kinematicActionFixture.applyAction(deltaTime, this);
+    }
+    
+    @Override
+    public void dispose(){
+        this.kinematicActionFixture.dispose(this.physicBody);
     }
 }

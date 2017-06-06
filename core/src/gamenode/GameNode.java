@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package menu;
+package gamenode;
 
 import com.badlogic.gdx.Screen;
 import com.mygdx.game.HelpGame;
@@ -18,9 +18,7 @@ import java.util.Map;
  * @author Deneyr
  */
 public abstract class GameNode {
-
    
-    
     protected List<Screen> screensDisplayed;
     
     protected Map<Integer, GameNode> outputGameNode;
@@ -42,6 +40,10 @@ public abstract class GameNode {
             game.setScreen(screenDisplayed);
             game.renderScreen();
         }
+    }
+    
+    public void addNextNode(int index, GameNode gameNode){
+        this.outputGameNode.put(index, gameNode);
     }
     
     public boolean onStartingNode(HelpGame game){

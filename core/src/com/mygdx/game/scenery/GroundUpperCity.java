@@ -18,13 +18,14 @@ import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.SolidObject2D;
 import java.io.File;
 import java.util.ArrayList;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
  * @author françois
  */
 public class GroundUpperCity extends SolidObject2D {
-    private static final Texture GROUNDTEXT = new Texture("ground" + File.separator + "Sol.png");
+    private static final String GROUNDTEXT = "ground/Sol.png";
     
     private static final float SCALE_X = 100f;
     private static final float SCALE_Y = 3f;
@@ -32,7 +33,7 @@ public class GroundUpperCity extends SolidObject2D {
     public GroundUpperCity(World world, float posX, float posY){
         
         // Part graphic
-        this.texture = GROUNDTEXT;
+        this.assignTextures();
         
         // Part physic
         
@@ -70,6 +71,11 @@ public class GroundUpperCity extends SolidObject2D {
         this.physicBody = groundBody;
         
         //this.physicBody.setLinearVelocity(new Vector2(0.5f, 0));
+    }
+    
+    @Override
+    public void assignTextures(){
+        this.texture = TextureManager.getInstance().getTexture(GROUNDTEXT, this);
     }
     
     @Override

@@ -68,7 +68,7 @@ public class TextureManager extends ResourceManager implements AssetErrorListene
             this.registerResource(path);
             if(ResourceManager.assetManager.isLoaded(path)){
                 return ResourceManager.assetManager.get(path);
-            }else{               
+            }else if(graphicalComponent != null){               
                 this.waitingObject2D.add(graphicalComponent);
             }
         }

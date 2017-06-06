@@ -6,11 +6,9 @@
 package com.mygdx.game.scenery;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -18,21 +16,21 @@ import com.badlogic.gdx.physics.box2d.World;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.SolidObject2D;
 import java.util.ArrayList;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
  * @author françois
  */
 public class Orphanage extends SolidObject2D{
-    private static final Texture ORPHANAGETEXT = new Texture("orphenageBlack.png");
+    private static final String ORPHANAGETEXT = "orphenageBlack.png";
     
     public Orphanage(World world, float posX, float posY){
         
         // Part graphic
-        this.texture = ORPHANAGETEXT;
+        this.assignTextures();
         
-        // Part physic
-        
+        // Part physic 
         BodyDef groundBodyDef = new BodyDef();  
         // Set its world position
         groundBodyDef.position.set(new Vector2(posX * P2M, posY * P2M));  
@@ -77,6 +75,11 @@ public class Orphanage extends SolidObject2D{
         fix.setUserData(this);
 
         this.physicBody = groundBody;
+    }
+    
+    @Override
+    public void assignTextures(){
+        this.texture = TextureManager.getInstance().getTexture(ORPHANAGETEXT, this);
     }
     
 }

@@ -97,7 +97,6 @@ public abstract class Object2D implements Disposable, GraphicalComponent{
             }
         }
         
-        
         return sprite;
     }
     
