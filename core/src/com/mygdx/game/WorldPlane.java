@@ -6,13 +6,14 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.utils.Disposable;
 import java.util.List;
 
 /**
  *
  * @author françois
  */
-public interface WorldPlane {
+public interface WorldPlane extends Disposable{
     List<Sprite> getSpritesInRegion(float lowerX, float lowerY, float upperX, float upperY);
     
     void step(float delta);

@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import java.io.File;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
@@ -22,30 +23,42 @@ import java.io.File;
  */
 public class GuiPortrait extends GuiComponent{
 
-    private static final Texture PORTRAITTEXT = new Texture("gui" + File.separator + "characters.png");
+    private static final String PORTRAITTEXT = "gui/portraits200x250.png";
     
     private GuiText.ReferenceCorner refCornerWidth;
     
     private boolean isMainCharacter;
     
-    public GuiPortrait(GuiText.ReferenceCorner refCornerWidth, float locX, float locY){
-        this.texture = PORTRAITTEXT;
-        
+    private boolean isRightPortrait;
+    
+    public GuiPortrait(GuiText.ReferenceCorner refCornerWidth, float locX, float locY, boolean isRightPortrait){     
         this.refCornerWidth = refCornerWidth;
         
         this.location = new Vector2(locX, locY);
         
         this.isMainCharacter = true;
         
-        // Part graphic
-        TextureRegion[][] tmp = TextureRegion.split(this.texture, 120, 120);
+        this.isRightPortrait = isRightPortrait;
         
-        Array<TextureRegion> array;
-        for(TextureRegion[] listTextureRegion : tmp){
-            array = new Array<TextureRegion>(listTextureRegion);
-            this.listAnimations.add(new Animation(1f, array));
+        // Part graphic
+        this.assignTextures();
+    }
+    
+    @Override
+    public void assignTextures(){
+        this.texture = TextureManager.getInstance().getTexture(PORTRAITTEXT, this);
+        
+        if(this.texture != null){
+            TextureRegion[][] tmp = TextureRegion.split(this.texture, 200, 250);
+        
+            Array<TextureRegion> array;
+            for(TextureRegion[] listTextureRegion : tmp){
+                array = new Array<TextureRegion>(listTextureRegion);
+                this.listAnimations.add(new Animation(1f, array));
+            }
+            
+            this.setCharacterPortrait(Character.GRANDMA, Emotion.DEFAULT);
         }
-        this.setCharacterPortrait(Character.GRANDMA, Emotion.DEFAULT);
     }
     
     /*@Override
@@ -86,10 +99,10 @@ public class GuiPortrait extends GuiComponent{
         float posY = camera.position.y + this.getLocation().y * camera.viewportHeight / 2;
               
         Sprite portrait = this.createCurrentSprite(camera); 
-      
-        
         
         if(portrait != null){
+            
+            portrait.setFlip(this.isRightPortrait, false);
             
             if(!this.isMainCharacter){
                 portrait.setAlpha(portrait.getColor().a * 0.5f);
@@ -122,7 +135,7 @@ public class GuiPortrait extends GuiComponent{
 
     @Override
     public void drawShapeRenderer(Camera camera, ShapeRenderer shapeRenderer) {
-        float posX = camera.position.x + this.getLocation().x * camera.viewportWidth / 2;
+        /*float posX = camera.position.x + this.getLocation().x * camera.viewportWidth / 2;
         float posY = camera.position.y + this.getLocation().y * camera.viewportHeight / 2;
               
         Sprite portrait = this.createCurrentSprite(camera); 
@@ -144,23 +157,31 @@ public class GuiPortrait extends GuiComponent{
             
             shapeRenderer.setColor(0, 0, 0, 1);
             shapeRenderer.rect(posX - portrait.getWidth() * 0.03f, posY - portrait.getHeight() * 0.03f, portrait.getWidth() * 1.06f, portrait.getHeight() * 1.06f);      
-        }
+        }*/
     }
     
     public enum Character{
-        NONE(-1),
-        GRANDMA(0),
-        TEMERI(1),
-        PRIDE(2);
+        NONE(-1, "Unamed"),
+        GRANDMA(0, "Grand-mère"),
+        TEMERI(1, "Temeri"),
+        PRIDE(2, "Voleur");
         
         private final int value;
+        
+        private final String name;
 
-        private Character(int value) {
+        private Character(int value, String name) {
             this.value = value;
+            
+            this.name = name;
         }  
         
         public int getValue() {
             return this.value;
+        }
+        
+        public String getName() {
+            return this.name;
         }
         
         public boolean isCharacter(){
@@ -173,7 +194,7 @@ public class GuiPortrait extends GuiComponent{
         DEFAULT(0),
         HAPPY(1),
         ANGRY(2),
-        SORROW(3);
+        SORROW(0);
         
         private final int value;
 

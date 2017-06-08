@@ -8,6 +8,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
 import static com.mygdx.game.HelpGame.P2M;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,7 +69,14 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
         
         return spriteList;
     }
-
+    
+    @Override
+    public void dispose() {
+        for(BackgroundPart part : this.backgroundPartList.values()){
+            part.dispose();
+        }
+    }
+    
     @Override
     public void assignTextures(){
         // Nothing to do 
@@ -92,7 +100,7 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
         return ratioDist;
     }
     
-    protected class BackgroundPart{
+    protected class BackgroundPart implements Disposable{
         
         protected float ratioSprite;
         
@@ -194,6 +202,13 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
          */
         public List<Sprite> getSpriteListInBackground() {
             return spriteListInBackground;
+        }
+
+        @Override
+        public void dispose() {
+            this.percentPresenceElemList.clear();
+            this.sceneryElemList.clear();
+            this.spriteListInBackground.clear();
         }
     }
     

@@ -20,13 +20,8 @@ import ressourcesmanagers.TextureManager;
  *
  * @author Deneyr
  */
-public abstract class LvlGameNode extends GameNode implements GameEventListener{
+public abstract class LvlGameNode extends GameNode{
 
-    /*
-    protected static final GameWorld gameWorld = new GameWorld();
-    
-    protected static final TreeMap<Float, WorldPlane> mapBackgroundPlanes = new TreeMap<Float, WorldPlane>();
-    */
     public LvlGameNode(HelpGame game, Batch batch){
         super();
         
@@ -36,8 +31,7 @@ public abstract class LvlGameNode extends GameNode implements GameEventListener{
         this.screensDisplayed.add(new GameScreen(batch, game.getGameWorld()));
         this.screensDisplayed.add(new GUIScreen(batch, game.getGameWorld()));
         
-        
-        
+        this.outputGameNode.put("restart", this);
     }
     
     @Override
@@ -73,13 +67,13 @@ public abstract class LvlGameNode extends GameNode implements GameEventListener{
     
     @Override
     public boolean onStartingNode(HelpGame game){
+        game.clearAllWorldPlanes();
+        
         TextureManager.getInstance().resetLoadedResources();
-        // TODO : Add each manager
         
         this.initializeLevel(game);
         
         TextureManager.getInstance().UpdateResources();
-        // TODO : Add each manager
         
         return true;
     }
@@ -88,10 +82,4 @@ public abstract class LvlGameNode extends GameNode implements GameEventListener{
     public void onEndingNode(HelpGame game){
         this.flushLevel(game);
     }
-
-    @Override
-    public void onGameEvent(EventType type, String details, Vector2 location) {
-
-    }
-    
 }

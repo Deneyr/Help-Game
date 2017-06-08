@@ -8,11 +8,16 @@ package guicomponents;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import guicomponents.CinematicManager.CinematicState;
 import guicomponents.GuiText.ReferenceCorner;
+import static guicomponents.GuiText.staticGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +26,6 @@ import java.util.List;
  * @author Deneyr
  */
 public class GuiDialogueBlock extends GuiComponent{
-
-    
     
     private GuiPortrait leftPortrait;
     private GuiPortrait rightPortrait;
@@ -42,16 +45,19 @@ public class GuiDialogueBlock extends GuiComponent{
         
         this.dialogues = new ArrayList(dialogues);
         
-        this.rightPortrait = new GuiPortrait(ReferenceCorner.RIGHT, 1f, -1f);
-        this.leftPortrait = new GuiPortrait(ReferenceCorner.LEFT, -1f, -1f);
+        this.rightPortrait = new GuiPortrait(ReferenceCorner.RIGHT, 1f, -0.6f, true);
+        this.leftPortrait = new GuiPortrait(ReferenceCorner.LEFT, -1f, -0.6f, false);
         
-        this.textBlock = new GuiTextBlock(0.1f, 0f, -0.9f, 1.6f, 0.6f);
+        this.textBlock = new GuiTextBlock(0.1f, 0f, -0.5f, 1.6f, 0.6f);
         
         this.indexCurrentDialogue = 0;
         this.indexCurrentReply = 0;
         
         this.dialogueState = CinematicState.STOP;
+        
+        
     }
+    
     
     public void setCurrentDialogue(int index){
         this.indexCurrentDialogue = index;
@@ -76,22 +82,23 @@ public class GuiDialogueBlock extends GuiComponent{
                     case 0:
                         this.leftPortrait.setIsMainCharacter(true);
                         this.rightPortrait.setIsMainCharacter(false);
+                        
+                        this.textBlock.setTextBlockState(GuiTextBlock.TextBlockState.LEFT);
+                        this.textBlock.setNameText(currentDialogue.getCharacterLeft(this.indexCurrentReply).getName());
                         break;
                     case 1:
                         this.leftPortrait.setIsMainCharacter(false);
                         this.rightPortrait.setIsMainCharacter(true);
+                        
+                        this.textBlock.setTextBlockState(GuiTextBlock.TextBlockState.RIGHT);
+                        this.textBlock.setNameText(currentDialogue.getCharacterRight(this.indexCurrentReply).getName());
                         break;
                 }
             }else{
-                this.leftPortrait.setIsMainCharacter(true);
-                this.rightPortrait.setIsMainCharacter(true);
-            }
-            
-            if(!currentDialogue.getCharacterLeft(this.indexCurrentReply).isCharacter()
-                    && !currentDialogue.getCharacterRight(this.indexCurrentReply).isCharacter()){
-                this.textBlock.setIsDialogue(false);
-            }else{
-                this.textBlock.setIsDialogue(true);
+                this.leftPortrait.setIsMainCharacter(false);
+                this.rightPortrait.setIsMainCharacter(false);
+                
+                this.textBlock.setTextBlockState(GuiTextBlock.TextBlockState.CENTER);
             }
         }
     }
@@ -100,6 +107,7 @@ public class GuiDialogueBlock extends GuiComponent{
     public void updateLogic(float deltaTime){
         
         if(this.dialogueState == CinematicState.STOP){
+            this.textBlock.setTextBlockState(GuiTextBlock.TextBlockState.CENTER);
             return;
         }
       
@@ -144,10 +152,10 @@ public class GuiDialogueBlock extends GuiComponent{
             return;
         }
         
-        this.textBlock.drawBatch(camera, batch);
-
         this.leftPortrait.drawBatch(camera, batch);
         this.rightPortrait.drawBatch(camera, batch);
+        
+        this.textBlock.drawBatch(camera, batch);
     }
 
     @Override
@@ -158,13 +166,14 @@ public class GuiDialogueBlock extends GuiComponent{
         
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        shapeRenderer.setColor(1f, 1f, 1f, 0.6f);
+        shapeRenderer.setColor(1f, 1f, 1f, 0.8f);
         shapeRenderer.rect(camera.position.x - camera.viewportWidth * 1.1f / 2, camera.position.y - camera.viewportHeight * 1.1f / 2, camera.viewportWidth * 1.1f, camera.viewportHeight * 1.1f);
         
-        this.textBlock.drawShapeRenderer(camera, shapeRenderer);
+        /*this.textBlock.drawShapeRenderer(camera, shapeRenderer);
 
         this.leftPortrait.drawShapeRenderer(camera, shapeRenderer);
-        this.rightPortrait.drawShapeRenderer(camera, shapeRenderer);
+        this.rightPortrait.drawShapeRenderer(camera, shapeRenderer);*/
+        // Nothing to do.
     }
 
     /**

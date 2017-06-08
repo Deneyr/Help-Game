@@ -15,6 +15,8 @@ public interface GameEventListener {
     
     public void onGameEvent(EventType type, String details, Vector2 location);
     
+    public void onHelpGameEvent(HelpGame helpGame, EventType type, String details, Vector2 location);
+    
     public enum EventType{
         SCORE,
         CINEMATIC,
@@ -23,6 +25,7 @@ public interface GameEventListener {
         LIFE,
         TAKE,
         GAMEOVER,
-        GAMESTART
+        GAMESTART,
+        GAMENODECHANGE
     }
 }

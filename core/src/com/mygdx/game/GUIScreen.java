@@ -44,7 +44,7 @@ public class GUIScreen implements Screen{
         
         this.shapeRenderer = new ShapeRenderer();
         
-        this.scoreText = new GuiText("0 $", 30, ReferenceCorner.RIGHT, ReferenceCorner.LEFT, 0.95f, 1);
+        this.scoreText = new GuiText("0 $", 30, ReferenceCorner.RIGHT, ReferenceCorner.LEFT, 0.95f, 1, 2);
         this.currentScore = -1;
     }
    

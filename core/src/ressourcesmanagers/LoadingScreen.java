@@ -11,10 +11,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.mygdx.game.HelpGame;
 import guicomponents.GuiText;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -36,7 +33,7 @@ public class LoadingScreen implements Screen{
         
         this.batch = batch;
         
-        this.loadingText = new GuiText("Chargement ...", 30, GuiText.ReferenceCorner.LEFT, GuiText.ReferenceCorner.MIDDLE, -0.5f, -0.5f);
+        this.loadingText = new GuiText("Chargement ...", 30, GuiText.ReferenceCorner.LEFT, GuiText.ReferenceCorner.MIDDLE, -0.5f, -0.5f, 2);
     }
    
     

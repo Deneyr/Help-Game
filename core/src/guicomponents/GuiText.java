@@ -22,7 +22,7 @@ import java.io.File;
  */
 public class GuiText extends GuiComponent{
 
-    protected static FreeTypeFontGenerator staticGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts" + File.separator + "helpFont.ttf"));
+    public static FreeTypeFontGenerator staticGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts" + File.separator + "helpFont.ttf"));
     
     protected BitmapFont bitmapFont;
     
@@ -33,15 +33,15 @@ public class GuiText extends GuiComponent{
     
     protected GlyphLayout glyphLayout;
     
-    public GuiText(String str, int size, ReferenceCorner refCornerWidth, ReferenceCorner refCornerHeight, float locX, float locY){
+    public GuiText(String str, int size, ReferenceCorner refCornerWidth, ReferenceCorner refCornerHeight, float locX, float locY, float fontWidth){
         super();
         
         FreeTypeFontGenerator.FreeTypeFontParameter fontParameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
         fontParameters.size = size;
-        fontParameters.color = Color.LIGHT_GRAY;
-        fontParameters.borderColor = Color.DARK_GRAY;
-        fontParameters.borderWidth = 2;
+        fontParameters.color = Color.DARK_GRAY;
+        fontParameters.borderColor = Color.LIGHT_GRAY;
+        fontParameters.borderWidth = fontWidth;
         
         this.bitmapFont = staticGenerator.generateFont(fontParameters);
         

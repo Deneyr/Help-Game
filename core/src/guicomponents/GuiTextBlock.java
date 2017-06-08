@@ -8,8 +8,18 @@ package guicomponents;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Array;
+import static guicomponents.GuiText.staticGenerator;
+import ressourcesmanagers.TextureManager;
 
 /**
  *
@@ -17,6 +27,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  */
 public class GuiTextBlock extends GuiText{
   
+    private static final String DIALOGUETEXT = "gui/BulleDialogue524x178.png";
+    
     private float width;
     private float height;
     
@@ -25,10 +37,13 @@ public class GuiTextBlock extends GuiText{
     
     private String finalText;
     
-    private boolean isDialogue;
+    private TextBlockState blockState;
+    
+    protected BitmapFont bitmapFontName;
+    protected GlyphLayout glyphLayoutName;
     
     public GuiTextBlock(float period2Add, float locX, float locY, float width, float height) {
-        super("", 20, ReferenceCorner.LEFT, ReferenceCorner.LEFT, locX, locY);
+        super("", 18, ReferenceCorner.LEFT, ReferenceCorner.LEFT, locX, locY, 1);
         
         this.width = width;
         this.height = height;
@@ -38,7 +53,43 @@ public class GuiTextBlock extends GuiText{
         
         this.finalText = new String();
         
-        this.isDialogue = true;
+        this.blockState = TextBlockState.CENTER;
+        
+        // Part graphic.
+        this.assignTextures();
+        
+        // Part name
+        FreeTypeFontGenerator.FreeTypeFontParameter fontParameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        fontParameters.size = 15;
+        fontParameters.color = Color.WHITE;
+        fontParameters.borderColor = Color.LIGHT_GRAY;
+        fontParameters.borderWidth = 1;
+        
+        this.bitmapFontName = staticGenerator.generateFont(fontParameters);
+        
+        this.glyphLayoutName = new GlyphLayout();
+    }
+    
+    public void setNameText(String name){    
+        this.glyphLayoutName.setText(this.bitmapFontName, name);
+    }
+    
+    @Override
+    public void assignTextures(){
+        this.texture = TextureManager.getInstance().getTexture(DIALOGUETEXT, this);
+        
+        if(this.texture != null){
+            TextureRegion[][] tmp = TextureRegion.split(this.texture, 524, 178);
+        
+            Array<TextureRegion> array;
+            for(TextureRegion[] listTextureRegion : tmp){
+                array = new Array<TextureRegion>(listTextureRegion);
+                this.listAnimations.add(new Animation(1f, array));
+            }
+
+            this.changeAnimation(0, true);
+        }
     }
     
     @Override
@@ -93,6 +144,7 @@ public class GuiTextBlock extends GuiText{
         float posX = camera.position.x + this.getLocation().x * camera.viewportWidth / 2;
         float posY = camera.position.y + this.getLocation().y * camera.viewportHeight / 2;
         
+        
         switch(this.refCornerWidth){
             case MIDDLE:
                 
@@ -119,25 +171,63 @@ public class GuiTextBlock extends GuiText{
                 break;
         }
         
-        if(this.isDialogue){
-            posX -= this.width * camera.viewportWidth * 0.7 / 4;
-        }else{
-            posX -= this.width * camera.viewportWidth * 0.9 / 4;
+        Sprite bubble = this.createCurrentSprite();
+        
+        if(bubble != null){
+            float bubblePosX = posX - bubble.getWidth() / 2;
+            float bubblePosY = posY - bubble.getHeight() / 2;
+            
+            posX -= bubble.getWidth() * 0.8 / 2;
+            posY -= bubble.getHeight() * 0.8 / 2 - bubble.getHeight() * 0.55;
+            
+            boolean drawCharaName = true;
+            switch(this.blockState){
+                case RIGHT:
+                    //this.changeAnimation(1, true);
+                    bubble.setFlip(true, false);
+                    
+                    posX += camera.viewportWidth * 0.08;
+                    bubblePosX += camera.viewportWidth * 0.08;
+                    break;
+                case LEFT:
+                    //this.changeAnimation(1, true);
+                    
+                    posX -= camera.viewportWidth * 0.08;
+                    bubblePosX -= camera.viewportWidth * 0.08;
+                    break;
+                case CENTER:
+                    //this.changeAnimation(0, true);
+                    drawCharaName = false;
+                    break;
+            }
+            
+            bubble.setPosition(bubblePosX, bubblePosY);
+            
+            batch.setColor(bubble.getColor());
+            batch.draw(bubble, 
+                        bubble.getX(), bubble.getY(),
+                        bubble.getOriginX(), bubble.getOriginY(),
+                        bubble.getWidth(),bubble.getHeight(),
+                        bubble.getScaleX(),bubble.getScaleY(),
+                        bubble.getRotation());
+         
+            if(drawCharaName){
+                this.bitmapFontName.draw(batch, this.glyphLayoutName, bubblePosX + bubble.getWidth() / 2 - this.glyphLayoutName.width / 2, posY + bubble.getHeight() * 0.28f);
+            }
         }
-        posY += this.height * camera.viewportHeight * 1.6 / 4;
         
         this.bitmapFont.draw(batch, this.glyphLayout, posX, posY);
     }
     
     @Override
     public void drawShapeRenderer(Camera camera, ShapeRenderer shapeRenderer) {
-        float posX = camera.position.x + this.getLocation().x * camera.viewportWidth / 2;
+        /*float posX = camera.position.x + this.getLocation().x * camera.viewportWidth / 2;
         float posY = camera.position.y + this.getLocation().y * camera.viewportHeight / 2;
         
         posX -= this.width * camera.viewportWidth / 4;
         
         shapeRenderer.setColor(0, 0, 0, 1);
-        shapeRenderer.rect(posX, posY, this.width * camera.viewportWidth / 2, this.height * camera.viewportHeight / 2);
+        shapeRenderer.rect(posX, posY, this.width * camera.viewportWidth / 2, this.height * camera.viewportHeight / 2);*/
     }
     
     public boolean AllTextPassed(){
@@ -145,9 +235,26 @@ public class GuiTextBlock extends GuiText{
     }
     
     /**
-     * @param isDialogue the isDialogue to set
+     * @param blockState the block state.
      */
-    public void setIsDialogue(boolean isDialogue) {
-        this.isDialogue = isDialogue;
+    public void setTextBlockState(TextBlockState blockState) {
+        this.blockState = blockState;
+        switch(this.blockState){
+            case RIGHT:
+                this.changeAnimation(1, true);
+                break;
+            case LEFT:
+                this.changeAnimation(1, true);
+                break;
+            case CENTER:
+                this.changeAnimation(0, true);
+                break;
+        }
+    }
+    
+    public enum TextBlockState{
+        CENTER,
+        RIGHT,
+        LEFT
     }
 }

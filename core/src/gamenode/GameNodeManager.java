@@ -6,11 +6,12 @@
 package gamenode;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.game.GameEventListener;
 import com.mygdx.game.HelpGame;
 import java.util.ArrayList;
 import java.util.List;
-import ressourcesmanagers.ResourceManager;
 import ressourcesmanagers.ResourceManagerListener;
 import ressourcesmanagers.TextureManager;
 
@@ -18,7 +19,7 @@ import ressourcesmanagers.TextureManager;
  *
  * @author Deneyr
  */
-public class GameNodeManager extends GameNode implements Disposable, ResourceManagerListener{
+public class GameNodeManager extends GameNode implements Disposable, ResourceManagerListener, GameEventListener{
 
     private List<GameNode> gameNodes;
     
@@ -66,11 +67,11 @@ public class GameNodeManager extends GameNode implements Disposable, ResourceMan
     
     @Override
     public void updateLogic(HelpGame game, float deltaTime){
-        // Update current node.
+        /*// Update current node.
         if(!this.waiting4Resources){
             GameNode nextNode = this.currentGameNode.getNextGameNode();   
             this.changeCurrentGameNode(game, nextNode);
-        }
+        }*/
         
         // Update logic current game node.
         if(this.waiting4Resources){
@@ -97,6 +98,25 @@ public class GameNodeManager extends GameNode implements Disposable, ResourceMan
     @Override
     public void onResourcesLoaded() {
         this.waiting4Resources = false;
+    }
+
+    @Override
+    public void onHelpGameEvent(HelpGame helpGame, EventType type, String details, Vector2 location){
+        if(this.currentGameNode != null){
+            switch(type){
+                case GAMENODECHANGE:
+                    GameNode nextNode = this.currentGameNode.getGameNodeByKey(details);
+                    if(nextNode != null){
+                        this.changeCurrentGameNode(helpGame, nextNode);
+                    }
+                    break;
+            }
+        }   
+    }
+    
+    @Override
+    public void onGameEvent(EventType type, String details, Vector2 location) {
+        // Nothing to do.
     }
     
 }

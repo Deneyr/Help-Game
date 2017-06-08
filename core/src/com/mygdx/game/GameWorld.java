@@ -32,7 +32,7 @@ import java.util.Set;
  *
  * @author françois
  */
-public class GameWorld implements Disposable, WorldPlane, GameEventListener{
+public class GameWorld implements WorldPlane, GameEventListener{
 
     private World world;
     
@@ -266,6 +266,11 @@ public class GameWorld implements Disposable, WorldPlane, GameEventListener{
             }
         }
         return true;
+    }
+
+    @Override
+    public void onHelpGameEvent(HelpGame helpGame, EventType type, String details, Vector2 location) {
+        // Nothing to do.
     }
     
     private class ScreenQueryCallback implements QueryCallback{

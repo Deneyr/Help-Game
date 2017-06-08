@@ -21,16 +21,12 @@ public abstract class GameNode {
    
     protected List<Screen> screensDisplayed;
     
-    protected Map<Integer, GameNode> outputGameNode;
-    
-    private GameNode nextGameNode;
+    protected Map<String, GameNode> outputGameNode;
     
     public GameNode(){
-        this.outputGameNode = new HashMap<Integer, GameNode>();
+        this.outputGameNode = new HashMap<String, GameNode>();
         
         this.screensDisplayed = new ArrayList<Screen>();
-        
-        this.nextGameNode = null;
     }
     
     public abstract void updateLogic(HelpGame game, float deltaTime);
@@ -42,8 +38,8 @@ public abstract class GameNode {
         }
     }
     
-    public void addNextNode(int index, GameNode gameNode){
-        this.outputGameNode.put(index, gameNode);
+    public void addNextNode(String key, GameNode gameNode){
+        this.outputGameNode.put(key, gameNode);
     }
     
     public boolean onStartingNode(HelpGame game){
@@ -57,8 +53,8 @@ public abstract class GameNode {
      /**
      * @return the nextGameNode
      */
-    public GameNode getNextGameNode() {
-        return this.nextGameNode;
+    public GameNode getGameNodeByKey(String key) {
+        return this.outputGameNode.get(key);
     }
     
 }

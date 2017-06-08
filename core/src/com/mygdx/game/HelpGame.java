@@ -8,6 +8,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import java.util.TreeMap;
 import gamenode.GameNode;
 import gamenode.GameNodeManager;
@@ -19,14 +20,14 @@ import gamenode.Lvl1GameNode;
  *
  * @author françois
  */
-public class HelpGame extends Game{
+public class HelpGame extends Game implements GameEventListener{
 
     public static float P2M = 1.5f/64; 
     
     /// Game logic Worlds.
     private final GameWorld gameWorld = new GameWorld();
     
-    private TreeMap<Float, WorldPlane> mapBackgroundPlanes = new TreeMap<Float, WorldPlane>();
+    private final TreeMap<Float, WorldPlane> mapBackgroundPlanes = new TreeMap<Float, WorldPlane>();
    
     // Batch
     public SpriteBatch batch;
@@ -40,6 +41,8 @@ public class HelpGame extends Game{
     
     @Override
     public void create() {  
+        // GameWorld
+        this.gameWorld.addGameEventListener(this);
         
         // Create the sprite batch
         this.batch = new SpriteBatch();
@@ -72,17 +75,35 @@ public class HelpGame extends Game{
         this.batch.dispose();
     }
 
+    public void clearAllWorldPlanes(){
+        for(WorldPlane plane : this.mapBackgroundPlanes.values()){
+            plane.dispose();
+        }
+        
+        this.gameWorld.flushWorld();
+    }
+    
     /**
      * @return the gameWorld
      */
     public GameWorld getGameWorld() {
         return gameWorld;
     }
-
+    
     /**
      * @return the mapBackgroundPlanes
      */
     public TreeMap<Float, WorldPlane> getMapBackgroundPlanes() {
-        return mapBackgroundPlanes;
+        return this.mapBackgroundPlanes;
+    }
+
+    @Override
+    public void onGameEvent(EventType type, String details, Vector2 location) {
+        this.gameNodeManager.onHelpGameEvent(this, type, details, location);
+    }
+
+    @Override
+    public void onHelpGameEvent(HelpGame helpGame, EventType type, String details, Vector2 location) {
+        // Nothing to do.
     }
 }

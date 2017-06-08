@@ -26,7 +26,6 @@ import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DStateListener;
 import com.mygdx.game.ShieldActionFixture;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
