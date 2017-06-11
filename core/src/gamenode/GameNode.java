@@ -19,14 +19,18 @@ import java.util.Map;
  */
 public abstract class GameNode {
    
+    private String id;
+    
     protected List<Screen> screensDisplayed;
     
     protected Map<String, GameNode> outputGameNode;
     
-    public GameNode(){
+    public GameNode(String id){
         this.outputGameNode = new HashMap<String, GameNode>();
         
         this.screensDisplayed = new ArrayList<Screen>();
+        
+        this.id = id;
     }
     
     public abstract void updateLogic(HelpGame game, float deltaTime);
@@ -50,11 +54,23 @@ public abstract class GameNode {
         // Nothing to do.
     }
     
+    
+    public boolean hasLoadingScreen(){
+        return false;
+    }   
+    
      /**
      * @return the nextGameNode
      */
     public GameNode getGameNodeByKey(String key) {
         return this.outputGameNode.get(key);
+    }
+    
+     /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
     }
     
 }

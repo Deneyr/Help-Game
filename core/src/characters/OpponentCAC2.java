@@ -99,7 +99,6 @@ public class OpponentCAC2 extends OpponentCAC1{
                 }
             }, 0.4f);
             
-            
             Timer.schedule(new Timer.Task(){
                     @Override
                     public void run() {

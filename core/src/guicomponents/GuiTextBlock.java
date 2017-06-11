@@ -186,14 +186,14 @@ public class GuiTextBlock extends GuiText{
                     //this.changeAnimation(1, true);
                     bubble.setFlip(true, false);
                     
-                    posX += camera.viewportWidth * 0.08;
-                    bubblePosX += camera.viewportWidth * 0.08;
+                    posX += camera.viewportWidth * 0.06;
+                    bubblePosX += camera.viewportWidth * 0.06;
                     break;
                 case LEFT:
                     //this.changeAnimation(1, true);
                     
-                    posX -= camera.viewportWidth * 0.08;
-                    bubblePosX -= camera.viewportWidth * 0.08;
+                    posX -= camera.viewportWidth * 0.06;
+                    bubblePosX -= camera.viewportWidth * 0.06;
                     break;
                 case CENTER:
                     //this.changeAnimation(0, true);

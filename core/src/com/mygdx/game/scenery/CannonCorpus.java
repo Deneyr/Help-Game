@@ -51,9 +51,6 @@ public class CannonCorpus extends SolidObject2D{
     
     public CannonCorpus(World world, Object2D target, float posX, float posY, float angle){
         
-        // Part graphic
-        this.assignTextures();
-        
         // Part physic   
         BodyDef groundBodyDef = new BodyDef();  
         // Set its world position
@@ -97,6 +94,9 @@ public class CannonCorpus extends SolidObject2D{
         
         // Child
         this.cannon = new Cannon(this.physicBody, target, world, posX , posY);
+        
+        // Part graphic
+        this.assignTextures();
     }   
          
     @Override

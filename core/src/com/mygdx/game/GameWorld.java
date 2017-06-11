@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.Timer;
 import static com.mygdx.game.HelpGame.P2M;
 import guicomponents.CinematicManager;
 import guicomponents.CinematicManager.CinematicState;
@@ -45,7 +45,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
     private double screenFOV;
     private float timerOutOfScreen;
     
-    private int score;
+    private int currentMoney;
     
     protected List<WeakReference<GameEventListener>> listEventGameListeners;
     
@@ -54,6 +54,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
     private StateAnimationHandler stateAnimationHanlder;
     
     private Map<String, CinematicManager> mapCinematicManagers;
+    
     
     public GameWorld(){
         this.world = new World(new Vector2(0, -20f), true);
@@ -66,7 +67,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
         this.screenFOV = -1d;
         this.timerOutOfScreen = 0;
         
-        this.score = 0;
+        this.currentMoney = 0;
         
         this.listEventGameListeners = new ArrayList<WeakReference<GameEventListener>>();
         
@@ -228,9 +229,15 @@ public class GameWorld implements WorldPlane, GameEventListener{
 
     @Override
     public void dispose() {
+        Timer.instance().clear();
+        
         this.hero = null;
 
+        this.currentMoney = 0;
+        
         this.stateAnimationHanlder.dispose();
+        
+        this.object2D2Flush.clear();
         for(Object2D obj : this.listCurrentObject2D){
             obj.removeBody(this.world);
         }
@@ -246,7 +253,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
         
         switch(type){
             case SCORE:
-                this.setScore(this.score + Integer.parseInt(details));
+                this.setCurrentMoney(this.currentMoney + Integer.parseInt(details));
                 break;
             case CINEMATIC:
                 if(this.mapCinematicManagers.containsKey(details) && this.isCinematicManagersFree(details)){
@@ -363,20 +370,20 @@ public class GameWorld implements WorldPlane, GameEventListener{
     }
     
     /**
-     * @return the score
+     * @return the currentMoney
      */
-    public int getScore() {
-        return score;
+    public int getCurrentMoney() {
+        return currentMoney;
     }
 
     /**
-     * @param score the score to set
+     * @param score the currentMoney to set
      */
-    public void setScore(int score) {
-        this.score = score;
+    public void setCurrentMoney(int score) {
+        this.currentMoney = score;
         
-        if(this.score < 0){
-            this.score = 0;
+        if(this.currentMoney < 0){
+            this.currentMoney = 0;
         }
     }
 }

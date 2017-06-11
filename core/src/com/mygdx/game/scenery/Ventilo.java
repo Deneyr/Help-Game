@@ -52,9 +52,6 @@ public class Ventilo extends SolidObject2D{
         
         this.strength = strength;
         
-        // Part graphic
-        this.assignTextures();
-        
         // Part physic    
         BodyDef groundBodyDef = new BodyDef();  
         // Set its world position
@@ -112,6 +109,9 @@ public class Ventilo extends SolidObject2D{
         if(angle != 0){
             this.physicBody.setTransform(this.physicBody.getPosition(), angle);
         }
+        
+        // Part graphic
+        this.assignTextures();
         
         this.isWorking = true;
     }

@@ -24,8 +24,9 @@ public interface GameEventListener {
         ATTACK,
         LIFE,
         TAKE,
-        GAMEOVER,
+        GAMEOVER, // dead, success
         GAMESTART,
-        GAMENODECHANGE
+        CHECKPOINT, // reached
+        GAMENODECHANGE // restart, [id gamenode]
     }
 }

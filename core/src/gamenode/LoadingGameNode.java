@@ -5,6 +5,7 @@
  */
 package gamenode;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.HelpGame;
 import ressourcesmanagers.LoadingScreen;
@@ -17,7 +18,7 @@ import ressourcesmanagers.TextureManager;
 public class LoadingGameNode extends GameNode{
 
     public LoadingGameNode(Batch batch){
-        super();
+        super("loadingGameNode");
         
         this.screensDisplayed.add(new LoadingScreen(batch));
     }
@@ -26,6 +27,15 @@ public class LoadingGameNode extends GameNode{
     @Override
     public void updateLogic(HelpGame game, float deltaTime) {
         TextureManager.getInstance().updateLogic(deltaTime);
+    }
+    
+    public void setDisplayLoadingGraphical(boolean displayLoadingGraphical){
+        for(Screen screen : this.screensDisplayed){
+            if(screen instanceof LoadingScreen){
+                LoadingScreen loadingScreen = (LoadingScreen) screen;
+                loadingScreen.setDisplayLoadingGraphical(displayLoadingGraphical);
+            }
+        }
     }
     
 }

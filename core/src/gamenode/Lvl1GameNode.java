@@ -51,7 +51,7 @@ import triggered.UpTriggeredObject2D;
 public class Lvl1GameNode extends LvlGameNode{
     
     public Lvl1GameNode(HelpGame game, Batch batch) {
-        super(game, batch);
+        super("Lvl1GameNode", game, batch);
     }
     
     @Override

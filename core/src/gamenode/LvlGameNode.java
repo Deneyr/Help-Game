@@ -22,8 +22,8 @@ import ressourcesmanagers.TextureManager;
  */
 public abstract class LvlGameNode extends GameNode{
 
-    public LvlGameNode(HelpGame game, Batch batch){
-        super();
+    public LvlGameNode(String id, HelpGame game, Batch batch){
+        super(id);
         
         // --- init screen ---
         this.screensDisplayed.clear();
@@ -72,6 +72,7 @@ public abstract class LvlGameNode extends GameNode{
         TextureManager.getInstance().resetLoadedResources();
         
         this.initializeLevel(game);
+        game.getGameWorld().setCurrentMoney(game.getPlayerData().getCurrentMoney());
         
         TextureManager.getInstance().UpdateResources();
         
@@ -80,6 +81,14 @@ public abstract class LvlGameNode extends GameNode{
     
     @Override
     public void onEndingNode(HelpGame game){
+        game.getPlayerData().setCurrentLevel(this.getId());
+        game.getPlayerData().setCurrentMoney(game.getGameWorld().getCurrentMoney());
+        
         this.flushLevel(game);
     }
+    
+    @Override
+    public boolean hasLoadingScreen(){
+        return true;
+    }  
 }

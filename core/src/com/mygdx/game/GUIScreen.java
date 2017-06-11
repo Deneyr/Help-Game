@@ -90,7 +90,7 @@ public class GUIScreen implements Screen{
                                         lifeBarHero.getScaleX(),lifeBarHero.getScaleY(),
                                         lifeBarHero.getRotation());
         
-        int score = this.gameWorld.getScore();
+        int score = this.gameWorld.getCurrentMoney();
         if(this.currentScore < 0 || this.currentScore != score){
             this.scoreText.setText(String.valueOf(score) + " $");
             this.currentScore = score;

@@ -11,7 +11,8 @@ import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.GameEventListener;
 import com.mygdx.game.HelpGame;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import ressourcesmanagers.ResourceManagerListener;
 import ressourcesmanagers.TextureManager;
 
@@ -21,7 +22,7 @@ import ressourcesmanagers.TextureManager;
  */
 public class GameNodeManager extends GameNode implements Disposable, ResourceManagerListener, GameEventListener{
 
-    private List<GameNode> gameNodes;
+    private Map<String, GameNode> gameNodes;
     
     private GameNode currentGameNode;
     
@@ -30,9 +31,9 @@ public class GameNodeManager extends GameNode implements Disposable, ResourceMan
     private boolean waiting4Resources;
     
     public GameNodeManager(Batch batch){
-        super();
+        super("gameNodeManager");
         
-        this.gameNodes = new ArrayList<GameNode>();
+        this.gameNodes = new HashMap<String, GameNode>();
         
         this.currentGameNode = null;
         
@@ -48,14 +49,16 @@ public class GameNodeManager extends GameNode implements Disposable, ResourceMan
     
     
     public void addGameNode(GameNode gameNode){
-        this.gameNodes.add(gameNode);
+        this.gameNodes.put(gameNode.getId(), gameNode);
     }
     
     public boolean changeCurrentGameNode(HelpGame game, GameNode gameNode){
-        if(gameNode != null && this.gameNodes.contains(gameNode)){
+        if(gameNode != null && this.gameNodes.containsKey(gameNode.getId())){
             if(this.currentGameNode != null){
                 this.currentGameNode.onEndingNode(game);
             }
+            this.loadingGameNode.setDisplayLoadingGraphical(gameNode.hasLoadingScreen());
+            
             this.waiting4Resources = gameNode.onStartingNode(game);
 
             this.currentGameNode = gameNode;
