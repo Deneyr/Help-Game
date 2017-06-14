@@ -56,40 +56,29 @@ public class GuiText extends GuiComponent{
         this.location = new Vector2(locX, locY);
     }
     
-    /*@Override
-    public void draw(Batch batch, Camera camera, ShapeRenderer shapeRenderer) {
+    public GuiText(String str, int size, ReferenceCorner refCornerWidth, ReferenceCorner refCornerHeight, float locX, float locY, float fontWidth, Color mainColor, Color borderColor){
+        super();
         
-        float posX = camera.position.x + this.getLocation().x * camera.viewportWidth / 2;
-        float posY = camera.position.y + this.getLocation().y * camera.viewportHeight / 2;
+        FreeTypeFontGenerator.FreeTypeFontParameter fontParameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        fontParameters.size = size;
+        fontParameters.color = mainColor;
+        fontParameters.borderColor = borderColor;
+        fontParameters.borderWidth = fontWidth;
         
-        switch(this.refCornerWidth){
-            case MIDDLE:
-                
-                posX -= this.glyphLayout.width / 2;
-                
-                break;
-            case RIGHT:
-                
-                posX -= this.glyphLayout.width;
-                
-                break;
-        }
+        this.bitmapFont = staticGenerator.generateFont(fontParameters);
         
-        switch(this.refCornerHeight){
-            case MIDDLE:
-                
-                posY -= this.glyphLayout.height / 2;
-                
-                break;
-            case LEFT:
-                
-                posY -= this.glyphLayout.height;
-                
-                break;
-        }
+        this.text = new StringBuffer(str);
         
-        this.bitmapFont.draw(batch, this.glyphLayout, posX, posY);
-    }*/
+        this.refCornerWidth = refCornerWidth;
+        this.refCornerHeight = refCornerHeight;
+        
+        this.glyphLayout = new GlyphLayout();
+        this.glyphLayout.setText(this.bitmapFont, this.text);
+        
+        this.location = new Vector2(locX, locY);
+    }
+
     
     /**
      * @param text the text to set
@@ -141,6 +130,10 @@ public class GuiText extends GuiComponent{
                 posY -= this.glyphLayout.height;
                 
                 break;
+        }
+
+        if(!this.spriteColor.equals(this.bitmapFont.getColor())){
+            this.bitmapFont.setColor(this.spriteColor);
         }
         
         this.bitmapFont.draw(batch, this.glyphLayout, posX, posY);
