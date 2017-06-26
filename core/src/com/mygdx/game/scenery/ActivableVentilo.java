@@ -34,7 +34,7 @@ public class ActivableVentilo extends Ventilo{
     public ActivableVentilo(World world, float posX, float posY, float strength, float angle, boolean start) {
         super(world, posX, posY, strength, angle, start);
         
-        this.button = new ButtonObject2D(this, world, posX + (40 * SCALE_X), posY, 40 * SCALE_X);
+        this.button = new ButtonObject2D(this, world, posX - (40 * SCALE_X), posY, -40 * SCALE_X);
 
         this.isWorking = true;
         
@@ -119,7 +119,7 @@ public class ActivableVentilo extends Ventilo{
 
 
             PolygonShape ground = new PolygonShape();
-            ground.setAsBox(75 * P2M * SCALE_X, 30 * P2M * SCALE_Y, new Vector2(0, 0), 0);
+            ground.setAsBox(15 * P2M * SCALE_X, 30 * P2M * SCALE_Y, new Vector2(0, 0), 0);
             // Set the polygon shape as a box which is twice the size of our view port and 20 high
             // (setAsBox takes half-width and half-height as arguments)
             FixtureDef fixtureDef2 = new FixtureDef();

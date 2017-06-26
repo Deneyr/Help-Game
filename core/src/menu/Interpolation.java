@@ -72,21 +72,21 @@ public class Interpolation {
         return 1 - (alpha - 1) * (alpha - 1);
     }
     
-    public static float interpolate(float timeStart, float timeEnd, float currentTime, InterType type){
+    public static float interpolate(float timeStart, float timeEnd, float currentTime, InterpolationType type){
         switch(type){
             case LINEAR:
                 return Interpolation.interpolate1(timeStart, timeEnd, currentTime);
-            case QUADRAINC:
+            case QUADRA_INC:
                 return Interpolation.interpolate2Inc(timeStart, timeEnd, currentTime);
-            case QUADRADEC:
+            case QUADRA_DEC:
                 return Interpolation.interpolate2Dec(timeStart, timeEnd, currentTime);
         }
         return 0;
     }
     
-    public enum InterType{
+    public enum InterpolationType{
         LINEAR,
-        QUADRAINC,
-        QUADRADEC
+        QUADRA_INC,
+        QUADRA_DEC
     }
 }

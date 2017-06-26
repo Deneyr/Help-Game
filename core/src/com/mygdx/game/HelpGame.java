@@ -16,6 +16,7 @@ import gamenode.Lvl1GameNode;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import menu.MenuManager;
 
 
 
@@ -31,11 +32,13 @@ public class HelpGame extends Game implements GameEventListener{
     private final GameWorld gameWorld = new GameWorld();
     
     private final TreeMap<Float, WorldPlane> mapBackgroundPlanes = new TreeMap<Float, WorldPlane>();
+    
+    private final MenuManager menuManager = new MenuManager();
    
     // Batch
     public SpriteBatch batch;
     
-    // Game Nodes.
+    // Game nodes.
     GameNodeManager gameNodeManager;
     
     // Game event
@@ -57,6 +60,9 @@ public class HelpGame extends Game implements GameEventListener{
         // GameWorld
         this.gameWorld.addGameEventListener(this);
         
+        // Menu manager
+        this.menuManager.addGameEventListener(this);
+        
         // Create the sprite batch
         this.batch = new SpriteBatch();
         
@@ -68,6 +74,7 @@ public class HelpGame extends Game implements GameEventListener{
         this.gameNodeManager.addGameNode(gameNode);
         
         this.gameNodeManager.changeCurrentGameNode(this, gameNode);
+        
     }
     
     @Override
@@ -100,6 +107,8 @@ public class HelpGame extends Game implements GameEventListener{
         }
         
         this.gameWorld.flushWorld();
+        
+        this.menuManager.dispose();
     }
     
     /**

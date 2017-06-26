@@ -9,32 +9,70 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.game.GameEventListener;
+import guicomponents.GuiComponent;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import menu.Animation.AnimationState;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
  * @author Deneyr
  */
 public class MenuManager implements Disposable{
+
     private float epochTime;
     
     private Vector2 cameraPosition;
     private Vector2 cameraScale;
     private float cameraRotation;
     
-    List<Animation> listAnimation;
+    Animation cameraAnimation;
+    
+    TreeMap<Integer, GuiComponent> layoutsGuiComponent; 
+    Map<GuiComponent, List<Animation>> mapListAnimations;
+    
+    protected List<WeakReference<GameEventListener>> listEventGameListeners;
     
     public MenuManager(){
         this.epochTime = -1;
         
-        this.listAnimation = new ArrayList<Animation>();
+        this.mapListAnimations = new HashMap<GuiComponent,List<Animation>>();
+        
+        this.layoutsGuiComponent = new TreeMap<Integer, GuiComponent>();
+        
+        this.cameraAnimation = null;
+        
+        this.listEventGameListeners = new ArrayList<WeakReference<GameEventListener>>();
+        
+        // Part camera
+        this.cameraPosition = new Vector2();
+        
+        this.cameraScale = new Vector2();
+        
+        this.cameraRotation = 0;
+    }
+    
+    public void addGuiComponent(GuiComponent guiComponent, int layoutIndex){
+        this.layoutsGuiComponent.put(layoutIndex, guiComponent);
+        this.mapListAnimations.put(guiComponent, new ArrayList<Animation>());
+    }
+    
+    public void addCameraAnimation(Animation cameraAnimation){
+        
     }
     
     public void addAnimation(Animation animation){
-        this.listAnimation.add(animation);
+        GuiComponent guiComponent = animation.getGuiComponent();
+        if(this.mapListAnimations.containsKey(guiComponent)){
+            List<Animation> listAnimations = this.mapListAnimations.get(guiComponent);
+            listAnimations.add(animation);
+        }
     }
     
     public void step(float deltaTime){
@@ -44,24 +82,26 @@ public class MenuManager implements Disposable{
         
         this.epochTime += deltaTime;
         
-        for(Animation animation : this.listAnimation){
-            animation.updateAnimation(this.epochTime, this);
+        for(List<Animation> listAnimations : this.mapListAnimations.values()){
+            for(Animation animation : listAnimations){
+                animation.updateAnimation(this.epochTime, this, false);
+            }
+        }
+        
+        if(this.cameraAnimation != null){
+            this.cameraAnimation.updateAnimation(this.epochTime, this, true);
         }
     }
     
     public void drawBatch(Camera camera, Batch batch){
-        for(Animation animation : this.listAnimation){
-            if(animation.getAnimationState() == AnimationState.RUN){
-                animation.getGuiComponent().drawBatch(camera, batch);
-            }
+        for(GuiComponent guiComponent : this.layoutsGuiComponent.values()){
+            guiComponent.drawBatch(camera, batch);
         }
     }
     
     public void drawShapeRenderer(Camera camera, ShapeRenderer shapeRenderer){
-        for(Animation animation : this.listAnimation){
-            if(animation.getAnimationState() == AnimationState.RUN){
-                animation.getGuiComponent().drawShapeRenderer(camera, shapeRenderer);
-            }
+        for(GuiComponent guiComponent : this.layoutsGuiComponent.values()){
+            guiComponent.drawShapeRenderer(camera, shapeRenderer);
         }
     }
 
@@ -69,10 +109,66 @@ public class MenuManager implements Disposable{
     public void dispose() {
         this.epochTime = -1;
         
-        for(Animation animation : this.listAnimation){
-            animation.dispose();
+        for(List<Animation> listAnimations : this.mapListAnimations.values()){
+            for(Animation animation : listAnimations){
+                animation.dispose();
+            }
         }
-        this.listAnimation.clear();
+        if(this.cameraAnimation != null){
+            this.cameraAnimation.dispose();
+            this.cameraAnimation = null;
+        }
+        
+        this.layoutsGuiComponent.clear();
+        this.mapListAnimations.clear();
+        
+        // Part camera
+        this.cameraPosition = new Vector2();
+        
+        this.cameraScale = new Vector2();
+        
+        this.cameraRotation = 0;
+    }
+    
+    public void addGameEventListener(GameEventListener listener){
+        if(listener != null){
+            this.listEventGameListeners.add(new WeakReference(listener));
+        }
+    }
+
+    /**
+     * @param cameraScale the cameraScale to set
+     */
+    public void setCameraScale(float cameraScaleX, float cameraScaleY) {
+        this.cameraScale = cameraScale;
+    }
+
+    /**
+     * @param cameraRotation the cameraRotation to set
+     */
+    public void setCameraRotation(float cameraRotation) {
+        this.cameraRotation = cameraRotation;
+    }
+    
+    /**
+     * @param cameraPosition the cameraPosition to set
+     */
+    public void setCameraPosition(float cameraScaleX, float cameraScaleY) {
+        this.cameraPosition = cameraPosition;
+    }
+    
+    public void updateCamera(Camera camera, float originalWidth, float originalHeight){
+        
+        camera.position.set(this.cameraPosition.x, this.cameraPosition.y, 0);
+        
+        camera.rotate(new Vector3(0, 0, 1), this.cameraRotation);
+        
+        if(this.cameraScale.x != 1 || this.cameraScale.y != 1){
+            camera.viewportWidth = originalWidth * this.cameraScale.x;
+            camera.viewportHeight = originalHeight * this.cameraScale.y;
+        }
+        
+        camera.update();
     }
 
 }
