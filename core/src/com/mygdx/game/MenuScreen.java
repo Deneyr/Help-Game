@@ -7,16 +7,13 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Vector2;
-import java.io.File;
+import menu.MenuManager;
 
 
 /**
@@ -25,12 +22,16 @@ import java.io.File;
  */
 public class MenuScreen implements Screen{
 
-    public static final String TITLE = "HELP";
-    public static final String SUBTITLE = "PRESS        ENTER";
+    /*public static final String TITLE = "HELP";
+    public static final String SUBTITLE = "PRESS        ENTER";*/
     
-    private final HelpGame game;
+    private final MenuManager menuManager;
     
-    OrthographicCamera camera;
+    private final Batch batch;
+    
+    private OrthographicCamera camera;
+    
+    private Vector2 cameraSize;
     
     // Part ressources
     
@@ -39,12 +40,15 @@ public class MenuScreen implements Screen{
     
     Sprite umbrella;
     
-    public MenuScreen(HelpGame game){
-        this.game = game;
+    public MenuScreen(Batch batch, MenuManager menuManager){
+        this.menuManager = menuManager;
        
-        this.camera = new OrthographicCamera(800, 480);
+        this.cameraSize = new Vector2(800, 400);
+        this.camera = new OrthographicCamera(this.cameraSize.x, this.cameraSize.y);
         
-        // Part ressources initialization
+        this.batch = batch;
+        
+        /*// Part ressources initialization
         
         FreeTypeFontParameter fontParameters = new FreeTypeFontParameter();
 
@@ -65,7 +69,7 @@ public class MenuScreen implements Screen{
         
         this.umbrella = new Sprite(new Texture("parapluie.png"));
         this.umbrella.setSize(75, 75);
-        this.umbrella.setPosition(-25, -100);
+        this.umbrella.setPosition(-25, -100);*/
     }
    
     
@@ -79,26 +83,22 @@ public class MenuScreen implements Screen{
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        this.camera.update();
-        this.game.batch.setProjectionMatrix(this.camera.combined);
+        this.menuManager.updateCamera(this.camera, this.cameraSize.x, this.cameraSize.y);
         
-        this.game.batch.begin();
+        this.batch.setProjectionMatrix(this.camera.combined);
+        this.batch.begin();
         
-        this.titleFont.draw(this.game.batch, TITLE, -100, 100);
-        this.subTitleFont.draw(this.game.batch, SUBTITLE, -160, -50);
-        this.game.batch.draw(this.umbrella, 
-                                    this.umbrella.getX(), this.umbrella.getY(),
-                                    this.umbrella.getOriginX(), this.umbrella.getOriginY(),
-                                    this.umbrella.getWidth(),this.umbrella.getHeight(),
-                                    this.umbrella.getScaleX(),this.umbrella.getScaleY(),
-                                    this.umbrella.getRotation());
+        this.menuManager.drawBatch(this.camera, this.batch);
         
-        this.game.batch.end();
+        this.batch.end();
     }
 
     @Override
     public void resize(int i, int i1) {
-        this.camera.setToOrtho(false, i, i1);
+        this.cameraSize.x = i;
+        this.cameraSize.y = i1;
+        
+        this.camera.setToOrtho(false, this.cameraSize.x, this.cameraSize.y);
         
         this.camera.position.set(new Vector2(0, 0),0);
     }

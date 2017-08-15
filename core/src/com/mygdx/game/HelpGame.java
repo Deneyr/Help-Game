@@ -13,6 +13,7 @@ import java.util.TreeMap;
 import gamenode.GameNode;
 import gamenode.GameNodeManager;
 import gamenode.Lvl1GameNode;
+import gamenode.MainMenuGameNode;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,11 +70,18 @@ public class HelpGame extends Game implements GameEventListener{
         // Init GameNodeManager
         this.gameNodeManager = new GameNodeManager(this.batch);
         
-        GameNode gameNode = new Lvl1GameNode(this, this.batch);
-        
+        // Add Node Part
+        GameNode gameNode = new Lvl1GameNode(this, this.batch);    
         this.gameNodeManager.addGameNode(gameNode);
         
-        this.gameNodeManager.changeCurrentGameNode(this, gameNode);
+        GameNode menuNode = new MainMenuGameNode(this, this.batch);    
+        this.gameNodeManager.addGameNode(menuNode);
+        
+        // Link Nodes Part
+        menuNode.addNextNode("Go", gameNode);
+        
+        // Initialize first node
+        this.gameNodeManager.changeCurrentGameNode(this, menuNode);
         
     }
     
@@ -115,7 +123,14 @@ public class HelpGame extends Game implements GameEventListener{
      * @return the gameWorld
      */
     public GameWorld getGameWorld() {
-        return gameWorld;
+        return this.gameWorld;
+    }
+    
+    /**
+     * @return the menuManager
+     */
+    public MenuManager getMenuManager() {
+        return this.menuManager;
     }
     
     /**
