@@ -243,6 +243,10 @@ public class GameWorld implements WorldPlane, GameEventListener{
         }
         this.world.dispose();
         
+        
+        for(CinematicManager cinematicManager : this.mapCinematicManagers.values()){
+            cinematicManager.dispose();
+        }
         this.mapCinematicManagers.clear();
         
         assert this.world.getBodyCount() == 0;

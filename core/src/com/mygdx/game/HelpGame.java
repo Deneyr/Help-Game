@@ -78,7 +78,8 @@ public class HelpGame extends Game implements GameEventListener{
         this.gameNodeManager.addGameNode(menuNode);
         
         // Link Nodes Part
-        menuNode.addNextNode("Go", gameNode);
+        gameNode.addNextNode("Menu", menuNode);
+        menuNode.addNextNode("Start", gameNode);
         
         // Initialize first node
         this.gameNodeManager.changeCurrentGameNode(this, menuNode);
@@ -117,6 +118,8 @@ public class HelpGame extends Game implements GameEventListener{
         this.gameWorld.flushWorld();
         
         this.menuManager.dispose();
+
+        this.batch.flush();
     }
     
     /**

@@ -103,9 +103,9 @@ public abstract class ResourceManager implements WorldPlane, Disposable, Resourc
         
         ResourceManager.isLoading = true;
     }
-    
+
     public void registerResource(String path){
-        if(!this.mapLoadRessourceAgain.containsKey(path)){
+        if(!this.mapLoadRessourceAgain.containsKey(path)){      
             this.ressources2Load.add(path);
         }else{
             this.mapLoadRessourceAgain.put(path, true);
@@ -118,11 +118,7 @@ public abstract class ResourceManager implements WorldPlane, Disposable, Resourc
         for(Entry<String, Boolean> entryLoadRessourceAgain : entryLoadRessourcesAgain){
             if(!entryLoadRessourceAgain.getValue()){
                 ResourceManager.assetManager.unload(entryLoadRessourceAgain.getKey());
-                if(ResourceManager.assetManager.isLoaded(entryLoadRessourceAgain.getKey()) == true){
-                    System.out.println("NONNNN !");
-                }else{
-                    System.out.println("OUIII !");
-                }
+
                 this.mapLoadRessourceAgain.remove(entryLoadRessourceAgain.getKey());
             }
         }

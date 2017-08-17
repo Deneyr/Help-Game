@@ -76,11 +76,11 @@ public class MenuManager implements Disposable, GameEventListener{
         this.indexCurrentText = -1;
         this.indexPreviousText = -1;
         
-        this.hoverAnimation = new Animation(null, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_INC, 0, 0, 1);
+        this.hoverAnimation = new Animation(null, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_INC, 0, 0, 0.5f);
         this.hoverAnimation.setColorAnimation(Color.LIGHT_GRAY, Color.WHITE);
         this.hoverAnimation.setRelativePositionAnimation(new Vector2(0.1f, 0));
     
-        this.unHoverAnimation = new Animation(null, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_DEC, 0, 0, 1);
+        this.unHoverAnimation = new Animation(null, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_DEC, 0, 0, 0.5f);
         this.unHoverAnimation.setColorAnimation(Color.WHITE, Color.LIGHT_GRAY);
         this.unHoverAnimation.setRelativePositionAnimation(new Vector2(-0.1f, 0));
     }
@@ -166,6 +166,11 @@ public class MenuManager implements Disposable, GameEventListener{
             this.setIndexCurrentText(this.indexCurrentText + 1);
         }else if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
             this.setIndexCurrentText(this.indexCurrentText - 1); 
+        }else if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+            if(this.indexCurrentText >= 0 && this.indexCurrentText < this.listGuiMenuTexts.size()){
+                GuiMenuText guiMenuText = this.listGuiMenuTexts.get(this.indexCurrentText);
+                guiMenuText.onSelected();
+            }
         }
     }
     
@@ -188,6 +193,8 @@ public class MenuManager implements Disposable, GameEventListener{
     @Override
     public void dispose() {
         this.epochTime = -1;
+        
+        this.indexCurrentText = -1;
         
         for(List<Animation> listAnimations : this.mapListAnimations.values()){
             for(Animation animation : listAnimations){

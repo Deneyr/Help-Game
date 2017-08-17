@@ -8,23 +8,20 @@ package guicomponents;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.mygdx.game.Character2D;
+import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DStateListener;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.TreeMap;
 
 /**
  *
  * @author Deneyr
  */
-public class CinematicManager {
+public class CinematicManager implements Disposable{
   
     private String id;
     
@@ -175,6 +172,11 @@ public class CinematicManager {
      */
     public String getId() {
         return id;
+    }
+
+    @Override
+    public void dispose() {
+        this.dialogueBlock.dispose();
     }
     
     public enum CinematicState{

@@ -176,6 +176,13 @@ public class GuiDialogueBlock extends GuiComponent{
         // Nothing to do.
     }
 
+    @Override
+    public void dispose() {
+        this.leftPortrait.dispose();
+        this.rightPortrait.dispose();
+        this.textBlock.dispose();
+    }
+    
     /**
      * @return the indexCurrentDialogue
      */

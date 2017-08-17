@@ -68,6 +68,7 @@ public class GuiText extends GuiComponent{
         
         this.bitmapFont = staticGenerator.generateFont(fontParameters);
         
+        
         this.text = new StringBuffer(str);
         
         this.refCornerWidth = refCornerWidth;
@@ -133,7 +134,17 @@ public class GuiText extends GuiComponent{
         }
 
         if(!this.spriteColor.equals(this.bitmapFont.getColor())){
+            //System.out.println(this.spriteColor.r + ":" + this.spriteColor.g + ":" + this.spriteColor.b);
             this.bitmapFont.setColor(this.spriteColor);
+            /*FreeTypeFontGenerator.FreeTypeFontParameter fontParameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+            fontParameters.size = 40;
+            fontParameters.color = this.spriteColor;
+            fontParameters.borderColor = Color.LIGHT_GRAY;
+            fontParameters.borderWidth = 2;
+
+            this.bitmapFont = staticGenerator.generateFont(fontParameters);*/
+            
         }
         
         this.bitmapFont.draw(batch, this.glyphLayout, posX, posY);
