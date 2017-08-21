@@ -19,7 +19,7 @@ public class GuiMenuText extends GuiText{
     private String details;
     
     public GuiMenuText(String str, float locX, float locY) {
-        super(str, 40, ReferenceCorner.MIDDLE, ReferenceCorner.MIDDLE, locX, locY, 2, Color.LIGHT_GRAY, Color.GRAY);
+        super(str, 50, ReferenceCorner.MIDDLE, ReferenceCorner.MIDDLE, locX, locY, 2, Color.LIGHT_GRAY, Color.GRAY);
     }
     
     public void setEventDetails(GameEventListener.EventType eventType, String details){

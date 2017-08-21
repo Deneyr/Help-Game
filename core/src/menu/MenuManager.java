@@ -40,7 +40,7 @@ public class MenuManager implements Disposable, GameEventListener{
     
     private List<Animation> cameraListAnimations;
     
-    private TreeMap<Integer, GuiComponent> layoutsGuiComponent; 
+    private TreeMap<Float, GuiComponent> layoutsGuiComponent; 
     private Map<GuiComponent, List<Animation>> mapListAnimations;
     
     private List<GuiMenuText> listGuiMenuTexts;
@@ -57,7 +57,7 @@ public class MenuManager implements Disposable, GameEventListener{
         
         this.mapListAnimations = new HashMap<GuiComponent,List<Animation>>();
         
-        this.layoutsGuiComponent = new TreeMap<Integer, GuiComponent>();
+        this.layoutsGuiComponent = new TreeMap<Float, GuiComponent>();
         
         this.cameraListAnimations = new ArrayList<Animation>();
         
@@ -112,7 +112,7 @@ public class MenuManager implements Disposable, GameEventListener{
         }
     }
     
-    public void addGuiComponent(GuiComponent guiComponent, int layoutIndex){
+    public void addGuiComponent(GuiComponent guiComponent, float layoutIndex){
         this.layoutsGuiComponent.put(layoutIndex, guiComponent);
         this.mapListAnimations.put(guiComponent, new ArrayList<Animation>());
     }
@@ -213,6 +213,9 @@ public class MenuManager implements Disposable, GameEventListener{
         
         this.listGuiMenuTexts.clear();
         
+        for(GuiComponent guiComponent : this.layoutsGuiComponent.values()){
+            guiComponent.dispose();
+        }
         this.layoutsGuiComponent.clear();
         this.mapListAnimations.clear();
         

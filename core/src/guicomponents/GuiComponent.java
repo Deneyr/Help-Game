@@ -53,8 +53,11 @@ public abstract class GuiComponent extends Object2D{
         float posY = camera.position.y + this.getLocation().y * camera.viewportHeight / 2;
         
         if(this.currentAnimation < 0){
-            sprite = null;
-
+            if(this.texture != null){
+                sprite = new Sprite(this.texture);
+            }else{
+                sprite = null;
+            }
         }else{
             TextureRegion region = this.listAnimations.get(this.currentAnimation).getKeyFrame(this.animationTime);
             sprite = new Sprite(region);  
