@@ -61,31 +61,39 @@ public class GuiPortrait extends GuiComponent{
         }
     }
     
-    /*@Override
-    public void draw(Batch batch, Camera camera, ShapeRenderer shapeRenderer) {
+    public Sprite createCurrentSprite(Camera camera){
+        Sprite sprite;
         
         float posX = camera.position.x + this.getLocation().x * camera.viewportWidth / 2;
         float posY = camera.position.y + this.getLocation().y * camera.viewportHeight / 2;
-              
-        Sprite portrait = this.createCurrentSprite(camera); 
-      
-        if(portrait != null){
-            
-            portrait.setPosition(posX, posY);
         
-            shapeRenderer.setColor(0, 0, 0, 1);
-            shapeRenderer.rect(posX - portrait.getWidth() * 0.1f, posY - portrait.getHeight() * 0.1f, portrait.getWidth() * 1.2f, portrait.getWidth() * 1.2f);
-            
-            batch.setColor(portrait.getColor());
-            batch.draw(portrait, 
-                        portrait.getX(), portrait.getY(),
-                        portrait.getOriginX(), portrait.getOriginY(),
-                        portrait.getWidth(),portrait.getHeight(),
-                        portrait.getScaleX(),portrait.getScaleY(),
-                        portrait.getRotation());
+        if(this.currentAnimation < 0){
+            sprite = null;
+        }else{
+            TextureRegion region = this.listAnimations.get(this.currentAnimation).getKeyFrame(this.animationTime);
+            sprite = new Sprite(region);  
         }
         
-    }*/
+        
+        if(sprite != null){
+            
+            if(!this.spriteColor.equals(sprite.getColor())){
+                sprite.setColor(this.spriteColor);
+            }
+            
+            if(this.spriteRotation != sprite.getRotation()){
+                sprite.setColor(this.spriteColor);
+            }
+            
+            if(this.spriteScale.x != sprite.getScaleX() || this.spriteScale.y != sprite.getScaleX()){
+                sprite.setScale(this.spriteScale.x, this.spriteScale.y);
+            }
+            
+            sprite.setPosition(posX, posY);
+        }
+        
+        return sprite;
+    }
     
     
     
