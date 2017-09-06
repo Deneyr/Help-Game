@@ -8,55 +8,7 @@
     </open-files>
     <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-      <group>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/GroundUpperCity.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/background/Decors_Fond1.png</file>
-        <file>file:/D:/Projects/Help-Game/core/src/menucomp/Tree2MenuComponent.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/guicomponents/GuiTextBlock.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/ressourcesmanagers/ResourceManager.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/GUIScreen.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/TreeWithoutLeaf.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/gamenode/GameNodeManager.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/gamenode/GameNode.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/gamenode/LvlGameNode.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/guicomponents/GuiMenuText.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/HelpGame.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/menucomp/MistMenuComponent.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/ressourcesmanagers/GraphicalComponent.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Panneau_Direction.png</file>
-        <file>file:/D:/Projects/Help-Game/core/src/menucomp/Tree1MenuComponent.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/menucomp/GroundMenuComponent.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/building/Obstacle_Maison.png</file>
-        <file>file:/D:/Projects/Help-Game/core/src/menu/MenuManager.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/building/Obstacle_Maison3.png</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Obstacle_banc.png</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/tree/Decors_Arbre1.png</file>
-        <file>file:/D:/Projects/Help-Game/core/src/guicomponents/GuiPortrait.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Obstacle_Poubelle.png</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/menu/mist.png</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/background/Decors_FondFond_Colline.png</file>
-        <file>file:/D:/Projects/Help-Game/core/src/guicomponents/CinematicManager.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/building/Obstacle_Maison10.png</file>
-        <file>file:/D:/Projects/Help-Game/core/src/gamenode/Lvl1GameNode.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/MenuScreen.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Obstacle_Poutrelle.png</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/tree/Decors_Arbre2.png</file>
-        <file>file:/D:/Projects/Help-Game/core/src/menucomp/BackgroundMenuComponent.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/background/SpritemapOiseau.png</file>
-        <file>file:/D:/Projects/Help-Game/core/src/gamenode/MainMenuGameNode.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Panneau_Danger.png</file>
-        <file>file:/D:/Projects/Help-Game/core/src/guicomponents/GuiText.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/background/cityBackground.jpg</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Object2D.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/characters/Grandma.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/gamenode/MenuGameNode.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/guicomponents/GuiComponent.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/menucomp/OrphenageMenuComponent.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Obstacle_Abribus.png</file>
-        <file>file:/D:/Projects/Help-Game/core/src/guicomponents/GuiDialogueBlock.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/GameWorld.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/menucomp/StreetLampMenuComponent.java</file>
-      </group>
+      <group/>
     </open-files>
   </auxiliary>
 </gradle-project-properties>

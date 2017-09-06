@@ -27,6 +27,7 @@ public interface GameEventListener {
         GAMEOVER, // dead, success
         GAMESTART,
         CHECKPOINT, // reached
+        MENUOPTION, // move, select
         GAMENODECHANGE // restart, [id gamenode]
     }
 }

@@ -22,6 +22,8 @@ import menucomp.MistMenuComponent;
 import menucomp.OrphenageMenuComponent;
 import menucomp.StreetLampMenuComponent;
 import menucomp.Tree2MenuComponent;
+import ressourcesmanagers.MusicManager;
+import ressourcesmanagers.SoundManager;
 
 /**
  *
@@ -142,6 +144,10 @@ public class MainMenuGameNode extends MenuGameNode{
         Animation animation = new Animation(tree2, Animation.RunType.RESTART, Interpolation.InterpolationType.LINEAR, 1f, 0f, 60f);
         animation.setPositionAnimation(new Vector2(-2f, -0.35f), new Vector2(2f, -0.35f));      
         game.getMenuManager().addAnimation(animation);*/
+        
+        // Sounds.
+        
+        MusicManager.getInstance().registerResource("sounds/Help_MainTitle.ogg");
         
     }
     

@@ -7,62 +7,54 @@ package ressourcesmanagers;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import java.util.HashSet;
 import java.util.Set;
-
 
 /**
  *
  * @author Deneyr
  */
-public class TextureManager extends ResourceManager implements AssetErrorListener{
+public class SoundManager extends ResourceManager implements AssetErrorListener{
 
     
-    private static TextureManager instance;
-    
-    private Set<GraphicalComponent> waitingObject2D;
+    private static SoundManager instance;
        
-    private TextureManager(){
+    private SoundManager(){
         super();
         
         ResourceManager.addGameEventListener(this);
-        
-        this.waitingObject2D = new HashSet<GraphicalComponent>();
         
         this.assetManager.setErrorListener(this);
     }
     
     
-    public static TextureManager getInstance(){
-        if(TextureManager.instance != null){
-            return TextureManager.instance;
+    public static SoundManager getInstance(){
+        if(SoundManager.instance != null){
+            return SoundManager.instance;
         }
-        return TextureManager.instance = new TextureManager();
+        return SoundManager.instance = new SoundManager();
     }
 
     @Override
     public void resetLoadedResources(){
         super.resetLoadedResources();
-        
-        this.waitingObject2D.clear();
     }
     
     @Override
     public void LoadNewResources() {
         for(String resourcePath : this.ressources2Load){
-            ResourceManager.assetManager.load(resourcePath, Texture.class);
+            ResourceManager.assetManager.load(resourcePath, Sound.class);
             this.mapLoadRessourceAgain.put(resourcePath, true);
         }
     }
     
-    public Texture getTexture(String path, GraphicalComponent graphicalComponent){
+    public Sound getSound(String path){
         synchronized(this){
             this.registerResource(path);
             if(ResourceManager.assetManager.isLoaded(path)){
                 return ResourceManager.assetManager.get(path);
-            }else if(graphicalComponent != null){               
-                this.waitingObject2D.add(graphicalComponent);
             }
         }
         return null;
@@ -70,11 +62,7 @@ public class TextureManager extends ResourceManager implements AssetErrorListene
    
     @Override
     public void onResourcesLoaded(){
-        synchronized(this){
-            for(GraphicalComponent graphicalComponent : this.waitingObject2D){
-                graphicalComponent.assignTextures();
-            }
-        }
+        // nothing to do.
     }
     
     @Override

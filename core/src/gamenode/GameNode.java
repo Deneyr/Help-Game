@@ -6,6 +6,8 @@
 package gamenode;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.GameEventListener;
 import com.mygdx.game.HelpGame;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,15 +27,24 @@ public abstract class GameNode {
     
     protected Map<String, GameNode> outputGameNode;
     
+    private boolean isFirstUpdate;
+    
     public GameNode(String id){
         this.outputGameNode = new HashMap<String, GameNode>();
         
         this.screensDisplayed = new ArrayList<Screen>();
         
         this.id = id;
+        
+        this.isFirstUpdate = true;
     }
     
-    public abstract void updateLogic(HelpGame game, float deltaTime);
+    public void updateLogic(HelpGame game, float deltaTime){
+        if(this.isFirstUpdate){
+            this.isFirstUpdate = false;
+            game.onGameEvent(GameEventListener.EventType.GAMESTART, this.getId(), Vector2.Zero);
+        }
+    }
     
     public void renderScreens(HelpGame game, float deltaTime){
         for(Screen screenDisplayed : this.screensDisplayed){
@@ -47,7 +58,9 @@ public abstract class GameNode {
     }
     
     public boolean onStartingNode(HelpGame game){
-        return false;
+        this.isFirstUpdate = true;
+        
+        return true;
     }
     
     public void onEndingNode(HelpGame game){

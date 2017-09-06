@@ -70,12 +70,6 @@ public class GameNodeManager extends GameNode implements Disposable, ResourceMan
     
     @Override
     public void updateLogic(HelpGame game, float deltaTime){
-        /*// Update current node.
-        if(!this.waiting4Resources){
-            GameNode nextNode = this.currentGameNode.getNextGameNode();   
-            this.changeCurrentGameNode(game, nextNode);
-        }*/
-        
         // Update logic current game node.
         if(this.waiting4Resources){
             this.loadingGameNode.updateLogic(game, deltaTime);

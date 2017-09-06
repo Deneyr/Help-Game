@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.HelpGame;
 import com.mygdx.game.MenuScreen;
 import java.util.Map;
+import ressourcesmanagers.MusicManager;
+import ressourcesmanagers.SoundManager;
 import ressourcesmanagers.TextureManager;
 
 /**
@@ -27,6 +29,7 @@ public abstract class MenuGameNode extends GameNode{
     
     @Override
     public void updateLogic(HelpGame game, float deltaTime) { 
+        super.updateLogic(game, deltaTime);
         // Compute the next step of the environment game logic.
         game.getMenuManager().step(deltaTime);
     }
@@ -39,19 +42,27 @@ public abstract class MenuGameNode extends GameNode{
     
     @Override
     public boolean onStartingNode(HelpGame game){
+        super.onStartingNode(game);
+        
         game.clearAllWorldPlanes();
         
         TextureManager.getInstance().resetLoadedResources();
+        SoundManager.getInstance().resetLoadedResources();
+        MusicManager.getInstance().resetLoadedResources();
         
         this.initializeMenu(game);
         
         TextureManager.getInstance().UpdateResources();
+        SoundManager.getInstance().UpdateResources();
+        MusicManager.getInstance().UpdateResources();
         
         return true;
     }
     
     @Override
     public void onEndingNode(HelpGame game){
+        super.onEndingNode(game);
+        
         this.flushMenu(game);
     }
     

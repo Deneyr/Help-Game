@@ -35,6 +35,8 @@ public class HelpGame extends Game implements GameEventListener{
     private final TreeMap<Float, WorldPlane> mapBackgroundPlanes = new TreeMap<Float, WorldPlane>();
     
     private final MenuManager menuManager = new MenuManager();
+    
+    private final SoundMusicManager soundMusicManager = new SoundMusicManager();
    
     // Batch
     public SpriteBatch batch;
@@ -107,6 +109,8 @@ public class HelpGame extends Game implements GameEventListener{
 
     @Override
     public void dispose() {
+        this.clearAllWorldPlanes();
+        
         this.batch.dispose();
     }
 
@@ -118,6 +122,8 @@ public class HelpGame extends Game implements GameEventListener{
         this.gameWorld.flushWorld();
         
         this.menuManager.dispose();
+        
+        this.soundMusicManager.dispose();
 
         this.batch.flush();
     }
@@ -162,6 +168,8 @@ public class HelpGame extends Game implements GameEventListener{
                     this.getPlayerData().setCurrentMoney(this.gameWorld.getCurrentMoney());
                     break;
             }
+            
+            this.soundMusicManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
             
             this.gameNodeManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
         }

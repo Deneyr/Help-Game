@@ -6,14 +6,14 @@
 package gamenode;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.BackgroundScreen;
 import com.mygdx.game.GUIScreen;
-import com.mygdx.game.GameEventListener;
 import com.mygdx.game.GameScreen;
 import com.mygdx.game.HelpGame;
 import com.mygdx.game.WorldPlane;
 import java.util.Map;
+import ressourcesmanagers.MusicManager;
+import ressourcesmanagers.SoundManager;
 import ressourcesmanagers.TextureManager;
 
 /**
@@ -21,7 +21,7 @@ import ressourcesmanagers.TextureManager;
  * @author Deneyr
  */
 public abstract class LvlGameNode extends GameNode{
-
+    
     public LvlGameNode(String id, HelpGame game, Batch batch){
         super(id);
         
@@ -36,6 +36,8 @@ public abstract class LvlGameNode extends GameNode{
     
     @Override
     public void updateLogic(HelpGame game, float deltaTime) {
+        super.updateLogic(game, deltaTime);
+        
         // Compute the next step of the background logic.
         for(Map.Entry<Float, WorldPlane> plane : game.getMapBackgroundPlanes().entrySet()){
             plane.getValue().step(deltaTime);
@@ -67,20 +69,28 @@ public abstract class LvlGameNode extends GameNode{
     
     @Override
     public boolean onStartingNode(HelpGame game){
+        super.onStartingNode(game);
+        
         game.clearAllWorldPlanes();
         
         TextureManager.getInstance().resetLoadedResources();
+        SoundManager.getInstance().resetLoadedResources();
+        MusicManager.getInstance().resetLoadedResources();
         
         this.initializeLevel(game);
         game.getGameWorld().setCurrentMoney(game.getPlayerData().getCurrentMoney());
         
         TextureManager.getInstance().UpdateResources();
+        SoundManager.getInstance().UpdateResources();
+        MusicManager.getInstance().UpdateResources();
         
         return true;
     }
     
     @Override
     public void onEndingNode(HelpGame game){
+        super.onEndingNode(game);
+        
         game.getPlayerData().setCurrentLevel(this.getId());
         game.getPlayerData().setCurrentMoney(game.getGameWorld().getCurrentMoney());
         
