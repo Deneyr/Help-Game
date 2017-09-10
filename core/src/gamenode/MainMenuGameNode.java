@@ -145,8 +145,7 @@ public class MainMenuGameNode extends MenuGameNode{
         animation.setPositionAnimation(new Vector2(-2f, -0.35f), new Vector2(2f, -0.35f));      
         game.getMenuManager().addAnimation(animation);*/
         
-        // Sounds.
-        
+        // Music & Sounds.
         MusicManager.getInstance().registerResource("sounds/Help_MainTitle.ogg");
         
     }

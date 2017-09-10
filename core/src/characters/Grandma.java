@@ -852,6 +852,7 @@ public class Grandma extends Character2D{
             }else{
                 Grandma.this.changeAnimation(3, false);
             }
+            Grandma.this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "umbrella", new Vector2(Grandma.this.getPositionBody()));
         }
         
         

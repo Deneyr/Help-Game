@@ -83,7 +83,7 @@ public abstract class GameNode {
      * @return the id
      */
     public String getId() {
-        return id;
+        return this.id;
     }
     
 }
