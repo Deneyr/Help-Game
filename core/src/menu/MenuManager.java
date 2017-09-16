@@ -145,6 +145,10 @@ public class MenuManager implements Disposable, GameEventListener{
         
         this.UpdateInfluences();
         
+        for(GuiComponent guiComponent : this.layoutsGuiComponent.values()){
+            guiComponent.updateLogic(deltaTime);
+        }
+        
         for(List<Animation> listAnimations : this.mapListAnimations.values()){
             for(Animation animation : listAnimations){
                 animation.updateAnimation(this.epochTime, this, false);

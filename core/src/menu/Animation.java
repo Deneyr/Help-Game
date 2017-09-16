@@ -127,7 +127,7 @@ public class Animation implements Disposable{
                 case END:
 
                     if(this.runType == RunType.RESTART){
-                        this.startTime = timeElapsed;
+                        this.startTime += this.lenghtPreAnimationTime + this.lengthAnimationTime;
                         this.animationState = AnimationState.START;
 
                         if(this.spriteAnimate){

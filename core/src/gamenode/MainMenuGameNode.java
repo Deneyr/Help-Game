@@ -20,6 +20,7 @@ import menucomp.GroundMenuComponent;
 import menucomp.HaloMenuComponent;
 import menucomp.MistMenuComponent;
 import menucomp.OrphenageMenuComponent;
+import menucomp.RainMenuComponent;
 import menucomp.StreetLampMenuComponent;
 import menucomp.Tree2MenuComponent;
 import ressourcesmanagers.MusicManager;
@@ -56,7 +57,7 @@ public class MainMenuGameNode extends MenuGameNode{
         
         OrphenageMenuComponent orph = new OrphenageMenuComponent();
         orph.setLocation(-0.9f, -0.8f);
-        game.getMenuManager().addGuiComponent(orph, 0.01f);
+        game.getMenuManager().addGuiComponent(orph, 0.05f);
         
         // The second layer.
         StreetLampMenuComponent lamp = new StreetLampMenuComponent();
@@ -104,9 +105,34 @@ public class MainMenuGameNode extends MenuGameNode{
         ground.setLocation(0, -1.6f);
         game.getMenuManager().addGuiComponent(ground, 3);
         
-        // Add animations.
+        // rain 
         
-        Animation animation = new Animation(mist, Animation.RunType.RESTART, Interpolation.InterpolationType.LINEAR, 0f, 0f, 1500f);
+        int nbHeight = 6;
+        int nbWidth = 6;
+        RainMenuComponent[][] arrayRain = new RainMenuComponent[nbHeight][nbWidth];
+        for(int i = 0; i < nbHeight; i++){
+            for(int i2 = 0; i2 < nbWidth; i2++){
+                arrayRain[i][i2] = new RainMenuComponent();
+                arrayRain[i][i2].setLocation(3f, 3f);
+                game.getMenuManager().addGuiComponent(arrayRain[i][i2], 0.55f + 0.001f*i + 0.0001f*i2);
+            }
+        }
+        
+        // Add animations.
+        Animation animation;
+        // start rain animations.
+        
+        for(int i = 0; i < nbHeight; i++){
+            for(int i2 = 0; i2 < nbWidth; i2++){
+                animation = new Animation(arrayRain[i][i2], Animation.RunType.RESTART, Interpolation.InterpolationType.LINEAR, 1f / nbWidth * i2, 0f, 1f);
+                animation.setPositionAnimation(new Vector2(-1 + 3f / nbHeight * i, 0.8f), new Vector2(-1.5f + 3f / nbHeight * i, -1f));      
+                game.getMenuManager().addAnimation(animation);
+            }
+        }
+        
+        // end rain animations.
+        
+        animation = new Animation(mist, Animation.RunType.RESTART, Interpolation.InterpolationType.LINEAR, 0f, 0f, 1500f);
         animation.setPositionAnimation(new Vector2(0f, 0f), new Vector2(200f, 0f));      
         game.getMenuManager().addAnimation(animation);
         
