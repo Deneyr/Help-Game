@@ -101,4 +101,19 @@ public abstract class LvlGameNode extends GameNode{
     public boolean hasLoadingScreen(){
         return true;
     }  
+    
+    protected void initSoundsLvl(){
+        
+        // Swing.
+        SoundManager.getInstance().getSound("sounds/attacks/swingUmbrella.ogg");    
+        SoundManager.getInstance().getSound("sounds/attacks/swingBat.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/swingPunch.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/swingBigPunch.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/shot.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/reloadGun.ogg");
+        
+        // Hit.
+        SoundManager.getInstance().getSound("sounds/attacks/hitPunch.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/hitPunch2.ogg");
+    }
 }

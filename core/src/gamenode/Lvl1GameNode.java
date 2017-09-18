@@ -303,7 +303,7 @@ public class Lvl1GameNode extends LvlGameNode{
         // Music & Sounds.
         MusicManager.getInstance().registerResource("sounds/Help_MainTitle.ogg");
         
-        SoundManager.getInstance().getSound("sounds/attacks/swingUmbrella.ogg");
+        this.initSoundsLvl();
     }
     
 }

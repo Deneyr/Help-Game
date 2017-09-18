@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.DamageActionFixture;
+import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.ShieldActionFixture;
@@ -207,6 +208,8 @@ public class OpponentCACElite extends OpponentCAC2{
                 @Override
                 public void run() {
                     if(!OpponentCACElite.this.isInvulnerable){
+                        OpponentCACElite.this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "bigPunch", new Vector2(OpponentCACElite.this.getPositionBody()));
+                        
                         OpponentCACElite.this.shieldActionFixture.applyAction(deltaTime, OpponentCACElite.this);
                         OpponentCACElite.this.damageActionFixture.applyAction(deltaTime, OpponentCACElite.this);
                     }

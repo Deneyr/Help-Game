@@ -58,6 +58,8 @@ public class RainMenuComponent extends GuiComponent{
         Sprite sprite = this.createCurrentSprite(camera);
         
         if(sprite != null){
+            sprite.setAlpha(0.3f);
+            
             batch.setColor(sprite.getColor());
             batch.draw(sprite, 
                         sprite.getX(), sprite.getY(),

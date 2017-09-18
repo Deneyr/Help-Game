@@ -5,7 +5,6 @@
  */
 package characters;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -16,9 +15,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.DamageActionFixture;
+import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -94,6 +93,8 @@ public class OpponentCAC2 extends OpponentCAC1{
                 @Override
                 public void run() {
                     if(!OpponentCAC2.this.isInvulnerable){
+                        OpponentCAC2.this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "bat", new Vector2(OpponentCAC2.this.getPositionBody()));
+                        
                         OpponentCAC2.this.damageActionFixture.applyAction(deltaTime, OpponentCAC2.this);
                     }
                 }

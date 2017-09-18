@@ -5,7 +5,6 @@
  */
 package characters;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -15,9 +14,9 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
+import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
-import java.io.File;
 import java.util.ArrayList;
 import ressourcesmanagers.TextureManager;
 import triggered.BulletTriggeredObject2D;
@@ -120,10 +119,16 @@ public class OpponentDIST1 extends OpponentCAC1{
                 && prevNode.getStateNode() != OppState.ATTACK 
                 && (nextNode != null && nextNode.getStateNode() == OppState.ATTACK)){
             this.canAttack = false;
+            
+            this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "reloadGun", new Vector2(this.getPositionBody()));
+            
             Timer.schedule(new Timer.Task(){
                     @Override
                     public void run() {
                         if(!OpponentDIST1.this.isInvulnerable){
+                            
+                            OpponentDIST1.this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "shot", new Vector2(OpponentDIST1.this.getPositionBody()));
+                            
                             Vector2 dirBall = new Vector2(OpponentDIST1.this.side == SideCharacter.RIGHT? 1: -1, 0);
                             Vector2 posBall = new Vector2(OpponentDIST1.this.getPositionBody()).scl(1 / P2M);
                             posBall = posBall.add(dirBall.scl(10)).add(new Vector2(0, 4));
