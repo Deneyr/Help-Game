@@ -37,7 +37,6 @@ import guicomponents.GuiPortrait;
 import java.util.ArrayList;
 import java.util.List;
 import ressourcesmanagers.MusicManager;
-import ressourcesmanagers.SoundManager;
 import ressourcesmanagers.TextureManager;
 import triggered.ActivableTriggeredObject2D;
 import triggered.BulletTriggeredObject2D;
@@ -301,7 +300,8 @@ public class Lvl1GameNode extends LvlGameNode{
         game.getGameWorld().addObject2DToWorld(acti);
         
         // Music & Sounds.
-        MusicManager.getInstance().registerResource("sounds/Help_MainTitle.ogg");
+        
+        MusicManager.getInstance().registerResource("sounds/first_lvl.ogg");
         
         this.initSoundsLvl();
     }

@@ -8,7 +8,6 @@ package gamenode;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.HelpGame;
 import com.mygdx.game.MenuScreen;
-import java.util.Map;
 import ressourcesmanagers.MusicManager;
 import ressourcesmanagers.SoundManager;
 import ressourcesmanagers.TextureManager;

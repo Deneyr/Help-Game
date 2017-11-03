@@ -23,6 +23,7 @@ public interface GameEventListener {
         DAMAGE,
         ATTACK,
         LIFE,
+        ACTION,
         TAKE,
         GAMEOVER, // dead, success
         GAMESTART,

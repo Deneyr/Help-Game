@@ -29,6 +29,8 @@ public class SoundMusicManager implements GameEventListener, Disposable{
     // Map Sound;
     private Map<String, List<String>> mapAttackSound; 
     
+    private Map<String, List<String>> mapActionSound; 
+    
     public SoundMusicManager(){
         this.volume = 0.8f;
         
@@ -41,6 +43,10 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         this.putAttackSound("reloadGun", "sounds/attacks/reloadGun.ogg");
         this.putAttackSound("hitPunch", "sounds/attacks/hitPunch.ogg");
         this.putAttackSound("hitPunch", "sounds/attacks/hitPunch2.ogg");
+        
+        this.mapActionSound = new HashMap<String, List<String>>();
+        this.putActionSound("umbrellaOpen", "sounds/action/umbrellaOpen.ogg");
+        this.putActionSound("umbrellaClose", "sounds/action/umbrellaClose.ogg");
     }
     
     
@@ -52,6 +58,9 @@ public class SoundMusicManager implements GameEventListener, Disposable{
                 break;
             case ATTACK:
                 this.launchSoundAttak(location, details);
+                break;
+            case ACTION:
+                this.launchSoundAction(location, details);
                 break;
         }
     }
@@ -75,6 +84,8 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         System.out.println(details);
         if(details.equals("MainMenuGameNode")){
             this.music = MusicManager.getInstance().getMusic("sounds/Help_MainTitle.ogg");
+        }else if(details.equals("Lvl1GameNode")){
+            this.music = MusicManager.getInstance().getMusic("sounds/first_lvl.ogg");
         }
         
         if(this.music != null){
@@ -96,29 +107,36 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         listPathSounds.add(pathSound);
     }
     
+    private void putActionSound(String category, String pathSound){
+        if(!this.mapActionSound.containsKey(category)){
+            this.mapActionSound.put(category, new ArrayList());
+        }
+        
+        List<String> listPathSounds = this.mapActionSound.get(category);
+        
+        listPathSounds.add(pathSound);
+    }
+    
     private void launchSoundAttak(Vector2 location, String details){
         Sound sound = null;
         
-        /*if(details == null || details.isEmpty()){
-            sound = SoundManager.getInstance().getSound("sounds/attacks/swingUmbrella.ogg");
-        }else if(details.equals("umbrella")){
-            sound = SoundManager.getInstance().getSound("sounds/attacks/swingUmbrella.ogg");
-        }else if(details.equals("punch")){
-            sound = SoundManager.getInstance().getSound("sounds/attacks/swingPunch.ogg");
-        }else if(details.equals("bigPunch")){
-            sound = SoundManager.getInstance().getSound("sounds/attacks/swingBigPunch.ogg");
-        }else if(details.equals("bat")){
-            sound = SoundManager.getInstance().getSound("sounds/attacks/swingBat.ogg");
-        }else if(details.equals("shot")){
-            sound = SoundManager.getInstance().getSound("sounds/attacks/shot.ogg");
-        }else if(details.equals("reloadGun")){
-            sound = SoundManager.getInstance().getSound("sounds/attacks/reloadGun.ogg");
-        }else if(details.equals("hitPunch")){
-            sound = SoundManager.getInstance().getSound("sounds/attacks/hitPunch.ogg");
-        }*/
-        
         if(this.mapAttackSound.containsKey(details)){
             List<String> listPathSounds = this.mapAttackSound.get(details);
+            
+            String pathSound = listPathSounds.get( (int) (Math.random() * listPathSounds.size()) );
+            sound = SoundManager.getInstance().getSound(pathSound);
+        }
+        
+        if(sound != null){
+            sound.play(this.volume, 1, location.x);    
+        }
+    }
+    
+    private void launchSoundAction(Vector2 location, String details){
+        Sound sound = null;
+        
+        if(this.mapActionSound.containsKey(details)){
+            List<String> listPathSounds = this.mapActionSound.get(details);
             
             String pathSound = listPathSounds.get( (int) (Math.random() * listPathSounds.size()) );
             sound = SoundManager.getInstance().getSound(pathSound);

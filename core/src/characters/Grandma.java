@@ -699,6 +699,7 @@ public class Grandma extends Character2D{
                     GrandmaInfluence currentInfluence = it.next();
                     switch(currentInfluence){
                         case UMB_SWITCH :
+                            Grandma.this.notifyGameEventListener(GameEventListener.EventType.ACTION, "umbrellaOpen", new Vector2(Grandma.this.getPositionBody()));
                             return new StateNode(GrandmaState.UNFOLDED_UMBRELLA_MIDDLE);
 
                     }
@@ -714,6 +715,7 @@ public class Grandma extends Character2D{
                 switch(currentInfluence){
                     case UMB_SWITCH :
                         switchAnimJump(GrandmaState.JUMP_UNFOLDED_MIDDLE);
+                        Grandma.this.notifyGameEventListener(GameEventListener.EventType.ACTION, "umbrellaOpen", new Vector2(Grandma.this.getPositionBody()));
                         return new StateNode(GrandmaState.JUMP_UNFOLDED_MIDDLE);
 
                 }
@@ -767,6 +769,7 @@ public class Grandma extends Character2D{
                 switch(currentInfluence){
                     case UMB_SWITCH :
                         switchAnimJump(GrandmaState.JUMP_FOLDED);
+                        Grandma.this.notifyGameEventListener(GameEventListener.EventType.ACTION, "umbrellaClose", new Vector2(Grandma.this.getPositionBody()));
                         return new StateNode(GrandmaState.JUMP_FOLDED);
                     case UMB_DOWN :
                         return new StateNode(GrandmaState.UNFOLDED_UMBRELLA_DOWN);
@@ -795,6 +798,7 @@ public class Grandma extends Character2D{
                     GrandmaInfluence currentInfluence = it.next();
                     switch(currentInfluence){
                         case UMB_SWITCH :
+                            Grandma.this.notifyGameEventListener(GameEventListener.EventType.ACTION, "umbrellaClose", new Vector2(Grandma.this.getPositionBody()));
                             return new StateNode(GrandmaState.FOLDED_UMBRELLA_NORMAL);
 
                     }
@@ -812,6 +816,7 @@ public class Grandma extends Character2D{
                 switch(currentInfluence){
                     case UMB_SWITCH :
                         switchAnimJump(GrandmaState.JUMP_FOLDED);
+                        Grandma.this.notifyGameEventListener(GameEventListener.EventType.ACTION, "umbrellaClose", new Vector2(Grandma.this.getPositionBody()));
                         return new StateNode(GrandmaState.JUMP_FOLDED);
                     case UMB_UP :
                         return new StateNode(GrandmaState.JUMP_UNFOLDED_UP);
@@ -837,6 +842,7 @@ public class Grandma extends Character2D{
                         }
                         break;
                     case UMB_SWITCH :
+                        Grandma.this.notifyGameEventListener(GameEventListener.EventType.ACTION, "umbrellaOpen", new Vector2(Grandma.this.getPositionBody()));
                         return new StateNode(GrandmaState.UNFOLDED_UMBRELLA_MIDDLE);
                     case ATTACK :
                         launchAttackAnimation();
@@ -877,6 +883,7 @@ public class Grandma extends Character2D{
                         }
                         break;
                     case UMB_SWITCH :
+                        Grandma.this.notifyGameEventListener(GameEventListener.EventType.ACTION, "umbrellaClose", new Vector2(Grandma.this.getPositionBody()));
                         return new StateNode(GrandmaState.FOLDED_UMBRELLA_NORMAL);
                     case UMB_DOWN :
                         return new StateNode(GrandmaState.UNFOLDED_UMBRELLA_DOWN);
@@ -906,6 +913,7 @@ public class Grandma extends Character2D{
                         }
                         break;
                     case UMB_SWITCH :
+                        Grandma.this.notifyGameEventListener(GameEventListener.EventType.ACTION, "umbrellaClose", new Vector2(Grandma.this.getPositionBody()));
                         return new StateNode(GrandmaState.FOLDED_UMBRELLA_NORMAL);
                     case UMB_DOWN :
                         return new StateNode(GrandmaState.UNFOLDED_UMBRELLA_DOWN);
@@ -925,6 +933,7 @@ public class Grandma extends Character2D{
                 GrandmaInfluence currentInfluence = it.next();
                 switch(currentInfluence){
                     case UMB_SWITCH :
+                        Grandma.this.notifyGameEventListener(GameEventListener.EventType.ACTION, "umbrellaClose", new Vector2(Grandma.this.getPositionBody()));
                         return new StateNode(GrandmaState.FOLDED_UMBRELLA_NORMAL);
                     case UMB_UP :
                         return new StateNode(GrandmaState.UNFOLDED_UMBRELLA_UP);

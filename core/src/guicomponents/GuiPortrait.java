@@ -23,7 +23,7 @@ import ressourcesmanagers.TextureManager;
  */
 public class GuiPortrait extends GuiComponent{
 
-    private static final String PORTRAITTEXT = "gui/portraits200x250.png";
+    private static final String PORTRAITTEXT = "gui/Characters200x250.png";
     
     private GuiText.ReferenceCorner refCornerWidth;
     
@@ -110,7 +110,7 @@ public class GuiPortrait extends GuiComponent{
         
         if(portrait != null){
             
-            portrait.setFlip(this.isRightPortrait, false);
+            portrait.setFlip(!this.isRightPortrait, false);
             
             if(!this.isMainCharacter){
                 portrait.setAlpha(portrait.getColor().a * 0.5f);

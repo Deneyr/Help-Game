@@ -133,11 +133,11 @@ public class MainMenuGameNode extends MenuGameNode{
         // end rain animations.
         
         animation = new Animation(mist, Animation.RunType.RESTART, Interpolation.InterpolationType.LINEAR, 0f, 0f, 1500f);
-        animation.setPositionAnimation(new Vector2(0f, 0f), new Vector2(200f, 0f));      
+        animation.setPositionAnimation(new Vector2(0f, 0f), new Vector2(-200f, 0f));      
         game.getMenuManager().addAnimation(animation);
         
         animation = new Animation(mist2, Animation.RunType.RESTART, Interpolation.InterpolationType.LINEAR, 0f, 0f, 1500f);
-        animation.setPositionAnimation(new Vector2(0f, 0.2f), new Vector2(100f, 0.2f));      
+        animation.setPositionAnimation(new Vector2(0f, 0.2f), new Vector2(-100f, 0.2f));      
         game.getMenuManager().addAnimation(animation);
         
         animation = new Animation(halo, Animation.RunType.RESTART, Interpolation.InterpolationType.LINEAR, -2f, 2f, 2f);
