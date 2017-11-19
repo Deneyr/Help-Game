@@ -5,7 +5,6 @@
  */
 package com.mygdx.game.scenery;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -18,11 +17,11 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Character2D;
+import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DStateListener;
 import triggered.UpTriggeredObject2D;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import ressourcesmanagers.TextureManager;
@@ -146,6 +145,8 @@ public class SmallBox extends Character2D{
         }
         
         if(result && this.getLifePoints() <= 0){
+            
+            this.notifyGameEventListener(GameEventListener.EventType.DAMAGE, "boxCrash", new Vector2(this.getPositionBody()));
             
             Vector2 upVector = new Vector2(0, 1);
             float angle = dirDamage.nor().angle(upVector) / 2f;

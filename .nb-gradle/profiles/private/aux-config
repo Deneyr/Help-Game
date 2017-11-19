@@ -4,11 +4,49 @@
   <auxiliary>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-      <group/>
+      <group>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentDIST1.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Character2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/ressourcesmanagers/SoundManager.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/guicomponents/GuiPortrait.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/menucomp/RainMenuComponent.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/Lvl1GameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/TriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/SoundMusicManager.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentCACElite.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentCAC2.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/MainMenuGameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/triggered/UpTriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/LvlGameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/SmallBox.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/Grandma.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/MenuGameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentCAC1.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/GameEventListener.java</file>
+      </group>
     </open-files>
     <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-      <group/>
+      <group>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentDIST1.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Character2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/ressourcesmanagers/SoundManager.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/guicomponents/GuiPortrait.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/menucomp/RainMenuComponent.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/Lvl1GameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/TriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/SoundMusicManager.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentCACElite.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentCAC2.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/MainMenuGameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/triggered/UpTriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/LvlGameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/SmallBox.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/Grandma.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/MenuGameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentCAC1.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/GameEventListener.java</file>
+      </group>
     </open-files>
   </auxiliary>
 </gradle-project-properties>

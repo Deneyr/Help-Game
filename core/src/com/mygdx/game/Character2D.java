@@ -237,6 +237,9 @@ public abstract class Character2D extends Object2D{
             
             float ratioDamage = (oldLifePoints - this.lifePoints) / (float) this.lifePointMax;
             if(ratioDamage > 0 && !dirDamage.epsilonEquals(Vector2.Zero, 0.01f)){
+                
+                this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "hitPunch", new Vector2(this.getPositionBody()));
+                
                 this.physicBody.applyLinearImpulse(dirDamage.scl(ratioDamage * 100.f * this.scaleDamageForce), ptApplication, true);
             }
             return true;

@@ -8,6 +8,10 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,9 +35,19 @@ public class SoundMusicManager implements GameEventListener, Disposable{
     
     private Map<String, List<String>> mapActionSound; 
     
+    private Map<String, List<String>> mapDamagesTakenSound; 
+    
+    // Timer score increase.
+    private LocalDateTime lastScoreIncreaseTime;
+    private int scoreNumber;
+    
     public SoundMusicManager(){
-        this.volume = 0.8f;
+        this.volume = 0.6f;
         
+        this.scoreNumber = 0;
+        this.lastScoreIncreaseTime = LocalDateTime.now();
+        
+        // Part attack sounds map fill.
         this.mapAttackSound = new HashMap<String, List<String>>();
         this.putAttackSound("umbrella", "sounds/attacks/swingUmbrella.ogg");
         this.putAttackSound("punch", "sounds/attacks/swingPunch.ogg");
@@ -44,9 +58,15 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         this.putAttackSound("hitPunch", "sounds/attacks/hitPunch.ogg");
         this.putAttackSound("hitPunch", "sounds/attacks/hitPunch2.ogg");
         
+        // Part action sounds map fill.
         this.mapActionSound = new HashMap<String, List<String>>();
         this.putActionSound("umbrellaOpen", "sounds/action/umbrellaOpen.ogg");
         this.putActionSound("umbrellaClose", "sounds/action/umbrellaClose.ogg");
+        this.putActionSound("scoreIncrease", "sounds/action/music_note.ogg");
+        
+        // Part damages taken sounds map fill.
+        this.mapDamagesTakenSound = new HashMap<String, List<String>>();
+        this.putDamagesTakenSound("boxCrash", "sounds/damagesTaken/crash_box.ogg");
     }
     
     
@@ -61,6 +81,9 @@ public class SoundMusicManager implements GameEventListener, Disposable{
                 break;
             case ACTION:
                 this.launchSoundAction(location, details);
+                break;
+            case DAMAGE:
+                this.launchSoundDamagesTaken(location, details);
                 break;
         }
     }
@@ -117,6 +140,16 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         listPathSounds.add(pathSound);
     }
     
+    private void putDamagesTakenSound(String category, String pathSound){
+        if(!this.mapDamagesTakenSound.containsKey(category)){
+            this.mapDamagesTakenSound.put(category, new ArrayList());
+        }
+        
+        List<String> listPathSounds = this.mapDamagesTakenSound.get(category);
+        
+        listPathSounds.add(pathSound);
+    }
+    
     private void launchSoundAttak(Vector2 location, String details){
         Sound sound = null;
         
@@ -137,6 +170,33 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         
         if(this.mapActionSound.containsKey(details)){
             List<String> listPathSounds = this.mapActionSound.get(details);
+            
+            String pathSound = listPathSounds.get( (int) (Math.random() * listPathSounds.size()) );
+            sound = SoundManager.getInstance().getSound(pathSound);
+        }
+        
+        if(sound != null){
+            if(details.equals("scoreIncrease")){
+                Duration duration = Duration.between(LocalDateTime.now(), this.lastScoreIncreaseTime);
+                if(duration.getSeconds() > 5){
+                    this.scoreNumber = 0;
+                }
+                this.lastScoreIncreaseTime = LocalDateTime.now();
+                
+                this.scoreNumber++;
+                
+                sound.play(this.volume, 0.5f + this.scoreNumber * 0.1f, location.x); 
+            }else{
+                sound.play(this.volume, 1, location.x);    
+            }
+        }
+    }
+    
+    private void launchSoundDamagesTaken(Vector2 location, String details){
+        Sound sound = null;
+        
+        if(this.mapDamagesTakenSound.containsKey(details)){
+            List<String> listPathSounds = this.mapDamagesTakenSound.get(details);
             
             String pathSound = listPathSounds.get( (int) (Math.random() * listPathSounds.size()) );
             sound = SoundManager.getInstance().getSound(pathSound);

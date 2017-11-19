@@ -30,6 +30,8 @@ public class UpTriggeredObject2D extends TriggeredObject2D{
 
     public static final String UPTEXTURE = "Collectible_Piece_spritemap.png";
     
+    private boolean wasOnFloor;
+    
     public UpTriggeredObject2D(){
         super();
         
@@ -83,6 +85,8 @@ public class UpTriggeredObject2D extends TriggeredObject2D{
         this.collisionFixture = new ArrayList<Fixture>();
         this.collisionFixture.add(fix);
         fix.setUserData(this);
+        
+        this.wasOnFloor = false;
     }
     
     @Override
@@ -93,6 +97,7 @@ public class UpTriggeredObject2D extends TriggeredObject2D{
             Grandma grandma = (Grandma) objThatTriggered;
             
             this.notifyGameEventListener(GameEventListener.EventType.SCORE, String.valueOf(10), new Vector2(grandma.getPositionBody()));
+            this.notifyGameEventListener(GameEventListener.EventType.ACTION, "scoreIncrease", new Vector2(grandma.getPositionBody()));
             
             this.changeAnimation(1, false);
 
