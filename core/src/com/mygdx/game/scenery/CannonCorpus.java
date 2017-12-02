@@ -22,10 +22,12 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.Character2D;
+import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DStateListener;
 import com.mygdx.game.SolidObject2D;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -93,7 +95,7 @@ public class CannonCorpus extends SolidObject2D{
         }
         
         // Child
-        this.cannon = new Cannon(this.physicBody, target, world, posX , posY);
+        this.cannon = new Cannon(this.physicBody, target, world, posX , posY);   
         
         // Part graphic
         this.assignTextures();
@@ -108,6 +110,16 @@ public class CannonCorpus extends SolidObject2D{
                 && cannon != null){
             
             this.cannon.assignTextures(cannon);
+        }
+    }
+    
+    // listener
+    @Override
+    public void addGameEventListener(GameEventListener listener){
+        super.addGameEventListener(listener);
+        
+        if(listener != null){
+            this.cannon.addGameEventListener(listener);
         }
     }
     
@@ -303,8 +315,10 @@ public class CannonCorpus extends SolidObject2D{
                         @Override
                         public void run() {
                             Vector2 dirBall = new Vector2(-1, 0).rotate((float) (Cannon.this.physicBody.getAngle() * 180 / Math.PI));
-                   
+                            
                             Cannon.this.notifyObject2D2CreateListener(CannonBallTriggeredObject2D.class, Cannon.this.getPositionBody().add(dirBall.scl(Cannon.this.texture.getWidth() / 10.5f * P2M)).scl(1 / P2M), dirBall.scl(160 * P2M));
+                            
+                            Cannon.this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "cannon", Cannon.this.getPositionBody().add(dirBall.scl(Cannon.this.texture.getWidth() / 10.5f * P2M)));
                         }
                         
                 }, 0.5f);

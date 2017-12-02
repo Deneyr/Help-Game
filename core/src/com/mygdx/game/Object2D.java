@@ -47,7 +47,7 @@ public abstract class Object2D implements Disposable, GraphicalComponent{
     private float scale;
     
     // listener
-    WeakReference<GameEventListener> gameEventListener;
+    protected WeakReference<GameEventListener> gameEventListener;
     
     public Object2D(){
         this.currentAnimation = -1;

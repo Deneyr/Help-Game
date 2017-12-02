@@ -116,8 +116,7 @@
           <gateTime>100</gateTime>
           </Articulation>
         <Channel>
-          <controller ctrl="32" value="8"/>
-          <program value="25"/>
+          <program value="68"/>
           <controller ctrl="10" value="65"/>
           <synti>Fluid</synti>
           </Channel>

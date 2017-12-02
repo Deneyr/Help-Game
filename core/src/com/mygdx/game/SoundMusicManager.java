@@ -57,6 +57,8 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         this.putAttackSound("reloadGun", "sounds/attacks/reloadGun.ogg");
         this.putAttackSound("hitPunch", "sounds/attacks/hitPunch.ogg");
         this.putAttackSound("hitPunch", "sounds/attacks/hitPunch2.ogg");
+        this.putAttackSound("cannon", "sounds/attacks/Cannon_Explosion_1.ogg");
+        this.putAttackSound("cannon", "sounds/attacks/Cannon_Explosion_2.ogg");
         
         // Part action sounds map fill.
         this.mapActionSound = new HashMap<String, List<String>>();
@@ -177,7 +179,8 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         
         if(sound != null){
             if(details.equals("scoreIncrease")){
-                Duration duration = Duration.between(LocalDateTime.now(), this.lastScoreIncreaseTime);
+                Duration duration = Duration.between(this.lastScoreIncreaseTime, LocalDateTime.now());
+                System.out.println(duration.getSeconds());
                 if(duration.getSeconds() > 5){
                     this.scoreNumber = 0;
                 }

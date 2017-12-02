@@ -6,7 +6,6 @@
 package guicomponents;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -14,7 +13,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import java.io.File;
 import ressourcesmanagers.TextureManager;
 
 /**
@@ -23,7 +21,7 @@ import ressourcesmanagers.TextureManager;
  */
 public class GuiPortrait extends GuiComponent{
 
-    private static final String PORTRAITTEXT = "gui/Characters200x250.png";
+    private static final String PORTRAITTEXT = "gui/Characters200x300.png";
     
     private GuiText.ReferenceCorner refCornerWidth;
     
@@ -49,7 +47,7 @@ public class GuiPortrait extends GuiComponent{
         this.texture = TextureManager.getInstance().getTexture(PORTRAITTEXT, this);
         
         if(this.texture != null){
-            TextureRegion[][] tmp = TextureRegion.split(this.texture, 200, 250);
+            TextureRegion[][] tmp = TextureRegion.split(this.texture, 200, 300);
         
             Array<TextureRegion> array;
             for(TextureRegion[] listTextureRegion : tmp){
