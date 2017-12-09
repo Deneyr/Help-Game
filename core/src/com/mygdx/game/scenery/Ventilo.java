@@ -19,15 +19,16 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.SolidObject2D;
 import com.mygdx.game.WindActionFixture;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import ressourcesmanagers.TextureManager;
 
 /**
@@ -35,6 +36,9 @@ import ressourcesmanagers.TextureManager;
  * @author françois
  */
 public class Ventilo extends SolidObject2D{
+    
+    protected final String id = UUID.randomUUID().toString();
+    
     private static final String VENTILOTEXT = "destroyable/spritemapVentilloV3-01.png";
     
     protected static final float SCALE_X = 1f;
@@ -155,6 +159,8 @@ public class Ventilo extends SolidObject2D{
         
         if(this.isWorking){
             this.windActionFixture.applyAction(deltaTime, this);
+            
+            this.notifyGameEventListener(GameEventListener.EventType.LOOP, "ventiloWind" + ":" + this.id, this.getPositionBody());
         }
         
         for(WindObject2D wind : this.wind){

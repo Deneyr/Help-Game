@@ -97,9 +97,6 @@ public class HillBackground extends BackgroundWorld{
         // Part birds
         for(Sprite sprite : this.birdsLogic.getSpriteMap().keySet()){
             if(sprite.getX() + sprite.getWidth() > lowerX / P2M && sprite.getX() < upperX / P2M){
-               
-                /*System.out.println("sprite x : " + sprite.getX() + " and max : " + (sprite.getX() +sprite.getWidth()));
-                System.out.println("cam x : " + lowerX + " and max : " + upperX);*/
                 
                 spriteList.add(sprite);
             }

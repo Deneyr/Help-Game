@@ -24,6 +24,8 @@ public interface GameEventListener {
         ATTACK,
         LIFE,
         ACTION,
+        LOOP,
+        LOOP_STOP,
         TAKE,
         GAMEOVER, // dead, success
         GAMESTART,

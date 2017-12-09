@@ -533,7 +533,7 @@ public class Grandma extends Character2D{
         if(this.currentStateNode.stateNode == GrandmaState.JUMP_UNFOLDED_UP 
                 || this.currentStateNode.stateNode == GrandmaState.UNFOLDED_UMBRELLA_UP ){
             return 1;
-        }else if(!(this.currentStateNode.stateNode == GrandmaState.UNFOLDED_UMBRELLA_MIDDLE)){
+        }else if(this.currentStateNode.stateNode == GrandmaState.UNFOLDED_UMBRELLA_MIDDLE){
             return -1;
         }
         return 0;

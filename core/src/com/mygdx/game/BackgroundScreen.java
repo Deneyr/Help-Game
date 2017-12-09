@@ -82,7 +82,6 @@ public class BackgroundScreen implements Screen{
                                             sprite.getScaleX(),sprite.getScaleY(),
                                             sprite.getRotation());
                 }
-                //System.out.println("position : " + sprite.getX() + "-" + sprite.getY());
             }
             
             this.batch.setColor(1f, 1f, 1f, 1f);

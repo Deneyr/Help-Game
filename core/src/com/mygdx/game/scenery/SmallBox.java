@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.Character2D;
 import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
@@ -34,10 +35,14 @@ public class SmallBox extends Character2D{
 
     private static final String SMALLBOXTEXT = "destroyable/SpritemapCaisse.png";
     
+    private boolean canSendEventBounce;
+    
     public SmallBox(World world, float posX, float posY) {
         super(3);
         
         this.side = SideCharacter.RIGHT;   
+        
+        this.canSendEventBounce = true;
         
         // Part graphic
         this.assignTextures();
@@ -185,6 +190,18 @@ public class SmallBox extends Character2D{
         float sign = -Math.signum((new Vector2(1f, 0f).dot(bounceVector)));
 
         Vector2 ptApplication = new Vector2(15 * P2M * sign, 0);
+        
+        if(this.canSendEventBounce){
+            this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "hitBounce", new Vector2(this.getPositionBody()));
+            
+            this.canSendEventBounce = false;
+            Timer.schedule(new Timer.Task(){
+                @Override
+                public void run() {
+                    SmallBox.this.canSendEventBounce = true;
+                }
+            }, 0.3f);
+        }
         
         super.applyBounce(bounceVector, bounceOwner, ptApplication.add(this.physicBody.getPosition()));
     }

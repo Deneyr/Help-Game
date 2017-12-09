@@ -134,7 +134,6 @@ public class GuiText extends GuiComponent{
         }
 
         if(!this.spriteColor.equals(this.bitmapFont.getColor())){
-            //System.out.println(this.spriteColor.r + ":" + this.spriteColor.g + ":" + this.spriteColor.b);
             this.bitmapFont.setColor(this.spriteColor);
             /*FreeTypeFontGenerator.FreeTypeFontParameter fontParameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
 

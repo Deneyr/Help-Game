@@ -259,6 +259,8 @@ public abstract class Character2D extends Object2D{
             bounceVector.scl(this.scaleBounceForce);
             
             if(!bounceVector.epsilonEquals(Vector2.Zero, 0.01f)){
+                this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "hitBounce", new Vector2(this.getPositionBody()));
+                
                 this.physicBody.applyLinearImpulse(bounceVector, Vector2.Zero, true);
             }
             

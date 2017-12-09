@@ -117,13 +117,22 @@ public abstract class LvlGameNode extends GameNode{
         SoundManager.getInstance().getSound("sounds/attacks/hitPunch2.ogg");
         SoundManager.getInstance().getSound("sounds/attacks/Cannon_Explosion_1.ogg");
         SoundManager.getInstance().getSound("sounds/attacks/Cannon_Explosion_2.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/bounce_1.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/bounce_2.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/bounce_3.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/bounce_4.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/bounce_5.ogg");
         
         //Action.
         SoundManager.getInstance().getSound("sounds/action/umbrellaOpen.ogg");
         SoundManager.getInstance().getSound("sounds/action/umbrellaClose.ogg");
         SoundManager.getInstance().getSound("sounds/action/music_note.ogg");
+        SoundManager.getInstance().getSound("sounds/action/Button_Click.ogg");
         
-        // Damages taken
+        // Damages taken.
         SoundManager.getInstance().getSound("sounds/damagesTaken/crash_box.ogg");
+        
+        // Environment sounbs.
+        SoundManager.getInstance().getSound("sounds/environment/Ventilo_Wind_Loop.ogg");
     }
 }

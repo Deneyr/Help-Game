@@ -88,7 +88,6 @@ public class GameScreen implements Screen{
                                         sprite.getScaleX(),sprite.getScaleY(),
                                         sprite.getRotation());
             }
-            //System.out.println("position : " + sprite.getX() + "-" + sprite.getY());
         }
         this.batch.end();
     }

@@ -37,6 +37,9 @@ public class SoundMusicManager implements GameEventListener, Disposable{
     
     private Map<String, List<String>> mapDamagesTakenSound; 
     
+    private Map<String, List<String>> mapLoopSound; 
+    private Map<String, Long> mapIdLoopSound;
+    
     // Timer score increase.
     private LocalDateTime lastScoreIncreaseTime;
     private int scoreNumber;
@@ -59,34 +62,60 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         this.putAttackSound("hitPunch", "sounds/attacks/hitPunch2.ogg");
         this.putAttackSound("cannon", "sounds/attacks/Cannon_Explosion_1.ogg");
         this.putAttackSound("cannon", "sounds/attacks/Cannon_Explosion_2.ogg");
+        this.putAttackSound("hitBounce", "sounds/attacks/bounce_1.ogg");
+        this.putAttackSound("hitBounce", "sounds/attacks/bounce_2.ogg");
+        this.putAttackSound("hitBounce", "sounds/attacks/bounce_3.ogg");
+        this.putAttackSound("hitBounce", "sounds/attacks/bounce_4.ogg");
+        this.putAttackSound("hitProjectile", "sounds/attacks/bounce_5.ogg");
         
         // Part action sounds map fill.
         this.mapActionSound = new HashMap<String, List<String>>();
         this.putActionSound("umbrellaOpen", "sounds/action/umbrellaOpen.ogg");
         this.putActionSound("umbrellaClose", "sounds/action/umbrellaClose.ogg");
         this.putActionSound("scoreIncrease", "sounds/action/music_note.ogg");
+        this.putActionSound("ventiloButton", "sounds/action/Button_Click.ogg");
         
         // Part damages taken sounds map fill.
         this.mapDamagesTakenSound = new HashMap<String, List<String>>();
         this.putDamagesTakenSound("boxCrash", "sounds/damagesTaken/crash_box.ogg");
+        
+        // Part loop sounds map fill.
+        this.mapLoopSound = new HashMap<String, List<String>>();
+        this.putLoopSound("ventiloWind", "sounds/environment/Ventilo_Wind_Loop.ogg");
+        this.mapIdLoopSound = new HashMap<String, Long>();
     }
     
     
     @Override
     public void onGameEvent(EventType type, String details, Vector2 location) {
-        switch(type){
-            case GAMESTART:
-                this.launchMusic(details);
-                break;
-            case ATTACK:
-                this.launchSoundAttak(location, details);
-                break;
-            case ACTION:
-                this.launchSoundAction(location, details);
-                break;
-            case DAMAGE:
-                this.launchSoundDamagesTaken(location, details);
-                break;
+        if(Math.abs(location.x) <= 1
+                && Math.abs(location.y) <= 1){
+            switch(type){
+                case GAMESTART:
+                    //this.launchMusic(details);
+                    break;
+                case ATTACK:
+                    this.launchSoundAttak(location, details);
+                    break;
+                case ACTION:
+                    this.launchSoundAction(location, details);
+                    break;
+                case DAMAGE:
+                    this.launchSoundDamagesTaken(location, details);
+                    break;
+                case LOOP:
+                    this.launchSoundLoop(location, details);
+                    break;
+                case LOOP_STOP:
+                    this.clearSoundLoop(details);
+                    break;
+            }
+        }else{
+            switch(type){
+                case LOOP:
+                    this.clearSoundLoop(details);
+                    break;
+            }
         }
     }
 
@@ -101,12 +130,13 @@ public class SoundMusicManager implements GameEventListener, Disposable{
             this.music.stop();
             this.music = null;
         }
+        
+        this.mapIdLoopSound.clear();
     }
     
     
     // Music launcher.
     private void launchMusic(String details){
-        System.out.println(details);
         if(details.equals("MainMenuGameNode")){
             this.music = MusicManager.getInstance().getMusic("sounds/Help_MainTitle.ogg");
         }else if(details.equals("Lvl1GameNode")){
@@ -152,6 +182,16 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         listPathSounds.add(pathSound);
     }
     
+    private void putLoopSound(String category, String pathSound){
+        if(!this.mapLoopSound.containsKey(category)){
+            this.mapLoopSound.put(category, new ArrayList());
+        }
+        
+        List<String> listPathSounds = this.mapLoopSound.get(category);
+        
+        listPathSounds.add(pathSound);
+    }
+    
     private void launchSoundAttak(Vector2 location, String details){
         Sound sound = null;
         
@@ -180,7 +220,6 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         if(sound != null){
             if(details.equals("scoreIncrease")){
                 Duration duration = Duration.between(this.lastScoreIncreaseTime, LocalDateTime.now());
-                System.out.println(duration.getSeconds());
                 if(duration.getSeconds() > 5){
                     this.scoreNumber = 0;
                 }
@@ -207,6 +246,66 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         
         if(sound != null){
             sound.play(this.volume, 1, location.x);    
+        }
+    }
+    
+    private void launchSoundLoop(Vector2 location, String details){
+        Sound sound = null;
+        
+        String[] keys = details.split(":");
+        String keySound = keys[0];
+        String idObject = keys[1];
+        
+        float scaleVolumeOut = Math.abs(1f - Math.max(0, Math.abs(location.x) - 0.7f)); 
+        scaleVolumeOut *= Math.abs(1f - Math.max(0, Math.abs(location.y) - 0.7f)); 
+        
+        if(!this.mapIdLoopSound.containsKey(idObject)){
+        
+            if(this.mapLoopSound.containsKey(keySound)){
+                
+                List<String> listPathSounds = this.mapLoopSound.get(keySound);
+                
+                String pathSound = listPathSounds.get( (int) (Math.random() * listPathSounds.size()) );
+                sound = SoundManager.getInstance().getSound(pathSound);
+                
+                long idSoundInstance = sound.play(this.volume * scaleVolumeOut, 1, location.x); 
+                
+                sound.setLooping(idSoundInstance, true);
+                
+                this.mapIdLoopSound.put(idObject, idSoundInstance);
+            }
+        }else{
+            if(this.mapLoopSound.containsKey(keySound)){
+                
+                List<String> listPathSounds = this.mapLoopSound.get(keySound);
+
+                String pathSound = listPathSounds.get( (int) (Math.random() * listPathSounds.size()) );
+                sound = SoundManager.getInstance().getSound(pathSound);
+                
+                sound.setPan(this.mapIdLoopSound.get(idObject), location.x, this.volume * scaleVolumeOut);
+            }
+        }
+    }
+    
+    public void clearSoundLoop(String details){
+        Sound sound = null;
+        
+        String[] keys = details.split(":");
+        String keySound = keys[0];
+        String idObject = keys[1];
+        
+        if(this.mapIdLoopSound.containsKey(idObject)){
+            if(this.mapLoopSound.containsKey(keySound)){
+                
+                List<String> listPathSounds = this.mapLoopSound.get(keySound);
+
+                String pathSound = listPathSounds.get( (int) (Math.random() * listPathSounds.size()) );
+                sound = SoundManager.getInstance().getSound(pathSound);
+                
+                sound.stop(this.mapIdLoopSound.get(idObject));
+                
+                this.mapIdLoopSound.remove(idObject);
+            }
         }
     }
 }

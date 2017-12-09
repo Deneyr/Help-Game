@@ -56,7 +56,7 @@ public class WindActionFixture extends ActionFixtures{
                         return;
                     }
                 }else{
-                    if(grandma.stateUmbrella() == -1 || grandma.getSideCharacter() == ((computedAngle > Math.PI/2 && computedAngle < 3*Math.PI/2) ? SideCharacter.LEFT : SideCharacter.RIGHT)){
+                    if(grandma.stateUmbrella() != -1 || grandma.getSideCharacter() == ((computedAngle > Math.PI/2 && computedAngle < 3*Math.PI/2) ? SideCharacter.LEFT : SideCharacter.RIGHT)){
                         obj.physicBody.applyForceToCenter(normVector.setLength(strength * 10), true);
                         return;
                     }

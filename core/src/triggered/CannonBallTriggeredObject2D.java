@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DStateListener;
@@ -135,6 +136,8 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
     @Override
     public void reflectBullet(Object2D reflecter){
         if(!this.isTriggered){
+            this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "hitProjectile", new Vector2(this.getPositionBody()));
+            
             this.physicBody.setLinearVelocity(Vector2.Zero);
             this.changeAnimation(1, false);
             super.trigger(reflecter);

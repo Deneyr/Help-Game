@@ -194,7 +194,6 @@ public class Animation implements Disposable{
         float alpha = Interpolation.interpolate(this.startTime + this.lenghtPreAnimationTime, this.startTime + this.lenghtPreAnimationTime + this.lengthAnimationTime, timeElapsed, this.interpolationType);
         Vector2 resultVector = new Vector2(startVector);
         resultVector = resultVector.lerp(endVector, alpha);
-        //System.out.println(resultVector.x + ":" + resultVector.y + " - " + alpha);
         return resultVector;
     }
     

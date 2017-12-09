@@ -17,9 +17,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
+import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
-import ressourcesmanagers.TextureManager;
 
 /**
  *
@@ -66,6 +66,8 @@ public class ActivableVentilo extends Ventilo{
             return;
         }
         
+        this.notifyGameEventListener(GameEventListener.EventType.ACTION, "ventiloButton", this.getPositionBody());
+        
         if(this.isWorking){
             this.changeAnimation(3, false);
             
@@ -81,6 +83,9 @@ public class ActivableVentilo extends Ventilo{
         }
         
         this.isWorking = !this.isWorking;
+        if(!this.isWorking){
+            this.notifyGameEventListener(GameEventListener.EventType.LOOP_STOP, "ventiloWind" + ":" + this.id, this.getPositionBody());
+        }
         
         this.canBeActivated = false;
         Timer.schedule(new Timer.Task(){
