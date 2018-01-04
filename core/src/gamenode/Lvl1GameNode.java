@@ -22,8 +22,10 @@ import com.mygdx.game.GameEventListener;
 import com.mygdx.game.HelpGame;
 import com.mygdx.game.scenery.Abribus;
 import com.mygdx.game.scenery.ActivableVentilo;
+import com.mygdx.game.scenery.AutoCannonCorpus;
 import com.mygdx.game.scenery.Banc;
 import com.mygdx.game.scenery.CannonCorpus;
+import com.mygdx.game.scenery.DirectCannonCorpus;
 import com.mygdx.game.scenery.GroundUpperCity;
 import com.mygdx.game.scenery.Orphanage;
 import com.mygdx.game.scenery.Poutrelle;
@@ -205,15 +207,30 @@ public class Lvl1GameNode extends LvlGameNode{
         
         // Cannon
         
-        CannonCorpus cannon = new CannonCorpus(game.getGameWorld().getWorld(), hero, -3400f, -170f, 0);
+        CannonCorpus cannon = new AutoCannonCorpus(game.getGameWorld().getWorld(), hero, -3400f, -170f, 0, false, 1);
         game.getGameWorld().addObject2DToWorld(cannon, true);
         
-        cannon = new CannonCorpus(game.getGameWorld().getWorld(), hero, -3800f, -100f, (float) -Math.PI / 2);
+        cannon = new AutoCannonCorpus(game.getGameWorld().getWorld(), hero, -3800f, -100f, (float) -Math.PI / 2, false, 0);
         game.getGameWorld().addObject2DToWorld(cannon, true);
         
-        cannon = new CannonCorpus(game.getGameWorld().getWorld(), hero, -3800f, 20f, (float) -Math.PI / 2);
-        game.getGameWorld().addObject2DToWorld(cannon, true);
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -3800f, 130);
+        game.getGameWorld().addObject2DToWorld(opp, true);
         
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -3820f, 130);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC2(game.getGameWorld().getWorld(), hero, -3830f, 130);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC2(game.getGameWorld().getWorld(), hero, -3840f, 130);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC2(game.getGameWorld().getWorld(), hero, -3860, 130);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        
+        opp = new OpponentCACElite(game.getGameWorld().getWorld(), hero, -3880, 130);
+        game.getGameWorld().addObject2DToWorld(opp, true);
         
         // Cinematics
         

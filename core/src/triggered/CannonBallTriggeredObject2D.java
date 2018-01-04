@@ -16,11 +16,11 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.Character2D;
 import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DStateListener;
-import com.mygdx.game.SolidObject2D;
 import com.mygdx.game.TriggeredObject2D;
 import java.util.ArrayList;
 import ressourcesmanagers.TextureManager;
@@ -93,21 +93,25 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
     public void trigger(Object2D objThatTriggered){
         
         if(!this.isTriggered && 
-                (objThatTriggered instanceof Grandma || objThatTriggered instanceof SolidObject2D)){
+                (objThatTriggered instanceof Character2D)){
+            
+            Vector2 targetPhysicBody = new Vector2(objThatTriggered.getPositionBody());
+            Vector2 dirDamage = targetPhysicBody.sub(this.getPositionBody());
+            dirDamage = dirDamage.nor();
             
             if(objThatTriggered instanceof Grandma){
                 Grandma grandma = (Grandma) objThatTriggered;
                 
-                Vector2 targetPhysicBody = new Vector2(grandma.getPositionBody());
-                Vector2 dirDamage = targetPhysicBody.sub(this.getPositionBody());
-                dirDamage = dirDamage.nor();
-                
                 grandma.applyDamage(2, dirDamage, this);
-            }
-            
-            this.changeAnimation(1, false);
+                
+                this.changeAnimation(1, false);
 
-            super.trigger(objThatTriggered);
+                super.trigger(objThatTriggered);
+            }else{
+                Character2D chara = (Character2D) objThatTriggered;
+                
+                chara.applyDamage(50, dirDamage, this);
+            }
         }
     }
     

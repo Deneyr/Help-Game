@@ -96,7 +96,7 @@ public class BulletTriggeredObject2D extends TriggeredObject2D{
     public void trigger(Object2D objThatTriggered){
         
         if(!this.isTriggered && 
-                (objThatTriggered instanceof Grandma || objThatTriggered instanceof SolidObject2D)){
+                (objThatTriggered instanceof Grandma || objThatTriggered instanceof SolidObject2D)){ // Didn't work : the bullet is not stopped by wall.
             
             if(objThatTriggered instanceof Grandma){
                 Grandma grandma = (Grandma) objThatTriggered;

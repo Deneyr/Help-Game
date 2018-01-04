@@ -8,9 +8,6 @@ package ressourcesmanagers;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  *

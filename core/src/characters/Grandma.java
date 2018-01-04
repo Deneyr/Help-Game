@@ -567,6 +567,9 @@ public class Grandma extends Character2D{
         if(!dirOpponent.isZero(0.001f) && 
                 this.currentStateNode.stateNode == GrandmaState.UNFOLDED_UMBRELLA_DOWN &&
                 Math.abs(Math.acos(dirOpponent.dot(dirDown))) < Math.PI/4){
+            
+            Grandma.this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "hitProjectile", new Vector2(Grandma.this.getPositionBody()));
+            
             return false;
         }
         
