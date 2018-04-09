@@ -5,7 +5,6 @@
  */
 package com.mygdx.game.scenery;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -14,14 +13,11 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.ActionFixtures;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.KinematicActionFixtures;
 import com.mygdx.game.SolidObject2D;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import ressourcesmanagers.TextureManager;
 

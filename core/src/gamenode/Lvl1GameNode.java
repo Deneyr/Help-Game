@@ -24,6 +24,7 @@ import com.mygdx.game.scenery.Abribus;
 import com.mygdx.game.scenery.ActivableVentilo;
 import com.mygdx.game.scenery.AutoCannonCorpus;
 import com.mygdx.game.scenery.Banc;
+import triggered.BarbedTriggeredObject2D;
 import com.mygdx.game.scenery.CannonCorpus;
 import com.mygdx.game.scenery.DirectCannonCorpus;
 import com.mygdx.game.scenery.GroundUpperCity;
@@ -85,6 +86,17 @@ public class Lvl1GameNode extends LvlGameNode{
         
         FarBackground farBackground = new FarBackground(seed);
         game.getMapBackgroundPlanes().put(farBackground.getRatioDist(), farBackground);
+        
+        // init solid objects
+        
+        BarbedTriggeredObject2D barbed = new BarbedTriggeredObject2D(game.getGameWorld().getWorld(), -1900f, -185);
+        game.getGameWorld().addObject2DToWorld(barbed, true);
+        
+        barbed = new BarbedTriggeredObject2D(game.getGameWorld().getWorld(), -1850f, -185);
+        game.getGameWorld().addObject2DToWorld(barbed, true);
+        
+        barbed = new BarbedTriggeredObject2D(game.getGameWorld().getWorld(), -1780f, -185);
+        game.getGameWorld().addObject2DToWorld(barbed, true);
         
         // init hero
         Grandma hero = new Grandma(game.getGameWorld().getWorld(), -2000f, 0f);

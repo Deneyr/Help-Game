@@ -162,15 +162,33 @@ public class HelpGame extends Game implements GameEventListener{
     }
     
     public void computeGameEvents(){
+        
+        List<GameEventContainer> endGameEventContainerList = new ArrayList<GameEventContainer>();
+                
         for(GameEventContainer gameEvent : this.listGameEvents){
+
             switch(gameEvent.eventType){
                 case CHECKPOINT:
                     this.getPlayerData().setCurrentMoney(this.gameWorld.getCurrentMoney());
+                    
+                    this.soundMusicManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
                     break;
+                // End level event : must be forward after the others events.
+                case GAMEOVER:
+                case GAMENODECHANGE:
+                    endGameEventContainerList.add(gameEvent);
+                    break;
+                default:
+                    this.soundMusicManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
+
+                    this.gameNodeManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
             }
-            
+        }
+        
+        // Play the end level events.
+        for(GameEventContainer gameEvent : endGameEventContainerList){
             this.soundMusicManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
-            
+
             this.gameNodeManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
         }
         this.listGameEvents.clear();

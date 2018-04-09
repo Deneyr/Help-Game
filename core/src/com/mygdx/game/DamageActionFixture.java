@@ -36,6 +36,7 @@ public class DamageActionFixture extends ActionFixtures{
     public void applyAction(final float deltaTime, final Object2D owner) {
         super.applyAction(deltaTime, owner);
 
+        this.encounterSomething = false;
         for(Object2D obj : DamageActionFixture.this.setObject2DInside){
             if(obj != owner){
                 Vector2 physicBody = new Vector2(obj.physicBody.getPosition());
@@ -44,7 +45,7 @@ public class DamageActionFixture extends ActionFixtures{
 
                 boolean isEffective = obj.applyDamage(DamageActionFixture.this.damageInflicted, dirDamage, owner);
 
-                DamageActionFixture.this.encounterSomething |= isEffective;
+                this.encounterSomething |= isEffective;
             }
         }
     }
@@ -72,7 +73,7 @@ public class DamageActionFixture extends ActionFixtures{
     /**
      * @return the encounterSomething
      */
-    public boolean isEncounterSomething() {
+    public boolean hasEncounteredSomething() {
         return encounterSomething;
     }
     

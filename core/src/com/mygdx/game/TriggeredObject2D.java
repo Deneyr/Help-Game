@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import static com.mygdx.game.HelpGame.P2M;
 import java.lang.ref.WeakReference;
@@ -73,6 +74,49 @@ public abstract class TriggeredObject2D extends Object2D{
 
             FixtureDef fixtureDef = new FixtureDef();
             fixtureDef.shape = circle;
+
+            body.setFixedRotation(true);
+            Fixture fix = body.createFixture(fixtureDef);
+
+            Set<Fixture> setTrigger = new HashSet<Fixture>();
+            setTrigger.add(fix);
+            this.triggerActionFixture = new TriggerActionFixture(setTrigger);
+
+            this.physicBody = body;
+            
+            // Set physic
+            if(this.IsDynamicObject()){
+                this.physicBody.applyLinearImpulse(speed, Vector2.Zero, true);   
+            }else{
+                this.physicBody.setLinearVelocity(speed);
+            }
+            
+            
+            // Reset alpha & scaling
+            this.setAlpha(1f);
+            this.setScale(1f);
+        }
+        
+        this.isTriggered = false;
+    }
+    
+    public void initialize(World world, Vector2 position, Vector2 speed, Shape shape){
+        if(this.physicBody == null){
+            // Part Physic
+            BodyDef bodyDef = new BodyDef();
+            
+            if(this.IsDynamicObject()){
+                bodyDef.type = BodyDef.BodyType.DynamicBody;         
+            }else{
+                bodyDef.type = BodyDef.BodyType.KinematicBody;
+            }
+            bodyDef.position.set(position.x * P2M, position.y * P2M); 
+
+            Body body = world.createBody(bodyDef);
+
+            // Collision fixture
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.shape = shape;
 
             body.setFixedRotation(true);
             Fixture fix = body.createFixture(fixtureDef);

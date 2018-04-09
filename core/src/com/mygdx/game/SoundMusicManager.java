@@ -12,8 +12,10 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import ressourcesmanagers.MusicManager;
 import ressourcesmanagers.SoundManager;
 
@@ -37,6 +39,7 @@ public class SoundMusicManager implements GameEventListener, Disposable{
     
     private Map<String, List<String>> mapLoopSound; 
     private Map<String, Long> mapIdLoopSound;
+    private Set<String> setLoopSoundPathUsed;
     
     // Timer score increase.
     private LocalDateTime lastScoreIncreaseTime;
@@ -65,6 +68,7 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         this.putAttackSound("hitBounce", "sounds/attacks/bounce_3.ogg");
         this.putAttackSound("hitBounce", "sounds/attacks/bounce_4.ogg");
         this.putAttackSound("hitProjectile", "sounds/attacks/bounce_5.ogg");
+        this.putAttackSound("barbed", "sounds/attacks/Metal_Wire.ogg");
         
         // Part action sounds map fill.
         this.mapActionSound = new HashMap<String, List<String>>();
@@ -81,6 +85,7 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         this.mapLoopSound = new HashMap<String, List<String>>();
         this.putLoopSound("ventiloWind", "sounds/environment/Ventilo_Wind_Loop.ogg");
         this.mapIdLoopSound = new HashMap<String, Long>();
+        this.setLoopSoundPathUsed = new HashSet<String>();
     }
     
     
@@ -129,6 +134,9 @@ public class SoundMusicManager implements GameEventListener, Disposable{
             this.music = null;
         }
         
+        this.clearAllLoopSound();
+        
+        this.setLoopSoundPathUsed.clear();
         this.mapIdLoopSound.clear();
     }
     
@@ -248,7 +256,7 @@ public class SoundMusicManager implements GameEventListener, Disposable{
     }
     
     private void launchSoundLoop(Vector2 location, String details){
-        Sound sound = null;
+        Sound sound;
         
         String[] keys = details.split(":");
         String keySound = keys[0];
@@ -265,6 +273,8 @@ public class SoundMusicManager implements GameEventListener, Disposable{
                 
                 String pathSound = listPathSounds.get( (int) (Math.random() * listPathSounds.size()) );
                 sound = SoundManager.getInstance().getSound(pathSound);
+                
+                this.setLoopSoundPathUsed.add(pathSound);
                 
                 long idSoundInstance = sound.play(this.volume * scaleVolumeOut, 1, location.x); 
                 
@@ -304,6 +314,15 @@ public class SoundMusicManager implements GameEventListener, Disposable{
                 
                 this.mapIdLoopSound.remove(idObject);
             }
+        }
+    }
+    
+    public void clearAllLoopSound(){
+        for(String pathSound : this.setLoopSoundPathUsed){
+            
+            Sound sound = SoundManager.getInstance().getSound(pathSound);
+                
+            sound.stop();
         }
     }
 }

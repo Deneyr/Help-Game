@@ -9,19 +9,34 @@
     <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
       <group>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Character2D.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/ressourcesmanagers/SoundManager.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/TriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/SoundMusicManager.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Banc.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/GameNodeManager.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/DamageActionFixture.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/LvlGameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/ShieldActionFixture.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/HelpGame.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/ActivableActionFixture.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/WarningBarbed.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/menu/MenuManager.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/triggered/CannonBallTriggeredObject2D.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/AutoCannonCorpus.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/DirectCannonCorpus.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Poutrelle.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/gamenode/Lvl1GameNode.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/TriggeredObject2D.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/SoundMusicManager.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Abribus.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/ContinueDamageActionFixture.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/gamenode/MainMenuGameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/triggered/UpTriggeredObject2D.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/CannonCorpus.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/triggered/BulletTriggeredObject2D.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/menu/MenuManager.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/HillBackground.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Barbed.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentCAC1.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Ventilo.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/GameWorld.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/ActivableVentilo.java</file>
       </group>
     </open-files>
   </auxiliary>
