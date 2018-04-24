@@ -275,7 +275,7 @@ public class Animation implements Disposable{
 
     @Override
     public void dispose() {
-        this.getGuiComponent().dispose();
+        //this.getGuiComponent().dispose();
     }
     
     /**

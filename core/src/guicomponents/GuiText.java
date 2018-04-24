@@ -104,49 +104,52 @@ public class GuiText extends GuiComponent{
 
     @Override
     public void drawBatch(Camera camera, Batch batch) {
-        float posX = camera.position.x + this.getLocation().x * camera.viewportWidth / 2;
-        float posY = camera.position.y + this.getLocation().y * camera.viewportHeight / 2;
         
-        switch(this.refCornerWidth){
-            case MIDDLE:
-                
-                posX -= this.glyphLayout.width / 2;
-                
-                break;
-            case RIGHT:
-                
-                posX -= this.glyphLayout.width;
-                
-                break;
-        }
-        
-        switch(this.refCornerHeight){
-            case MIDDLE:
-                
-                posY -= this.glyphLayout.height / 2;
-                
-                break;
-            case LEFT:
-                
-                posY -= this.glyphLayout.height;
-                
-                break;
-        }
+        if(this.spriteColor.a > 0){
+            float posX = camera.position.x + this.getLocation().x * camera.viewportWidth / 2;
+            float posY = camera.position.y + this.getLocation().y * camera.viewportHeight / 2;
 
-        if(!this.spriteColor.equals(this.bitmapFont.getColor())){
-            this.bitmapFont.setColor(this.spriteColor);
-            /*FreeTypeFontGenerator.FreeTypeFontParameter fontParameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
+            switch(this.refCornerWidth){
+                case MIDDLE:
 
-            fontParameters.size = 40;
-            fontParameters.color = this.spriteColor;
-            fontParameters.borderColor = Color.LIGHT_GRAY;
-            fontParameters.borderWidth = 2;
+                    posX -= this.glyphLayout.width / 2;
 
-            this.bitmapFont = staticGenerator.generateFont(fontParameters);*/
-            
+                    break;
+                case RIGHT:
+
+                    posX -= this.glyphLayout.width;
+
+                    break;
+            }
+
+            switch(this.refCornerHeight){
+                case MIDDLE:
+
+                    posY -= this.glyphLayout.height / 2;
+
+                    break;
+                case LEFT:
+
+                    posY -= this.glyphLayout.height;
+
+                    break;
+            }
+
+            if(!this.spriteColor.equals(this.bitmapFont.getColor())){
+                this.bitmapFont.setColor(this.spriteColor);
+                /*FreeTypeFontGenerator.FreeTypeFontParameter fontParameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+                fontParameters.size = 40;
+                fontParameters.color = this.spriteColor;
+                fontParameters.borderColor = Color.LIGHT_GRAY;
+                fontParameters.borderWidth = 2;
+
+                this.bitmapFont = staticGenerator.generateFont(fontParameters);*/
+
+            }
+
+            this.bitmapFont.draw(batch, this.glyphLayout, posX, posY);
         }
-        
-        this.bitmapFont.draw(batch, this.glyphLayout, posX, posY);
     }
 
     @Override

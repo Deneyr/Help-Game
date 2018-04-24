@@ -80,8 +80,8 @@ public class MenuScreen implements Screen{
 
     @Override
     public void render(float f) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        /*Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
         
         this.menuManager.updateCamera(this.camera, this.cameraSize.x, this.cameraSize.y);
         

@@ -584,8 +584,7 @@ public class Grandma extends Character2D{
     
     @Override
     public void onDeath(){
-        this.notifyGameEventListener(GameEventListener.EventType.GAMEOVER, "dead", new Vector2(this.getPositionBody()));
-        this.notifyGameEventListener(GameEventListener.EventType.GAMENODECHANGE, "restart", new Vector2(this.getPositionBody()));
+        this.notifyGameEventListener(GameEventListener.EventType.GAMEOVER, "defeat", new Vector2(this.getPositionBody()));
     }
     
     /*

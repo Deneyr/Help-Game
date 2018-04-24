@@ -40,11 +40,11 @@ public class MenuManager implements Disposable, GameEventListener{
     
     private List<Animation> cameraListAnimations;
     
-    private TreeMap<Float, GuiComponent> layoutsGuiComponent; 
-    private Map<GuiComponent, List<Animation>> mapListAnimations;
+    protected TreeMap<Float, GuiComponent> layoutsGuiComponent; 
+    protected Map<GuiComponent, List<Animation>> mapListAnimations;
     
-    private List<GuiMenuText> listGuiMenuTexts;
-    private int indexCurrentText;
+    protected List<GuiMenuText> listGuiMenuTexts;
+    protected int indexCurrentText;
     private int indexPreviousText;
     private Animation hoverAnimation;
     private Animation unHoverAnimation;
@@ -77,11 +77,9 @@ public class MenuManager implements Disposable, GameEventListener{
         this.indexPreviousText = -1;
         
         this.hoverAnimation = new Animation(null, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_INC, 0, 0, 0.5f);
-        this.hoverAnimation.setColorAnimation(Color.LIGHT_GRAY, Color.WHITE);
         this.hoverAnimation.setRelativePositionAnimation(new Vector2(0.1f, 0));
     
         this.unHoverAnimation = new Animation(null, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_DEC, 0, 0, 0.5f);
-        this.unHoverAnimation.setColorAnimation(Color.WHITE, Color.LIGHT_GRAY);
         this.unHoverAnimation.setRelativePositionAnimation(new Vector2(-0.1f, 0));
     }
     
@@ -193,7 +191,7 @@ public class MenuManager implements Disposable, GameEventListener{
             guiComponent.drawShapeRenderer(camera, shapeRenderer);
         }
     }
-
+    
     @Override
     public void dispose() {
         this.epochTime = -1;
@@ -245,8 +243,10 @@ public class MenuManager implements Disposable, GameEventListener{
         }
     }
     
-    /**
-     * @param cameraScale the cameraScale to set
+    /***
+     * Set the scaling of the camera
+     * @param cameraScaleX
+     * @param cameraScaleY 
      */
     public void setCameraScale(float cameraScaleX, float cameraScaleY) {
         this.cameraScale.set(cameraScaleX, cameraScaleY);

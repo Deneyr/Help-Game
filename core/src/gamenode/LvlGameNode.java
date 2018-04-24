@@ -10,8 +10,12 @@ import com.mygdx.game.BackgroundScreen;
 import com.mygdx.game.GUIScreen;
 import com.mygdx.game.GameScreen;
 import com.mygdx.game.HelpGame;
+import com.mygdx.game.MenuScreen;
 import com.mygdx.game.WorldPlane;
+import guicomponents.GuiComponent;
 import java.util.Map;
+import menucomp.CartoonHaloMenuComponent;
+import menucomp.GameOverMenuComponent;
 import ressourcesmanagers.MusicManager;
 import ressourcesmanagers.SoundManager;
 import ressourcesmanagers.TextureManager;
@@ -31,6 +35,8 @@ public abstract class LvlGameNode extends GameNode{
         this.screensDisplayed.add(new GameScreen(batch, game.getGameWorld()));
         this.screensDisplayed.add(new GUIScreen(batch, game.getGameWorld()));
         
+        this.screensDisplayed.add(new MenuScreen(batch, game.getGameMenuManager()));
+        
         this.outputGameNode.put("restart", this);
     }
     
@@ -45,26 +51,24 @@ public abstract class LvlGameNode extends GameNode{
         
         // Compute the next step of the environment game logic.
         game.getGameWorld().step(deltaTime);
+        
+        // Compute the next step of the Menu manager Logic.
+        game.getGameMenuManager().step(deltaTime);
     }
     
-    /*@Override
-    public void renderScreens(HelpGame game, float deltaTime){
+    protected void initializeLevel(HelpGame game){
+        // Init Game Menu Manager.
+        GuiComponent guiComponent = new CartoonHaloMenuComponent();
+        game.getGameMenuManager().addModelGuiComponent("halo", guiComponent);
         
-        for(Screen screenDisplayed : this.screensDisplayed){
-            if(screenDisplayed instanceof BackgroundScreen){
-                BackgroundScreen backgroundScreen = (BackgroundScreen) screenDisplayed;
-                
-                backgroundScreen.setTargetCameraPosition(game.getGameWorld().getHeroPosition().x / P2M, game.getGameWorld().getHeroPosition().y / P2M);
-            }
-        }
-        
-        super.renderScreens(game, deltaTime);
-    }*/
-    
-    protected abstract void initializeLevel(HelpGame game);
+        guiComponent = new GameOverMenuComponent(); 
+        game.getGameMenuManager().addModelGuiComponent("gameOver", guiComponent);
+    }
     
     protected void flushLevel(HelpGame game){
         game.getGameWorld().flushWorld();
+        
+        game.getGameMenuManager().dispose();
     }
     
     @Override

@@ -47,38 +47,41 @@ public abstract class GuiComponent extends Object2D{
     public abstract void drawShapeRenderer(Camera camera, ShapeRenderer shapeRenderer);
     
     public Sprite createCurrentSprite(Camera camera){
-        Sprite sprite;
+        Sprite sprite = null;
         
         float posX = camera.position.x + this.getLocation().x * camera.viewportWidth / 2;
         float posY = camera.position.y + this.getLocation().y * camera.viewportHeight / 2;
         
-        if(this.currentAnimation < 0){
-            if(this.texture != null){
-                sprite = new Sprite(this.texture);
+        if(this.spriteColor.a > 0){
+        
+            if(this.currentAnimation < 0){
+                if(this.texture != null){
+                    sprite = new Sprite(this.texture);
+                }else{
+                    sprite = null;
+                }
             }else{
-                sprite = null;
+                TextureRegion region = this.listAnimations.get(this.currentAnimation).getKeyFrame(this.animationTime);
+                sprite = new Sprite(region);  
             }
-        }else{
-            TextureRegion region = this.listAnimations.get(this.currentAnimation).getKeyFrame(this.animationTime);
-            sprite = new Sprite(region);  
-        }
-        
-        
-        if(sprite != null){
-            
-            if(!this.spriteColor.equals(sprite.getColor())){
-                sprite.setColor(this.spriteColor);
+
+
+            if(sprite != null){
+
+                if(!this.spriteColor.equals(sprite.getColor())){
+                    sprite.setColor(this.spriteColor);
+                }
+
+                if(this.spriteRotation != sprite.getRotation()){
+                    sprite.setColor(this.spriteColor);
+                }
+
+                if(this.spriteScale.x != sprite.getScaleX() || this.spriteScale.y != sprite.getScaleX()){
+                    sprite.setScale(this.spriteScale.x, this.spriteScale.y);
+                }
+
+                sprite.setPosition(posX, posY);
             }
-            
-            if(this.spriteRotation != sprite.getRotation()){
-                sprite.setColor(this.spriteColor);
-            }
-            
-            if(this.spriteScale.x != sprite.getScaleX() || this.spriteScale.y != sprite.getScaleX()){
-                sprite.setScale(this.spriteScale.x, this.spriteScale.y);
-            }
-            
-            sprite.setPosition(posX, posY);
         }
         
         return sprite;

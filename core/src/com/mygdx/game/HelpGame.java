@@ -17,6 +17,7 @@ import gamenode.MainMenuGameNode;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import menu.GameMenuManager;
 import menu.MenuManager;
 
 
@@ -35,6 +36,8 @@ public class HelpGame extends Game implements GameEventListener{
     private final TreeMap<Float, WorldPlane> mapBackgroundPlanes = new TreeMap<Float, WorldPlane>();
     
     private final MenuManager menuManager = new MenuManager();
+    
+    private final GameMenuManager gameMenuManager = new GameMenuManager();
     
     private final SoundMusicManager soundMusicManager = new SoundMusicManager();
    
@@ -65,6 +68,9 @@ public class HelpGame extends Game implements GameEventListener{
         
         // Menu manager
         this.menuManager.addGameEventListener(this);
+        
+        // Game Menu Manager
+        this.gameMenuManager.addGameEventListener(this);
         
         // Create the sprite batch
         this.batch = new SpriteBatch();
@@ -123,6 +129,8 @@ public class HelpGame extends Game implements GameEventListener{
         
         this.menuManager.dispose();
         
+        this.gameMenuManager.dispose();
+        
         this.soundMusicManager.dispose();
 
         this.batch.flush();
@@ -140,6 +148,13 @@ public class HelpGame extends Game implements GameEventListener{
      */
     public MenuManager getMenuManager() {
         return this.menuManager;
+    }
+    
+    /**
+     * @return the gameMenuManager
+     */
+    public GameMenuManager getGameMenuManager() {
+        return gameMenuManager;
     }
     
     /**
@@ -182,6 +197,8 @@ public class HelpGame extends Game implements GameEventListener{
                     this.soundMusicManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
 
                     this.gameNodeManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
+                    
+                    this.gameMenuManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
             }
         }
         
@@ -190,6 +207,8 @@ public class HelpGame extends Game implements GameEventListener{
             this.soundMusicManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
 
             this.gameNodeManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
+            
+            this.gameMenuManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
         }
         this.listGameEvents.clear();
     }

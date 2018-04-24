@@ -60,8 +60,9 @@ public class Lvl1GameNode extends LvlGameNode{
     
     @Override
     protected void initializeLevel(HelpGame game){
-        
         // --- init stage ---
+        
+        super.initializeLevel(game);
         
         // import dynamic resources (created at runtime).
         TextureManager.getInstance().getTexture(BulletTriggeredObject2D.BULLETTEXTURE, null);
