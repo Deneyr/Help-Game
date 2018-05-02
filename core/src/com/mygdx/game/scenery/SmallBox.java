@@ -40,6 +40,15 @@ public class SmallBox extends Character2D{
     public SmallBox(World world, float posX, float posY) {
         super(3);
         
+        this.Initialize(world, posX, posY, 20f, 16f, 8f);
+    }
+    
+    public SmallBox(World world, float posX, float posY, int lifePoint) {
+        super(lifePoint);
+    }
+    
+    public final void Initialize(World world, float posX, float posY, float radiusCollisionX, float radiusCollisionY, float density) {
+        
         this.side = SideCharacter.RIGHT;   
         
         this.canSendEventBounce = true;
@@ -61,11 +70,11 @@ public class SmallBox extends Character2D{
         this.setCollisionFilterMask(fixtureDef, false);
         
         PolygonShape collisionBox = new PolygonShape();
-        collisionBox.setAsBox(20 * P2M, 16 * P2M, new Vector2( 0, 0), 0);
+        collisionBox.setAsBox(radiusCollisionX * P2M, radiusCollisionY * P2M, new Vector2( 0, 0), 0);
         fixtureDef = new FixtureDef();
         fixtureDef.shape = collisionBox;
-        fixtureDef.density = 8f; 
-        fixtureDef.friction = 0.02f;
+        fixtureDef.density = density; 
+        fixtureDef.friction = 0.03f;
         fixtureDef.restitution = 0.005f; 
 
         Fixture fix = this.physicBody.createFixture(fixtureDef);
@@ -78,7 +87,7 @@ public class SmallBox extends Character2D{
 
         // Feet fixture
         PolygonShape feet = new PolygonShape();
-        feet.setAsBox(21 * P2M, 17 * P2M, new Vector2( 0, 0), 0);
+        feet.setAsBox((radiusCollisionX + 1) * P2M, (radiusCollisionY + 1) * P2M, new Vector2( 0, 0), 0);
         fixtureDef = new FixtureDef();
         fixtureDef.shape = feet;
         fixtureDef.density = 1f; 
@@ -143,7 +152,7 @@ public class SmallBox extends Character2D{
 
         boolean result = this.applyDamage(damage, dirDamage, damageOwner, ptApplication);
         
-        int animationUpdated = 3 - this.getLifePoints();
+        int animationUpdated = this.getLifePointsMax() - this.getLifePoints();
         
         if(this.currentAnimation != animationUpdated){
             this.changeAnimation(animationUpdated, true);
@@ -161,16 +170,23 @@ public class SmallBox extends Character2D{
             
             this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(2f));
             
-            if(Math.random() < 0.3){
-                this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(3f));
-            }
-            
-            if(Math.random() < 0.1){
-                this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(4f));
-            }
+            this.spawnLoot(new Vector2(dirDamage.scl(2f)));
         }
         
         return result;
+    }
+    
+    protected void spawnLoot(Vector2 dirDamage)
+    {
+        dirDamage.scl(2f);
+        
+        if(Math.random() < 0.3){
+            this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), (new Vector2(dirDamage)).rotate((float) Math.random()*360));
+        }
+
+        if(Math.random() < 0.1){
+            this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), (new Vector2(dirDamage)).rotate((float) Math.random()*360));
+        }
     }
     
     @Override

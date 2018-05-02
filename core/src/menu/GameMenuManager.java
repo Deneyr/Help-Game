@@ -13,10 +13,13 @@ import com.mygdx.game.GameEventListener;
 import com.mygdx.game.HelpGame;
 import guicomponents.GuiComponent;
 import guicomponents.GuiMenuText;
+import guicomponents.GuiText;
+import guicomponents.GuiText.ReferenceCorner;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import menucomp.GameStartMenuComponent;
 
 /**
  *
@@ -35,7 +38,10 @@ public class GameMenuManager extends MenuManager{
         
         switch(type){
             case GAMESTART :
-                this.onStart();
+                String[] parts = details.split(":");
+                if(parts != null && parts.length > 1){
+                    this.onStart(parts[0], parts[1]);
+                }
                 break;
             case GAMEOVER :
                 if(details.equals("defeat")){
@@ -49,8 +55,43 @@ public class GameMenuManager extends MenuManager{
         //super.notifyGameEventListeners(type, details, location);
     }
     
-    private void onStart(){
+    private void onStart(String indexLevel, String titleLevel){
+        super.dispose();
         
+        GuiComponent gameStart = this.mapModelGuiComponents.get("gameStart");
+        gameStart.setLocation(-1.6f, -2f);
+        this.addGuiComponent(gameStart, 0);
+        
+        Animation animation = new Animation(gameStart, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_INC, 0f, 0f, 1f);
+        animation.setColorAnimation(new Color(1, 1, 1, 0), new Color(1, 1, 1, 1));      
+        this.addAnimation(animation);
+        
+        animation = new Animation(gameStart, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_INC, 3f, 0f, 1f);
+        animation.setColorAnimation(new Color(1, 1, 1, 1), new Color(1, 1, 1, 0));      
+        this.addAnimation(animation);
+        
+        // Part GUI
+        GuiText guiText = new GuiText("Niveau " + indexLevel, 20, ReferenceCorner.RIGHT, ReferenceCorner.MIDDLE, 0f, 0f, 1.5f, Color.WHITE, Color.DARK_GRAY);
+        guiText.setLocation(-2f, 0f);
+        this.addGuiComponent(guiText, 1);
+        animation = new Animation(guiText, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_INC, 0.5f, 0f, 0.5f);
+        animation.setPositionAnimation(new Vector2(-2f, -0.1f), new Vector2(-0.1f, -0.1f));      
+        this.addAnimation(animation);
+        
+        animation = new Animation(guiText, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_INC, 3f, 0f, 0.5f);
+        animation.setPositionAnimation(new Vector2(-0.1f, -0.1f), new Vector2(-0.1f, 2f));      
+        this.addAnimation(animation);
+        
+        guiText = new GuiText(titleLevel, 20, ReferenceCorner.LEFT, ReferenceCorner.MIDDLE, 0f, 0f, 1.5f, Color.WHITE, Color.DARK_GRAY);
+        guiText.setLocation(2f, 0f);
+        this.addGuiComponent(guiText, 2);
+        animation = new Animation(guiText, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_INC, 0.5f, 0f, 0.5f);
+        animation.setPositionAnimation(new Vector2(2f, -0.1f), new Vector2(0.1f, -0.1f));      
+        this.addAnimation(animation);
+        
+        animation = new Animation(guiText, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_INC, 3f, 0f, 0.5f);
+        animation.setPositionAnimation(new Vector2(0.1f, -0.1f), new Vector2(0.1f, -2f));      
+        this.addAnimation(animation);
     }
     
     private void onSuccess(String details){

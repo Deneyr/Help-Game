@@ -16,6 +16,7 @@ import guicomponents.GuiComponent;
 import java.util.Map;
 import menucomp.CartoonHaloMenuComponent;
 import menucomp.GameOverMenuComponent;
+import menucomp.GameStartMenuComponent;
 import ressourcesmanagers.MusicManager;
 import ressourcesmanagers.SoundManager;
 import ressourcesmanagers.TextureManager;
@@ -63,6 +64,9 @@ public abstract class LvlGameNode extends GameNode{
         
         guiComponent = new GameOverMenuComponent(); 
         game.getGameMenuManager().addModelGuiComponent("gameOver", guiComponent);
+        
+        guiComponent = new GameStartMenuComponent(); 
+        game.getGameMenuManager().addModelGuiComponent("gameStart", guiComponent);
     }
     
     protected void flushLevel(HelpGame game){
@@ -133,9 +137,12 @@ public abstract class LvlGameNode extends GameNode{
         SoundManager.getInstance().getSound("sounds/action/umbrellaClose.ogg");
         SoundManager.getInstance().getSound("sounds/action/music_note.ogg");
         SoundManager.getInstance().getSound("sounds/action/Button_Click.ogg");
+        SoundManager.getInstance().getSound("sounds/action/metalHit1.ogg");
+        SoundManager.getInstance().getSound("sounds/action/metalHit2.ogg");
         
         // Damages taken.
         SoundManager.getInstance().getSound("sounds/damagesTaken/crash_box.ogg");
+        SoundManager.getInstance().getSound("sounds/damagesTaken/metalHitDamage.ogg");
         
         // Environment sounbs.
         SoundManager.getInstance().getSound("sounds/environment/Ventilo_Wind_Loop.ogg");

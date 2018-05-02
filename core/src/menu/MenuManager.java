@@ -8,7 +8,6 @@ package menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -178,7 +177,9 @@ public class MenuManager implements Disposable, GameEventListener{
     
     public void drawBatch(Camera camera, Batch batch){
         for(GuiComponent guiComponent : this.layoutsGuiComponent.values()){
-            guiComponent.drawBatch(camera, batch);
+            if(guiComponent.getSpriteColor().a > 0.01){
+                guiComponent.drawBatch(camera, batch);
+            }
         }
         
         for(GuiMenuText guiMenuText : this.listGuiMenuTexts){

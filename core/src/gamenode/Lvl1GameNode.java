@@ -26,11 +26,12 @@ import com.mygdx.game.scenery.AutoCannonCorpus;
 import com.mygdx.game.scenery.Banc;
 import triggered.BarbedTriggeredObject2D;
 import com.mygdx.game.scenery.CannonCorpus;
-import com.mygdx.game.scenery.DirectCannonCorpus;
 import com.mygdx.game.scenery.GroundUpperCity;
+import com.mygdx.game.scenery.MetalBox;
 import com.mygdx.game.scenery.Orphanage;
 import com.mygdx.game.scenery.Poutrelle;
 import com.mygdx.game.scenery.SmallBox;
+import com.mygdx.game.scenery.StrongBox;
 import com.mygdx.game.scenery.TreeWithoutLeaf;
 import com.mygdx.game.scenery.Ventilo;
 import guicomponents.CharacterTimeline;
@@ -55,7 +56,7 @@ import triggered.UpTriggeredObject2D;
 public class Lvl1GameNode extends LvlGameNode{
     
     public Lvl1GameNode(HelpGame game, Batch batch) {
-        super("Lvl1GameNode", game, batch);
+        super("1:L'orgueil\nd'une grand-mère", game, batch);
     }
     
     @Override
@@ -216,6 +217,27 @@ public class Lvl1GameNode extends LvlGameNode{
         game.getGameWorld().addObject2DToWorld(box, true);
         
         box = new SmallBox(game.getGameWorld().getWorld(), -2800f, -100f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new SmallBox(game.getGameWorld().getWorld(), -2775f, -100f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new SmallBox(game.getGameWorld().getWorld(), -2850f, -100);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new SmallBox(game.getGameWorld().getWorld(), -2850f, -150);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new StrongBox(game.getGameWorld().getWorld(), -2850f, -200);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new StrongBox(game.getGameWorld().getWorld(), -2900f, -200);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new MetalBox(game.getGameWorld().getWorld(), -4000f, -200);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new MetalBox(game.getGameWorld().getWorld(), -4000f, -100);
         game.getGameWorld().addObject2DToWorld(box, true);
         
         // Cannon

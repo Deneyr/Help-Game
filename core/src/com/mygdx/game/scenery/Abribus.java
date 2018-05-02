@@ -5,7 +5,6 @@
  */
 package com.mygdx.game.scenery;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -16,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.SolidObject2D;
-import java.io.File;
 import java.util.ArrayList;
 import ressourcesmanagers.TextureManager;
 
