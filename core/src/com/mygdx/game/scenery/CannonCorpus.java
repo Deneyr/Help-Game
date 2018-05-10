@@ -282,7 +282,7 @@ public abstract class CannonCorpus extends SolidObject2D{
             }
         }
         
-        private void influences2Actions(float deltaTime){
+        protected void influences2Actions(float deltaTime){
             
             StateNode prevNode = this.currentStateNode;
             StateNode nextNode = this.currentStateNode.getNextStateNode();
@@ -476,7 +476,7 @@ public abstract class CannonCorpus extends SolidObject2D{
             
             private void updateCannonMove(float deltaTime){
                 if(Cannon.this.side == SideCharacter.LEFT){
-                    if(Cannon.this.physicBody.getAngle() < -Math.PI / 2){
+                    if(Cannon.this.physicBody.getAngle() < -(Math.PI / 2 - 0.2)){
                         Cannon.this.physicBody.applyAngularImpulse((float) (10000 * deltaTime * Math.PI / 180), true);
                     }
 
@@ -484,7 +484,7 @@ public abstract class CannonCorpus extends SolidObject2D{
                         Cannon.this.angularDir = -1;
                     }
                 }else{
-                    if(Cannon.this.physicBody.getAngle() > -Math.PI / 2){
+                    if(Cannon.this.physicBody.getAngle() > -(Math.PI / 2 + 0.2)){
                         Cannon.this.physicBody.applyAngularImpulse((float) (-10000 * deltaTime * Math.PI / 180), true);
                     }
 
@@ -585,6 +585,10 @@ public abstract class CannonCorpus extends SolidObject2D{
             float diffAngle = angleTargeted - angleCannon;
             diffAngle = (diffAngle + 180) % 360 - 180;
             if(Math.abs(angleCannon - angleTargeted) < 2){
+                if(Math.abs(angleCannon - angleTargeted) > 0.5){
+                    this.physicBody.setTransform(this.getPositionBody(), (float) (angleTargeted * Math.PI / 180));
+                }
+                
                 this.influences.add(CannonInfluence.ATTACK);
                 
                 this.cannonDirTargeted = nextDirTargeted;

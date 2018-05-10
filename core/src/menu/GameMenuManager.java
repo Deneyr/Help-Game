@@ -75,7 +75,7 @@ public class GameMenuManager extends MenuManager{
         guiText.setLocation(-2f, 0f);
         this.addGuiComponent(guiText, 1);
         animation = new Animation(guiText, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_INC, 0.5f, 0f, 0.5f);
-        animation.setPositionAnimation(new Vector2(-2f, -0.1f), new Vector2(-0.1f, -0.1f));      
+        animation.setPositionAnimation(new Vector2(-2f, -0.15f), new Vector2(-0.1f, -0.15f));      
         this.addAnimation(animation);
         
         animation = new Animation(guiText, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_INC, 3f, 0f, 0.5f);

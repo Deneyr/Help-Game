@@ -236,7 +236,7 @@ public class SoundMusicManager implements GameEventListener, Disposable{
                 
                 this.scoreNumber++;
                 
-                sound.play(this.volume, 0.5f + this.scoreNumber * 0.1f, location.x); 
+                sound.play(this.volume, 0.5f + (this.scoreNumber%8) * 0.25f, location.x); 
             }else{
                 sound.play(this.volume, 1, location.x);    
             }
