@@ -48,7 +48,10 @@ public abstract class Character2D extends Object2D{
     
     protected boolean hasLifeBar;
     
+    // Part cinematic
     protected boolean isCinematicEntity;
+
+    protected float slowingDown;
     
     public Character2D(int lifePoints){
         super();
@@ -76,6 +79,8 @@ public abstract class Character2D extends Object2D{
         this.listObject2DStateListener = new ArrayList<WeakReference<Object2DStateListener>>();
         
         this.isCinematicEntity = false;
+        
+        this.slowingDown = 1;
     }
     
     public void addStaticObj(){
@@ -94,6 +99,15 @@ public abstract class Character2D extends Object2D{
     
     public boolean isFixtureFeet(Fixture fixture){
         return this.feetFixture == fixture;
+    }
+    
+    @Override
+    public void updateLogic(float deltaTime){
+        if(Math.abs(1 - this.slowingDown) < 0.01){
+            super.updateLogic(deltaTime);
+        }else{
+            super.updateLogic(deltaTime * this.slowingDown);
+        }
     }
 
     /**

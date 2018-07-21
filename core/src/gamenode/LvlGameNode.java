@@ -69,6 +69,10 @@ public abstract class LvlGameNode extends GameNode{
         game.getGameMenuManager().addModelGuiComponent("gameStart", guiComponent);
     }
     
+    protected void initializeLevelState(HelpGame game){
+        game.initWorldState();
+    }
+    
     protected void flushLevel(HelpGame game){
         game.getGameWorld().flushWorld();
         
@@ -86,7 +90,8 @@ public abstract class LvlGameNode extends GameNode{
         MusicManager.getInstance().resetLoadedResources();
         
         this.initializeLevel(game);
-        game.getGameWorld().setCurrentMoney(game.getPlayerData().getCurrentMoney());
+        
+        this.initializeLevelState(game);
         
         TextureManager.getInstance().UpdateResources();
         SoundManager.getInstance().UpdateResources();
@@ -98,9 +103,6 @@ public abstract class LvlGameNode extends GameNode{
     @Override
     public void onEndingNode(HelpGame game){
         super.onEndingNode(game);
-        
-        game.getPlayerData().setCurrentLevel(this.getId());
-        game.getPlayerData().setCurrentMoney(game.getGameWorld().getCurrentMoney());
         
         this.flushLevel(game);
     }
@@ -144,7 +146,7 @@ public abstract class LvlGameNode extends GameNode{
         SoundManager.getInstance().getSound("sounds/damagesTaken/crash_box.ogg");
         SoundManager.getInstance().getSound("sounds/damagesTaken/metalHitDamage.ogg");
         
-        // Environment sounbs.
+        // Environment sounds.
         SoundManager.getInstance().getSound("sounds/environment/Ventilo_Wind_Loop.ogg");
     }
 }

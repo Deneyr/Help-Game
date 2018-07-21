@@ -27,7 +27,7 @@ public interface GameEventListener {
         LOOP,
         LOOP_STOP,
         TAKE,
-        GAMEOVER, // dead, success
+        GAMEOVER, // defeat, success
         GAMESTART,
         CHECKPOINT, // reached
         MENUOPTION, // move, select

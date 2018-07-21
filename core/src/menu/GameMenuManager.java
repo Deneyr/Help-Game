@@ -5,9 +5,7 @@
  */
 package menu;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameEventListener;
 import com.mygdx.game.HelpGame;
@@ -19,7 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import menucomp.GameStartMenuComponent;
 
 /**
  *

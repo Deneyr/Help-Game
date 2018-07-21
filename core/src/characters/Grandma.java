@@ -170,6 +170,15 @@ public class Grandma extends Character2D{
             array = new Array<TextureRegion>(tmp[12]);
             array.removeRange(0, 3);
             this.listAnimations.add(new Animation(0.3f, array));
+            
+            //cinematic animations
+            // back on feet
+            array = new Array<TextureRegion>(tmp[17]);
+            array.removeRange(4, 7);
+            this.listAnimations.add(new Animation(0.3f, array));
+            array = new Array<TextureRegion>(tmp[17]);
+            array.removeRange(0, 3);
+            this.listAnimations.add(new Animation(0.3f, array));
 
             this.changeAnimation(0, true);
 
@@ -197,6 +206,10 @@ public class Grandma extends Character2D{
                 this.influences.add(GrandmaInfluence.UMB_DOWN);
             }else if(influence.equals("switch")){
                 this.influences.add(GrandmaInfluence.UMB_SWITCH);
+            }else if(influence.equals("onGround")){
+                this.influences.add(GrandmaInfluence.CINE_ON_GROUND);
+            }else if(influence.equals("onFeet")){
+                this.influences.add(GrandmaInfluence.CINE_BACK_ON_FEET);
             }
         }
     }
@@ -459,22 +472,24 @@ public class Grandma extends Character2D{
         }
     }
     
-    private void influences2Actions(){
-        /*if(this.lifeState == LifeState.DEAD){
-            Vector2 velocity = Grandma.this.physicBody.getLinearVelocity();
-            
-            // Clamp speed
-            if(Math.abs(velocity.x) > 6.f){
-                velocity.x = 6.f * (float)Math.signum(velocity.x);
+    private void influences2Actions(){            
+        Iterator<GrandmaInfluence> it = Grandma.this.influences.iterator();
+        boolean isWalking = false;
+        while(it.hasNext() && isWalking == false){
+            GrandmaInfluence currentInfluence = it.next();
+            switch(currentInfluence){
+                case CINE_GO_WALK_RIGHT :
+                case CINE_GO_WALK_LEFT :
+                    isWalking = true;
+                break;
             }
-            
-            if(Math.abs(velocity.y) > 13.f){
-                velocity.y = 13.f * (float)Math.signum(velocity.y);
-            }
-            
-            this.physicBody.setLinearVelocity(velocity);
-            return;
-        }*/
+        } 
+        
+        if(isWalking){
+            this.slowingDown = 0.5f;
+        }else{
+            this.slowingDown = 1;
+        }
         
         StateNode prevNode = this.currentStateNode;
         StateNode nextNode = this.currentStateNode.getNextStateNode();
@@ -526,7 +541,11 @@ public class Grandma extends Character2D{
         FOLDED_UMBRELLA_ATTACK,
         UNFOLDED_UMBRELLA_UP,
         UNFOLDED_UMBRELLA_MIDDLE,
-        UNFOLDED_UMBRELLA_DOWN
+        UNFOLDED_UMBRELLA_DOWN,
+        
+        // Cinematic States
+        CINE_ON_GROUND,
+        CINE_BACK_ON_FEET,
     }
     
     public int stateUmbrella(){
@@ -546,7 +565,13 @@ public class Grandma extends Character2D{
         UMB_UP,
         UMB_DOWN,
         UMB_SWITCH,
-        ATTACK
+        ATTACK,
+        
+        // Cinematic influences
+        CINE_ON_GROUND,
+        CINE_BACK_ON_FEET,
+        CINE_GO_WALK_RIGHT,
+        CINE_GO_WALK_LEFT,
     }
     
     @Override
@@ -686,10 +711,37 @@ public class Grandma extends Character2D{
                     return getUmbUnfoldedMiddleNextNode();
                 case UNFOLDED_UMBRELLA_DOWN :
                     return getUmbUnfoldedDownNextNode();
-
+                case CINE_ON_GROUND:
+                    return getOnGroundNextNode();
+                case CINE_BACK_ON_FEET:
+                    return getBackOnFeetNextNode();
             }         
             
             return new StateNode(GrandmaState.UNFOLDED_UMBRELLA_UP);
+        }
+        
+        private StateNode getOnGroundNextNode(){
+            if(Grandma.this.isCurrentAnimationOver()){
+                Iterator<GrandmaInfluence> it = Grandma.this.influences.iterator();
+
+                while(it.hasNext()){
+                    GrandmaInfluence currentInfluence = it.next();
+                    switch(currentInfluence){
+                        case CINE_BACK_ON_FEET :
+                            Grandma.this.notifyGameEventListener(GameEventListener.EventType.ACTION, "onFeet", new Vector2(Grandma.this.getPositionBody()));
+                            return new StateNode(GrandmaState.CINE_BACK_ON_FEET);
+
+                    }
+                } 
+            }
+            return null;
+        }
+        
+        private StateNode getBackOnFeetNextNode(){
+            if(Grandma.this.isCurrentAnimationOver()){
+                return new StateNode(GrandmaState.FOLDED_UMBRELLA_NORMAL);
+            }
+            return null;
         }
         
         private StateNode getJumpFoldedNextNode(){
@@ -849,6 +901,9 @@ public class Grandma extends Character2D{
                     case ATTACK :
                         launchAttackAnimation();
                         return new StateNode(GrandmaState.FOLDED_UMBRELLA_ATTACK);
+                    case CINE_ON_GROUND:
+                        Grandma.this.notifyGameEventListener(GameEventListener.EventType.ACTION, "onGround", new Vector2(Grandma.this.getPositionBody()));
+                        return new StateNode(GrandmaState.CINE_ON_GROUND);
                 }
             }
             return null;
@@ -985,9 +1040,33 @@ public class Grandma extends Character2D{
                     return getUmbUnfoldedMiddleAnimation();
                 case UNFOLDED_UMBRELLA_DOWN :
                     return getUmbUnfoldedDownAnimation();
+                case CINE_ON_GROUND :
+                    return getOnGroundAnimation();
+                case CINE_BACK_ON_FEET :
+                    return getBackOnFeetAnimation();
 
             }
             return 0;
+        }
+        
+        private int getOnGroundAnimation(){
+            this.restartAnimation = false;
+            this.pauseAnimation = 0;
+            if(Grandma.this.side == SideCharacter.RIGHT){
+                return 18;
+            }else{
+                return 19;
+            }
+        }
+        
+        private int getBackOnFeetAnimation(){
+            this.restartAnimation = false;
+            this.pauseAnimation = 0;
+            if(Grandma.this.side == SideCharacter.RIGHT){
+                return 20;
+            }else{
+                return 21;
+            }
         }
         
         private int getJumpFoldedAnimation(){
@@ -1167,7 +1246,8 @@ public class Grandma extends Character2D{
                 return;
             }
             
-            if(this.stateNode != GrandmaState.UNFOLDED_UMBRELLA_DOWN){
+            if(this.stateNode != GrandmaState.UNFOLDED_UMBRELLA_DOWN
+                    && this.stateNode != GrandmaState.CINE_ON_GROUND){
                 Iterator<GrandmaInfluence> it = Grandma.this.influences.iterator();
 
                 boolean isMove = false;
@@ -1248,10 +1328,11 @@ public class Grandma extends Character2D{
             } 
             
             // Clamp speed
-            if(Math.abs(velocity.x) > 6.f){
-                velocity.x = 6.f * (float)Math.signum(velocity.x);
+
+            if(Math.abs(velocity.x) > 6.f * Grandma.this.slowingDown){
+                velocity.x = 6.f * Grandma.this.slowingDown * (float)Math.signum(velocity.x);
             }
-            
+
             if(Math.abs(velocity.y) > 15.f){
                 velocity.y = 15.f * (float)Math.signum(velocity.y);
             }

@@ -30,7 +30,7 @@ public class TextureManager extends ResourceManager implements AssetErrorListene
         
         this.waitingObject2D = new HashSet<GraphicalComponent>();
         
-        this.assetManager.setErrorListener(this);
+        ResourceManager.assetManager.setErrorListener(this);
     }
     
     

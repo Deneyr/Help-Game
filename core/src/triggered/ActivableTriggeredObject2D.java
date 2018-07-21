@@ -133,6 +133,7 @@ public class ActivableTriggeredObject2D extends TriggeredObject2D{
         this.changeAnimation(0, false);
     }
     
+    @Override
     public void initialize(World world, Vector2 position, Vector2 speed, float radius){
         if(this.physicBody == null){
             // Part Physic

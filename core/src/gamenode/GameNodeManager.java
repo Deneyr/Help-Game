@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.GameEventListener;
 import com.mygdx.game.HelpGame;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import ressourcesmanagers.ResourceManagerListener;
@@ -116,4 +115,11 @@ public class GameNodeManager extends GameNode implements Disposable, ResourceMan
         // Nothing to do.
     }
     
+    public String getCurrentGameNodeId(){
+        return this.currentGameNode.getId();
+    }
+    
+    public boolean isCurrentGameNodeLvl(){
+        return this.currentGameNode instanceof LvlGameNode;
+    }
 }

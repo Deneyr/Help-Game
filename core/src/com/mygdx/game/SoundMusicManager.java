@@ -78,6 +78,8 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         this.putActionSound("ventiloButton", "sounds/action/Button_Click.ogg");
         this.putActionSound("metalHit", "sounds/action/metalHit1.ogg");
         this.putActionSound("metalHit", "sounds/action/metalHit2.ogg");
+        this.putActionSound("onGround", "sounds/cinematic/onGround.ogg");
+        this.putActionSound("onFeet", "sounds/cinematic/backOnFeet.ogg");
         
         // Part damages taken sounds map fill.
         this.mapDamagesTakenSound = new HashMap<String, List<String>>();

@@ -41,6 +41,7 @@ import guicomponents.GuiPortrait;
 import java.util.ArrayList;
 import java.util.List;
 import ressourcesmanagers.MusicManager;
+import ressourcesmanagers.SoundManager;
 import ressourcesmanagers.TextureManager;
 import triggered.ActivableTriggeredObject2D;
 import triggered.BulletTriggeredObject2D;
@@ -358,4 +359,12 @@ public class Lvl1GameNode extends LvlGameNode{
         this.initSoundsLvl();
     }
     
+    @Override
+    protected void initSoundsLvl(){
+        super.initSoundsLvl();
+        
+        // Cinematic sounds.
+        SoundManager.getInstance().getSound("sounds/cinematic/backOnFeet.ogg");
+        SoundManager.getInstance().getSound("sounds/cinematic/onGround.ogg");
+    }
 }

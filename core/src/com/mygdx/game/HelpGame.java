@@ -14,7 +14,6 @@ import gamenode.GameNode;
 import gamenode.GameNodeManager;
 import gamenode.Lvl1GameNode;
 import gamenode.MainMenuGameNode;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import menu.GameMenuManager;
@@ -61,6 +60,39 @@ public class HelpGame extends Game implements GameEventListener{
         this.playerData = new PlayerData();
     }
     
+    public boolean LoadSaveFile(String filePath){
+        PlayerData dataLoaded = PlayerDataManager.getInstance().deserializePlayerData(filePath);
+        
+        if(dataLoaded != null){
+            this.playerData = dataLoaded;
+            
+            if(this.playerData.getCurrentLevel() != null){
+                GameNode menuNode = this.gameNodeManager.getGameNodeByKey("Menu");
+                GameNode startNode = this.gameNodeManager.getGameNodeByKey(this.playerData.getCurrentLevel());
+                if(menuNode != null){
+                    menuNode.addNextNode("Start", startNode);
+                }
+            }
+            
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean SerializeSaveFile(String filePath){
+        boolean isSuccess = PlayerDataManager.getInstance().serializePlayerData(filePath, this.playerData);
+        
+        if(isSuccess && this.playerData.getCurrentLevel() != null){
+            GameNode menuNode = this.gameNodeManager.getGameNodeByKey("Menu");
+            GameNode startNode = this.gameNodeManager.getGameNodeByKey(this.playerData.getCurrentLevel());
+            if(menuNode != null){
+                menuNode.addNextNode("Start", startNode);
+            }
+        }
+        
+        return isSuccess;
+    }
+    
     @Override
     public void create() {  
         // GameWorld
@@ -88,6 +120,9 @@ public class HelpGame extends Game implements GameEventListener{
         // Link Nodes Part
         gameNode.addNextNode("Menu", menuNode);
         menuNode.addNextNode("Start", gameNode);
+        
+        // Load save file
+        this.LoadSaveFile("profil.save");
         
         // Initialize first node
         this.gameNodeManager.changeCurrentGameNode(this, menuNode);
@@ -182,10 +217,10 @@ public class HelpGame extends Game implements GameEventListener{
                 
         for(GameEventContainer gameEvent : this.listGameEvents){
 
+            this.updatePlayerData(gameEvent);
+            
             switch(gameEvent.eventType){
-                case CHECKPOINT:
-                    this.getPlayerData().setCurrentMoney(this.gameWorld.getCurrentMoney());
-                    
+                case CHECKPOINT:                   
                     this.soundMusicManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
                     break;
                 // End level event : must be forward after the others events.
@@ -213,7 +248,37 @@ public class HelpGame extends Game implements GameEventListener{
         this.listGameEvents.clear();
     }
     
-        /**
+    private void updatePlayerData(GameEventContainer gameEventContainer){
+        
+        if(this.gameNodeManager.isCurrentGameNodeLvl()){
+            switch(gameEventContainer.eventType){
+                case CHECKPOINT:
+                    this.getPlayerData().setCurrentMoney(this.gameWorld.getCurrentMoney());
+                    this.getPlayerData().setCurrentCheckpointInex(Integer.parseInt(gameEventContainer.details));
+                break;
+                case GAMEOVER:
+                    if(gameEventContainer.details.equals("success")){
+                        this.getPlayerData().setCurrentMoney(this.gameWorld.getCurrentMoney());
+                        
+                        this.SerializeSaveFile("profil.save");
+                    }
+                break;
+                case GAMESTART:
+                    this.getPlayerData().setCurrentLevel(this.gameNodeManager.getCurrentGameNodeId());
+                    this.gameWorld.setCurrentMoney(this.getPlayerData().getCurrentMoney());
+                break;
+            }
+        }
+                    
+    }
+    
+    public void initWorldState(){
+        if(this.playerData.getCurrentCheckpointInex() >= 0){
+            // TODO
+        }
+    }
+    
+    /**
      * @return the playerData
      */
     public PlayerData getPlayerData() {
@@ -231,46 +296,5 @@ public class HelpGame extends Game implements GameEventListener{
         public String details;
         public Vector2 location;
     }
-    
-    public class PlayerData implements Serializable{
-        private  static  final  long serialVersionUID =  1350092881346723535L;
-        
-        private int currentMoney;
-        
-        private String idCurrentLevel;
-        
-        PlayerData(){
-            this.currentMoney = 0;
-            
-            this.idCurrentLevel = "";
-        }
-
-        /**
-         * @return the currentMoney
-         */
-        public int getCurrentMoney() {
-            return currentMoney;
-        }
-
-        /**
-         * @param currentMoney the currentMoney to set
-         */
-        public void setCurrentMoney(int currentMoney) {
-            this.currentMoney = currentMoney;
-        }
-
-        /**
-         * @return the currentLevel
-         */
-        public String getCurrentLevel() {
-            return idCurrentLevel;
-        }
-
-        /**
-         * @param currentLevel the currentLevel to set
-         */
-        public void setCurrentLevel(String currentLevel) {
-            this.idCurrentLevel = currentLevel;
-        }
-    }
+   
 }
