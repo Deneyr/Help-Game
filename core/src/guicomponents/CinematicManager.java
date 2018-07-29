@@ -5,10 +5,14 @@
  */
 package guicomponents;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.game.GameEventListener;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DStateListener;
 import java.lang.ref.WeakReference;
@@ -39,6 +43,29 @@ public class CinematicManager implements Disposable{
     // Event part
     
     private WeakReference<Object2DStateListener> stateListener;
+    private WeakReference<GameEventListener> gameEventListener;
+    
+    private boolean isStartCinematic;
+    private String levelId;
+    
+    public CinematicManager(String id, List<Dialogue> dialogues, boolean isStartCinematic, String levelId){
+        this.id = id;
+        
+        this.currentTime = 0;
+        
+        this.cinematicState = CinematicState.STOP;
+        
+        this.charactersTimeline = new ArrayList<CharacterTimeline>();
+        
+        this.dialogueTimeline = new TreeMap<Float, Integer>();
+        
+        this.currentKeyDialogue = null;
+        
+        this.isStartCinematic = isStartCinematic;
+        this.levelId = levelId;
+        
+        this.dialogueBlock = new GuiDialogueBlock(dialogues);
+    }
     
     public CinematicManager(String id, List<Dialogue> dialogues){
         this.id = id;
@@ -52,6 +79,9 @@ public class CinematicManager implements Disposable{
         this.dialogueTimeline = new TreeMap<Float, Integer>();
         
         this.currentKeyDialogue = null;
+        
+        this.isStartCinematic = false;
+        this.levelId = new String();
         
         this.dialogueBlock = new GuiDialogueBlock(dialogues);
     }
@@ -82,9 +112,15 @@ public class CinematicManager implements Disposable{
         }
     }
     
-    public void notifyListenerObj2Removed(Object2D obj){
+    private void notifyListenerObj2Removed(Object2D obj){
         if(this.stateListener.get() != null){
             this.stateListener.get().onStateChanged(obj, Object2DStateListener.Object2DState.DEATH, 0);
+        }
+    }
+    
+    private void notifyGameStart(Object2D obj){
+        if(this.gameEventListener.get() != null){
+            this.gameEventListener.get().onGameEvent(GameEventListener.EventType.GAMESTART, this.levelId, obj.getPositionBody());
         }
     }
     
@@ -100,6 +136,9 @@ public class CinematicManager implements Disposable{
                 switch(timeline.getCinematicStatus()){
                     case END_CINEMATIC:
                         this.notifyListenerObj2Removed(timeline.getCharacter());
+                        if(this.isStartCinematic){
+                            this.notifyGameStart(timeline.getCharacter());
+                        }
                         break;
                 }
             }
@@ -120,7 +159,10 @@ public class CinematicManager implements Disposable{
         
         this.dialogueBlock.updateLogic(deltaTime);
         
-        if(this.dialogueBlock.getDialogueState() == CinematicState.STOP){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            this.dialogueBlock.endDialogue();
+            this.cinematicState = CinematicState.END;
+        }else if(this.dialogueBlock.getDialogueState() == CinematicState.STOP){
             this.currentTime += deltaTime;
         }
         
@@ -128,6 +170,10 @@ public class CinematicManager implements Disposable{
         
         for(CharacterTimeline timeline : this.charactersTimeline){
             hasEnded &= timeline.updateTimeline(this.currentTime);
+        }
+        
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            hasEnded = true;
         }
         
         if(hasEnded &&
@@ -177,6 +223,13 @@ public class CinematicManager implements Disposable{
     @Override
     public void dispose() {
         this.dialogueBlock.dispose();
+    }
+    
+    /**
+     * @param gameEventListener the gameEventListener to set
+     */
+    public void setGameEventListener(GameEventListener gameEventListener) {
+        this.gameEventListener = new WeakReference(gameEventListener);
     }
     
     public enum CinematicState{

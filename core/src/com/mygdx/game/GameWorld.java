@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import triggered.CheckPointTriggeredObject2D;
 
 /**
  *
@@ -41,6 +42,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
     private Character2D hero; 
     
     private Set<Object2D> object2D2Flush;
+    
+    private List<CheckPointTriggeredObject2D> listCheckpoints;
     
     private double screenFOV;
     private float timerOutOfScreen;
@@ -64,6 +67,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
         
         this.object2D2Flush = new HashSet<Object2D>();
         
+        this.listCheckpoints = new ArrayList<CheckPointTriggeredObject2D>();
+        
         this.screenFOV = -1d;
         this.timerOutOfScreen = 0;
         
@@ -79,6 +84,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
     
     public void addCinematicManager(CinematicManager cinematicManager){
         cinematicManager.setStateListener(this.stateAnimationHanlder);
+        cinematicManager.setGameEventListener(this);
         this.mapCinematicManagers.put(cinematicManager.getId(), cinematicManager);
     }
     
@@ -241,8 +247,10 @@ public class GameWorld implements WorldPlane, GameEventListener{
         for(Object2D obj : this.listCurrentObject2D){
             obj.removeBody(this.world);
         }
-        this.world.dispose();
         
+        this.listCheckpoints.clear();
+        
+        this.world.dispose();       
         
         for(CinematicManager cinematicManager : this.mapCinematicManagers.values()){
             cinematicManager.dispose();
@@ -382,6 +390,25 @@ public class GameWorld implements WorldPlane, GameEventListener{
                 }
             }
         }
+    }
+    
+    public void addCheckPoint(CheckPointTriggeredObject2D checkPoint, int currentCheckpointIndex){      
+        checkPoint.setIndex(this.listCheckpoints.size());
+        this.listCheckpoints.add(checkPoint);
+               
+        checkPoint.setIsActive(checkPoint.getIndex() > currentCheckpointIndex);
+        
+        this.addObject2DToWorld(checkPoint);
+    }
+    
+    public Vector2 getPositionAtCheckpoint(int index){
+        if(index < 0){
+            return null;
+        }
+        Vector2 position = this.listCheckpoints.get(index).getPositionBody();
+        position.x /= HelpGame.P2M;
+        position.y /= HelpGame.P2M;
+        return position;
     }
     
     /**

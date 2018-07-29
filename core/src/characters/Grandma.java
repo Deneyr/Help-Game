@@ -1246,7 +1246,7 @@ public class Grandma extends Character2D{
                 return;
             }
             
-            if(this.stateNode != GrandmaState.UNFOLDED_UMBRELLA_DOWN
+            if((this.stateNode != GrandmaState.UNFOLDED_UMBRELLA_DOWN || Grandma.this.isFlying())
                     && this.stateNode != GrandmaState.CINE_ON_GROUND){
                 Iterator<GrandmaInfluence> it = Grandma.this.influences.iterator();
 

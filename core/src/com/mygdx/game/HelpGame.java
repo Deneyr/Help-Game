@@ -64,12 +64,15 @@ public class HelpGame extends Game implements GameEventListener{
         PlayerData dataLoaded = PlayerDataManager.getInstance().deserializePlayerData(filePath);
         
         if(dataLoaded != null){
+            
+            dataLoaded.setCurrentCheckpointIndex(-1);
+            
             this.playerData = dataLoaded;
             
             if(this.playerData.getCurrentLevel() != null){
                 GameNode menuNode = this.gameNodeManager.getGameNodeByKey("Menu");
                 GameNode startNode = this.gameNodeManager.getGameNodeByKey(this.playerData.getCurrentLevel());
-                if(menuNode != null){
+                if(startNode != null){
                     menuNode.addNextNode("Start", startNode);
                 }
             }
@@ -254,28 +257,24 @@ public class HelpGame extends Game implements GameEventListener{
             switch(gameEventContainer.eventType){
                 case CHECKPOINT:
                     this.getPlayerData().setCurrentMoney(this.gameWorld.getCurrentMoney());
-                    this.getPlayerData().setCurrentCheckpointInex(Integer.parseInt(gameEventContainer.details));
+                    this.getPlayerData().setCurrentCheckpointIndex(Integer.parseInt(gameEventContainer.details));
+                    
+                    this.SerializeSaveFile("profil.save");
                 break;
                 case GAMEOVER:
                     if(gameEventContainer.details.equals("success")){
                         this.getPlayerData().setCurrentMoney(this.gameWorld.getCurrentMoney());
-                        
-                        this.SerializeSaveFile("profil.save");
                     }
                 break;
                 case GAMESTART:
                     this.getPlayerData().setCurrentLevel(this.gameNodeManager.getCurrentGameNodeId());
                     this.gameWorld.setCurrentMoney(this.getPlayerData().getCurrentMoney());
+                    
+                    this.SerializeSaveFile("profil.save");
                 break;
             }
         }
                     
-    }
-    
-    public void initWorldState(){
-        if(this.playerData.getCurrentCheckpointInex() >= 0){
-            // TODO
-        }
     }
     
     /**

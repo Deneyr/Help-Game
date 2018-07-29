@@ -66,11 +66,7 @@ public class ActivableTriggeredObject2D extends TriggeredObject2D{
         this.target = null;
         
         // Part graphic
-        this.texture = ACTIVABLETEXTURE;
-        TextureRegion[][] tmp = TextureRegion.split(this.texture, 50, 37);
-        // walk folded
-        Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
-        this.listAnimations.add(new Animation(0.4f, array, Animation.PlayMode.LOOP));
+        this.assignTextures();
         
         this.parentCharacter = null;
     }
@@ -98,11 +94,7 @@ public class ActivableTriggeredObject2D extends TriggeredObject2D{
         this.target = null;
         
         // Part graphic
-        this.texture = ACTIVABLETEXTURE;
-        TextureRegion[][] tmp = TextureRegion.split(this.texture, 50, 37);
-        // walk folded
-        Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
-        this.listAnimations.add(new Animation(0.5f, array, Animation.PlayMode.LOOP));
+        this.assignTextures();
         
         this.parentCharacter = new WeakReference(parent);
     }
@@ -183,7 +175,7 @@ public class ActivableTriggeredObject2D extends TriggeredObject2D{
     
     @Override
     public void onObj2DEnteredArea(Object2D obj){
-        if(obj instanceof Grandma){
+        if(obj instanceof Grandma){            
             this.target = (Grandma) obj;
         }
     }
@@ -230,6 +222,16 @@ public class ActivableTriggeredObject2D extends TriggeredObject2D{
         if(objThatTriggered instanceof Grandma){
             this.notifyGameEventListener(this.eventType, this.details, Vector2.Zero);
         }
+    }
+    
+    @Override
+    public void assignTextures(){
+        // Part graphic
+        this.texture = ACTIVABLETEXTURE;
+        TextureRegion[][] tmp = TextureRegion.split(this.texture, 50, 37);
+        // walk folded
+        Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
+        this.listAnimations.add(new Animation(0.5f, array, Animation.PlayMode.LOOP));
     }
     
 }

@@ -18,14 +18,14 @@ public class PlayerData implements Serializable{
 
     private String idCurrentLevel;
 
-    private transient int currentCheckpointInex;
+    private transient int currentCheckpointIndex;
 
     PlayerData(){
         this.currentMoney = 0;
 
         this.idCurrentLevel = null;
 
-        this.currentCheckpointInex = -1;
+        this.currentCheckpointIndex = -1;
     }
 
     /**
@@ -55,20 +55,20 @@ public class PlayerData implements Serializable{
     public void setCurrentLevel(String currentLevel) {
         this.idCurrentLevel = currentLevel;
 
-        this.currentCheckpointInex = -1;
+        this.currentCheckpointIndex = -1;
     }
 
     /**
      * @return the currentCheckpointInex
      */
-    public int getCurrentCheckpointInex() {
-        return currentCheckpointInex;
+    public int getCurrentCheckpointIndex() {
+        return currentCheckpointIndex;
     }
 
     /**
      * @param currentCheckpointInex the currentCheckpointInex to set
      */
-    public void setCurrentCheckpointInex(int currentCheckpointInex) {
-        this.currentCheckpointInex = currentCheckpointInex;
+    public void setCurrentCheckpointIndex(int currentCheckpointIndex) {
+        this.currentCheckpointIndex = currentCheckpointIndex;
     }
 }

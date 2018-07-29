@@ -6,12 +6,14 @@
 package triggered;
 
 import characters.Grandma;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.TriggeredObject2D;
@@ -24,7 +26,7 @@ import ressourcesmanagers.TextureManager;
  */
 public class TeethTriggeredObject2D extends TriggeredObject2D{
 
-    public static final String UPTEXTURE = "Collectible_Dent.png";
+    public static final String TEETHTEXTURE = "Dent_Anim-01.png";
     
     
     public TeethTriggeredObject2D(){
@@ -40,6 +42,8 @@ public class TeethTriggeredObject2D extends TriggeredObject2D{
         float radius = 15;
         
         super.initialize(world, position, speed, radius * 1.1f);
+        
+        this.changeAnimation(0, false);
         
         // Collision fixture
         CircleShape circle = new CircleShape();
@@ -65,7 +69,17 @@ public class TeethTriggeredObject2D extends TriggeredObject2D{
     
     @Override
     public void assignTextures(){
-        this.texture = TextureManager.getInstance().getTexture(UPTEXTURE, this);
+        this.texture = TextureManager.getInstance().getTexture(TEETHTEXTURE, this);
+        
+        if(this.texture != null){
+            TextureRegion[][] tmp = TextureRegion.split(this.texture, 36, 36);
+            // walk folded
+            Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
+            this.listAnimations.add(new Animation(0.2f, array, Animation.PlayMode.LOOP));
+
+            array = new Array<TextureRegion>(tmp[1]);
+            this.listAnimations.add(new Animation(0.2f, array));
+        }
     }
     
     @Override
@@ -76,9 +90,11 @@ public class TeethTriggeredObject2D extends TriggeredObject2D{
             Grandma grandma = (Grandma) objThatTriggered;
             
             if(grandma.getLifePoints() < grandma.getLifePointsMax()){
-
+                
                 grandma.setLifePoints(grandma.getLifePoints() + 1);
 
+                this.changeAnimation(1, false);
+                
                 super.trigger(objThatTriggered);
             }
         }

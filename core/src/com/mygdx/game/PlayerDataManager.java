@@ -35,12 +35,14 @@ public class PlayerDataManager {
         ObjectOutputStream objectOutputStream = null;
 
         try {
-            final FileOutputStream fileOutputStream = new FileOutputStream(filePath);
-            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            synchronized(this){
+                final FileOutputStream fileOutputStream = new FileOutputStream(filePath);
+                objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-            objectOutputStream.writeObject(playerData);
+                objectOutputStream.writeObject(playerData);
 
-            objectOutputStream.flush();
+                objectOutputStream.flush();
+            }
             
             return true;
             
@@ -66,10 +68,12 @@ public class PlayerDataManager {
         ObjectInputStream objectInputStream = null;
 
         try {
-            final FileInputStream fileInputStream = new FileInputStream(filePath);
-            objectInputStream = new ObjectInputStream(fileInputStream);
+            synchronized(this){
+                final FileInputStream fileInputStream = new FileInputStream(filePath);
+                objectInputStream = new ObjectInputStream(fileInputStream);
 
-            return (PlayerData) objectInputStream.readObject();
+                return (PlayerData) objectInputStream.readObject();
+            }
             
         } catch (FileNotFoundException ex) {
             

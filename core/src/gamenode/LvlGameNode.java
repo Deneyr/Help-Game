@@ -6,6 +6,7 @@
 package gamenode;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.BackgroundScreen;
 import com.mygdx.game.GUIScreen;
 import com.mygdx.game.GameScreen;
@@ -57,6 +58,8 @@ public abstract class LvlGameNode extends GameNode{
         game.getGameMenuManager().step(deltaTime);
     }
     
+    protected abstract Vector2 initCheckpoints(HelpGame game);
+    
     protected void initializeLevel(HelpGame game){
         // Init Game Menu Manager.
         GuiComponent guiComponent = new CartoonHaloMenuComponent();
@@ -66,11 +69,7 @@ public abstract class LvlGameNode extends GameNode{
         game.getGameMenuManager().addModelGuiComponent("gameOver", guiComponent);
         
         guiComponent = new GameStartMenuComponent(); 
-        game.getGameMenuManager().addModelGuiComponent("gameStart", guiComponent);
-    }
-    
-    protected void initializeLevelState(HelpGame game){
-        game.initWorldState();
+        game.getGameMenuManager().addModelGuiComponent("gameStart", guiComponent);       
     }
     
     protected void flushLevel(HelpGame game){
@@ -90,8 +89,6 @@ public abstract class LvlGameNode extends GameNode{
         MusicManager.getInstance().resetLoadedResources();
         
         this.initializeLevel(game);
-        
-        this.initializeLevelState(game);
         
         TextureManager.getInstance().UpdateResources();
         SoundManager.getInstance().UpdateResources();

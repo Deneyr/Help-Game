@@ -18,6 +18,7 @@ import characters.OpponentDIST1;
 import characters.OpponentThief;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameEventListener;
 import com.mygdx.game.HelpGame;
 import com.mygdx.game.scenery.Abribus;
@@ -46,6 +47,7 @@ import ressourcesmanagers.TextureManager;
 import triggered.ActivableTriggeredObject2D;
 import triggered.BulletTriggeredObject2D;
 import triggered.CannonBallTriggeredObject2D;
+import triggered.CheckPointTriggeredObject2D;
 import triggered.EventTriggeredObject2D;
 import triggered.TeethTriggeredObject2D;
 import triggered.UpTriggeredObject2D;
@@ -61,6 +63,17 @@ public class Lvl1GameNode extends LvlGameNode{
     }
     
     @Override
+    protected Vector2 initCheckpoints(HelpGame game)
+    {
+        int index = game.getPlayerData().getCurrentCheckpointIndex();
+        
+        CheckPointTriggeredObject2D checkPoint = new CheckPointTriggeredObject2D(game.getGameWorld().getWorld(), 600f, -100f);
+        game.getGameWorld().addCheckPoint(checkPoint, index);
+        
+        return game.getGameWorld().getPositionAtCheckpoint(index);
+    }
+    
+    @Override
     protected void initializeLevel(HelpGame game){
         // --- init stage ---
         
@@ -71,7 +84,7 @@ public class Lvl1GameNode extends LvlGameNode{
         
         TextureManager.getInstance().getTexture(CannonBallTriggeredObject2D.CANNONBALLTEXTURE, null);
         
-        TextureManager.getInstance().getTexture(TeethTriggeredObject2D.UPTEXTURE, null);
+        TextureManager.getInstance().getTexture(TeethTriggeredObject2D.TEETHTEXTURE, null);
         
         TextureManager.getInstance().getTexture(UpTriggeredObject2D.UPTEXTURE, null);
         
@@ -101,8 +114,16 @@ public class Lvl1GameNode extends LvlGameNode{
         barbed = new BarbedTriggeredObject2D(game.getGameWorld().getWorld(), -1780f, -185);
         game.getGameWorld().addObject2DToWorld(barbed, true);
         
+        // init checkpoints
+        Vector2 heroPosition = this.initCheckpoints(game);
+        
         // init hero
-        Grandma hero = new Grandma(game.getGameWorld().getWorld(), -2000f, 0f);
+        Grandma hero = null;
+        if(heroPosition != null){
+            hero = new Grandma(game.getGameWorld().getWorld(), heroPosition.x, heroPosition.y);
+        }else{
+            hero = new Grandma(game.getGameWorld().getWorld(), -2000f, 0f);
+        }
         game.getGameWorld().setHero(hero);
         
         // init opponent
@@ -285,7 +306,7 @@ public class Lvl1GameNode extends LvlGameNode{
         dialogue.addReply("Ca va chauffer !!", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
         list.add(dialogue);
         
-        CinematicManager cin1 = new CinematicManager("roof", list);
+        CinematicManager cin1 = new CinematicManager("roof", list, true, this.getId());
         
         cin1.addDialogueTimeline(1f, 0);
         cin1.addDialogueTimeline(2f, 1);
@@ -357,6 +378,12 @@ public class Lvl1GameNode extends LvlGameNode{
         MusicManager.getInstance().registerResource("sounds/first_lvl.ogg");
         
         this.initSoundsLvl();
+    }
+    
+    @Override
+    protected void onStartingGame(HelpGame game)
+    {
+        // nothing to do.
     }
     
     @Override

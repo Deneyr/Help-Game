@@ -42,8 +42,14 @@ public abstract class GameNode {
     public void updateLogic(HelpGame game, float deltaTime){
         if(this.isFirstUpdate){
             this.isFirstUpdate = false;
-            game.onGameEvent(GameEventListener.EventType.GAMESTART, this.getId(), Vector2.Zero);
+            
+            this.onStartingGame(game);
         }
+    }
+    
+    protected void onStartingGame(HelpGame game)
+    {
+        game.onGameEvent(GameEventListener.EventType.GAMESTART, this.getId(), Vector2.Zero);
     }
     
     public void renderScreens(HelpGame game, float deltaTime){

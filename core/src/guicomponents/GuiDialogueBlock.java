@@ -8,16 +8,11 @@ package guicomponents;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import guicomponents.CinematicManager.CinematicState;
 import guicomponents.GuiText.ReferenceCorner;
-import static guicomponents.GuiText.staticGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,6 +130,12 @@ public class GuiDialogueBlock extends GuiComponent{
             }
         }
         
+    }
+    
+    public void endDialogue(){
+        if(this.dialogueState != CinematicState.STOP){
+            this.dialogueState = CinematicState.END;
+        }
     }
     
     /**
