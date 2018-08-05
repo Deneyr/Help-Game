@@ -13,6 +13,7 @@ import java.util.TreeMap;
 import gamenode.GameNode;
 import gamenode.GameNodeManager;
 import gamenode.Lvl1GameNode;
+import gamenode.Lvl1UpperCity;
 import gamenode.MainMenuGameNode;
 import java.util.ArrayList;
 import java.util.List;
@@ -115,6 +116,9 @@ public class HelpGame extends Game implements GameEventListener{
         
         // Add Node Part
         GameNode gameNode = new Lvl1GameNode(this, this.batch);    
+        this.gameNodeManager.addGameNode(gameNode);
+        
+        gameNode = new Lvl1UpperCity(this, this.batch);    
         this.gameNodeManager.addGameNode(gameNode);
         
         GameNode menuNode = new MainMenuGameNode(this, this.batch);    
@@ -266,7 +270,7 @@ public class HelpGame extends Game implements GameEventListener{
                         this.getPlayerData().setCurrentMoney(this.gameWorld.getCurrentMoney());
                     }
                 break;
-                case GAMESTART:
+                case LVLSTART:
                     this.getPlayerData().setCurrentLevel(this.gameNodeManager.getCurrentGameNodeId());
                     this.gameWorld.setCurrentMoney(this.getPlayerData().getCurrentMoney());
                     

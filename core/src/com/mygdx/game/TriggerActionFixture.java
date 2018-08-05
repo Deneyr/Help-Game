@@ -6,7 +6,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.mygdx.game.scenery.Ventilo;
 import java.util.HashSet;
 import java.util.Set;
 

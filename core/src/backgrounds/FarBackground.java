@@ -5,12 +5,10 @@
  */
 package backgrounds;
 
-import static backgrounds.CityBackground.BUILDING;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.BackgroundWorld;
 import static com.mygdx.game.HelpGame.P2M;
-import java.io.File;
 import ressourcesmanagers.TextureManager;
 
 /**

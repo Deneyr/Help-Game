@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.game.Character2D;
 import com.mygdx.game.GameEventListener;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DStateListener;
@@ -112,15 +113,20 @@ public class CinematicManager implements Disposable{
         }
     }
     
-    private void notifyListenerObj2Removed(Object2D obj){
+    private void notifyListenerObj2Removed(CharacterTimeline timeline){
         if(this.stateListener.get() != null){
-            this.stateListener.get().onStateChanged(obj, Object2DStateListener.Object2DState.DEATH, 0);
+            Character2D character = timeline.getCharacter();
+            
+            if(character != null){
+                timeline.clearCharacter();
+                this.stateListener.get().onStateChanged(character, Object2DStateListener.Object2DState.DEATH, 0);
+            }         
         }
     }
     
-    private void notifyGameStart(Object2D obj){
+    private void notifyGameStart(Vector2 gameStartPosition){
         if(this.gameEventListener.get() != null){
-            this.gameEventListener.get().onGameEvent(GameEventListener.EventType.GAMESTART, this.levelId, obj.getPositionBody());
+            this.gameEventListener.get().onGameEvent(GameEventListener.EventType.GAMESTART, this.levelId, gameStartPosition);
         }
     }
     
@@ -131,17 +137,22 @@ public class CinematicManager implements Disposable{
         
         if(this.getCinematicState() == CinematicState.END){
             
+            Vector2 gameStartPosition = Vector2.Zero;
             for(CharacterTimeline timeline : this.charactersTimeline){
                 timeline.getCharacter().isCinematicEntity(false);
+                
+                gameStartPosition = timeline.getCharacter().getPositionBody();
                 switch(timeline.getCinematicStatus()){
                     case END_CINEMATIC:
-                        this.notifyListenerObj2Removed(timeline.getCharacter());
-                        if(this.isStartCinematic){
-                            this.notifyGameStart(timeline.getCharacter());
-                        }
+                        this.notifyListenerObj2Removed(timeline);
                         break;
                 }
             }
+            
+            if(this.isStartCinematic){
+                this.notifyGameStart(gameStartPosition);
+            }
+            
             this.cinematicState = CinematicState.STOP;
         }
         
@@ -159,17 +170,17 @@ public class CinematicManager implements Disposable{
         
         this.dialogueBlock.updateLogic(deltaTime);
         
+        boolean hasEnded = true;
+        
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             this.dialogueBlock.endDialogue();
             this.cinematicState = CinematicState.END;
         }else if(this.dialogueBlock.getDialogueState() == CinematicState.STOP){
             this.currentTime += deltaTime;
-        }
-        
-        boolean hasEnded = true;
-        
-        for(CharacterTimeline timeline : this.charactersTimeline){
-            hasEnded &= timeline.updateTimeline(this.currentTime);
+            
+            for(CharacterTimeline timeline : this.charactersTimeline){
+                hasEnded &= timeline.updateTimeline(this.currentTime);
+            }
         }
         
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
@@ -222,6 +233,19 @@ public class CinematicManager implements Disposable{
 
     @Override
     public void dispose() {
+        if(this.getCinematicState() != CinematicState.STOP){
+            
+            for(CharacterTimeline timeline : this.charactersTimeline){
+                timeline.getCharacter().isCinematicEntity(false);
+                switch(timeline.getCinematicStatus()){
+                    case END_CINEMATIC:
+                        this.notifyListenerObj2Removed(timeline);
+                        break;
+                }
+            }
+            this.cinematicState = CinematicState.STOP;
+        }
+        
         this.dialogueBlock.dispose();
     }
     

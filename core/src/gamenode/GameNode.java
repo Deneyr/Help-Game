@@ -49,7 +49,7 @@ public abstract class GameNode {
     
     protected void onStartingGame(HelpGame game)
     {
-        game.onGameEvent(GameEventListener.EventType.GAMESTART, this.getId(), Vector2.Zero);
+        game.onGameEvent(GameEventListener.EventType.LVLSTART, this.getId(), Vector2.Zero);
     }
     
     public void renderScreens(HelpGame game, float deltaTime){

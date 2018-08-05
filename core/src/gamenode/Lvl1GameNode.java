@@ -35,6 +35,7 @@ import com.mygdx.game.scenery.SmallBox;
 import com.mygdx.game.scenery.StrongBox;
 import com.mygdx.game.scenery.TreeWithoutLeaf;
 import com.mygdx.game.scenery.Ventilo;
+import cosmetics.HitCosmeticObject2D;
 import guicomponents.CharacterTimeline;
 import guicomponents.CinematicManager;
 import guicomponents.Dialogue;
@@ -59,23 +60,23 @@ import triggered.UpTriggeredObject2D;
 public class Lvl1GameNode extends LvlGameNode{
     
     public Lvl1GameNode(HelpGame game, Batch batch) {
-        super("1:L'orgueil\nd'une grand-mère", game, batch);
+        super("0:niveau de test", game, batch);
     }
     
     @Override
-    protected Vector2 initCheckpoints(HelpGame game)
-    {
-        int index = game.getPlayerData().getCurrentCheckpointIndex();
-        
+    protected Vector2 initCheckpoints(HelpGame game, int checkpointIndex)
+    {   
         CheckPointTriggeredObject2D checkPoint = new CheckPointTriggeredObject2D(game.getGameWorld().getWorld(), 600f, -100f);
-        game.getGameWorld().addCheckPoint(checkPoint, index);
+        game.getGameWorld().addCheckPoint(checkPoint, checkpointIndex);
         
-        return game.getGameWorld().getPositionAtCheckpoint(index);
+        return game.getGameWorld().getPositionAtCheckpoint(checkpointIndex);
     }
+    
     
     @Override
     protected void initializeLevel(HelpGame game){
         // --- init stage ---
+        int index = game.getPlayerData().getCurrentCheckpointIndex();
         
         super.initializeLevel(game);
         
@@ -87,6 +88,8 @@ public class Lvl1GameNode extends LvlGameNode{
         TextureManager.getInstance().getTexture(TeethTriggeredObject2D.TEETHTEXTURE, null);
         
         TextureManager.getInstance().getTexture(UpTriggeredObject2D.UPTEXTURE, null);
+        
+        TextureManager.getInstance().getTexture(HitCosmeticObject2D.HIT_TEXTURE, null);
         
         // init background
         int seed = 100;
@@ -115,7 +118,7 @@ public class Lvl1GameNode extends LvlGameNode{
         game.getGameWorld().addObject2DToWorld(barbed, true);
         
         // init checkpoints
-        Vector2 heroPosition = this.initCheckpoints(game);
+        Vector2 heroPosition = this.initCheckpoints(game, index);
         
         // init hero
         Grandma hero = null;
@@ -329,7 +332,7 @@ public class Lvl1GameNode extends LvlGameNode{
         charaTimeline.addEntry(2f, "per_jump");
         cin1.addCharacterTimeline(charaTimeline);
         
-        game.getGameWorld().addCinematicManager(cin1);
+        game.getGameWorld().addCinematicManager(cin1, index, 0);
         
         EventTriggeredObject2D trigger = new EventTriggeredObject2D(game.getGameWorld().getWorld(), -50f, 180f, GameEventListener.EventType.CINEMATIC, "roof", 100);
         game.getGameWorld().addObject2DToWorld(trigger);
@@ -378,12 +381,6 @@ public class Lvl1GameNode extends LvlGameNode{
         MusicManager.getInstance().registerResource("sounds/first_lvl.ogg");
         
         this.initSoundsLvl();
-    }
-    
-    @Override
-    protected void onStartingGame(HelpGame game)
-    {
-        // nothing to do.
     }
     
     @Override

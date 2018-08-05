@@ -135,7 +135,7 @@ public class CheckPointTriggeredObject2D extends TriggeredObject2D{
         // walk folded
         array = new Array<TextureRegion>(tmp[0]);
         array.removeRange(8, 11);
-        this.listAnimations.add(new Animation(0.4f, array, Animation.PlayMode.LOOP));
+        this.listAnimations.add(new Animation(0.2f, array, Animation.PlayMode.LOOP));
         
         array = new Array<TextureRegion>(tmp[0]);
         array.removeRange(0, 7);

@@ -43,12 +43,9 @@ public class Grandma extends Character2D{
     
     private static final String GRANDMATEXT = "character/spritemapmeme.png";
     
-    private static final String DENTIERTEXT = "spritemapdentierV2-01.png";
+    private static final String DENTIERTEXT = "spritemapdentierV3-01.png";
     TextureRegion[][] lifeSprites;
     
-    /*
-    private Fixture rightDamageZone;
-    private Fixture leftDamageZone;*/
     private ShieldActionFixture damageZone;
     
     private Set<GrandmaInfluence> influences = new HashSet<GrandmaInfluence>();
@@ -58,7 +55,8 @@ public class Grandma extends Character2D{
     
     private SideCharacter previousSide; 
     
-    //private Shield shield;
+    private boolean gotPurse;
+   
     
     public Grandma(World world, float posX, float posY){
         super(12);
@@ -74,6 +72,8 @@ public class Grandma extends Character2D{
         
         this.currentStateNode = new StateNode(GrandmaState.UNFOLDED_UMBRELLA_UP);
         this.previousStateNode = this.currentStateNode;
+        
+        this.gotPurse = false;
         
         // Part graphic
         this.assignTextures();
@@ -179,7 +179,12 @@ public class Grandma extends Character2D{
             array = new Array<TextureRegion>(tmp[17]);
             array.removeRange(0, 3);
             this.listAnimations.add(new Animation(0.3f, array));
-
+            // with purse
+            this.listAnimations.add(new Animation(0.2f, tmp[18]));
+            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
+            this.listAnimations.add(new Animation(0.2f, tmp[19]));
+            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.LOOP);
+            
             this.changeAnimation(0, true);
 
             // Life sprite
@@ -206,10 +211,16 @@ public class Grandma extends Character2D{
                 this.influences.add(GrandmaInfluence.UMB_DOWN);
             }else if(influence.equals("switch")){
                 this.influences.add(GrandmaInfluence.UMB_SWITCH);
-            }else if(influence.equals("onGround")){
+            }else if(influence.equals("onground")){
                 this.influences.add(GrandmaInfluence.CINE_ON_GROUND);
-            }else if(influence.equals("onFeet")){
+            }else if(influence.equals("onfeet")){
                 this.influences.add(GrandmaInfluence.CINE_BACK_ON_FEET);
+            }else if(influence.equals("walkright")){
+                this.influences.add(GrandmaInfluence.CINE_GO_WALK_RIGHT);
+            }else if(influence.equals("walkleft")){
+                this.influences.add(GrandmaInfluence.CINE_GO_WALK_LEFT);
+            }else if(influence.equals("gotpurse")){
+                this.influences.add(GrandmaInfluence.CINE_GOT_PURSE);
             }
         }
     }
@@ -475,12 +486,16 @@ public class Grandma extends Character2D{
     private void influences2Actions(){            
         Iterator<GrandmaInfluence> it = Grandma.this.influences.iterator();
         boolean isWalking = false;
-        while(it.hasNext() && isWalking == false){
+        this.gotPurse = false;
+        while(it.hasNext()){
             GrandmaInfluence currentInfluence = it.next();
             switch(currentInfluence){
                 case CINE_GO_WALK_RIGHT :
                 case CINE_GO_WALK_LEFT :
                     isWalking = true;
+                break;
+                case CINE_GOT_PURSE:
+                    this.gotPurse = true;
                 break;
             }
         } 
@@ -572,6 +587,7 @@ public class Grandma extends Character2D{
         CINE_BACK_ON_FEET,
         CINE_GO_WALK_RIGHT,
         CINE_GO_WALK_LEFT,
+        CINE_GOT_PURSE
     }
     
     @Override
@@ -611,66 +627,6 @@ public class Grandma extends Character2D{
     public void onDeath(){
         this.notifyGameEventListener(GameEventListener.EventType.GAMEOVER, "defeat", new Vector2(this.getPositionBody()));
     }
-    
-    /*
-    private class Shield extends SolidObject2D{
-        
-        private Joint joint;
-        
-        @Override
-        public boolean applyDamage(int damage, Vector2 dirDamage, Object2D damageOwner){
-            return super.applyDamage(damage, dirDamage, damageOwner);
-        }
-        
-        public Sprite createCurrentSprite(){
-            return null;
-        }
-        
-        /*public Shield(Body ownerBody, World world){
-            
-            // Part physic
-            BodyDef groundBodyDef = new BodyDef();    
-            // groundBodyDef.position.set(new Vector2(posX * P2M, posY * P2M)); 
-            // Create a body from the defintion and add it to the world
-            Body groundBody = world.createBody(groundBodyDef);
-            groundBody.setType(BodyDef.BodyType.DynamicBody);
-
-
-            PolygonShape ground = new PolygonShape();
-            ground.setAsBox(10 * P2M, 15 * P2M, new Vector2(0, 0), 0);
-            // Set the polygon shape as a box which is twice the size of our view port and 20 high
-            // (setAsBox takes half-width and half-height as arguments)
-            FixtureDef fixtureDef2 = new FixtureDef();
-            fixtureDef2.shape = ground;
-            fixtureDef2.density = 0.1f; 
-            fixtureDef2.friction = 0.05f;
-            fixtureDef2.restitution = 0.5f; 
-            // Create a fixture from our polygon shape and add it to our ground body  
-            Fixture fix = groundBody.createFixture(fixtureDef2); 
-            fix.setUserData(this);
-
-            this.physicBody = groundBody;
-
-            WeldJointDef jointDef = new WeldJointDef ();
-            jointDef.bodyA = ownerBody;
-            jointDef.bodyB = this.physicBody;
-            jointDef.localAnchorA.set(new Vector2(38 * P2M ,0));
-            jointDef.localAnchorB.set(new Vector2(0 ,0));
-            jointDef.collideConnected = false;
-            jointDef.dampingRatio = 0f;
-            
-            this.joint = world.createJoint(jointDef);
-           
-        }*/
-        
-        //public void updateSide(SideCharacter side){
-            /*if(side == SideCharacter.LEFT){
-                this.joint.getAnchorA().y = -38;
-            }else{
-                this.joint.getAnchorA().y = 38;
-            }*/
-        //}
-    //}
     
     // --- Class StateNode ---
     
@@ -1109,20 +1065,39 @@ public class Grandma extends Character2D{
                         isMove = true;
                     }
                 }
-                if(isMove){
-                    this.pauseAnimation = 0;
-                    if(Grandma.this.side == SideCharacter.RIGHT){
-                        return 0;
+                if(Grandma.this.gotPurse){
+                    if(isMove){
+                        this.pauseAnimation = 0;
+                        if(Grandma.this.side == SideCharacter.RIGHT){
+                            return 22;
+                        }else{
+                            return 23;
+                        }
                     }else{
-                        return 1;
+                        this.pauseAnimation = -1;
+
+                        if(Grandma.this.side == SideCharacter.RIGHT){
+                            return 22;
+                        }else{
+                            return 23;
+                        }
                     }
                 }else{
-                    this.pauseAnimation = -1;
-                    
-                    if(Grandma.this.side == SideCharacter.RIGHT){
-                        return 0;
+                    if(isMove){
+                        this.pauseAnimation = 0;
+                        if(Grandma.this.side == SideCharacter.RIGHT){
+                            return 0;
+                        }else{
+                            return 1;
+                        }
                     }else{
-                        return 1;
+                        this.pauseAnimation = -1;
+
+                        if(Grandma.this.side == SideCharacter.RIGHT){
+                            return 0;
+                        }else{
+                            return 1;
+                        }
                     }
                 }
             }
@@ -1276,11 +1251,6 @@ public class Grandma extends Character2D{
                     }
                 }
                 
-                Fixture fix = Grandma.this.collisionFixture.get(0);
-                if(fix.getRestitution() > 0.1f){
-                    fix.setRestitution(0.1f);
-                }
-                
             }else{
                 Iterator<GrandmaInfluence> it = Grandma.this.influences.iterator();             
                 while(it.hasNext()){
@@ -1294,11 +1264,15 @@ public class Grandma extends Character2D{
                             break;
                     }
                 }
-                
-                Fixture fix = Grandma.this.collisionFixture.get(0);
-                if(fix.getRestitution() < 0.8f){
-                    fix.setRestitution(2.5f);
-                }
+            }
+            
+            Fixture fix = Grandma.this.collisionFixture.get(0);
+            if(this.stateNode != GrandmaState.UNFOLDED_UMBRELLA_DOWN && this.stateNode != GrandmaState.CINE_ON_GROUND && fix.getRestitution() > 0.1f){
+                fix.setRestitution(0.1f);
+            }else if(this.stateNode == GrandmaState.UNFOLDED_UMBRELLA_DOWN && fix.getRestitution() < 0.8f){
+                fix.setRestitution(2.5f);
+            }else if(this.stateNode == GrandmaState.CINE_ON_GROUND && fix.getRestitution() < 0.8f){
+                fix.setRestitution(2.5f);
             }
           
             if((this.stateNode == GrandmaState.JUMP_UNFOLDED_UP  || this.stateNode == GrandmaState.UNFOLDED_UMBRELLA_UP)

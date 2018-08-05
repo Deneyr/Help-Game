@@ -23,16 +23,18 @@ import ressourcesmanagers.TextureManager;
  * @author françois
  */
 public class HillBackground extends BackgroundWorld{
-
-    private static final int NB_ELEM = 15; 
     
     public static final String HILL = "background/Decors_FondFond_Colline.png";
     
-    public static final String CLOUD = "background/Nuage_Test2.png";
+    public static final String CLOUD1 = "background/Help_Nuages_01.png";
+    public static final String CLOUD2 = "background/Help_Nuages_04.png";
+    public static final String CLOUD3 = "background/Help_Nuages_03.png";
     public static final String BIRD = "background/SpritemapOiseau.png";
     
     
     private DynamicElemLogic cloudsLogic;
+    private DynamicElemLogic cloudsLogic2;
+    private DynamicElemLogic cloudsLogic3;
     
     private BirdsDynamicElemLogic birdsLogic;
     
@@ -59,15 +61,17 @@ public class HillBackground extends BackgroundWorld{
         
         Texture building = TextureManager.getInstance().getTexture(CityBackground.BUILDING, this);
         Texture hill = TextureManager.getInstance().getTexture(HILL, this);
-        Texture cloud = TextureManager.getInstance().getTexture(CLOUD, this);
+        Texture cloud = TextureManager.getInstance().getTexture(CLOUD1, this);
+        Texture cloud2 = TextureManager.getInstance().getTexture(CLOUD2, this);
         Texture bird = TextureManager.getInstance().getTexture(BIRD, this);
         
         if(building != null
                 && hill != null
                 && cloud != null
+                && cloud2 != null
                 && bird != null){
             
-            BackgroundPart part = new BackgroundPart(200 * P2M, new Vector2(-2000 * P2M, -235 * P2M),  new Vector2(0 * P2M, -235 * P2M), 1f);
+            BackgroundPart part = new BackgroundPart(200 * P2M, new Vector2(-1000 * P2M, -75 * P2M),  new Vector2(2000 * P2M, -75 * P2M), 1f);
         
             part.addObject2D2Scenary(hill, 30);
             part.addObject2D2Scenary(building, 30);
@@ -77,7 +81,9 @@ public class HillBackground extends BackgroundWorld{
 
             // Dynamic elem
 
-            this.cloudsLogic = new CloudDynamicElemLogic(cloud, 1, -2000 * P2M, 0 * P2M, 20);
+            this.cloudsLogic = new CloudDynamicElemLogic(cloud, 1, -2000 * P2M, 0 * P2M, 10);
+            this.cloudsLogic2 = new CloudDynamicElemLogic(cloud2, 1, -2000 * P2M, 0 * P2M, 10);
+            this.cloudsLogic3 = new CloudDynamicElemLogic(cloud2, 1, -2000 * P2M, 0 * P2M, 10);
             this.birdsLogic = new BirdsDynamicElemLogic(bird, 2, -2000 * P2M, 0 * P2M, 4);
         }
         
@@ -109,6 +115,20 @@ public class HillBackground extends BackgroundWorld{
                 spriteList.add(sprite);
             }
         }
+        
+        for(Sprite sprite : this.cloudsLogic2.getSpriteMap().keySet()){
+            if(sprite.getX() + sprite.getWidth() > lowerX / P2M && sprite.getX() < upperX / P2M){
+                
+                spriteList.add(sprite);
+            }
+        }
+        
+        for(Sprite sprite : this.cloudsLogic3.getSpriteMap().keySet()){
+            if(sprite.getX() + sprite.getWidth() > lowerX / P2M && sprite.getX() < upperX / P2M){
+                
+                spriteList.add(sprite);
+            }
+        }
        
         
         return spriteList;
@@ -119,6 +139,8 @@ public class HillBackground extends BackgroundWorld{
         
         
         this.cloudsLogic.step(delta, this.lowerX, this.lowerY, this.upperX, this.upperY);
+        this.cloudsLogic2.step(delta, this.lowerX, this.lowerY, this.upperX, this.upperY);
+        this.cloudsLogic3.step(delta, this.lowerX, this.lowerY, this.upperX, this.upperY);
         
         
         this.birdsLogic.step(delta, this.lowerX, this.lowerY, this.upperX, this.upperY);

@@ -22,7 +22,7 @@ public class CharacterTimeline{
 
     
         
-        private final Character2D character;
+        private Character2D character;
         
         private final TreeMap<Float, String> timeline;
         
@@ -99,6 +99,10 @@ public class CharacterTimeline{
         
         
         public boolean updateTimeline(float time){
+            if(this.character == null){
+                return true;
+            }
+            
             boolean result = false;
             
             List<String> influencesPunctual = this.getValueAt(time);
@@ -130,6 +134,10 @@ public class CharacterTimeline{
          */
         public Character2D getCharacter() {
             return character;
+        }
+        
+        public void clearCharacter(){
+            this.character = null;
         }
         /**
         * @return the cinematicStatus

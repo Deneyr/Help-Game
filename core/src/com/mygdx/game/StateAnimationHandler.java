@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
+import cosmetics.CosmeticObject2D;
+import cosmetics.HitCosmeticObject2D;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +30,8 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
     
     private static final float TIMER_DURATION = 0.1f;
     
+    private static final int MAX_COSMETICS = 10;
+    
     WeakReference<GameWorld> gameWorld;
     
     private final Map<Object2D, Integer> currentAnimatedObjectsCounter;
@@ -38,7 +42,10 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
     private boolean isScheduled;
     
     // Part Pool create
-    private final Map<Class, FactoryPool> Object2DFactoryPools;
+    private final Map<Class, FactoryPool> object2DFactoriesPool;
+    
+    private List<CosmeticObject2D> cosmeticObject2DPool;
+    private final Map<Class, CosmeticFactoryPool> cosmeticObj2DFactoriesPool;
     
     public StateAnimationHandler(GameWorld gameWorld){
         this.gameWorld = new WeakReference(gameWorld);
@@ -46,13 +53,19 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
         this.currentAnimatedObjectsCounter = new HashMap<Object2D, Integer>();
         this.currentAnimatedObjectsState = new HashMap<Object2D, Object2DStateListener.Object2DState>();
         
-        // Set pool factory
-        this.Object2DFactoryPools = new HashMap<Class, FactoryPool>();
+        this.cosmeticObject2DPool = new ArrayList<CosmeticObject2D>();
+        this.cosmeticObj2DFactoriesPool = new HashMap<Class, CosmeticFactoryPool>();
         
-        this.Object2DFactoryPools.put(UpTriggeredObject2D.class, new Object2DFactoryPool<UpTriggeredObject2D>(UpTriggeredObject2D.class));
-        this.Object2DFactoryPools.put(TeethTriggeredObject2D.class, new Object2DFactoryPool<TeethTriggeredObject2D>(TeethTriggeredObject2D.class));
-        this.Object2DFactoryPools.put(CannonBallTriggeredObject2D.class, new Object2DFactoryPool<CannonBallTriggeredObject2D>(CannonBallTriggeredObject2D.class));
-        this.Object2DFactoryPools.put(BulletTriggeredObject2D.class, new Object2DFactoryPool<BulletTriggeredObject2D>(BulletTriggeredObject2D.class));
+        // Set pool factory
+        this.object2DFactoriesPool = new HashMap<Class, FactoryPool>();
+        
+        this.object2DFactoriesPool.put(UpTriggeredObject2D.class, new Object2DFactoryPool<UpTriggeredObject2D>(UpTriggeredObject2D.class));
+        this.object2DFactoriesPool.put(TeethTriggeredObject2D.class, new Object2DFactoryPool<TeethTriggeredObject2D>(TeethTriggeredObject2D.class));
+        this.object2DFactoriesPool.put(CannonBallTriggeredObject2D.class, new Object2DFactoryPool<CannonBallTriggeredObject2D>(CannonBallTriggeredObject2D.class));
+        this.object2DFactoriesPool.put(BulletTriggeredObject2D.class, new Object2DFactoryPool<BulletTriggeredObject2D>(BulletTriggeredObject2D.class));
+        
+        // Set Pool cosmetic
+        this.cosmeticObj2DFactoriesPool.put(HitCosmeticObject2D.class, new CosmeticFactoryPool<HitCosmeticObject2D>(HitCosmeticObject2D.class));
         
         // Set Timer
         
@@ -117,6 +130,11 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
             this.currentAnimatedObjectsCounter.remove(obj);
             this.currentAnimatedObjectsState.remove(obj);
         }
+        
+        if(this.cosmeticObject2DPool.size() > MAX_COSMETICS){
+            CosmeticObject2D cosmeticObj2D = this.cosmeticObject2DPool.remove(0);
+            this.removeObject2D(cosmeticObj2D);
+        }
     }
 
     public void removeObject2D(Object2D obj){
@@ -168,12 +186,29 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
     @Override
     public void onObject2D2Create(Object2D notifier, Class obj2DClass, Vector2 position, Vector2 speed){
         
-        if(this.Object2DFactoryPools.containsKey(obj2DClass) && this.gameWorld.get() != null){
-            FactoryPool factoryPool = this.Object2DFactoryPools.get(obj2DClass);
+        if(this.object2DFactoriesPool.containsKey(obj2DClass) && this.gameWorld.get() != null){
+            FactoryPool factoryPool = this.object2DFactoriesPool.get(obj2DClass);
             TriggeredObject2D triggeredObj2D = factoryPool.obtainTriggeredObject2D(this.gameWorld.get().getWorld(), position, speed);
             
             this.gameWorld.get().addObject2DToWorld(triggeredObj2D, true);
         }
+    }
+    
+    @Override
+    public void onCosmeticObj2D2Create(Object2D giver, Object2D receiver, Class obj2DClass, Vector2 position, Vector2 speed, float strength) {
+        
+        if(this.cosmeticObj2DFactoriesPool.containsKey(obj2DClass) && this.gameWorld.get() != null){
+            
+            CosmeticFactoryPool cosmeticFactoryPool = this.cosmeticObj2DFactoriesPool.get(obj2DClass);
+            CosmeticObject2D cosmeticObj2D = cosmeticFactoryPool.obtainTriggeredObject2D(this.gameWorld.get().getWorld(), giver, receiver, position, speed, strength);
+            
+            if(!this.cosmeticObject2DPool.contains(cosmeticObj2D)){
+                this.cosmeticObject2DPool.add(cosmeticObj2D);
+            }
+            
+            this.gameWorld.get().addObject2DToWorld(cosmeticObj2D, true);
+        }
+        
     }
     
     public boolean IsObject2DHandled(Object2D notifier){
@@ -181,10 +216,17 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
     }
 
     public void freeObject2D(Object2D obj){
-        if(this.Object2DFactoryPools.containsKey(obj.getClass())){
+        if(this.object2DFactoriesPool.containsKey(obj.getClass())){
    
-            FactoryPool factoryPool = this.Object2DFactoryPools.get(obj.getClass());
+            FactoryPool factoryPool = this.object2DFactoriesPool.get(obj.getClass());
             factoryPool.freeTriggeredObject2D((TriggeredObject2D) obj);
+        }else if(this.cosmeticObj2DFactoriesPool.containsKey(obj.getClass())){
+            CosmeticObject2D cosmeticObject2D = (CosmeticObject2D) obj;
+            
+            CosmeticFactoryPool cosmeticFactoryPool = this.cosmeticObj2DFactoriesPool.get(obj.getClass());
+            cosmeticFactoryPool.freeTriggeredObject2D(cosmeticObject2D);
+            
+            this.cosmeticObject2DPool.remove(cosmeticObject2D);
         }
     }
     

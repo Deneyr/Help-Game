@@ -12,6 +12,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
+import static com.mygdx.game.HelpGame.P2M;
+import cosmetics.HitCosmeticObject2D;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -221,9 +223,22 @@ public abstract class Character2D extends Object2D{
             float ratioDamage = (oldLifePoints - this.lifePoints) / (float) this.lifePointMax;
             if(ratioDamage > 0 && !dirDamage.epsilonEquals(Vector2.Zero, 0.01f)){
                 
-                this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "hitPunch", new Vector2(this.getPositionBody()));
+                this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "hitPunch", this.getPositionBody());
                 
                 this.physicBody.applyLinearImpulse(dirDamage.scl(ratioDamage * 100.f * this.scaleDamageForce), Vector2.Zero, true);
+                
+                
+                Vector2 receiverPosition = this.getPositionBody();
+                Vector2 distance = receiverPosition.sub(damageOwner.getPositionBody());
+                
+                upVector = new Vector2(0, 1);
+                angle = dirDamage.angle(upVector) * 0.7f;
+                dirDamage = dirDamage.rotate(angle);
+                Vector2 speed = (dirDamage).nor().scl(3 + ratioDamage * 2f);
+                
+                distance.y = 0;
+                this.notifyCosmeticObj2D2CreateListener(damageOwner, this, HitCosmeticObject2D.class, damageOwner.getPositionBody().add(distance.scl(0.9f)).scl(1 / P2M), Vector2.Zero, ratioDamage);
+                
             }
             return true;
         }
@@ -385,6 +400,14 @@ public abstract class Character2D extends Object2D{
         for(WeakReference<Object2DStateListener> refObject2DStateListener : this.listObject2DStateListener){
             if(refObject2DStateListener.get() != null){
                 refObject2DStateListener.get().onObject2D2Create(this, obj2DClass, position, speed);
+            }
+        }
+    } 
+    
+    protected void notifyCosmeticObj2D2CreateListener(Object2D giver, Object2D receiver, Class obj2DClass, Vector2 position, Vector2 speed, float strenght){
+        for(WeakReference<Object2DStateListener> refObject2DStateListener : this.listObject2DStateListener){
+            if(refObject2DStateListener.get() != null){
+                refObject2DStateListener.get().onCosmeticObj2D2Create(giver, receiver, obj2DClass, position, speed, strenght);
             }
         }
     } 

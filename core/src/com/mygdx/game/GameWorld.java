@@ -82,6 +82,18 @@ public class GameWorld implements WorldPlane, GameEventListener{
         this.mapCinematicManagers = new HashMap<String, CinematicManager>();
     }
     
+    public void addCinematicManager(CinematicManager cinematicManager, int indexCheckpoint, int indexCinematic){    
+        cinematicManager.setStateListener(this.stateAnimationHanlder);
+        cinematicManager.setGameEventListener(this);
+        
+        if(indexCheckpoint < 0 || indexCinematic > indexCheckpoint){
+            this.mapCinematicManagers.put(cinematicManager.getId(), cinematicManager);
+        }else{
+            cinematicManager.reset();
+            cinematicManager.dispose();
+        }
+    }
+    
     public void addCinematicManager(CinematicManager cinematicManager){
         cinematicManager.setStateListener(this.stateAnimationHanlder);
         cinematicManager.setGameEventListener(this);

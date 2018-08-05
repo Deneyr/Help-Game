@@ -19,6 +19,8 @@ public interface Object2DStateListener {
     
     void onObject2D2Create(Object2D notifier, Class obj2DClass, Vector2 position, Vector2 speed);
     
+    void onCosmeticObj2D2Create(Object2D giver, Object2D receiver, Class obj2DClass, Vector2 position, Vector2 speed, float strength);
+    
     public enum Object2DState{
         DAMAGE_TOOK,
         DEATH,

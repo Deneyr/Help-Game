@@ -58,7 +58,8 @@ public abstract class LvlGameNode extends GameNode{
         game.getGameMenuManager().step(deltaTime);
     }
     
-    protected abstract Vector2 initCheckpoints(HelpGame game);
+    protected abstract Vector2 initCheckpoints(HelpGame game, int checkpointIndex);
+    
     
     protected void initializeLevel(HelpGame game){
         // Init Game Menu Manager.

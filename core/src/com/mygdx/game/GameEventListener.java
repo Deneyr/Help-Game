@@ -28,7 +28,8 @@ public interface GameEventListener {
         LOOP_STOP,
         TAKE,
         GAMEOVER, // defeat, success
-        GAMESTART,
+        LVLSTART, // The beginning of the level (before the GAMESTART event).
+        GAMESTART, // Used to display the start level banner.
         CHECKPOINT, // reached
         MENUOPTION, // move, select
         GAMENODECHANGE // restart, [id gamenode]

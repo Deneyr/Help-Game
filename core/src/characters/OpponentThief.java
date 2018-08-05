@@ -5,11 +5,8 @@
  */
 package characters;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Object2D;
-import java.io.File;
 import ressourcesmanagers.TextureManager;
 
 /**
@@ -36,6 +33,8 @@ public class OpponentThief extends OpponentCAC1{
         this.updateFixture();
         
         this.previousSide = this.side;
+        
+        this.hasLifeBar = false;
     }
     
     @Override

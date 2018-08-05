@@ -170,7 +170,8 @@ public class GuiPortrait extends GuiComponent{
         NONE(-1, "Unamed"),
         GRANDMA(0, "Grand-mère"),
         TEMERI(1, "Temeri"),
-        PRIDE(2, "Voleur");
+        PRIDE(2, "Voleur"),
+        SPEAKER(5, "Haut-Parleur");
         
         private final int value;
         
