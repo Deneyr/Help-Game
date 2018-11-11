@@ -120,7 +120,10 @@ public abstract class Object2D implements Disposable, GraphicalComponent{
     
     
     public Vector2 getPositionBody(){
-        return new Vector2(this.physicBody.getPosition());
+        if(this.physicBody != null){
+            return new Vector2(this.physicBody.getPosition());
+        }
+        return new Vector2();
     }
     
     public BodyType getBodyType(){

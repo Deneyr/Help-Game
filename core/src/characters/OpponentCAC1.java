@@ -57,6 +57,8 @@ public class OpponentCAC1 extends Character2D{
     
     protected SideCharacter previousSide;
     
+    protected boolean noPurse;
+    
     public OpponentCAC1(int lifePoint, Object2D target){
         super(lifePoint);
         
@@ -69,6 +71,8 @@ public class OpponentCAC1 extends Character2D{
         this.target = target;
         
         this.maxSpeed = 2f;
+        
+        this.noPurse = false;
     }
     
     public OpponentCAC1(World world, Object2D target, float posX, float posY) {
@@ -82,6 +86,8 @@ public class OpponentCAC1 extends Character2D{
         this.canAttack = true;
         
         this.maxSpeed = 2f;
+        
+        this.noPurse = false;
         
         // Part graphic
         this.assignTextures();
@@ -150,6 +156,8 @@ public class OpponentCAC1 extends Character2D{
                 this.influences.add(OppInfluence.ATTACK);
             }else if(influence.equals("jump")){
                 this.influences.add(OppInfluence.JUMP);
+            }else if(influence.equals("nopurse")){
+                this.influences.add(OppInfluence.CINE_NO_PURSE);
             }
         }
     }
@@ -551,6 +559,16 @@ public class OpponentCAC1 extends Character2D{
     }
     
     protected void influences2Actions(float deltaTime){
+        Iterator<OppInfluence> it = OpponentCAC1.this.influences.iterator();
+        this.noPurse = false;
+        while(it.hasNext()){
+            OppInfluence currentInfluence = it.next();
+            switch(currentInfluence){
+                case CINE_NO_PURSE:
+                    this.noPurse = true;
+                break;
+            }
+        } 
         
         StateNode prevNode = this.currentStateNode;
         StateNode nextNode = this.currentStateNode.getNextStateNode();
@@ -637,7 +655,8 @@ public class OpponentCAC1 extends Character2D{
         JUMP,
         GO_RIGHT,
         GO_LEFT,
-        ATTACK
+        ATTACK,
+        CINE_NO_PURSE
     }
     
     protected class StateNode{
@@ -745,20 +764,40 @@ public class OpponentCAC1 extends Character2D{
                         isMove = true;
                     }
                 }
-                if(isMove){
-                    this.pauseAnimation = 0;
-                    if(OpponentCAC1.this.side == SideCharacter.RIGHT){
-                        return 0;
+                
+                if(OpponentCAC1.this.noPurse){
+                    if(isMove){
+                        this.pauseAnimation = 0;
+                        if(OpponentCAC1.this.side == SideCharacter.RIGHT){
+                            return 8;
+                        }else{
+                            return 9;
+                        }
                     }else{
-                        return 1;
+                        if(OpponentCAC1.this.side == SideCharacter.RIGHT){
+                            this.pauseAnimation = -1;
+                            return 8;
+                        }else{
+                            this.pauseAnimation = 1;
+                            return 9;
+                        }
                     }
                 }else{
-                    if(OpponentCAC1.this.side == SideCharacter.RIGHT){
-                        this.pauseAnimation = -1;
-                        return 0;
+                    if(isMove){
+                        this.pauseAnimation = 0;
+                        if(OpponentCAC1.this.side == SideCharacter.RIGHT){
+                            return 0;
+                        }else{
+                            return 1;
+                        }
                     }else{
-                        this.pauseAnimation = 1;
-                        return 1;
+                        if(OpponentCAC1.this.side == SideCharacter.RIGHT){
+                            this.pauseAnimation = -1;
+                            return 0;
+                        }else{
+                            this.pauseAnimation = 1;
+                            return 1;
+                        }
                     }
                 }
             }

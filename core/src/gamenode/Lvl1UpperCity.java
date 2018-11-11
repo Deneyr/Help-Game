@@ -8,6 +8,7 @@ package gamenode;
 import backgrounds.CityBackground;
 import backgrounds.FarBackground;
 import backgrounds.HillBackground;
+import backgrounds.HostelBackground;
 import backgrounds.NearBackground;
 import characters.Grandma;
 import characters.OpponentThief;
@@ -18,6 +19,8 @@ import com.mygdx.game.HelpGame;
 import com.mygdx.game.scenery.Abribus;
 import com.mygdx.game.scenery.Banc;
 import com.mygdx.game.scenery.GroundCity;
+import com.mygdx.game.scenery.SmallBox;
+import com.mygdx.game.scenery.TestMarioStage;
 import com.mygdx.game.scenery.TreeWithoutLeaf;
 import cosmetics.HitCosmeticObject2D;
 import guicomponents.CharacterTimeline;
@@ -90,6 +93,9 @@ public class Lvl1UpperCity extends LvlGameNode{
         FarBackground farBackground = new FarBackground(seed);
         game.getMapBackgroundPlanes().put(farBackground.getRatioDist(), farBackground);
         
+        HostelBackground hostelBackground = new HostelBackground(seed, 1000, -25);
+        game.getMapBackgroundPlanes().put(hostelBackground.getRatioDist(), hostelBackground);
+        
         // init solid objects
         
         
@@ -127,9 +133,13 @@ public class Lvl1UpperCity extends LvlGameNode{
         tree = new TreeWithoutLeaf(game.getGameWorld().getWorld(), 700, 50);
         game.getGameWorld().addObject2DToWorld(tree);*/
         
+        /*TestMarioStage test = new TestMarioStage(game.getGameWorld().getWorld(), 600, 75);
+        game.getGameWorld().addObject2DToWorld(test);*/
+        
         
         // box 
-        
+        SmallBox box = new SmallBox(game.getGameWorld().getWorld(), 730f, 0f);
+        game.getGameWorld().addObject2DToWorld(box, true);
 
         
         // Cannon
@@ -144,7 +154,7 @@ public class Lvl1UpperCity extends LvlGameNode{
         dialogue.addReply("Bienvenue à TEO Cité,\nla ville ou la criminalité est punie\npar le plus juste des chatiments :", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, -1);
         dialogue.addReply("Le banissement !", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, -1);
         dialogue.addReply("Nous vous garantissons\nune sécurité sans faille,\net ce, de 6h à 21h !", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, -1);
-        dialogue.addReply("Notre histoire commence\ndans un quartier uppée de la ville ...", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, -1);        
+        dialogue.addReply("Notre histoire commence\ndans un quartier huppé de la ville ...", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, -1);        
         List<Dialogue> list = new ArrayList<Dialogue>();
         list.add(dialogue);
         
@@ -153,7 +163,7 @@ public class Lvl1UpperCity extends LvlGameNode{
         dialogue.addReply("Habitants de TEO Cité,\nil est actuellement 20h50,\nle couvre-feu va bientôt débuter.", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.SPEAKER, GuiPortrait.Emotion.DEFAULT, 1);
         dialogue.addReply("Conformement à la loi\n421-HJ156-543.14159265359\nAlinea ln(129i+12)²", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.SPEAKER, GuiPortrait.Emotion.DEFAULT, 1);
         dialogue.addReply("Toute personne présente passé 21h\nsera severement poursuivie !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.SPEAKER, GuiPortrait.Emotion.DEFAULT, 1);
-        dialogue.addReply("Juste ciel !\nJe dois me dépeche de rentrer !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.SPEAKER, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("Juste ciel !\nJe dois me dépecher de rentrer !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.SPEAKER, GuiPortrait.Emotion.DEFAULT, 0);
         list.add(dialogue);
         
         dialogue = new Dialogue();  
@@ -161,13 +171,33 @@ public class Lvl1UpperCity extends LvlGameNode{
         list.add(dialogue);
         
         dialogue = new Dialogue();  
-        dialogue.addReply("Qu'est ce qui se passe ?!\nAu secours !\nQuelqu'un ...\n Aidez moi !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
-        dialogue.addReply("Hahahahaha !\nAlors la vielle ?\n tu ne sais pas qu'après 21h\nc'est nous les boss de la cité ?", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.HAPPY, 1);
+        dialogue.addReply("Qu'est ce qui se passe ?!\nAu secours !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("Quelqu'un !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("Aidez moi ...", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("Hahahahaha !\nAlors la vieille ?\n tu ne sais pas qu'après 21h\nc'est nous les boss de la cité ?", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.HAPPY, 1);
         dialogue.addReply("Personne ne va venir t'aider !\nTu peux crier \"Help\"\nautant que tu veux !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.HAPPY, 1);
         list.add(dialogue);
         
         dialogue = new Dialogue();  
         dialogue.addReply(".........", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.HAPPY, 0);
+        list.add(dialogue);
+        
+        dialogue = new Dialogue();  
+        dialogue.addReply(" ... Qu'est ce que ...", GuiPortrait.Character.NONE, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.HAPPY, 1);
+        dialogue.addReply("Petit sacripan !\ntu n'aurais jamais du quitter\nle taudis qui te sert de maison !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.HAPPY, 0);
+        dialogue.addReply("Tu vas voir\nce qu'une vieille dame respectable\nva faire à une crapule dans ton genre !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.HAPPY, 0);
+        list.add(dialogue);
+        
+        dialogue = new Dialogue();  
+        dialogue.addReply(" Aie !!\nmais elle est completement folle !", GuiPortrait.Character.NONE, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.SORROW, 1);
+        dialogue.addReply("Petit polisson,\nrend moi mon sac à main !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.HAPPY, 0);
+        dialogue.addReply("Jamais ! les bourges dans ton genre\nen ont de toute façon 36\ncomme ça à la maison !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.HAPPY, 1);
+        dialogue.addReply("Ca va chauffer !!!", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.HAPPY, 0);
+        list.add(dialogue);
+        
+        dialogue = new Dialogue();  
+        dialogue.addReply("HELPPPP !\nje suis poursuivi par\nune vielle peau enragée !!", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.SORROW, 1);
+        dialogue.addReply("Mauvais graine !\nreviens ici !!", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
         list.add(dialogue);
         
         CinematicManager cin1 = new CinematicManager("startCinematic", list, true, this.getId());
@@ -177,14 +207,17 @@ public class Lvl1UpperCity extends LvlGameNode{
         cin1.addDialogueTimeline(5f, 2);
         cin1.addDialogueTimeline(6f, 3);
         cin1.addDialogueTimeline(7f, 4);
+        cin1.addDialogueTimeline(8f, 5);
+        cin1.addDialogueTimeline(9f, 6);
+        cin1.addDialogueTimeline(11f, 7);
         
         CharacterTimeline charaTimeline = new CharacterTimeline(hero, CharacterTimeline.CinematicStatus.NORMAL);
         
         charaTimeline.addEntry(0.1f, "switch");
         charaTimeline.addEntry(0.2f, "per_gotPurse");
-        charaTimeline.addEntry(0.3f, "per_walkRight");
+        charaTimeline.addEntry(0.3f, "per_walk");
         charaTimeline.addEntry(0.4f, "per_right");
-        charaTimeline.addEntry(5.0f, "per_walkRight");
+        charaTimeline.addEntry(5.0f, "per_walk");
         charaTimeline.addEntry(5.1f, "per_right");
         charaTimeline.addEntry(5.2f, "per_gotPurse");
         charaTimeline.addEntry(5.3f, "onGround");
@@ -192,16 +225,36 @@ public class Lvl1UpperCity extends LvlGameNode{
         charaTimeline.addEntry(5.5f, "right");
         charaTimeline.addEntry(5.7f, "left");
         charaTimeline.addEntry(5.9f, "right");
+        
+        charaTimeline.addEntry(7.1f, "onFeet");
+        
+        charaTimeline.addEntry(8.1f, "per_right");
+        charaTimeline.addEntry(8.3f, "per_right");
+        charaTimeline.addEntry(8.4f, "attack");
+        
+        charaTimeline.addEntry(9.1f, "per_right");
+        charaTimeline.addEntry(9.2f, "per_walk");
+        charaTimeline.addEntry(10.8f, "per_walk");
+        charaTimeline.addEntry(10.2f, "per_jump");
+        charaTimeline.addEntry(10.25f, "per_jump");
+        charaTimeline.addEntry(10.9f, "per_right");
         cin1.addCharacterTimeline(charaTimeline);
         
         charaTimeline = new CharacterTimeline(thief, CharacterTimeline.CinematicStatus.END_CINEMATIC);
 
+        charaTimeline.addEntry(0.1f, "per_noPurse");
         charaTimeline.addEntry(0.2f, "per_right");
         charaTimeline.addEntry(5.8f, "per_right");
         
+        charaTimeline.addEntry(5.1f, "per_noPurse");
         charaTimeline.addEntry(5.2f, "per_jump");
         charaTimeline.addEntry(5.5f, "per_jump");
         charaTimeline.addEntry(5.9f, "left");
+        
+        charaTimeline.addEntry(9.1f, "per_right");
+        charaTimeline.addEntry(10.9f, "per_right");
+        charaTimeline.addEntry(11.1f, "per_right");
+        charaTimeline.addEntry(13f, "per_right");
         cin1.addCharacterTimeline(charaTimeline);
         
         game.getGameWorld().addCinematicManager(cin1, index, 0);

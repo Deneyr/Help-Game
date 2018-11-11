@@ -7,7 +7,9 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import static com.mygdx.game.HelpGame.P2M;
 import java.util.ArrayList;
@@ -37,6 +39,8 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
         
         this.seed = seed;
     }
+
+    
     
     @Override
     public List<Sprite> getSpritesInRegion(float lowerX, float lowerY, float upperX, float upperY) {
@@ -64,10 +68,12 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
                 }
             }
         }
-       
-        
-        
+         
         return spriteList;
+    }
+    
+    public void createSoldidObj(World world){
+        // Nothing to do by default.
     }
     
     @Override
@@ -87,10 +93,12 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
         this.backgroundPartList.clear();
     }
     
-    protected void addBackgroundPart(float periodElem, Vector2 startPart, Vector2 endPart, float ratioSprite){
+    protected BackgroundPart addBackgroundPart(float periodElem, Vector2 startPart, Vector2 endPart, float ratioSprite){
         BackgroundPart part = new BackgroundPart(periodElem, startPart, endPart, ratioSprite);
         
         this.backgroundPartList.put(part.startPart.x, part);
+        
+        return part;
     }
 
     /**
@@ -100,19 +108,90 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
         return ratioDist;
     }
     
+    protected class ResidencePart extends BackgroundPart{
+    
+        private final int canvasWidth;
+        private final int canvasHeight;
+        
+        String[][] residenceMap;
+        
+        public ResidencePart(Vector2 startPart, String[][] residenceMap, int canvasWidth, int canvasHeight) {
+            super(1f, startPart, Vector2.Zero, 1f);
+            
+            this.canvasWidth = canvasWidth;
+            this.canvasHeight = canvasHeight;
+            
+            this.residenceMap = residenceMap;
+            
+            this.endPart = new Vector2(startPart.x + this.canvasWidth * this.residenceMap[0].length, startPart.y + this.canvasHeight * this.residenceMap.length);
+        }
+    
+        public void addObject2D2Scenary(Texture text){
+            this.sceneryElemList.add(text);
+        }
+        
+        @Override
+        public void createSpriteList(int seed){
+            List<Sprite> spriteList = new ArrayList<Sprite>();
+            
+            for(int i = 0; i < this.residenceMap.length; i++){
+                for(int j = 0; j < this.residenceMap[0].length; j++){
+                    String frame = this.residenceMap[i][j];
+                    int indexTexture = 0;
+                    int indexX = -1;
+                    int indexY = -1;
+                    
+                    String[] lFrameSplit = frame.split(":");
+                    
+                    if(lFrameSplit.length == 3){
+                        indexTexture = Integer.parseInt(lFrameSplit[0]);
+                        indexX = Integer.parseInt(lFrameSplit[1]);
+                        indexY = Integer.parseInt(lFrameSplit[2]);
+                    }else if(lFrameSplit.length == 2){
+                        indexX = Integer.parseInt(lFrameSplit[0]);
+                        indexY = Integer.parseInt(lFrameSplit[1]);
+                    }
+                    
+                    if(indexX >= 0 && indexY >= 0){
+                        TextureRegion textureRegion = new TextureRegion(this.sceneryElemList.get(indexTexture), indexX * this.canvasWidth, indexY * this.canvasHeight, this.canvasWidth, this.canvasHeight);
+                        
+                        Sprite sprite = new Sprite(textureRegion);
+                        
+                        if(this.ratioSprite != 1f){
+                            sprite.scale(this.ratioSprite);
+                            
+                            sprite.setAlpha((float) Math.min(0.3 + BackgroundWorld.this.ratioDist, 1f));
+                            sprite.setPosition(this.startPart.x / P2M + this.canvasWidth * j * this.ratioSprite
+                                            , this.startPart.y / P2M + this.canvasHeight * (this.residenceMap.length - i - 1) * this.ratioSprite);
+                        }else{
+                        
+                            sprite.setAlpha((float) Math.min(0.3 + BackgroundWorld.this.ratioDist, 1f));
+                            sprite.setPosition(this.startPart.x / P2M + this.canvasWidth * j
+                                            , this.startPart.y / P2M + this.canvasHeight * (this.residenceMap.length - i - 1));
+                        }
+                        spriteList.add(sprite);
+                    }
+                }
+            }
+                
+            this.spriteListInBackground = spriteList;
+        }
+    
+    }
+    
     protected class BackgroundPart implements Disposable{
         
         protected float ratioSprite;
         
-        private Vector2 startPart;
-        private Vector2 endPart;
+        protected Vector2 startPart;
+        protected Vector2 endPart;
                 
-        private float periodElem;
+        protected float periodElem;
         
-        private List<Texture> sceneryElemList;
-        private List<Integer> percentPresenceElemList;
+        protected List<Texture> sceneryElemList;
+        protected List<Integer> percentPresenceElemList;
         
-        private List<Sprite> spriteListInBackground;
+        protected List<Sprite> spriteListInBackground;
        
         
         public BackgroundPart(float periodElem, Vector2 startPart, Vector2 endPart, float ratioSprite){
@@ -155,15 +234,13 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
                 int percentagePart = this.percentPresenceElemList.get(i);
                 
                 int nbIndex2Take = (int) (percentagePart * nbParts/ 100.f);
-                
-                
+                              
                 for(int j = 0; j < nbIndex2Take; j++){
                     int index = (int) (generator.nextDouble() * indexParts.size());
                     
                     int indexPart = indexParts.get(index);
                     indexParts.remove(index);
-                   
-                    
+                                     
                     Sprite sprite = new Sprite(text);
                     
                     if(this.ratioSprite != 1f){
@@ -171,16 +248,14 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
                     }
                     sprite.setAlpha((float) Math.min(0.3 + BackgroundWorld.this.ratioDist, 1f));
                     sprite.setPosition((indexPart * this.periodElem + this.startPart.x) / P2M - sprite.getWidth() / 2.f, (this.startPart.y + (this.endPart.y - this.startPart.y) * (((float) indexPart) / nbParts)) / P2M);
-                    
-                    
+                                   
                     spriteList.add(sprite);
                 }
                 
                 i++;
             }
             
-            this.spriteListInBackground = spriteList;
-           
+            this.spriteListInBackground = spriteList;          
         }
 
         /**
@@ -201,7 +276,7 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
          * @return the spriteListInBackground
          */
         public List<Sprite> getSpriteListInBackground() {
-            return spriteListInBackground;
+            return this.spriteListInBackground;
         }
 
         @Override
@@ -422,5 +497,17 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
             this.indexAnimMap.remove(sprite);
         }
         
+    }
+    
+    protected enum RoomCollisionType{
+        LEFT,
+        RIGHT,
+        WHOLE,
+        LEFT_DOOR,
+        RIGHT_DOOR,
+        TOP,
+        BOTTOM,
+        STAIRS_RIGHT,
+        STAIRS_LEFT
     }
 }

@@ -74,7 +74,7 @@ public class SmallBox extends Character2D{
         fixtureDef = new FixtureDef();
         fixtureDef.shape = collisionBox;
         fixtureDef.density = density; 
-        fixtureDef.friction = 0.04f;
+        fixtureDef.friction = 0.2f;
         fixtureDef.restitution = 0.005f; 
 
         Fixture fix = this.physicBody.createFixture(fixtureDef);

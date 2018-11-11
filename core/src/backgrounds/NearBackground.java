@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.BackgroundWorld;
 import static com.mygdx.game.HelpGame.P2M;
-import java.io.File;
 import ressourcesmanagers.TextureManager;
 
 /**
@@ -26,7 +25,7 @@ public class NearBackground extends BackgroundWorld{
     public NearBackground(int seed){
         super(seed);
         
-        this.ratioDist = 1f;
+        this.ratioDist = 0.9f;
         
         this.assignTextures();
     }
@@ -47,7 +46,7 @@ public class NearBackground extends BackgroundWorld{
                 && build2 != null
                 && build3 != null){
             
-            BackgroundPart part = new BackgroundPart(111 * P2M, new Vector2(-1000 * P2M, -50 * P2M),  new Vector2(2000 * P2M, -15 * P2M), 1f);
+            BackgroundPart part = new BackgroundPart(111 * P2M, new Vector2(-1000 * P2M, -25 * P2M),  new Vector2(2000 * P2M, -25 * P2M), 1f);
         
             part.addObject2D2Scenary(build1, 30);
             part.addObject2D2Scenary(build2, 30);

@@ -215,10 +215,8 @@ public class Grandma extends Character2D{
                 this.influences.add(GrandmaInfluence.CINE_ON_GROUND);
             }else if(influence.equals("onfeet")){
                 this.influences.add(GrandmaInfluence.CINE_BACK_ON_FEET);
-            }else if(influence.equals("walkright")){
-                this.influences.add(GrandmaInfluence.CINE_GO_WALK_RIGHT);
-            }else if(influence.equals("walkleft")){
-                this.influences.add(GrandmaInfluence.CINE_GO_WALK_LEFT);
+            }else if(influence.equals("walk")){
+                this.influences.add(GrandmaInfluence.CINE_GO_WALK);
             }else if(influence.equals("gotpurse")){
                 this.influences.add(GrandmaInfluence.CINE_GOT_PURSE);
             }
@@ -490,8 +488,7 @@ public class Grandma extends Character2D{
         while(it.hasNext()){
             GrandmaInfluence currentInfluence = it.next();
             switch(currentInfluence){
-                case CINE_GO_WALK_RIGHT :
-                case CINE_GO_WALK_LEFT :
+                case CINE_GO_WALK:
                     isWalking = true;
                 break;
                 case CINE_GOT_PURSE:
@@ -585,8 +582,7 @@ public class Grandma extends Character2D{
         // Cinematic influences
         CINE_ON_GROUND,
         CINE_BACK_ON_FEET,
-        CINE_GO_WALK_RIGHT,
-        CINE_GO_WALK_LEFT,
+        CINE_GO_WALK,
         CINE_GOT_PURSE
     }
     

@@ -6,49 +6,55 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
       <group>
         <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/GroundUpperCity.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/ground/ground.png</file>
         <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/TriggerActionFixture.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/PlayerData.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Object2DStateListener.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/TriggeredObject2D.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentCACElite.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/GUIScreen.java</file>
         <file>file:/D:/Projects/Help-Game/core/assets/background/Nuage_Test2.png</file>
         <file>file:/D:/Projects/Help-Game/core/assets/character/opponentCAC1.png</file>
         <file>file:/D:/Projects/Help-Game/core/src/backgrounds/FarBackground.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/gamenode/GameNode.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/gamenode/LvlGameNode.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/GroundCity.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/triggered/ActivableTriggeredObject2D.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/FactoryPool.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/guicomponents/GuiMenuText.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/NearBackground.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/HelpGame.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/CosmeticFactoryPool.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/cosmetics/HitCosmeticObject2D.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentThief.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/guicomponents/Dialogue.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/triggered/CannonBallTriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/destroyable/Spritemap-GrosseCaisse.png</file>
         <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Character2D.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/character/spritemapkairaTir-01.png</file>
-        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/CityBackground.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/guicomponents/CinematicManager.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/character/spritemapmeme.png</file>
-        <file>file:/D:/Projects/Help-Game/core/src/gamenode/Lvl1GameNode.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/gamenode/Lvl1UpperCity.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/character/spritemapkairaVoleur-01.png</file>
         <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/StateAnimationHandler.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/ground/Sol.png</file>
         <file>file:/D:/Projects/Help-Game/core/src/triggered/UpTriggeredObject2D.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/guicomponents/CharacterTimeline.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/triggered/BulletTriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/BackgroundWorld.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/triggered/CheckPointTriggeredObject2D.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/HillBackground.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Object2D.java</file>
         <file>file:/D:/Projects/Help-Game/core/assets/character/spritemapkaira_batte-01.png</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/SmallBox.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/destroyable/Spritemap-MetalCaisse.png</file>
         <file>file:/D:/Projects/Help-Game/core/src/triggered/TeethTriggeredObject2D.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/characters/Grandma.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Object2DFactoryPool.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/guicomponents/GuiDialogueBlock.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/ground/ground.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Object2DStateListener.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/GameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/LvlGameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/FactoryPool.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/NearBackground.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/CosmeticFactoryPool.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentThief.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/guicomponents/Dialogue.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/triggered/CannonBallTriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/character/spritemapkairaTir-01.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/CityBackground.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/character/spritemapmeme.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/Lvl1GameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/ground/Sol.png</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/orphenageBlack.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/HillBackground.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/SmallBox.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/Grandma.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentCAC1.java</file>
       </group>
     </open-files>
     <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
