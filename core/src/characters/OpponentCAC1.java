@@ -59,6 +59,10 @@ public class OpponentCAC1 extends Character2D{
     
     protected boolean noPurse;
     
+    protected Vector2 spawnPoint;
+    private float maxDistanceFromSpawn;
+    private boolean isReseting;
+    
     public OpponentCAC1(int lifePoint, Object2D target){
         super(lifePoint);
         
@@ -73,6 +77,10 @@ public class OpponentCAC1 extends Character2D{
         this.maxSpeed = 2f;
         
         this.noPurse = false;
+        
+        this.spawnPoint = new Vector2();
+        this.maxDistanceFromSpawn = -1f;
+        this.isReseting = false;
     }
     
     public OpponentCAC1(World world, Object2D target, float posX, float posY) {
@@ -88,6 +96,10 @@ public class OpponentCAC1 extends Character2D{
         this.maxSpeed = 2f;
         
         this.noPurse = false;
+        
+        this.spawnPoint = new Vector2(posX * P2M, posY * P2M);
+        this.maxDistanceFromSpawn = -1f;
+        this.isReseting = false;
         
         // Part graphic
         this.assignTextures();
@@ -321,7 +333,7 @@ public class OpponentCAC1 extends Character2D{
         
          // Part damage zone    
         circle = new CircleShape();
-        circle.setRadius(25 * P2M);
+        circle.setRadius(30 * P2M);
         circle.setPosition(new Vector2(0, 0));
         fixtureDef = new FixtureDef();
         fixtureDef.shape = circle;
@@ -375,37 +387,58 @@ public class OpponentCAC1 extends Character2D{
             return;
         }
         
-        if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
-            if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
+        if(this.maxDistanceFromSpawn > 0 
+                && (this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn
+                    || (this.isReseting && this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn / 2))){
+            if(!this.isReseting){
+                this.isReseting = true;
+            }
+            if(this.spawnPoint.x - this.physicBody.getPosition().x > 0){
                 this.influences.add(OppInfluence.GO_RIGHT);
             }else{
                 this.influences.add(OppInfluence.GO_LEFT);
+            }      
+        }else{
+            if(this.isReseting){
+                this.isReseting = false;
             }
-            
+            if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
+                if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
+                    this.influences.add(OppInfluence.GO_RIGHT);
+                }else{
+                    this.influences.add(OppInfluence.GO_LEFT);
+                }
+            }else{
+                double rand = Math.random()*100;
+                if(rand > 10){
+                    if(this.side == SideCharacter.RIGHT){
+                        this.influences.add(OppInfluence.GO_RIGHT);
+                    }else{
+                        this.influences.add(OppInfluence.GO_LEFT);
+                    }
+                }else if(rand > 8){
+                    if(this.side == SideCharacter.RIGHT){
+                        this.influences.add(OppInfluence.GO_LEFT);
+                    }else{
+                        this.influences.add(OppInfluence.GO_RIGHT);
+                    }
+                }
+            }
+        }
+        
+        if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
             if(this.canAttack
                     && this.target.getPositionBody().y - this.physicBody.getPosition().y > 75 * P2M 
                     && this.target.getPositionBody().y - this.physicBody.getPosition().y < 150 * P2M){
                 this.influences.add(OppInfluence.JUMP);
             }
-            
+
             if(Math.abs(this.target.getPositionBody().sub(this.physicBody.getPosition()).len()) <  300 * P2M
                     && Math.abs(this.target.getPositionBody().y - this.physicBody.getPosition().y) < 50 * P2M){
+                if(this.isReseting){
+                    this.isReseting = false;
+                }
                 this.influences.add(OppInfluence.ATTACK);
-            }
-        }else{
-            double rand = Math.random()*100;
-            if(rand > 10){
-                if(this.side == SideCharacter.RIGHT){
-                    this.influences.add(OppInfluence.GO_RIGHT);
-                }else{
-                    this.influences.add(OppInfluence.GO_LEFT);
-                }
-            }else if(rand > 8){
-                if(this.side == SideCharacter.RIGHT){
-                    this.influences.add(OppInfluence.GO_LEFT);
-                }else{
-                    this.influences.add(OppInfluence.GO_RIGHT);
-                }
             }
         }
     }
@@ -419,32 +452,53 @@ public class OpponentCAC1 extends Character2D{
             return;
         }
         
-        if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
-            if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
+        if(this.maxDistanceFromSpawn > 0 
+                && (this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn
+                    || (this.isReseting && this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn / 2))){
+            if(!this.isReseting){
+                this.isReseting = true;
+            }
+            if(this.spawnPoint.x - this.physicBody.getPosition().x > 0){
                 this.influences.add(OppInfluence.GO_RIGHT);
             }else{
                 this.influences.add(OppInfluence.GO_LEFT);
+            }      
+        }else{
+            if(this.isReseting){
+                this.isReseting = false;
             }
-            
+            if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
+                if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
+                    this.influences.add(OppInfluence.GO_RIGHT);
+                }else{
+                    this.influences.add(OppInfluence.GO_LEFT);
+                }
+            }else{
+                double rand = Math.random()*100;
+                if(rand > 10){
+                    if(this.side == SideCharacter.RIGHT){
+                        this.influences.add(OppInfluence.GO_RIGHT);
+                    }else{
+                        this.influences.add(OppInfluence.GO_LEFT);
+                    }
+                }else if(rand > 8){
+                    if(this.side == SideCharacter.RIGHT){
+                        this.influences.add(OppInfluence.GO_LEFT);
+                    }else{
+                        this.influences.add(OppInfluence.GO_RIGHT);
+                    }
+                }
+            }
+        }
+        
+        if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
             if(Math.abs(this.target.getPositionBody().sub(this.physicBody.getPosition()).len()) <  50 * P2M
                     && Math.abs(this.target.getPositionBody().y - this.physicBody.getPosition().y) < 50 * P2M){
+                if(this.isReseting){
+                    this.isReseting = false;
+                }    
                 this.influences.add(OppInfluence.ATTACK);
-            }
-        }else{
-            double rand = Math.random()*100;
-            if(rand > 10){
-                if(this.side == SideCharacter.RIGHT){
-                    this.influences.add(OppInfluence.GO_RIGHT);
-                }else{
-                    this.influences.add(OppInfluence.GO_LEFT);
-                }
-            }else if(rand > 8){
-                if(this.side == SideCharacter.RIGHT){
-                    this.influences.add(OppInfluence.GO_LEFT);
-                }else{
-                    this.influences.add(OppInfluence.GO_RIGHT);
-                }
-            }
+            }  
         }
     }
     
@@ -457,29 +511,45 @@ public class OpponentCAC1 extends Character2D{
             return;
         }
         
-        if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
-            if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
-                if(this.side == SideCharacter.LEFT){
-                    this.influences.add(OppInfluence.GO_RIGHT);
+         if(this.maxDistanceFromSpawn > 0 
+                && (this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn
+                    || (this.isReseting && this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn / 2))){
+            if(!this.isReseting){
+                this.isReseting = true;
+            }
+            if(this.spawnPoint.x - this.physicBody.getPosition().x > 0){
+                this.influences.add(OppInfluence.GO_RIGHT);
+            }else{
+                this.influences.add(OppInfluence.GO_LEFT);
+            }      
+        }else{
+            if(this.isReseting){
+                this.isReseting = false;
+            }
+            if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
+                if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
+                    if(this.side == SideCharacter.LEFT){
+                        this.influences.add(OppInfluence.GO_RIGHT);
+                    }
+                }else{
+                    if(this.side == SideCharacter.RIGHT){
+                        this.influences.add(OppInfluence.GO_LEFT);
+                    }
                 }
             }else{
-                if(this.side == SideCharacter.RIGHT){
-                    this.influences.add(OppInfluence.GO_LEFT);
-                }
-            }
-        }else{
-            double rand = Math.random()*100;
-            if(rand > 10){
-                if(this.side == SideCharacter.RIGHT){
-                    this.influences.add(OppInfluence.GO_RIGHT);
-                }else{
-                    this.influences.add(OppInfluence.GO_LEFT);
-                }
-            }else if(rand > 8){
-                if(this.side == SideCharacter.RIGHT){
-                    this.influences.add(OppInfluence.GO_LEFT);
-                }else{
-                    this.influences.add(OppInfluence.GO_RIGHT);
+                double rand = Math.random()*100;
+                if(rand > 10){
+                    if(this.side == SideCharacter.RIGHT){
+                        this.influences.add(OppInfluence.GO_RIGHT);
+                    }else{
+                        this.influences.add(OppInfluence.GO_LEFT);
+                    }
+                }else if(rand > 8){
+                    if(this.side == SideCharacter.RIGHT){
+                        this.influences.add(OppInfluence.GO_LEFT);
+                    }else{
+                        this.influences.add(OppInfluence.GO_RIGHT);
+                    }
                 }
             }
         }
@@ -494,39 +564,60 @@ public class OpponentCAC1 extends Character2D{
             return;
         }
         
-        if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
-            if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
+        if(this.maxDistanceFromSpawn > 0 
+                && (this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn
+                    || (this.isReseting && this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn / 2))){
+            if(!this.isReseting){
+                this.isReseting = true;
+            }
+            if(this.spawnPoint.x - this.physicBody.getPosition().x > 0){
                 this.influences.add(OppInfluence.GO_RIGHT);
             }else{
                 this.influences.add(OppInfluence.GO_LEFT);
+            }      
+        }else{
+            if(this.isReseting){
+                this.isReseting = false;
             }
-            
+            if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
+                if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
+                    this.influences.add(OppInfluence.GO_RIGHT);
+                }else{
+                    this.influences.add(OppInfluence.GO_LEFT);
+                }
+            }else{
+                double rand = Math.random()*100;
+                if(rand > 10){
+                    if(this.side == SideCharacter.RIGHT){
+                        this.influences.add(OppInfluence.GO_RIGHT);
+                    }else{
+                        this.influences.add(OppInfluence.GO_LEFT);
+                    }
+                }else if(rand > 8){
+                    if(this.side == SideCharacter.RIGHT){
+                        this.influences.add(OppInfluence.GO_LEFT);
+                    }else{
+                        this.influences.add(OppInfluence.GO_RIGHT);
+                    }
+                }
+            }
+        }
+         
+        if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
             if(this.canAttack
                     && this.target.getPositionBody().y - this.physicBody.getPosition().y > 40 * P2M 
                     && this.target.getPositionBody().y - this.physicBody.getPosition().y < 150 * P2M){
                 this.influences.add(OppInfluence.JUMP);
             }
-            
+
             if(Math.abs(this.target.getPositionBody().sub(this.physicBody.getPosition()).len()) <  60 * P2M
                     && Math.abs(this.target.getPositionBody().y - this.physicBody.getPosition().y) < 50 * P2M){
+                if(this.isReseting){
+                    this.isReseting = false;
+                }
                 this.influences.add(OppInfluence.ATTACK);
             }
-        }else{
-            double rand = Math.random()*100;
-            if(rand > 10){
-                if(this.side == SideCharacter.RIGHT){
-                    this.influences.add(OppInfluence.GO_RIGHT);
-                }else{
-                    this.influences.add(OppInfluence.GO_LEFT);
-                }
-            }else if(rand > 8){
-                if(this.side == SideCharacter.RIGHT){
-                    this.influences.add(OppInfluence.GO_LEFT);
-                }else{
-                    this.influences.add(OppInfluence.GO_RIGHT);
-                }
-            }
-        }
+        }  
     }
     
     protected void createInfluencesCACElite(){
@@ -538,24 +629,43 @@ public class OpponentCAC1 extends Character2D{
             return;
         }
         
-        if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST * 1.5){
-            if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
+        if(this.maxDistanceFromSpawn > 0 
+                && (this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn
+                    || (this.isReseting && this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn / 2))){
+            if(!this.isReseting){
+                this.isReseting = true;
+            }
+            if(this.spawnPoint.x - this.physicBody.getPosition().x > 0){
                 this.influences.add(OppInfluence.GO_RIGHT);
             }else{
                 this.influences.add(OppInfluence.GO_LEFT);
+            }      
+        }else{
+            if(this.isReseting){
+                this.isReseting = false;
             }
-            
-            if(this.canAttack
-                    && this.target.getPositionBody().y - this.physicBody.getPosition().y > 50 * P2M 
-                    && this.target.getPositionBody().y - this.physicBody.getPosition().y < 150 * P2M){
-                this.influences.add(OppInfluence.JUMP);
-            }
-            
-            if(Math.abs(this.target.getPositionBody().sub(this.physicBody.getPosition()).len()) <  60 * P2M
-                    && Math.abs(this.target.getPositionBody().y - this.physicBody.getPosition().y) < 50 * P2M){
-                this.influences.add(OppInfluence.ATTACK);
+            if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST * 1.5){
+                if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
+                    this.influences.add(OppInfluence.GO_RIGHT);
+                }else{
+                    this.influences.add(OppInfluence.GO_LEFT);
+                }
             }
         }
+        
+        if(this.canAttack
+                && this.target.getPositionBody().y - this.physicBody.getPosition().y > 50 * P2M 
+                && this.target.getPositionBody().y - this.physicBody.getPosition().y < 150 * P2M){
+            this.influences.add(OppInfluence.JUMP);
+        }
+
+        if(Math.abs(this.target.getPositionBody().sub(this.physicBody.getPosition()).len()) <  60 * P2M
+                && Math.abs(this.target.getPositionBody().y - this.physicBody.getPosition().y) < 50 * P2M){
+            if(this.isReseting){
+                this.isReseting = false;
+            }
+            this.influences.add(OppInfluence.ATTACK);
+        } 
     }
     
     protected void influences2Actions(float deltaTime){
@@ -644,6 +754,13 @@ public class OpponentCAC1 extends Character2D{
                     }         
             }, 2f);
         }
+    }
+    
+    /**
+     * @param maxDistance the maxDistanceFromSpawn to set
+     */
+    public void setMaxDistance(float maxDistance) {
+        this.maxDistanceFromSpawn = maxDistance * P2M;
     }
     
     protected enum OppState{

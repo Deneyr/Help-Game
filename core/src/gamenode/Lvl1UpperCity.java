@@ -11,6 +11,7 @@ import backgrounds.HillBackground;
 import backgrounds.HostelBackground;
 import backgrounds.NearBackground;
 import characters.Grandma;
+import characters.OpponentCAC1;
 import characters.OpponentThief;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -96,6 +97,10 @@ public class Lvl1UpperCity extends LvlGameNode{
         HostelBackground hostelBackground = new HostelBackground(seed, 1000, -25);
         game.getMapBackgroundPlanes().put(hostelBackground.getRatioDist(), hostelBackground);
         
+        // init background solid objects
+        
+        hostelBackground.createSoldidObj(game.getGameWorld());
+        
         // init solid objects
         
         
@@ -111,9 +116,13 @@ public class Lvl1UpperCity extends LvlGameNode{
         }
         game.getGameWorld().setHero(hero);
         
-        // init opponent
+        // init opponents
         OpponentThief thief = new OpponentThief(game.getGameWorld().getWorld(), hero, -390f, 0f);
         game.getGameWorld().addObject2DToWorld(thief, false);
+        
+        OpponentCAC1 opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -500, 0);
+        opp.setMaxDistance(200);
+        game.getGameWorld().addObject2DToWorld(opp, true);
         
         // init scenary
         

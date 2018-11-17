@@ -81,10 +81,10 @@ public class HillBackground extends BackgroundWorld{
 
             // Dynamic elem
 
-            this.cloudsLogic = new CloudDynamicElemLogic(cloud, 1, -2000 * P2M, 0 * P2M, 10);
-            this.cloudsLogic2 = new CloudDynamicElemLogic(cloud2, 1, -2000 * P2M, 0 * P2M, 10);
-            this.cloudsLogic3 = new CloudDynamicElemLogic(cloud2, 1, -2000 * P2M, 0 * P2M, 10);
-            this.birdsLogic = new BirdsDynamicElemLogic(bird, 2, -2000 * P2M, 0 * P2M, 4);
+            this.cloudsLogic = new CloudDynamicElemLogic(cloud, 1, -2000 * P2M, 2000 * P2M, 10);
+            this.cloudsLogic2 = new CloudDynamicElemLogic(cloud2, 1, -2000 * P2M, 2000 * P2M, 10);
+            this.cloudsLogic3 = new CloudDynamicElemLogic(cloud2, 1, -2000 * P2M, 2000 * P2M, 10);
+            this.birdsLogic = new BirdsDynamicElemLogic(bird, 2, -2000 * P2M, 2000 * P2M, 4);
         }
         
     } 

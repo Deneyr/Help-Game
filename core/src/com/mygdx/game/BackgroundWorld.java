@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import static com.mygdx.game.HelpGame.P2M;
 import java.util.ArrayList;
@@ -72,7 +71,7 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
         return spriteList;
     }
     
-    public void createSoldidObj(World world){
+    public void createSoldidObj(GameWorld gameWorld){
         // Nothing to do by default.
     }
     
@@ -115,8 +114,8 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
         
         String[][] residenceMap;
         
-        public ResidencePart(Vector2 startPart, String[][] residenceMap, int canvasWidth, int canvasHeight) {
-            super(1f, startPart, Vector2.Zero, 1f);
+        public ResidencePart(Vector2 startPart, String[][] residenceMap, int canvasWidth, int canvasHeight, float ratioSprite) {
+            super(1f, startPart, Vector2.Zero, ratioSprite);
             
             this.canvasWidth = canvasWidth;
             this.canvasHeight = canvasHeight;
@@ -176,7 +175,6 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
                 
             this.spriteListInBackground = spriteList;
         }
-    
     }
     
     protected class BackgroundPart implements Disposable{
@@ -499,7 +497,7 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
         
     }
     
-    protected enum RoomCollisionType{
+    public enum RoomCollisionType{
         LEFT,
         RIGHT,
         WHOLE,
@@ -508,6 +506,7 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
         TOP,
         BOTTOM,
         STAIRS_RIGHT,
-        STAIRS_LEFT
+        STAIRS_LEFT,
+        TRAPDOOR
     }
 }
