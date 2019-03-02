@@ -24,7 +24,7 @@ import com.mygdx.game.HelpGame;
 import com.mygdx.game.scenery.Abribus;
 import com.mygdx.game.scenery.ActivableVentilo;
 import com.mygdx.game.scenery.AutoCannonCorpus;
-import com.mygdx.game.scenery.Banc;
+import com.mygdx.game.scenery.Bench;
 import triggered.BarbedTriggeredObject2D;
 import com.mygdx.game.scenery.CannonCorpus;
 import com.mygdx.game.scenery.GroundUpperCity;
@@ -206,13 +206,10 @@ public class Lvl1GameNode extends LvlGameNode{
         Orphanage orph = new Orphanage(game.getGameWorld().getWorld(), 0f, 0f);
         game.getGameWorld().addObject2DToWorld(orph);
         
-        GroundUpperCity ground = new GroundUpperCity(game.getGameWorld().getWorld(), 0f, -430f);
-        game.getGameWorld().addObject2DToWorld(ground);
-        
         Abribus abribus = new Abribus(game.getGameWorld().getWorld(), -700f, -163f);
         game.getGameWorld().addObject2DToWorld(abribus);
         
-        Banc banc = new Banc(game.getGameWorld().getWorld(), -700f, -192f);
+        Bench banc = new Bench(game.getGameWorld().getWorld(), -700f, -192f);
         game.getGameWorld().addObject2DToWorld(banc);
         
         TreeWithoutLeaf tree = new TreeWithoutLeaf(game.getGameWorld().getWorld(), -900f, -110f);

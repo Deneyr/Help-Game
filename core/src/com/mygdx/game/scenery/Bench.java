@@ -5,9 +5,7 @@
  */
 package com.mygdx.game.scenery;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -22,19 +20,15 @@ import ressourcesmanagers.TextureManager;
 
 /**
  *
- * @author Deneyr
+ * @author françois
  */
-public class GroundCity extends SolidObject2D {
-    private static final String GROUNDTEXT = "ground/ground.png";
+public class Bench extends SolidObject2D{
+    private static final String BANCTEXT = "urbanObj/Obstacle_banc.png";
     
-    private static final float SCALE_X = 1f;
-    private static final float SCALE_Y = 1f;
+    private static final float SCALE_X = 0.3f;
+    private static final float SCALE_Y = 0.3f;
     
-    private int repeatWidth;
-    
-    public GroundCity(World world, float posX, float posY, int repeatWidth){
-        
-        this.repeatWidth = repeatWidth;
+    public Bench(World world, float posX, float posY){
         
         // Part graphic
         this.assignTextures();
@@ -43,7 +37,7 @@ public class GroundCity extends SolidObject2D {
         
         BodyDef groundBodyDef = new BodyDef();  
         // Set its world position
-        groundBodyDef.position.set(new Vector2(posX * P2M, posY * P2M)); 
+        groundBodyDef.position.set(new Vector2(posX * P2M, posY * P2M));  
         
         // Create a body from the defintion and add it to the world
         Body groundBody = world.createBody(groundBodyDef);  
@@ -52,11 +46,11 @@ public class GroundCity extends SolidObject2D {
         
         this.collisionFixture = new ArrayList<Fixture>();
         
-        this.priority = 4;
+        this.priority = 1;
         
         // Create a polygon shape
         PolygonShape ground = new PolygonShape();
-        ground.setAsBox(128 * P2M * SCALE_X * this.repeatWidth, 128 * P2M * SCALE_Y, new Vector2(0, 0), 0);
+        ground.setAsBox(94 * P2M * SCALE_X, 61 * P2M * SCALE_Y, new Vector2(0, 0), 0);
         // Set the polygon shape as a box which is twice the size of our view port and 20 high
         // (setAsBox takes half-width and half-height as arguments)
         FixtureDef fixtureDef = new FixtureDef();
@@ -70,32 +64,21 @@ public class GroundCity extends SolidObject2D {
         // Create a fixture from our polygon shape and add it to our ground body  
         Fixture fix = groundBody.createFixture(fixtureDef); 
         fix.setUserData(this);
+        fix.setSensor(true);
         this.collisionFixture.add(fix);
 
         this.physicBody = groundBody;
-        
         //this.physicBody.setLinearVelocity(new Vector2(0.5f, 0));
     }
     
     @Override
     public void assignTextures(){
-        this.texture = TextureManager.getInstance().getTexture(GROUNDTEXT, this);
-        
-        if(this.texture != null){
-            this.texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        }
+        this.texture = TextureManager.getInstance().getTexture(BANCTEXT, this);
     }
     
     @Override
     public Sprite createCurrentSprite(){
         Sprite sprite = super.createCurrentSprite();
-        if(this.repeatWidth > 1){
-            TextureRegion imgTextureRegion = new TextureRegion(this.texture);
-            imgTextureRegion.setRegion(0,0,this.texture.getWidth() * this.repeatWidth, this.texture.getHeight());
-            sprite.setRegion(imgTextureRegion);
-            sprite.setSize(this.texture.getWidth() * this.repeatWidth, this.texture.getHeight());
-            sprite.setPosition(this.physicBody.getPosition().x / P2M - sprite.getWidth() / 2.f, this.physicBody.getPosition().y / P2M - sprite.getHeight() / 2.f);
-        }
         sprite.setScale(sprite.getScaleX() * SCALE_X, sprite.getScaleY() * SCALE_Y);
         return sprite;
     }

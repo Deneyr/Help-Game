@@ -7,6 +7,7 @@ package com.mygdx.game.scenery;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -30,7 +31,11 @@ public class GroundUpperCity extends SolidObject2D {
     private static final float SCALE_X = 100f;
     private static final float SCALE_Y = 3f;
     
-    public GroundUpperCity(World world, float posX, float posY){
+    private int repeatWidth;
+    
+    public GroundUpperCity(World world, float posX, float posY, int repeatWidth){
+        
+        this.repeatWidth = repeatWidth;
         
         // Part graphic
         this.assignTextures();
@@ -76,11 +81,21 @@ public class GroundUpperCity extends SolidObject2D {
     @Override
     public void assignTextures(){
         this.texture = TextureManager.getInstance().getTexture(GROUNDTEXT, this);
+        
+        if(this.texture != null){
+            this.texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.ClampToEdge);
+        }
     }
     
     @Override
     public Sprite createCurrentSprite(){
         Sprite sprite = super.createCurrentSprite();
+        if(this.repeatWidth > 1){
+            TextureRegion imgTextureRegion = new TextureRegion(this.texture);
+            imgTextureRegion.setRegion(0,0,this.texture.getWidth() * this.repeatWidth, this.texture.getHeight());
+            sprite.setRegion(imgTextureRegion);
+            
+        }
         sprite.setScale(sprite.getScaleX() * SCALE_X, sprite.getScaleY() * SCALE_Y);
         return sprite;
     }

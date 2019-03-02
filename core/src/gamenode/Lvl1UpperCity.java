@@ -18,8 +18,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameEventListener;
 import com.mygdx.game.HelpGame;
 import com.mygdx.game.scenery.Abribus;
-import com.mygdx.game.scenery.Banc;
+import com.mygdx.game.scenery.Bench;
 import com.mygdx.game.scenery.GroundCity;
+import com.mygdx.game.scenery.Sign;
 import com.mygdx.game.scenery.SmallBox;
 import com.mygdx.game.scenery.TestMarioStage;
 import com.mygdx.game.scenery.TreeWithoutLeaf;
@@ -126,15 +127,16 @@ public class Lvl1UpperCity extends LvlGameNode{
         
         // init scenary
         
-        for(int i = -5 ;i < 10; i++){
-            GroundCity ground = new GroundCity(game.getGameWorld().getWorld(), i * 256f, -150f);
-            game.getGameWorld().addObject2DToWorld(ground);
-        }
+        GroundCity ground = new GroundCity(game.getGameWorld().getWorld(), 1024, -150f, 20);
+        game.getGameWorld().addObject2DToWorld(ground);
+        
+        Sign sign = new Sign(game.getGameWorld().getWorld(), 0, 0, 0, 0);
+        game.getGameWorld().addObject2DToWorld(sign);
         /*
         Abribus abribus = new Abribus(game.getGameWorld().getWorld(), 400f, 0f);
         game.getGameWorld().addObject2DToWorld(abribus);
         
-        Banc banc = new Banc(game.getGameWorld().getWorld(), 400f, -15f);
+        Bench banc = new Bench(game.getGameWorld().getWorld(), 400f, -15f);
         game.getGameWorld().addObject2DToWorld(banc);
         
         TreeWithoutLeaf tree = new TreeWithoutLeaf(game.getGameWorld().getWorld(), 600f, 50);
