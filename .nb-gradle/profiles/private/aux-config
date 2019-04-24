@@ -4,6 +4,10 @@
   <auxiliary>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+      <group/>
+    </open-files>
+    <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
       <group>
         <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/GroundUpperCity.java</file>
         <file>file:/D:/Projects/Help-Game/core/assets/signs/Panneau_Danger.png</file>
@@ -13,6 +17,7 @@
         <file>file:/D:/Projects/Help-Game/core/src/gamenode/Lvl1UpperCity.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentCAC2.java</file>
         <file>file:/D:/Projects/Help-Game/core/assets/signs/Panneau_Direction_GaucheDroite.png</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/background/House_Hostel.png</file>
         <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/BackgroundScreen.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/backgrounds/FarBackground.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Sign.java</file>
@@ -27,11 +32,8 @@
         <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/GameScreen.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/backgrounds/HostelBackground.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentCAC1.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/GameWorld.java</file>
       </group>
-    </open-files>
-    <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-      <group/>
     </open-files>
   </auxiliary>
 </gradle-project-properties>

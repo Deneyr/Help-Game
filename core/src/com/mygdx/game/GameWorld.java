@@ -54,7 +54,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
     
     // Aux module
     
-    private StateAnimationHandler stateAnimationHanlder;
+    private StateAnimationHandler stateAnimationHandler;
     
     private Map<String, CinematicManager> mapCinematicManagers;
     
@@ -77,13 +77,13 @@ public class GameWorld implements WorldPlane, GameEventListener{
         this.listEventGameListeners = new ArrayList<WeakReference<GameEventListener>>();
         
         
-        this.stateAnimationHanlder = new StateAnimationHandler(this);
+        this.stateAnimationHandler = new StateAnimationHandler(this);
         
         this.mapCinematicManagers = new HashMap<String, CinematicManager>();
     }
     
     public void addCinematicManager(CinematicManager cinematicManager, int indexCheckpoint, int indexCinematic){    
-        cinematicManager.setStateListener(this.stateAnimationHanlder);
+        cinematicManager.setStateListener(this.stateAnimationHandler);
         cinematicManager.setGameEventListener(this);
         
         if(indexCheckpoint < 0 || indexCinematic > indexCheckpoint){
@@ -95,7 +95,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
     }
     
     public void addCinematicManager(CinematicManager cinematicManager){
-        cinematicManager.setStateListener(this.stateAnimationHanlder);
+        cinematicManager.setStateListener(this.stateAnimationHandler);
         cinematicManager.setGameEventListener(this);
         this.mapCinematicManagers.put(cinematicManager.getId(), cinematicManager);
     }
@@ -166,8 +166,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
         delta = Math.min(delta, 0.1f);
         this.timerOutOfScreen += delta;
         
-        if(!this.stateAnimationHanlder.IsScheduled()){
-            this.stateAnimationHanlder.scheduleTask();
+        if(!this.stateAnimationHandler.IsScheduled()){
+            this.stateAnimationHandler.scheduleTask();
         }
         
         for(CinematicManager cinematicManager : this.mapCinematicManagers.values()){
@@ -202,7 +202,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
             this.listCurrentObject2D.add(obj);
 
             if(isStateHandled){
-                obj.addObject2DStateListener(this.stateAnimationHanlder);
+                obj.addObject2DStateListener(this.stateAnimationHandler);
             }
             
             obj.addGameEventListener(this);
@@ -232,7 +232,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
         this.world = new World(new Vector2(0, -20f), true);
         this.listCurrentObject2D = new ArrayList();
         
-        this.stateAnimationHanlder = new StateAnimationHandler(this);
+        this.stateAnimationHandler = new StateAnimationHandler(this);
         
         this.world.setContactListener(new GameContactListener());
     }
@@ -253,7 +253,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
 
         this.currentMoney = 0;
         
-        this.stateAnimationHanlder.dispose();
+        this.stateAnimationHandler.dispose();
         
         this.object2D2Flush.clear();
         for(Object2D obj : this.listCurrentObject2D){
@@ -355,7 +355,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
     private void handleObject2D2Flush(){
         for(Object2D obj : this.object2D2Flush){
             this.removeObject2DToWorld(obj);
-            this.stateAnimationHanlder.freeObject2D(obj);
+            this.stateAnimationHandler.freeObject2D(obj);
         }
         
         this.object2D2Flush.clear();
