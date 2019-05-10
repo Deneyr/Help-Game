@@ -214,8 +214,8 @@ public class Ventilo extends SolidObject2D{
             WeldJointDef jointDef = new WeldJointDef ();
             jointDef.bodyA = ownerBody;
             jointDef.bodyB = this.physicBody;
-            jointDef.localAnchorA.set(new Vector2(offsetX * P2M ,0));
-            jointDef.localAnchorB.set(new Vector2(0 ,0));
+            jointDef.localAnchorA.set(new Vector2(offsetX * P2M, 0));
+            jointDef.localAnchorB.set(new Vector2(0, 0));
             jointDef.collideConnected = false;
         
             this.joint = world.createJoint(jointDef);

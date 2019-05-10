@@ -177,6 +177,7 @@ public abstract class CannonCorpus extends SolidObject2D{
             this.attackCooldown = 2;
             
             // Part physic
+            this.collisionFixture = new ArrayList<Fixture>();
             BodyDef groundBodyDef = new BodyDef();    
             groundBodyDef.position.set(new Vector2(posX * P2M, posY * P2M)); 
             // Create a body from the defintion and add it to the world
@@ -200,6 +201,7 @@ public abstract class CannonCorpus extends SolidObject2D{
             // Create a fixture from our polygon shape and add it to our ground body  
             Fixture fix = groundBody.createFixture(fixtureDef); 
             fix.setUserData(this);
+            this.collisionFixture.add(fix);
             
             this.physicBody = groundBody;
             

@@ -19,11 +19,15 @@ import com.mygdx.game.GameEventListener;
 import com.mygdx.game.HelpGame;
 import com.mygdx.game.scenery.Abribus;
 import com.mygdx.game.scenery.Bench;
+import com.mygdx.game.scenery.Bus;
+import com.mygdx.game.scenery.Crane;
 import com.mygdx.game.scenery.GroundCity;
+import com.mygdx.game.scenery.MetalBox;
 import com.mygdx.game.scenery.Sign;
 import com.mygdx.game.scenery.SmallBox;
 import com.mygdx.game.scenery.TestMarioStage;
-import com.mygdx.game.scenery.TreeWithoutLeaf;
+import com.mygdx.game.scenery.Pipe;
+import com.mygdx.game.scenery.Trashcan;
 import cosmetics.HitCosmeticObject2D;
 import guicomponents.CharacterTimeline;
 import guicomponents.CinematicManager;
@@ -104,6 +108,40 @@ public class Lvl1UpperCity extends LvlGameNode{
         
         // init solid objects
         
+        GroundCity ground = new GroundCity(game.getGameWorld().getWorld(), 1024, -150f, 20);
+        game.getGameWorld().addObject2DToWorld(ground);
+        
+        Sign sign = new Sign(game.getGameWorld().getWorld(), 0, 0, 0, 1);
+        game.getGameWorld().addObject2DToWorld(sign);
+        
+        Pipe pipe = new Pipe(game.getGameWorld().getWorld(), 730f, 100f, true);
+        game.getGameWorld().addObject2DToWorld(pipe, true);
+        
+        Trashcan trashcan = new Trashcan(game.getGameWorld().getWorld(), 500f, 0, 0);
+        game.getGameWorld().addObject2DToWorld(trashcan, true);
+        
+        trashcan = new Trashcan(game.getGameWorld().getWorld(), 600f, 0, 1);
+        game.getGameWorld().addObject2DToWorld(trashcan, true);
+        
+        Bus bus = new Bus(game.getGameWorld().getWorld(), -300f, 60);
+        game.getGameWorld().addObject2DToWorld(bus, true);
+        
+        Crane crane = new Crane(game.getGameWorld().getWorld(), -600f, 270, 0.7f, 0f, false);
+        game.getGameWorld().addObject2DToWorld(crane, true);
+        /*
+        Abribus abribus = new Abribus(game.getGameWorld().getWorld(), 400f, 0f);
+        game.getGameWorld().addObject2DToWorld(abribus);
+        
+        Bench banc = new Bench(game.getGameWorld().getWorld(), 400f, -15f);
+        game.getGameWorld().addObject2DToWorld(banc);
+        
+        Pipe tree = new Pipe(game.getGameWorld().getWorld(), 600f, 50);
+        game.getGameWorld().addObject2DToWorld(tree);
+        tree = new Pipe(game.getGameWorld().getWorld(), 700, 50);
+        game.getGameWorld().addObject2DToWorld(tree);*/
+        
+        /*TestMarioStage test = new TestMarioStage(game.getGameWorld().getWorld(), 600, 75);
+        game.getGameWorld().addObject2DToWorld(test);*/
         
         // init checkpoints
         Vector2 heroPosition = this.initCheckpoints(game, index);
@@ -125,33 +163,13 @@ public class Lvl1UpperCity extends LvlGameNode{
         opp.setMaxDistance(200);
         game.getGameWorld().addObject2DToWorld(opp, true);
         
-        // init scenary
-        
-        GroundCity ground = new GroundCity(game.getGameWorld().getWorld(), 1024, -150f, 20);
-        game.getGameWorld().addObject2DToWorld(ground);
-        
-        Sign sign = new Sign(game.getGameWorld().getWorld(), 0, 0, 0, 0);
-        game.getGameWorld().addObject2DToWorld(sign);
-        /*
-        Abribus abribus = new Abribus(game.getGameWorld().getWorld(), 400f, 0f);
-        game.getGameWorld().addObject2DToWorld(abribus);
-        
-        Bench banc = new Bench(game.getGameWorld().getWorld(), 400f, -15f);
-        game.getGameWorld().addObject2DToWorld(banc);
-        
-        TreeWithoutLeaf tree = new TreeWithoutLeaf(game.getGameWorld().getWorld(), 600f, 50);
-        game.getGameWorld().addObject2DToWorld(tree);
-        tree = new TreeWithoutLeaf(game.getGameWorld().getWorld(), 700, 50);
-        game.getGameWorld().addObject2DToWorld(tree);*/
-        
-        /*TestMarioStage test = new TestMarioStage(game.getGameWorld().getWorld(), 600, 75);
-        game.getGameWorld().addObject2DToWorld(test);*/
-        
         
         // box 
         SmallBox box = new SmallBox(game.getGameWorld().getWorld(), 730f, 0f);
         game.getGameWorld().addObject2DToWorld(box, true);
 
+        box = new MetalBox(game.getGameWorld().getWorld(), 1300f, 200f);
+        game.getGameWorld().addObject2DToWorld(box, true);
         
         // Cannon
         

@@ -27,7 +27,6 @@ import com.mygdx.game.scenery.AutoCannonCorpus;
 import com.mygdx.game.scenery.Bench;
 import triggered.BarbedTriggeredObject2D;
 import com.mygdx.game.scenery.CannonCorpus;
-import com.mygdx.game.scenery.GroundUpperCity;
 import com.mygdx.game.scenery.MetalBox;
 import com.mygdx.game.scenery.Orphanage;
 import com.mygdx.game.scenery.Poutrelle;

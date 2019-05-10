@@ -22,13 +22,18 @@ import ressourcesmanagers.TextureManager;
  *
  * @author françois
  */
-public class TreeWithoutLeaf extends SolidObject2D{
-    private static final String TREETEXT = "tree/Decors_Arbre1.png";
+public class Bus extends SolidObject2D{
+    private static final String[] TRASH_ARRAY = {
+        "urbanObj/Obstacle_Bus.png"};
     
-    private static final float SCALE_X = 1f;
-    private static final float SCALE_Y = 1f;
+    private static final float SCALE_X = 0.5f;
+    private static final float SCALE_Y = 0.5f;
     
-    public TreeWithoutLeaf(World world, float posX, float posY){
+    private int indexTrash;
+    
+    public Bus(World world, float posX, float posY){
+        
+        this.indexTrash = 0;
         
         // Part graphic
         this.assignTextures();
@@ -46,13 +51,13 @@ public class TreeWithoutLeaf extends SolidObject2D{
         
         this.collisionFixture = new ArrayList<Fixture>();
         
-        this.priority = 3;
+        this.priority = 1;
         
         // Create a polygon shape
         PolygonShape ground = new PolygonShape();
         
-        ground.setAsBox(8 * P2M, 79 * P2M, new Vector2(0, - 12 * P2M), 0);
-        
+        // Set the polygon shape as a box which is twice the size of our view port and 20 high
+        // (setAsBox takes half-width and half-height as arguments)
         FixtureDef fixtureDef = new FixtureDef();
         
         this.setCollisionFilterMask(fixtureDef, false);
@@ -61,26 +66,23 @@ public class TreeWithoutLeaf extends SolidObject2D{
         fixtureDef.density = 1f; 
         fixtureDef.friction = 0.05f;
         fixtureDef.restitution = 0.1f; // Make it bounce a little bit
-        // Create a fixture from our polygon shape and add it to our ground body  
-        Fixture fix = groundBody.createFixture(fixtureDef); 
-        fix.setUserData(this);
-
-        this.collisionFixture.add(fix);
+        // Create a fixture from our polygon shape and add it to our ground body 
         
-        ground = new PolygonShape();
-        
-        ground.setAsBox(90 * P2M, 8 * P2M, new Vector2(0, 10 * P2M), 0);
-        
-        fixtureDef = new FixtureDef();
-        fixtureDef.shape = ground;
-        fixtureDef.density = 1f; 
-        fixtureDef.friction = 0.05f;
-        fixtureDef.restitution = 0.1f; // Make it bounce a little bit
-        // Create a fixture from our polygon shape and add it to our ground body  
-        fix = groundBody.createFixture(fixtureDef); 
-        fix.setUserData(this);
-
-        this.collisionFixture.add(fix);
+        switch(this.indexTrash){
+            case 0:
+                ground.setAsBox(478 * P2M * SCALE_X, 88 * P2M * SCALE_Y, new Vector2(0, -40 * P2M * SCALE_Y), 0);
+                
+                Fixture fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix); 
+                
+                ground.setAsBox(380 * P2M * SCALE_X, 88 * P2M * SCALE_Y, new Vector2(60 * P2M * SCALE_Y, 75 * P2M * SCALE_Y), 0);
+                
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix); 
+                break;
+        }
 
         this.physicBody = groundBody;
         //this.physicBody.setLinearVelocity(new Vector2(0.5f, 0));
@@ -88,7 +90,7 @@ public class TreeWithoutLeaf extends SolidObject2D{
     
     @Override
     public void assignTextures(){
-        this.texture = TextureManager.getInstance().getTexture(TREETEXT, this);      
+        this.texture = TextureManager.getInstance().getTexture(TRASH_ARRAY[this.indexTrash], this);
     }
     
     @Override
