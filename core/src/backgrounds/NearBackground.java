@@ -51,7 +51,7 @@ public class NearBackground extends BackgroundWorld{
             part.addObject2D2Scenary(build1, 30);
             part.addObject2D2Scenary(build2, 30);
             part.addObject2D2Scenary(build3, 10);
-            part.createSpriteList(seed);
+            part.createSpriteList(this.seed);
 
             this.backgroundPartList.put(part.getStartPart().x, part);
             

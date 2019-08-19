@@ -35,6 +35,8 @@ public class HelpGame extends Game implements GameEventListener{
     
     private final TreeMap<Float, WorldPlane> mapBackgroundPlanes = new TreeMap<Float, WorldPlane>();
     
+    private final TreeMap<Float, WorldPlane> mapForegroundPlanes = new TreeMap<Float, WorldPlane>();
+    
     private final MenuManager menuManager = new MenuManager();
     
     private final GameMenuManager gameMenuManager = new GameMenuManager();
@@ -166,6 +168,12 @@ public class HelpGame extends Game implements GameEventListener{
         for(WorldPlane plane : this.mapBackgroundPlanes.values()){
             plane.dispose();
         }
+        this.mapBackgroundPlanes.clear();
+        
+        for(WorldPlane plane : this.mapForegroundPlanes.values()){
+            plane.dispose();
+        }
+        this.mapForegroundPlanes.clear();
         
         this.gameWorld.flushWorld();
         
@@ -205,6 +213,13 @@ public class HelpGame extends Game implements GameEventListener{
     public TreeMap<Float, WorldPlane> getMapBackgroundPlanes() {
         return this.mapBackgroundPlanes;
     }
+    
+    /**
+     * @return the mapForegroundPlanes
+     */
+    public TreeMap<Float, WorldPlane> getMapForegroundPlanes() {
+        return mapForegroundPlanes;
+    }
 
     @Override
     public void onGameEvent(EventType type, String details, Vector2 location) {
@@ -234,6 +249,12 @@ public class HelpGame extends Game implements GameEventListener{
                 case GAMEOVER:
                 case GAMENODECHANGE:
                     endGameEventContainerList.add(gameEvent);
+                    break;
+                case ENTERSTRUCT:
+                case QUITSTRUCT:
+                    for(WorldPlane worldPlane : this.mapForegroundPlanes.values()){
+                        worldPlane.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
+                    }
                     break;
                 default:
                     this.soundMusicManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);

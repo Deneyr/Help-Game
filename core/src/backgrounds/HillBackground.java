@@ -75,7 +75,7 @@ public class HillBackground extends BackgroundWorld{
         
             part.addObject2D2Scenary(hill, 30);
             part.addObject2D2Scenary(building, 30);
-            part.createSpriteList(seed);
+            part.createSpriteList(this.seed);
 
             this.backgroundPartList.put(part.getStartPart().x, part);
 

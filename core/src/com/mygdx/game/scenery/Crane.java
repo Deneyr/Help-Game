@@ -30,7 +30,7 @@ public class Crane extends SolidObject2D{
     private static final String HOOKCRANETEXT = "urbanObj/Decors_Grue_Crochet.png";
     private static final String FRONTCRANETEXT = "urbanObj/Decors_Grue_Avant.png";
     private static final String BACKCRANETEXT = "urbanObj/Decors_Grue_Arriere.png";
-    private static final String TOPCRANETEXT = "urbanObj/Decors_Grue_Sommet.png";
+    private static final String TOPCRANETEXT = "urbanObj/Decors_Grue_top.png";
 
     
     private static final float SCALE_X = 0.5f;

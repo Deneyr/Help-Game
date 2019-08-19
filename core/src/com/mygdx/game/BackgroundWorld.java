@@ -5,6 +5,7 @@
  */
 package com.mygdx.game;
 
+import backgrounds.StructureForeground;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,7 +25,7 @@ import ressourcesmanagers.GraphicalComponent;
  *
  * @author françois
  */
-public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
+public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent, GameEventListener{
 
     protected TreeMap<Float, BackgroundPart> backgroundPartList;
     
@@ -37,6 +38,8 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
         this.backgroundPartList = new TreeMap<Float, BackgroundPart>();
         
         this.seed = seed;
+        
+        this.ratioDist = 1f;
     }
 
     
@@ -58,11 +61,11 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
         }
         
         NavigableMap<Float, BackgroundPart> subMapRegion = this.backgroundPartList.subMap(entryPartStart.getKey(), true, entryPartEnd.getKey(), true);
-
         
         for(BackgroundPart part : subMapRegion.values()){
             for(Sprite sprite : part.getSpriteListInBackground()){
-                if(sprite.getX() + sprite.getWidth() > lowerX / P2M && sprite.getX() < upperX / P2M){
+                // sprite.getX() is the bottom left corner and is NOT affected by the scaling. 
+                if(sprite.getX() + sprite.getWidth() + sprite.getWidth() * (sprite.getScaleX() - 1) / 2 > lowerX / P2M && sprite.getX() - sprite.getWidth() * (sprite.getScaleX() - 1) / 2 < upperX / P2M){
                     spriteList.add(sprite);
                 }
             }
@@ -71,7 +74,11 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
         return spriteList;
     }
     
-    public void createSoldidObj(GameWorld gameWorld){
+    public void createSolidObj(GameWorld gameWorld){
+        // Nothing to do by default.
+    }
+    
+    public void createForegroundObj(GameWorld gameWorld, StructureForeground structureForeground){
         // Nothing to do by default.
     }
     
@@ -80,6 +87,8 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
         for(BackgroundPart part : this.backgroundPartList.values()){
             part.dispose();
         }
+        
+        this.backgroundPartList.clear();
     }
     
     @Override
@@ -89,7 +98,7 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
     
     @Override
     public void flushWorld() {
-        this.backgroundPartList.clear();
+        this.dispose();
     }
     
     protected BackgroundPart addBackgroundPart(float periodElem, Vector2 startPart, Vector2 endPart, float ratioSprite){
@@ -104,7 +113,17 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
      * @return the ratioDist
      */
     public float getRatioDist() {
-        return ratioDist;
+        return this.ratioDist;
+    }
+
+    @Override
+    public void onGameEvent(EventType type, String details, Vector2 location) {
+        // Nothing to do.
+    }
+
+    @Override
+    public void onHelpGameEvent(HelpGame helpGame, EventType type, String details, Vector2 location) {
+        // Nothing to do.
     }
     
     protected class ResidencePart extends BackgroundPart{
@@ -157,7 +176,7 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
                         Sprite sprite = new Sprite(textureRegion);
                         
                         if(this.ratioSprite != 1f){
-                            sprite.scale(this.ratioSprite);
+                            sprite.setScale(this.ratioSprite);
                             
                             sprite.setAlpha((float) Math.min(0.3 + BackgroundWorld.this.ratioDist, 1f));
                             sprite.setPosition(this.startPart.x / P2M + this.canvasWidth * j * this.ratioSprite
@@ -242,7 +261,7 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent{
                     Sprite sprite = new Sprite(text);
                     
                     if(this.ratioSprite != 1f){
-                        sprite.scale(this.ratioSprite);
+                        sprite.setScale(this.ratioSprite);
                     }
                     sprite.setAlpha((float) Math.min(0.3 + BackgroundWorld.this.ratioDist, 1f));
                     sprite.setPosition((indexPart * this.periodElem + this.startPart.x) / P2M - sprite.getWidth() / 2.f, (this.startPart.y + (this.endPart.y - this.startPart.y) * (((float) indexPart) / nbParts)) / P2M);

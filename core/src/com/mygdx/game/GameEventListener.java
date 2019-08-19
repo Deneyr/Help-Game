@@ -28,6 +28,8 @@ public interface GameEventListener {
         LOOP_STOP,
         TAKE,
         GAMEOVER, // defeat, success
+        ENTERSTRUCT, // Enter a residence
+        QUITSTRUCT,// Quit a residence
         LVLSTART, // The beginning of the level (before the GAMESTART event).
         GAMESTART, // Used to display the start level banner.
         CHECKPOINT, // reached

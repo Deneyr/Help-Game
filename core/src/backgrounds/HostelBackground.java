@@ -18,6 +18,7 @@ import com.mygdx.game.GameWorld;
 import static com.mygdx.game.HelpGame.P2M;
 import java.util.ArrayList;
 import ressourcesmanagers.TextureManager;
+import triggered.EnterQuitStructureTriggeredObject2D;
 
 /**
  *
@@ -29,12 +30,18 @@ public class HostelBackground extends BackgroundWorld{
     
     private Vector2 startPointPart;
     
-    public HostelBackground(int seed, float startPointX, float startPointY){
+    protected int canvasWidth;
+    protected int canvasHeight;
+    
+    public HostelBackground(int seed, float startPointX, float startPointY, int canvasWidth, int canvasHeight){
         super(seed);
         
         this.ratioDist = 1f;
         
         this.startPointPart = new Vector2(startPointX * P2M, startPointY * P2M);
+        
+        this.canvasWidth = canvasWidth;
+        this.canvasHeight = canvasHeight;
         
         this.assignTextures();
     }
@@ -69,8 +76,8 @@ public class HostelBackground extends BackgroundWorld{
     }
     
     @Override
-    public void createSoldidObj(GameWorld gameWorld){
-        
+    public void createSolidObj(GameWorld gameWorld){
+
         ArrayList<RoomCollisionType> listTopDoorLeft = new ArrayList<RoomCollisionType>();
         listTopDoorLeft.add(RoomCollisionType.TOP);
         listTopDoorLeft.add(RoomCollisionType.LEFT_DOOR);
@@ -101,23 +108,35 @@ public class HostelBackground extends BackgroundWorld{
             {listTopDoorLeft, listTopDoorLeft, listTop, listStairRight}
         };
         
-        this.createSoldidObjFrom(gameWorld, residenceMap, 200, 200, 1f);
+        this.createSolidObjFrom(gameWorld, residenceMap, 1f);
     }
     
-    protected void createSoldidObjFrom(GameWorld gameWorld, ArrayList[][] residenceMap, int canvasWidth, int canvasHeight, float ratioObject){
+    @Override
+    public void createForegroundObj(GameWorld gameWorld, StructureForeground structureForeground){
+        this.createForegroundObjFrom(gameWorld, structureForeground, 4, 3, 1f);
+    }
+    
+    protected void createSolidObjFrom(GameWorld gameWorld, ArrayList[][] residenceMap, float ratioObject){
             
         for(int i = 0; i < residenceMap.length; i++){
             for(int j = 0; j < residenceMap[0].length; j++){
         
                 // We add the width/height over two because the origin of the sprite is not at the middle for the background parts.
-                float posX = this.startPointPart.x / P2M + canvasWidth/2 + canvasWidth * j * ratioObject;
-                float posY = this.startPointPart.y / P2M + canvasHeight/2 + canvasHeight * (residenceMap.length - i - 1) * ratioObject;
+                float posX = this.startPointPart.x / P2M + this.canvasWidth/2 + this.canvasWidth * j * ratioObject;
+                float posY = this.startPointPart.y / P2M + this.canvasHeight/2 + this.canvasHeight * (residenceMap.length - i - 1) * ratioObject;
                 
-                BackgroundSolidObject backgroundSolidObject = new BackgroundSolidObject(gameWorld.getWorld(), posX , posY , residenceMap[i][j], canvasWidth, canvasHeight, ratioObject);
+                BackgroundSolidObject backgroundSolidObject = new BackgroundSolidObject(gameWorld.getWorld(), posX , posY , residenceMap[i][j], this.canvasWidth, this.canvasHeight, ratioObject);
 
                 gameWorld.addObject2DToWorld(backgroundSolidObject);
             }
         }
                   
+    }
+    
+    protected void createForegroundObjFrom(GameWorld gameWorld, StructureForeground structureForeground, int nbCanvasWidth, int nbCanvasHeight, float ratioObject){
+        EnterQuitStructureTriggeredObject2D trigger = new EnterQuitStructureTriggeredObject2D(gameWorld.getWorld(), this.startPointPart.x / P2M + nbCanvasWidth * this.canvasWidth * ratioObject / 2, this.startPointPart.y / P2M + nbCanvasHeight * this.canvasHeight * ratioObject / 2, nbCanvasWidth * this.canvasWidth * ratioObject, nbCanvasHeight * this.canvasHeight * ratioObject);
+        gameWorld.addObject2DToWorld(trigger, true);
+        
+        structureForeground.addStructurePart(trigger.getStructureID(), 0, new Vector2(this.startPointPart.x, this.startPointPart.y), new Vector2(this.startPointPart.x + nbCanvasWidth * this.canvasWidth * ratioObject * P2M, this.startPointPart.y + nbCanvasHeight * ratioObject * this.canvasHeight * P2M));
     }
 }

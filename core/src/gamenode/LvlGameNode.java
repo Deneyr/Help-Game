@@ -8,6 +8,7 @@ package gamenode;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.BackgroundScreen;
+import com.mygdx.game.ForegroundScreen;
 import com.mygdx.game.GUIScreen;
 import com.mygdx.game.GameScreen;
 import com.mygdx.game.HelpGame;
@@ -35,6 +36,7 @@ public abstract class LvlGameNode extends GameNode{
         this.screensDisplayed.clear();
         this.screensDisplayed.add(new BackgroundScreen(batch, game.getGameWorld(), game.getMapBackgroundPlanes()));
         this.screensDisplayed.add(new GameScreen(batch, game.getGameWorld()));
+        this.screensDisplayed.add(new ForegroundScreen(batch, game.getGameWorld(), game.getMapForegroundPlanes()));
         this.screensDisplayed.add(new GUIScreen(batch, game.getGameWorld()));
         
         this.screensDisplayed.add(new MenuScreen(batch, game.getGameMenuManager()));
@@ -48,6 +50,11 @@ public abstract class LvlGameNode extends GameNode{
         
         // Compute the next step of the background logic.
         for(Map.Entry<Float, WorldPlane> plane : game.getMapBackgroundPlanes().entrySet()){
+            plane.getValue().step(deltaTime);
+        }
+        
+        // Compute the next step of the foreground logic.
+        for(Map.Entry<Float, WorldPlane> plane : game.getMapForegroundPlanes().entrySet()){
             plane.getValue().step(deltaTime);
         }
         

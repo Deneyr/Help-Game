@@ -25,7 +25,7 @@ import ressourcesmanagers.TextureManager;
 public class Sign extends SolidObject2D{
     private static final String[] SIGNS_ARRAY = {
     "signs/Panneau_Danger.png",
-    "signs/Panneau_Déplacement.png",
+    "signs/Panneau_Deplacement.png",
     "signs/Panneau_Direction_GaucheDroite.png",
     "signs/Panneau_Direction_HautBas.png",
     "signs/Panneau_Frapper.png",
@@ -95,7 +95,10 @@ public class Sign extends SolidObject2D{
     @Override
     public Sprite createCurrentSprite(){
         Sprite sprite = super.createCurrentSprite();
-        sprite.setScale(sprite.getScaleX() * SCALE_X, sprite.getScaleY() * SCALE_Y);
+        
+        if(sprite != null){
+            sprite.setScale(sprite.getScaleX() * SCALE_X, sprite.getScaleY() * SCALE_Y);
+        }
         return sprite;
     }
 }

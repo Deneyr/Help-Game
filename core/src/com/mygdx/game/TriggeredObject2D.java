@@ -162,6 +162,7 @@ public abstract class TriggeredObject2D extends Object2D{
         this.isTriggered = true;
         
         if(this.object2DStateListener != null && this.object2DStateListener.get() != null){
+            System.out.println("event !!");
             this.object2DStateListener.get().onStateChanged(this, Object2DStateListener.Object2DState.TOOK_BY_PLAYER, 1);
         }
     }

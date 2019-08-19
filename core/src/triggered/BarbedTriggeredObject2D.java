@@ -66,8 +66,7 @@ public class BarbedTriggeredObject2D extends TriggeredObject2D{
         fixtureDef.density = 0f; 
         fixtureDef.friction = 0.05f;
         fixtureDef.restitution = 0.1f; 
-        
-        
+              
         Fixture fix = this.physicBody.createFixture(fixtureDef);       
         
         fix.setSensor(true);

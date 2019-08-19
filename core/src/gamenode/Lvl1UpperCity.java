@@ -9,6 +9,7 @@ import backgrounds.CityBackground;
 import backgrounds.FarBackground;
 import backgrounds.HillBackground;
 import backgrounds.HostelBackground;
+import backgrounds.Lvl1Foreground;
 import backgrounds.NearBackground;
 import characters.Grandma;
 import characters.OpponentCAC1;
@@ -99,12 +100,22 @@ public class Lvl1UpperCity extends LvlGameNode{
         FarBackground farBackground = new FarBackground(seed);
         game.getMapBackgroundPlanes().put(farBackground.getRatioDist(), farBackground);
         
-        HostelBackground hostelBackground = new HostelBackground(seed, 1000, -25);
+        HostelBackground hostelBackground = new HostelBackground(seed, 1000, -25, 200, 200);
         game.getMapBackgroundPlanes().put(hostelBackground.getRatioDist(), hostelBackground);
         
         // init background solid objects
         
-        hostelBackground.createSoldidObj(game.getGameWorld());
+        hostelBackground.createSolidObj(game.getGameWorld());
+        
+        // init foreground
+        
+        Lvl1Foreground lvl1Foreground = new Lvl1Foreground();
+        
+        hostelBackground.createForegroundObj(game.getGameWorld(), lvl1Foreground);
+        
+        lvl1Foreground.assignTextures();
+        
+        game.getMapForegroundPlanes().put(lvl1Foreground.getRatioDist(), lvl1Foreground);
         
         // init solid objects
         
@@ -159,9 +170,9 @@ public class Lvl1UpperCity extends LvlGameNode{
         OpponentThief thief = new OpponentThief(game.getGameWorld().getWorld(), hero, -390f, 0f);
         game.getGameWorld().addObject2DToWorld(thief, false);
         
-        OpponentCAC1 opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -500, 0);
+        /*OpponentCAC1 opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -500, 0);
         opp.setMaxDistance(200);
-        game.getGameWorld().addObject2DToWorld(opp, true);
+        game.getGameWorld().addObject2DToWorld(opp, true);*/
         
         
         // box 

@@ -10,7 +10,9 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.game.HelpGame;
 import com.mygdx.game.WorldPlane;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -93,6 +95,16 @@ public abstract class ResourceManager implements WorldPlane, Disposable, Resourc
             ResourceManager.resourceManagerListeners.clear();
             ResourceManager.resourceManagerListeners = null;
         }
+    }
+    
+     @Override
+    public void onGameEvent(EventType type, String details, Vector2 location) {
+        // Nothing to do.
+    }
+
+    @Override
+    public void onHelpGameEvent(HelpGame helpGame, EventType type, String details, Vector2 location) {
+        // Nothing to do.
     }
     
     public void resetLoadedResources(){

@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author françois
  */
-public interface WorldPlane extends Disposable{
+public interface WorldPlane extends Disposable, GameEventListener{
     List<Sprite> getSpritesInRegion(float lowerX, float lowerY, float upperX, float upperY);
     
     void step(float delta);

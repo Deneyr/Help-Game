@@ -39,8 +39,7 @@ public class GroundCity extends SolidObject2D {
         // Part graphic
         this.assignTextures();
         
-        // Part physic
-        
+        // Part physic 
         BodyDef groundBodyDef = new BodyDef();  
         // Set its world position
         groundBodyDef.position.set(new Vector2(posX * P2M, posY * P2M)); 
