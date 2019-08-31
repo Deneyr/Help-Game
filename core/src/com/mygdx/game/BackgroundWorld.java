@@ -144,7 +144,7 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent,
             this.endPart = new Vector2(startPart.x + this.canvasWidth * this.residenceMap[0].length, startPart.y + this.canvasHeight * this.residenceMap.length);
         }
     
-        public void addObject2D2Scenary(Texture text){
+        public void addTexture2Scenary(Texture text){
             this.sceneryElemList.add(text);
         }
         
@@ -163,11 +163,11 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent,
                     
                     if(lFrameSplit.length == 3){
                         indexTexture = Integer.parseInt(lFrameSplit[0]);
-                        indexX = Integer.parseInt(lFrameSplit[1]);
-                        indexY = Integer.parseInt(lFrameSplit[2]);
-                    }else if(lFrameSplit.length == 2){
-                        indexX = Integer.parseInt(lFrameSplit[0]);
                         indexY = Integer.parseInt(lFrameSplit[1]);
+                        indexX = Integer.parseInt(lFrameSplit[2]);
+                    }else if(lFrameSplit.length == 2){
+                        indexY = Integer.parseInt(lFrameSplit[0]);
+                        indexX = Integer.parseInt(lFrameSplit[1]);
                     }
                     
                     if(indexX >= 0 && indexY >= 0){
@@ -522,10 +522,20 @@ public abstract class BackgroundWorld implements WorldPlane, GraphicalComponent,
         WHOLE,
         LEFT_DOOR,
         RIGHT_DOOR,
+        LEFT_WINDOW,
+        RIGHT_WINDOW,
         TOP,
         BOTTOM,
         STAIRS_RIGHT,
         STAIRS_LEFT,
+        STAIRS_ONLY_RIGHT,
+        STAIRS_ONLY_LEFT,
+        STAIRS_UP_RIGHT,
+        STAIRS_UP_LEFT,
+        RIGHT_ROOF,
+        WHOLE_ROOF,
+        TRAP_ROOF,
+        LEFT_ROOF,
         TRAPDOOR
     }
 }

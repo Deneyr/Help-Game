@@ -52,7 +52,7 @@ public class BackgroundScreen implements Screen{
     
     @Override
     public void render(float f) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClearColor(0.7f, 0.7f, 0.7f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         for(Entry<Float, WorldPlane> plane : this.mapBackgroundPlanes.entrySet()){

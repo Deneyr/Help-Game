@@ -5,7 +5,9 @@
  */
 package guicomponents;
 
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Character2D;
+import static com.mygdx.game.HelpGame.P2M;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -19,9 +21,7 @@ import java.util.TreeMap;
  * @author Deneyr
  */
 public class CharacterTimeline{
-
-    
-        
+     
         private Character2D character;
         
         private final TreeMap<Float, String> timeline;
@@ -32,7 +32,11 @@ public class CharacterTimeline{
        
         private CinematicStatus cinematicStatus;
         
+        private Vector2 endPosition;
+        
         public CharacterTimeline(Character2D character, CinematicStatus cinematicStatus){
+            
+            this.endPosition = null;
             
             this.character = character;
             
@@ -49,6 +53,12 @@ public class CharacterTimeline{
                     character.isCinematicEntity(true);
                     break;
             }
+        }
+        
+        public CharacterTimeline(Character2D character, CinematicStatus cinematicStatus, Vector2 endPosition){
+            this(character, cinematicStatus);
+            
+            this.endPosition = new Vector2(endPosition.x * P2M, endPosition.y * P2M);
         }
         
         public void reset(){
@@ -97,6 +107,11 @@ public class CharacterTimeline{
             return null;
         }
         
+        public void onEndTimeline(){
+            if(this.endPosition != null){
+                this.character.setPosition(endPosition);
+            }
+        }
         
         public boolean updateTimeline(float time){
             if(this.character == null){

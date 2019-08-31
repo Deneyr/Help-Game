@@ -139,6 +139,7 @@ public class CinematicManager implements Disposable{
             
             Vector2 gameStartPosition = Vector2.Zero;
             for(CharacterTimeline timeline : this.charactersTimeline){
+                
                 timeline.getCharacter().isCinematicEntity(false);
                 
                 gameStartPosition = timeline.getCharacter().getPositionBody();
@@ -173,6 +174,10 @@ public class CinematicManager implements Disposable{
         boolean hasEnded = true;
         
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            for(CharacterTimeline timeline : this.charactersTimeline){
+                timeline.onEndTimeline();
+            }
+            
             this.dialogueBlock.endDialogue();
             this.cinematicState = CinematicState.END;
         }else if(this.dialogueBlock.getDialogueState() == CinematicState.STOP){

@@ -89,8 +89,7 @@ public abstract class TriggeredObject2D extends Object2D{
                 this.physicBody.applyLinearImpulse(speed, Vector2.Zero, true);   
             }else{
                 this.physicBody.setLinearVelocity(speed);
-            }
-            
+            }        
             
             // Reset alpha & scaling
             this.setAlpha(1f);
@@ -133,8 +132,7 @@ public abstract class TriggeredObject2D extends Object2D{
             }else{
                 this.physicBody.setLinearVelocity(speed);
             }
-            
-            
+                       
             // Reset alpha & scaling
             this.setAlpha(1f);
             this.setScale(1f);
@@ -162,7 +160,6 @@ public abstract class TriggeredObject2D extends Object2D{
         this.isTriggered = true;
         
         if(this.object2DStateListener != null && this.object2DStateListener.get() != null){
-            System.out.println("event !!");
             this.object2DStateListener.get().onStateChanged(this, Object2DStateListener.Object2DState.TOOK_BY_PLAYER, 1);
         }
     }

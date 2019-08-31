@@ -44,7 +44,7 @@ public class Crane extends SolidObject2D{
     private BackCraneObject2D backCraneObject2D;
     private TopCraneObject2D topCraneObject2D;
     
-    public Crane(World world, float posX, float posY, float heightCraneRate, float heightStringRate, boolean isLeft){
+    public Crane(World world, float posX, float posY, float heightCraneRate, float heightStringRate, float stringCraneRate, float hookCraneRate, boolean isLeft){
         
         this.heightCraneRate = heightCraneRate;
         this.heightStringRate = heightStringRate;
@@ -101,7 +101,7 @@ public class Crane extends SolidObject2D{
         this.physicBody = groundBody;
         //this.physicBody.setLinearVelocity(new Vector2(0.5f, 0));
         
-        this.frontCraneObject2D = new FrontCraneObject2D(this.physicBody, world, posX, posY, 1200 * P2M * SCALE_Y, this.heightCraneRate, this.isLeft);
+        this.frontCraneObject2D = new FrontCraneObject2D(this.physicBody, world, posX, posY, 1200 * P2M * SCALE_Y, this.heightCraneRate, stringCraneRate, hookCraneRate, this.isLeft);
         this.backCraneObject2D = new BackCraneObject2D(this.physicBody, world, posX, posY, 1200 * P2M * SCALE_Y, this.heightCraneRate, this.isLeft);
         this.topCraneObject2D = new TopCraneObject2D(this.physicBody, world, posX, posY, 1200 * P2M * SCALE_Y);
         
@@ -168,7 +168,7 @@ public class Crane extends SolidObject2D{
         
         private StringCraneObject2D stringCraneObject2D;
         
-        public FrontCraneObject2D(Body ownerBody, World world, float posX, float posY, float maxHeight, float heightCraneRate, boolean isLeft){
+        public FrontCraneObject2D(Body ownerBody, World world, float posX, float posY, float maxHeight, float heightCraneRate, float stringCraneRate, float hookCraneRate, boolean isLeft){
             
             this.priority = 1;          
             
@@ -237,7 +237,7 @@ public class Crane extends SolidObject2D{
             
             this.physicBody = groundBody;
             
-            this.stringCraneObject2D = new StringCraneObject2D(this.physicBody, world, groundBodyDef.position.x / P2M, groundBodyDef.position.y / P2M + 50, 1300 * P2M * SCALE_X, -0.5f, 1f, isLeft);             
+            this.stringCraneObject2D = new StringCraneObject2D(this.physicBody, world, groundBodyDef.position.x / P2M, groundBodyDef.position.y / P2M + 50, 1300 * P2M * SCALE_X, stringCraneRate, hookCraneRate, isLeft);             
         }
         
         public void assignTextures(Texture texture, Texture stringTexture, Texture hookTexture){
@@ -246,7 +246,7 @@ public class Crane extends SolidObject2D{
                 this.texture = texture;
             }
             
-            this.stringCraneObject2D.assignTextures(stringTexture);
+            this.stringCraneObject2D.assignTextures(stringTexture, hookTexture);
         }
         
         @Override
@@ -412,10 +412,12 @@ public class Crane extends SolidObject2D{
         private float parentPosY;
         private float maxWidth;
         private float ratioStringHeight;
+        
+        private HookCraneObject2D hookCraneObject2D;
     
         public StringCraneObject2D(Body ownerBody, World world, float posX, float posY, float maxWidth, float ratioWidth, float ratioStringHeight, boolean isLeft){
 
-            this.priority = 1;          
+            this.priority = 0;          
 
             this.maxWidth = maxWidth;
             this.parentPosX = posX;
@@ -426,9 +428,9 @@ public class Crane extends SolidObject2D{
             // Create a body from the defintion and add it to the world
             BodyDef groundBodyDef = new BodyDef();  
             if(isLeft){
-                groundBodyDef.position.set(new Vector2(this.parentPosX * P2M - this.maxWidth/2 * ratioWidth, (this.parentPosY * P2M - 318 * ratioStringHeight * P2M * Crane.SCALE_Y)));
+                groundBodyDef.position.set(new Vector2(this.parentPosX * P2M - this.maxWidth/2 * ratioWidth, (this.parentPosY * P2M - 320 * ratioStringHeight * P2M * Crane.SCALE_Y)));
             }else{
-                groundBodyDef.position.set(new Vector2(this.parentPosX * P2M + this.maxWidth/2 * ratioWidth, (this.parentPosY * P2M - 318 * ratioStringHeight * P2M * Crane.SCALE_Y)));
+                groundBodyDef.position.set(new Vector2(this.parentPosX * P2M + this.maxWidth/2 * ratioWidth, (this.parentPosY * P2M - 320 * ratioStringHeight * P2M * Crane.SCALE_Y)));
             }
             
             Body groundBody = world.createBody(groundBodyDef);
@@ -436,6 +438,69 @@ public class Crane extends SolidObject2D{
 
             PolygonShape ground = new PolygonShape();
             ground.setAsBox(25 * P2M * Crane.SCALE_X, 318 * P2M * Crane.SCALE_Y, new Vector2(0, 0), 0);
+
+            // Set the polygon shape as a box which is twice the size of our view port and 20 high
+            // (setAsBox takes half-width and half-height as arguments)
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.shape = ground;
+            fixtureDef.density = 0f; 
+            fixtureDef.friction = 0.05f;
+            fixtureDef.restitution = 0.1f; // Make it bounce a little bit
+            // Create a fixture from our polygon shape and add it to our ground body  
+            Fixture fix = groundBody.createFixture(fixtureDef); 
+            fix.setUserData(this);
+            fix.setSensor(true);
+
+            this.physicBody = groundBody;
+            
+            this.hookCraneObject2D = new HookCraneObject2D(this.physicBody, world, groundBodyDef.position.x / P2M, groundBodyDef.position.y / P2M, 640 * ratioStringHeight * Crane.SCALE_Y);
+        }
+
+        public void assignTextures(Texture texture, Texture hookTexture){
+
+            if(texture != null){
+                this.texture = texture;
+            }
+            
+            this.hookCraneObject2D.assignTextures(hookTexture);
+        }
+
+        @Override
+        public Sprite createCurrentSprite(){
+            Sprite sprite = super.createCurrentSprite();
+            sprite.setScale(sprite.getScaleX() * Crane.SCALE_X, sprite.getScaleY() * Crane.SCALE_Y * this.ratioStringHeight);
+            return sprite;
+        }
+    }
+    
+    public class HookCraneObject2D extends Object2D{
+        
+        private float parentPosX;
+        private float parentPosY;
+        
+        private float maxHeight;
+    
+        public HookCraneObject2D(Body ownerBody, World world, float posX, float posY, float maxHeight){
+
+            this.priority = 1;          
+
+            this.parentPosX = posX;
+            this.parentPosY = posY;
+            
+            this.maxHeight = maxHeight;
+
+            // Part physic
+            // Create a body from the defintion and add it to the world
+            BodyDef groundBodyDef = new BodyDef();  
+ 
+            groundBodyDef.position.set(new Vector2(this.parentPosX * P2M, (this.parentPosY - maxHeight / 2 - 25 * Crane.SCALE_Y) * P2M));
+
+            
+            Body groundBody = world.createBody(groundBodyDef);
+            groundBody.setType(BodyDef.BodyType.KinematicBody);
+
+            PolygonShape ground = new PolygonShape();
+            ground.setAsBox(51 * P2M * Crane.SCALE_X, 96 * P2M * Crane.SCALE_Y, new Vector2(0, 0), 0);
 
             // Set the polygon shape as a box which is twice the size of our view port and 20 high
             // (setAsBox takes half-width and half-height as arguments)
@@ -462,7 +527,7 @@ public class Crane extends SolidObject2D{
         @Override
         public Sprite createCurrentSprite(){
             Sprite sprite = super.createCurrentSprite();
-            sprite.setScale(sprite.getScaleX() * Crane.SCALE_X, sprite.getScaleY() * Crane.SCALE_Y * this.ratioStringHeight);
+            sprite.setScale(sprite.getScaleX() * Crane.SCALE_X, sprite.getScaleY() * Crane.SCALE_Y);
             return sprite;
         }
     }

@@ -33,8 +33,8 @@ public class Sign extends SolidObject2D{
     "signs/Panneau_Saut.png",
     "signs/Panneau_Switch.png"};
     
-    private static final float SCALE_X = 0.3f;
-    private static final float SCALE_Y = 0.3f;
+    private static final float SCALE_X = 0.5f;
+    private static final float SCALE_Y = 0.5f;
     
     private float rotation;
     private int signIndex;
@@ -82,8 +82,8 @@ public class Sign extends SolidObject2D{
         this.collisionFixture.add(fix);
 
         this.physicBody = groundBody;
-        
-        this.physicBody.setTransform(0, 0, this.rotation);
+
+        this.physicBody.setTransform(this.physicBody.getPosition().x, this.physicBody.getPosition().y, this.rotation);
         //this.physicBody.setLinearVelocity(new Vector2(0.5f, 0));
     }
     

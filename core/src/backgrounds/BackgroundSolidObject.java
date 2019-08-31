@@ -80,8 +80,7 @@ public class BackgroundSolidObject extends SolidObject2D{
                     this.collisionFixture.add(fix);
                     
                     break;
-                case WHOLE:
-                    
+                case WHOLE:                  
                     // Create a polygon shape
                     ground = new PolygonShape();
                     ground.setAsBox(canvasWidth / 2 * P2M * ratioObject, 
@@ -107,7 +106,9 @@ public class BackgroundSolidObject extends SolidObject2D{
 
                     fix.setUserData(this);
                     this.collisionFixture.add(fix);
+                    
                     break;
+                    
                 case RIGHT_DOOR:
                     // Create a polygon shape
                     ground = new PolygonShape();
@@ -120,6 +121,36 @@ public class BackgroundSolidObject extends SolidObject2D{
 
                     fix.setUserData(this);
                     this.collisionFixture.add(fix);
+                    
+                    break;
+                case LEFT_WINDOW:
+                    // Create a polygon shape
+                    ground = new PolygonShape();
+                    ground.setAsBox(canvasWidth / 20 * P2M * ratioObject, 
+                                    canvasHeight / 4 * P2M * ratioObject, 
+                                    new Vector2(-canvasWidth / 2 * ratioObject * P2M + canvasWidth / 20 * P2M * ratioObject, -canvasHeight / 4 * P2M * ratioObject), 0); 
+                    fixtureDef.shape = ground;
+                    
+                    fix = groundBody.createFixture(fixtureDef); 
+
+                    fix.setUserData(this);
+                    this.collisionFixture.add(fix);
+                    
+                    break;
+                    
+                case RIGHT_WINDOW:
+                    // Create a polygon shape
+                    ground = new PolygonShape();
+                    ground.setAsBox(canvasWidth / 20 * P2M * ratioObject, 
+                                    canvasHeight / 4 * P2M * ratioObject, 
+                                    new Vector2(canvasWidth / 2 * ratioObject * P2M - canvasWidth / 20 * P2M * ratioObject, -canvasHeight / 4 * P2M * ratioObject), 0); 
+                    fixtureDef.shape = ground;
+                    
+                    fix = groundBody.createFixture(fixtureDef); 
+
+                    fix.setUserData(this);
+                    this.collisionFixture.add(fix);
+                    
                     break;
                 case TOP:
                     // Create a polygon shape
@@ -133,6 +164,7 @@ public class BackgroundSolidObject extends SolidObject2D{
 
                     fix.setUserData(this);
                     this.collisionFixture.add(fix);
+                    
                     break;
                 case BOTTOM:
                     // Create a polygon shape
@@ -146,6 +178,7 @@ public class BackgroundSolidObject extends SolidObject2D{
 
                     fix.setUserData(this);
                     this.collisionFixture.add(fix);
+                    
                     break;
                 case STAIRS_RIGHT:
                     // Create a polygon shape
@@ -171,6 +204,7 @@ public class BackgroundSolidObject extends SolidObject2D{
 
                     fix.setUserData(this);
                     this.collisionFixture.add(fix);
+                    
                     break;
                 case STAIRS_LEFT:
                     // Create a polygon shape
@@ -196,6 +230,139 @@ public class BackgroundSolidObject extends SolidObject2D{
 
                     fix.setUserData(this);
                     this.collisionFixture.add(fix);
+                    
+                    break;
+                case STAIRS_ONLY_RIGHT:
+                    // Create a polygon shape
+                    ground = new PolygonShape();
+                    ground.set(new float[]{canvasWidth / 2 * P2M * ratioObject, canvasHeight / 2 * P2M * ratioObject,
+                        canvasWidth / 2 * P2M * ratioObject, -canvasHeight / 2 * P2M * ratioObject,
+                        -canvasWidth / 2 * P2M * ratioObject, -canvasHeight / 2 * P2M * ratioObject
+                    });
+                    fixtureDef.shape = ground;
+                    
+                    fix = groundBody.createFixture(fixtureDef); 
+
+                    fix.setUserData(this);
+                    this.collisionFixture.add(fix);
+                    
+                    break;
+                case STAIRS_ONLY_LEFT:
+                    // Create a polygon shape
+                    ground = new PolygonShape();
+                    ground.set(new float[]{-canvasWidth / 2 * P2M * ratioObject, canvasHeight / 2 * P2M * ratioObject,
+                        canvasWidth / 2 * P2M * ratioObject, -canvasHeight / 2 * P2M * ratioObject,
+                        -canvasWidth / 2 * P2M * ratioObject, -canvasHeight / 2 * P2M * ratioObject
+                    });
+                    fixtureDef.shape = ground;
+                    
+                    fix = groundBody.createFixture(fixtureDef); 
+
+                    fix.setUserData(this);
+                    this.collisionFixture.add(fix);
+                    
+                    break;
+                case STAIRS_UP_RIGHT:
+                    // Create a polygon shape
+                    ground = new PolygonShape();
+                    ground.set(new float[]{canvasWidth / 2 * P2M * ratioObject, -canvasHeight / 2 * P2M * ratioObject,
+                        canvasWidth / 2 * P2M * ratioObject, canvasHeight / 2 * P2M * ratioObject,
+                        -canvasWidth / 2 * P2M * ratioObject, canvasHeight / 2 * P2M * ratioObject
+                    });
+                    fixtureDef.shape = ground;
+                    
+                    fix = groundBody.createFixture(fixtureDef); 
+
+                    fix.setUserData(this);
+                    this.collisionFixture.add(fix);
+                    
+                    break;
+                case STAIRS_UP_LEFT:
+                    // Create a polygon shape
+                    ground = new PolygonShape();
+                    ground.set(new float[]{-canvasWidth / 2 * P2M * ratioObject, -canvasHeight / 2 * P2M * ratioObject,
+                        canvasWidth / 2 * P2M * ratioObject, canvasHeight / 2 * P2M * ratioObject,
+                        -canvasWidth / 2 * P2M * ratioObject, canvasHeight / 2 * P2M * ratioObject
+                    });
+                    fixtureDef.shape = ground;
+                    
+                    fix = groundBody.createFixture(fixtureDef); 
+
+                    fix.setUserData(this);
+                    this.collisionFixture.add(fix);
+                    
+                    break;
+                case RIGHT_ROOF:
+                    // Create a polygon shape
+                    ground = new PolygonShape();
+                    ground.set(new float[]{-canvasWidth / 2 * P2M * ratioObject, 0,
+                        canvasWidth / 4 * P2M * ratioObject, 0,
+                        canvasWidth / 2 * P2M * ratioObject, -canvasHeight / 2 * P2M * ratioObject,
+                        -canvasWidth / 2 * P2M * ratioObject, -canvasHeight / 2 * P2M * ratioObject
+                    });
+                    fixtureDef.shape = ground;
+                    
+                    fix = groundBody.createFixture(fixtureDef); 
+
+                    fix.setUserData(this);
+                    this.collisionFixture.add(fix);
+                    
+                    break;
+                case WHOLE_ROOF:
+                    // Create a polygon shape
+                    ground = new PolygonShape();
+                    ground.setAsBox(canvasWidth / 2 * P2M * ratioObject, 
+                                    canvasHeight / 4 * P2M * ratioObject, 
+                                    new Vector2(0, -canvasHeight / 4 * P2M * ratioObject), 0); 
+                    fixtureDef.shape = ground;
+                    
+                    fix = groundBody.createFixture(fixtureDef); 
+
+                    fix.setUserData(this);
+                    this.collisionFixture.add(fix);
+                    
+                    break;
+                case TRAP_ROOF:
+                    // Create a polygon shape
+                    ground = new PolygonShape();
+                    ground.setAsBox(canvasWidth / 8 * P2M * ratioObject, 
+                                    canvasHeight / 4 * P2M * ratioObject, 
+                                    new Vector2(-3*canvasWidth / 8 * P2M * ratioObject, -canvasHeight / 4 * P2M * ratioObject), 0); 
+                    fixtureDef.shape = ground;
+                    
+                    fix = groundBody.createFixture(fixtureDef); 
+
+                    fix.setUserData(this);
+                    this.collisionFixture.add(fix);
+                    
+                    // Create a polygon shape
+                    ground = new PolygonShape();
+                    ground.setAsBox(canvasWidth / 8 * P2M * ratioObject, 
+                                    canvasHeight / 4 * P2M * ratioObject, 
+                                    new Vector2(3*canvasWidth / 8 * P2M * ratioObject, -canvasHeight / 4 * P2M * ratioObject), 0); 
+                    fixtureDef.shape = ground;
+                    
+                    fix = groundBody.createFixture(fixtureDef); 
+
+                    fix.setUserData(this);
+                    this.collisionFixture.add(fix);
+                    
+                    break;
+                case LEFT_ROOF:
+                    // Create a polygon shape
+                    ground = new PolygonShape();
+                    ground.set(new float[]{-canvasWidth / 4 * P2M * ratioObject, 0,
+                        canvasWidth / 2 * P2M * ratioObject, 0,
+                        canvasWidth / 2 * P2M * ratioObject, -canvasHeight / 2 * P2M * ratioObject,
+                        -canvasWidth / 2 * P2M * ratioObject, -canvasHeight / 2 * P2M * ratioObject
+                    });
+                    fixtureDef.shape = ground;
+                    
+                    fix = groundBody.createFixture(fixtureDef); 
+
+                    fix.setUserData(this);
+                    this.collisionFixture.add(fix);
+                    
                     break;
                 case TRAPDOOR:
                     ground = new PolygonShape();
@@ -219,6 +386,7 @@ public class BackgroundSolidObject extends SolidObject2D{
 
                     fix.setUserData(this);
                     this.collisionFixture.add(fix);
+                    
                     break;
                 default:
                     // Create a polygon shape

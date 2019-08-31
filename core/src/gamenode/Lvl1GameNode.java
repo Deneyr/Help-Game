@@ -330,7 +330,7 @@ public class Lvl1GameNode extends LvlGameNode{
         
         game.getGameWorld().addCinematicManager(cin1, index, 0);
         
-        EventTriggeredObject2D trigger = new EventTriggeredObject2D(game.getGameWorld().getWorld(), -50f, 180f, GameEventListener.EventType.CINEMATIC, "roof", 100);
+        EventTriggeredObject2D trigger = new EventTriggeredObject2D(game.getGameWorld().getWorld(), -50f, 180f, GameEventListener.EventType.CINEMATIC, "roof", 100, 100, false);
         game.getGameWorld().addObject2DToWorld(trigger);
         
         // activable areas

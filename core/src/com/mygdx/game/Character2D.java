@@ -112,6 +112,12 @@ public abstract class Character2D extends Object2D{
         }
     }
 
+    public void setPosition(Vector2 newPosition){
+        if(newPosition != null && this.physicBody != null){
+            this.physicBody.setTransform(new Vector2(newPosition), this.physicBody.getAngle());
+        }
+    }
+    
     /**
      * @param lifePoints the lifePoints to set
      */

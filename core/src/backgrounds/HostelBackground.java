@@ -7,12 +7,6 @@ package backgrounds;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.BackgroundWorld;
 import com.mygdx.game.GameWorld;
 import static com.mygdx.game.HelpGame.P2M;
@@ -26,9 +20,9 @@ import triggered.EnterQuitStructureTriggeredObject2D;
  */
 public class HostelBackground extends BackgroundWorld{
 
-    public static final String HOSTEL = "background/House_Hostel.png";
+    public static final String HOSTEL = "background/house/House_Hostel.png";
     
-    private Vector2 startPointPart;
+    protected Vector2 startPointPart;
     
     protected int canvasWidth;
     protected int canvasHeight;
@@ -67,7 +61,7 @@ public class HostelBackground extends BackgroundWorld{
             
             ResidencePart part = new ResidencePart(this.startPointPart, residenceMap, 200, 200, 1f);
         
-            part.addObject2D2Scenary(house);
+            part.addTexture2Scenary(house);
             part.createSpriteList(this.seed);
 
             this.backgroundPartList.put(part.getStartPart().x, part);
@@ -98,7 +92,7 @@ public class HostelBackground extends BackgroundWorld{
         
         ArrayList<RoomCollisionType> listStairRight = new ArrayList<RoomCollisionType>();
         listStairRight.add(RoomCollisionType.STAIRS_RIGHT);
-        
+       
         ArrayList<RoomCollisionType> listTrapdoor = new ArrayList<RoomCollisionType>();
         listTrapdoor.add(RoomCollisionType.TRAPDOOR);
         
@@ -120,14 +114,15 @@ public class HostelBackground extends BackgroundWorld{
             
         for(int i = 0; i < residenceMap.length; i++){
             for(int j = 0; j < residenceMap[0].length; j++){
-        
-                // We add the width/height over two because the origin of the sprite is not at the middle for the background parts.
-                float posX = this.startPointPart.x / P2M + this.canvasWidth/2 + this.canvasWidth * j * ratioObject;
-                float posY = this.startPointPart.y / P2M + this.canvasHeight/2 + this.canvasHeight * (residenceMap.length - i - 1) * ratioObject;
-                
-                BackgroundSolidObject backgroundSolidObject = new BackgroundSolidObject(gameWorld.getWorld(), posX , posY , residenceMap[i][j], this.canvasWidth, this.canvasHeight, ratioObject);
+                if(residenceMap[i][j] != null){
+                    // We add the width/height over two because the origin of the sprite is not at the middle for the background parts.
+                    float posX = this.startPointPart.x / P2M + this.canvasWidth/2 + this.canvasWidth * j * ratioObject;
+                    float posY = this.startPointPart.y / P2M + this.canvasHeight/2 + this.canvasHeight * (residenceMap.length - i - 1) * ratioObject;
 
-                gameWorld.addObject2DToWorld(backgroundSolidObject);
+                    BackgroundSolidObject backgroundSolidObject = new BackgroundSolidObject(gameWorld.getWorld(), posX , posY , residenceMap[i][j], this.canvasWidth, this.canvasHeight, ratioObject);
+
+                    gameWorld.addObject2DToWorld(backgroundSolidObject);
+                }
             }
         }
                   

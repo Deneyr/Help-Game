@@ -44,7 +44,7 @@ public abstract class Object2D implements Disposable, GraphicalComponent{
     protected List<Fixture> collisionFixture;
     
     private float alpha;
-    private float scale;
+    protected float scale;
     
     // listener
     protected WeakReference<GameEventListener> gameEventListener;

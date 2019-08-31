@@ -526,6 +526,16 @@ public class OpponentCAC1 extends Character2D{
             if(this.isReseting){
                 this.isReseting = false;
             }
+            
+            if(this.side == SideCharacter.LEFT
+                    && this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
+                this.influences.add(OppInfluence.GO_RIGHT);
+            }else if(this.side == SideCharacter.RIGHT
+                    && this.target.getPositionBody().x - this.physicBody.getPosition().x < 0){
+                this.influences.add(OppInfluence.GO_LEFT);
+            }
+                       
+            /*
             if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
                 if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
                     if(this.side == SideCharacter.LEFT){
@@ -551,7 +561,7 @@ public class OpponentCAC1 extends Character2D{
                         this.influences.add(OppInfluence.GO_RIGHT);
                     }
                 }
-            }
+            }*/
         }
     }
     
