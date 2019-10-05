@@ -33,7 +33,22 @@ public class Poutrelle extends SolidObject2D{
     
     private KinematicActionFixtures kinematicActionFixture;
     
-    public Poutrelle(World world, float posX, float posY){
+    private float angle;
+    private float speed;
+    private float maxRadius; 
+    
+    private Vector2 startPosition;
+    private int scalarSign;
+    
+    public Poutrelle(World world, float posX, float posY, float angle, float speed, float maxRadius, float scale){
+        
+        this.scale = scale;
+        this.angle = angle;
+        this.speed = speed;
+        this.maxRadius = maxRadius;
+        
+        this.startPosition = new Vector2(posX * P2M, posY * P2M);
+        this.scalarSign = 1;
         
         // Part graphic
         this.assignTextures();
@@ -55,7 +70,7 @@ public class Poutrelle extends SolidObject2D{
         
         // Create a polygon shape
         PolygonShape ground = new PolygonShape();
-        ground.setAsBox(382 * P2M * SCALE_X, 117 / 8f * P2M * SCALE_Y, new Vector2(0, 117 * 3/ 8f * P2M * SCALE_Y), 0);
+        ground.setAsBox(382 * P2M * SCALE_X * this.scale, 117 / 8f * P2M * SCALE_Y * this.scale, new Vector2(0, 117 * 3/ 8f * P2M * SCALE_Y * this.scale), 0);
         // Set the polygon shape as a box which is twice the size of our view port and 20 high
         // (setAsBox takes half-width and half-height as arguments)
         FixtureDef fixtureDef = new FixtureDef();
@@ -71,7 +86,7 @@ public class Poutrelle extends SolidObject2D{
         fix.setUserData(this);
         this.collisionFixture.add(fix);
         
-        ground.setAsBox(382 * P2M * SCALE_X, 117 / 8f * P2M * SCALE_Y, new Vector2(0, -117 * 3/ 8f * P2M * SCALE_Y), 0);
+        ground.setAsBox(382 * P2M * SCALE_X * this.scale, 117 / 8f * P2M * SCALE_Y * this.scale, new Vector2(0, -117 * 3/ 8f * P2M * SCALE_Y * this.scale), 0);
         fix = groundBody.createFixture(fixtureDef); 
         fix.setUserData(this);
         this.collisionFixture.add(fix);
@@ -79,19 +94,22 @@ public class Poutrelle extends SolidObject2D{
         this.setCollisionFilterMask(fixtureDef, true);
         
         this.physicBody = groundBody;
-        this.physicBody.setLinearVelocity(new Vector2(-2f, 0));
+        this.physicBody.setTransform(this.getPositionBody(), this.angle);
+        
+        if(this.speed > 0){
+            this.physicBody.setLinearVelocity(new Vector2(1, 0).rotateRad(this.angle).scl(this.speed * this.scalarSign));
 
-        // ActionFixture
-        Set<Fixture> setFixtures = new HashSet();
-        
-        ground.setAsBox(382 * P2M * SCALE_X, 117 / 8f * P2M * SCALE_Y, new Vector2(0, (-117 * 3/ 8f + 3)  * P2M * SCALE_Y), 0);
-        fix = groundBody.createFixture(fixtureDef); 
-        setFixtures.add(fix);
-        ground.setAsBox(382 * P2M * SCALE_X, 117 / 8f * P2M * SCALE_Y, new Vector2(0, (117 * 3/ 8f + 3)  * P2M * SCALE_Y), 0);
-        fix = groundBody.createFixture(fixtureDef); 
-        setFixtures.add(fix);
-        this.kinematicActionFixture = new KinematicActionFixtures(setFixtures);
-        
+            // ActionFixture
+            Set<Fixture> setFixtures = new HashSet();
+
+            ground.setAsBox(382 * P2M * SCALE_X * this.scale, 117 / 8f * P2M * SCALE_Y * this.scale, new Vector2(0, (-117 * 3/ 8f + 3) * P2M * SCALE_Y * this.scale), 0);
+            fix = groundBody.createFixture(fixtureDef); 
+            setFixtures.add(fix);
+            ground.setAsBox(382 * P2M * SCALE_X * this.scale, 117 / 8f * P2M * SCALE_Y * this.scale, new Vector2(0, (117 * 3/ 8f + 3) * P2M * SCALE_Y * this.scale), 0);
+            fix = groundBody.createFixture(fixtureDef); 
+            setFixtures.add(fix);
+            this.kinematicActionFixture = new KinematicActionFixtures(setFixtures);
+        }
     }
     
     @Override
@@ -109,17 +127,33 @@ public class Poutrelle extends SolidObject2D{
     @Override
     public void updateLogic(float deltaTime){
         super.updateLogic(deltaTime);
-        if(this.physicBody.getPosition().x > -30){
-            this.physicBody.setLinearVelocity(new Vector2(-4f, 0));
-        }else if(this.physicBody.getPosition().x < -40){
-            this.physicBody.setLinearVelocity(new Vector2(4f, 0));
-        }
         
-        this.kinematicActionFixture.applyAction(deltaTime, this);
+        if(this.speed > 0){
+            Vector2 displacementVector = new Vector2(1, 0).rotateRad(angle);
+
+            Vector2 distVector = this.getPositionBody().sub(this.startPosition);
+            if(distVector.len2() > this.maxRadius * this.maxRadius){
+                if(distVector.crs(displacementVector) > 0){
+                    this.scalarSign = -1;
+
+                }else{
+                    this.scalarSign = 1;
+                }
+
+                this.physicBody.setLinearVelocity(displacementVector.scl(this.speed * this.scalarSign));
+            }
+
+            this.kinematicActionFixture.applyAction(deltaTime, this);
+        }
     }
     
     @Override
     public void dispose(){
-        this.kinematicActionFixture.dispose(this.physicBody);
+        
+        if(this.kinematicActionFixture != null){
+            this.kinematicActionFixture.dispose(this.physicBody);
+        }
+        
+        super.dispose();
     }
 }

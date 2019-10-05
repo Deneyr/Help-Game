@@ -27,6 +27,8 @@ public class HostelBackground extends BackgroundWorld{
     protected int canvasWidth;
     protected int canvasHeight;
     
+    protected ArrayList[][] residenceMap;
+    
     public HostelBackground(int seed, float startPointX, float startPointY, int canvasWidth, int canvasHeight){
         super(seed);
         
@@ -36,6 +38,8 @@ public class HostelBackground extends BackgroundWorld{
         
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
+        
+        this.residenceMap = new ArrayList[][]{};
         
         this.assignTextures();
     }
@@ -96,18 +100,18 @@ public class HostelBackground extends BackgroundWorld{
         ArrayList<RoomCollisionType> listTrapdoor = new ArrayList<RoomCollisionType>();
         listTrapdoor.add(RoomCollisionType.TRAPDOOR);
         
-        ArrayList[][] residenceMap = {
+        this.residenceMap = new ArrayList[][]{
             {listWhole, listTop, listTop, listTopWallRight},
             {listWhole, listTrapdoor, listTopDoorLeft, listTopWallRight},
             {listTopDoorLeft, listTopDoorLeft, listTop, listStairRight}
         };
         
-        this.createSolidObjFrom(gameWorld, residenceMap, 1f);
+        this.createSolidObjFrom(gameWorld, this.residenceMap, 1f);
     }
     
     @Override
     public void createForegroundObj(GameWorld gameWorld, StructureForeground structureForeground){
-        this.createForegroundObjFrom(gameWorld, structureForeground, 4, 3, 1f);
+        this.createForegroundObjFrom(gameWorld, structureForeground, 0, 1f);
     }
     
     protected void createSolidObjFrom(GameWorld gameWorld, ArrayList[][] residenceMap, float ratioObject){
@@ -128,10 +132,18 @@ public class HostelBackground extends BackgroundWorld{
                   
     }
     
-    protected void createForegroundObjFrom(GameWorld gameWorld, StructureForeground structureForeground, int nbCanvasWidth, int nbCanvasHeight, float ratioObject){
+    protected void createForegroundObjFrom(GameWorld gameWorld, StructureForeground structureForeground, int indexTexture, float ratioObject){
+        
+        int nbCanvasWidth = 0;
+        int nbCanvasHeight = 0;
+        if(this.residenceMap.length > 0){
+            nbCanvasWidth = this.residenceMap[0].length;
+            nbCanvasHeight = this.residenceMap.length - 1;
+        }
+        
         EnterQuitStructureTriggeredObject2D trigger = new EnterQuitStructureTriggeredObject2D(gameWorld.getWorld(), this.startPointPart.x / P2M + nbCanvasWidth * this.canvasWidth * ratioObject / 2, this.startPointPart.y / P2M + nbCanvasHeight * this.canvasHeight * ratioObject / 2, nbCanvasWidth * this.canvasWidth * ratioObject, nbCanvasHeight * this.canvasHeight * ratioObject);
         gameWorld.addObject2DToWorld(trigger, true);
         
-        structureForeground.addStructurePart(trigger.getStructureID(), 0, new Vector2(this.startPointPart.x, this.startPointPart.y), new Vector2(this.startPointPart.x + nbCanvasWidth * this.canvasWidth * ratioObject * P2M, this.startPointPart.y + nbCanvasHeight * ratioObject * this.canvasHeight * P2M));
+        structureForeground.addStructurePart(trigger.getStructureID(), indexTexture, new Vector2(this.startPointPart.x, this.startPointPart.y), new Vector2(this.startPointPart.x + nbCanvasWidth * this.canvasWidth * ratioObject * P2M, this.startPointPart.y + nbCanvasHeight * ratioObject * this.canvasHeight * P2M));
     }
 }

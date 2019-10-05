@@ -8,9 +8,10 @@ package gamenode;
 import backgrounds.CityBackground;
 import backgrounds.FarBackground;
 import backgrounds.HillBackground;
-import backgrounds.HostelBackground;
 import backgrounds.Lvl1Foreground;
 import backgrounds.Lvl1_1_Residence;
+import backgrounds.Lvl1_2_Residence;
+import backgrounds.Lvl1_3_Residence;
 import backgrounds.NearBackground;
 import characters.AllyTemeri;
 import characters.Grandma;
@@ -25,14 +26,17 @@ import com.mygdx.game.scenery.Abribus;
 import com.mygdx.game.scenery.Bench;
 import com.mygdx.game.scenery.Bus;
 import com.mygdx.game.scenery.Car;
+import com.mygdx.game.scenery.CityString;
 import com.mygdx.game.scenery.Crane;
 import com.mygdx.game.scenery.GroundCity;
 import com.mygdx.game.scenery.MetalBox;
 import com.mygdx.game.scenery.Sign;
 import com.mygdx.game.scenery.SmallBox;
-import com.mygdx.game.scenery.TestMarioStage;
 import com.mygdx.game.scenery.Pipe;
+import com.mygdx.game.scenery.Poutrelle;
 import com.mygdx.game.scenery.PoutrelleObstacle;
+import com.mygdx.game.scenery.Scaffolding;
+import com.mygdx.game.scenery.Speaker;
 import com.mygdx.game.scenery.StrongBox;
 import com.mygdx.game.scenery.Trashcan;
 import com.mygdx.game.scenery.TreeWithoutLeaf;
@@ -111,9 +115,19 @@ public class Lvl1UpperCity extends LvlGameNode{
         Lvl1_1_Residence lvl1_1_Residence = new Lvl1_1_Residence(seed, 6500f, -25, 200, 200);
         game.getMapBackgroundPlanes().put(lvl1_1_Residence.getRatioDist(), lvl1_1_Residence);
         
+        Lvl1_2_Residence lvl1_2_Residence = new Lvl1_2_Residence(seed, 8300f, -25, 200, 200);
+        game.getMapBackgroundPlanes().put(lvl1_2_Residence.getRatioDist(), lvl1_2_Residence);
+        
+        Lvl1_3_Residence lvl1_3_Residence = new Lvl1_3_Residence(seed, 11200f, -25, 200, 200);
+        game.getMapBackgroundPlanes().put(lvl1_3_Residence.getRatioDist(), lvl1_3_Residence);
+        
         // init background solid objects
         
         lvl1_1_Residence.createSolidObj(game.getGameWorld());
+        
+        lvl1_2_Residence.createSolidObj(game.getGameWorld());
+        
+        lvl1_3_Residence.createSolidObj(game.getGameWorld());
         
         // init foreground
         
@@ -121,13 +135,17 @@ public class Lvl1UpperCity extends LvlGameNode{
         
         lvl1_1_Residence.createForegroundObj(game.getGameWorld(), lvl1Foreground);
         
+        lvl1_2_Residence.createForegroundObj(game.getGameWorld(), lvl1Foreground);
+        
+        lvl1_3_Residence.createForegroundObj(game.getGameWorld(), lvl1Foreground);
+        
         lvl1Foreground.assignTextures();
         
         game.getMapForegroundPlanes().put(lvl1Foreground.getRatioDist(), lvl1Foreground);
         
         // init solid objects
         
-        GroundCity ground = new GroundCity(game.getGameWorld().getWorld(), 1024, -150f, 100);
+        GroundCity ground = new GroundCity(game.getGameWorld().getWorld(), 1024, -150f, 150);
         game.getGameWorld().addObject2DToWorld(ground);
         
         Sign sign = new Sign(game.getGameWorld().getWorld(), 1100f, 0, 0.02f, 2);
@@ -140,7 +158,7 @@ public class Lvl1UpperCity extends LvlGameNode{
         game.getGameWorld().addObject2DToWorld(sign);
         
         Pipe pipe = new Pipe(game.getGameWorld().getWorld(), 1900f, 20f, false);
-        game.getGameWorld().addObject2DToWorld(pipe, true);
+        game.getGameWorld().addObject2DToWorld(pipe);
         
         Abribus abribus = new Abribus(game.getGameWorld().getWorld(), 2400f, 15f);
         game.getGameWorld().addObject2DToWorld(abribus);
@@ -149,37 +167,37 @@ public class Lvl1UpperCity extends LvlGameNode{
         game.getGameWorld().addObject2DToWorld(banc);
         
         pipe = new Pipe(game.getGameWorld().getWorld(), 2700f, 150f, true);
-        game.getGameWorld().addObject2DToWorld(pipe, true);
+        game.getGameWorld().addObject2DToWorld(pipe);
         
         Car car = new Car(game.getGameWorld().getWorld(), 3000f, 10f, 0, 1);
-        game.getGameWorld().addObject2DToWorld(car, true);
+        game.getGameWorld().addObject2DToWorld(car);
         
         pipe = new Pipe(game.getGameWorld().getWorld(), 3200f, 150f, true);
-        game.getGameWorld().addObject2DToWorld(pipe, true);
+        game.getGameWorld().addObject2DToWorld(pipe);
         
         pipe = new Pipe(game.getGameWorld().getWorld(), 3500f, 220f, true);
-        game.getGameWorld().addObject2DToWorld(pipe, true);
+        game.getGameWorld().addObject2DToWorld(pipe);
         
         TreeWithoutLeaf tree = new TreeWithoutLeaf(game.getGameWorld().getWorld(), 3800f, 70f);
         game.getGameWorld().addObject2DToWorld(tree);
         
         Trashcan trashcan = new Trashcan(game.getGameWorld().getWorld(), 4000f, 0, 1, 1);
-        game.getGameWorld().addObject2DToWorld(trashcan, true);
+        game.getGameWorld().addObject2DToWorld(trashcan);
         
         trashcan = new Trashcan(game.getGameWorld().getWorld(), 4150f, 0, 0, 1);
-        game.getGameWorld().addObject2DToWorld(trashcan, true);
+        game.getGameWorld().addObject2DToWorld(trashcan);
         
         Bus bus = new Bus(game.getGameWorld().getWorld(), 4500f, 60, 0, -1);
-        game.getGameWorld().addObject2DToWorld(bus, true);
+        game.getGameWorld().addObject2DToWorld(bus);
         
         pipe = new Pipe(game.getGameWorld().getWorld(), 4000f, 420f, true);
-        game.getGameWorld().addObject2DToWorld(pipe, true);
+        game.getGameWorld().addObject2DToWorld(pipe);
         
         pipe = new Pipe(game.getGameWorld().getWorld(), 4400f, 320f, true);
-        game.getGameWorld().addObject2DToWorld(pipe, true);
+        game.getGameWorld().addObject2DToWorld(pipe);
         
         pipe = new Pipe(game.getGameWorld().getWorld(), 4800f, 220f, true);
-        game.getGameWorld().addObject2DToWorld(pipe, true);
+        game.getGameWorld().addObject2DToWorld(pipe);
         
         sign = new Sign(game.getGameWorld().getWorld(), 5200f, 0, -0.05f, 4);
         game.getGameWorld().addObject2DToWorld(sign);
@@ -188,12 +206,42 @@ public class Lvl1UpperCity extends LvlGameNode{
         game.getGameWorld().addObject2DToWorld(poutrelleObst);
         
         Crane crane = new Crane(game.getGameWorld().getWorld(), 6000f, 270, 0.8f, 0.1f, 0.9f, 0.2f, true);
-        game.getGameWorld().addObject2DToWorld(crane, true);
+        game.getGameWorld().addObject2DToWorld(crane);
+        
+        CityString cityString = new CityString(game.getGameWorld().getWorld(), 8000f, 600f);
+        game.getGameWorld().addObject2DToWorld(cityString);
+            
+        Speaker speaker = new Speaker(game.getGameWorld().getWorld(), 10000f, 15f);
+        game.getGameWorld().addObject2DToWorld(speaker);
+        
+        Scaffolding scaffolding = new Scaffolding(game.getGameWorld().getWorld(), 10300f, 70f, 2); 
+        game.getGameWorld().addObject2DToWorld(scaffolding);
+        
+        scaffolding = new Scaffolding(game.getGameWorld().getWorld(), 10600f, 110f, 1); 
+        game.getGameWorld().addObject2DToWorld(scaffolding);
+        
+        scaffolding = new Scaffolding(game.getGameWorld().getWorld(), 12450f, 70f, 3); 
+        game.getGameWorld().addObject2DToWorld(scaffolding);
+        
+        scaffolding = new Scaffolding(game.getGameWorld().getWorld(), 13000f, 70f, 1); 
+        game.getGameWorld().addObject2DToWorld(scaffolding);
+        
+        Poutrelle poutrelle = new Poutrelle(game.getGameWorld().getWorld(), 13300f, 100f, (float) (Math.PI / 2), 5f, 5, 1);
+        game.getGameWorld().addObject2DToWorld(poutrelle);
+        
+        crane = new Crane(game.getGameWorld().getWorld(), 14000, 270, 0.8f, 0.1f, 0.55f, 0.8f, false);
+        game.getGameWorld().addObject2DToWorld(crane);
+        
+        scaffolding = new Scaffolding(game.getGameWorld().getWorld(), 14100, 40f, 2); 
+        game.getGameWorld().addObject2DToWorld(scaffolding);
+        
+        poutrelle = new Poutrelle(game.getGameWorld().getWorld(), 14550f, 130f, 0f, 0f, 0f, 0.5f);
+        game.getGameWorld().addObject2DToWorld(poutrelle);
         
         /*Crane crane = new Crane(game.getGameWorld().getWorld(), -600f, 270, 0.7f, 0f, false);
         game.getGameWorld().addObject2DToWorld(crane, true);*/
         /*
-        Abribus abribus = new Abribus(game.getGameWorld().getWorld(), 400f, 0f);
+        Speaker abribus = new Speaker(game.getGameWorld().getWorld(), 400f, 0f);
         game.getGameWorld().addObject2DToWorld(abribus);
         
         Bench banc = new Bench(game.getGameWorld().getWorld(), 400f, -15f);
@@ -215,7 +263,7 @@ public class Lvl1UpperCity extends LvlGameNode{
         if(heroPosition != null){
             hero = new Grandma(game.getGameWorld().getWorld(), heroPosition.x, heroPosition.y);
         }else{
-            hero = new Grandma(game.getGameWorld().getWorld(), 0f, 0f);
+            hero = new Grandma(game.getGameWorld().getWorld(), 14500f, 0f);
         }
         game.getGameWorld().setHero(hero);
         
@@ -260,8 +308,6 @@ public class Lvl1UpperCity extends LvlGameNode{
         
         StrongBox strongBox = new StrongBox(game.getGameWorld().getWorld(), 5360f, 0f);
         game.getGameWorld().addObject2DToWorld(strongBox, true);
-        /*box = new MetalBox(game.getGameWorld().getWorld(), 1300f, 200f);
-        game.getGameWorld().addObject2DToWorld(box, true);*/
         
         box = new SmallBox(game.getGameWorld().getWorld(), 5500f, 0f);
         game.getGameWorld().addObject2DToWorld(box, true);
@@ -290,6 +336,67 @@ public class Lvl1UpperCity extends LvlGameNode{
         box = new SmallBox(game.getGameWorld().getWorld(), 6325f, 100f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
+        box = new SmallBox(game.getGameWorld().getWorld(), 8000f, 600f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new SmallBox(game.getGameWorld().getWorld(), 8000f, 650f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new MetalBox(game.getGameWorld().getWorld(), 9400f, 600f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new SmallBox(game.getGameWorld().getWorld(), 8900f, 600f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new SmallBox(game.getGameWorld().getWorld(), 8950, 600f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new SmallBox(game.getGameWorld().getWorld(), 8925, 650f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new SmallBox(game.getGameWorld().getWorld(), 9200f, 1500f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new SmallBox(game.getGameWorld().getWorld(), 9250, 1500f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new SmallBox(game.getGameWorld().getWorld(), 9225, 1550f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        
+        box = new MetalBox(game.getGameWorld().getWorld(), 10500f, 100f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new MetalBox(game.getGameWorld().getWorld(), 12500f, 100f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new MetalBox(game.getGameWorld().getWorld(), 13100f, 150f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new MetalBox(game.getGameWorld().getWorld(), 13120f, 100f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 2; j++){
+                box = new SmallBox(game.getGameWorld().getWorld(), 11100f + j * 40f, i * 40f);
+                game.getGameWorld().addObject2DToWorld(box, true);
+            } 
+        }      
+             
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 2; j++){
+                box = new SmallBox(game.getGameWorld().getWorld(), 10850f + j * 40f, i * 40f);
+                game.getGameWorld().addObject2DToWorld(box, true);
+            } 
+        } 
+        
+        
+        for(int i = 0; i < 5; i++){
+            for(int j = 0; j < 5; j++){
+                box = new SmallBox(game.getGameWorld().getWorld(), 14500f + j * 40f, 200f + i * 40f);
+                game.getGameWorld().addObject2DToWorld(box, true);
+            } 
+        } 
         // Cannon
         
 

@@ -12,10 +12,12 @@ package backgrounds;
 public class Lvl1Foreground extends StructureForeground{
     
     public static final String HOSTELTEXT = "background/HostelFront.png";
+    public static final String BUILDINGTEXT = "background/Building1.png";
     
     public Lvl1Foreground() {
         super();
         
         this.texturePathList.add(HOSTELTEXT);
+        this.texturePathList.add(BUILDINGTEXT);
     }   
 }

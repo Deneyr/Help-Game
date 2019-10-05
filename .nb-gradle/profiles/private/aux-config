@@ -5,34 +5,62 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
       <group>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Character2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Obstacle_Maison4.png</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/background/house/House_Hostel3.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/Lvl1_1_Residence.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/backgrounds/Lvl1Foreground.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/TriggerActionFixture.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Poutrelle.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/building/Obstacle_Maison10.png</file>
-        <file>file:/D:/Projects/Help-Game/core/src/guicomponents/CinematicManager.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/gamenode/Lvl1GameNode.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/gamenode/Lvl1UpperCity.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/TriggeredObject2D.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/PoutrelleObstacle.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/BackgroundScreen.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/guicomponents/CharacterTimeline.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Car.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/ObstacleObject2D.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Bus.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Crane.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Obstacle_Maison2.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Abribus.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/gui/Characters200x300.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/FarBackground.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/background/house/House_Hostel.png</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Obstacle_Maison9.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Sign.java</file>
         <file>file:/D:/Projects/Help-Game/core/src/backgrounds/BackgroundSolidObject.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/triggered/ActivableTriggeredObject2D.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/building/Obstacle_Maison.png</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Trashcan.java</file>
-        <file>file:/D:/Projects/Help-Game/core/assets/building/Obstacle_Maison3.png</file>
-        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/GameWorld.java</file>
-        <file>file:/D:/Projects/Help-Game/core/src/triggered/BarbedTriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Obstacle_Maison5.png</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/background/house/House_Hostel2.png</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Obstacle_Maison3.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/Lvl1_2_Residence.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/Lvl1_3_Residence.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Speaker.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/StructureForeground.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Scaffolding.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Obstacle_Maison8.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/HostelBackground.java</file>
       </group>
     </open-files>
     <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-      <group/>
+      <group>
+        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Obstacle_Maison4.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/Lvl1_1_Residence.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/FarBackground.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Obstacle_Maison9.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Pipe.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/BackgroundSolidObject.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/background/house/House_Hostel2.png</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Obstacle_Maison3.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/Lvl1_3_Residence.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Obstacle_Maison8.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/HostelBackground.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/background/house/House_Hostel3.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/Lvl1Foreground.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Poutrelle.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/Lvl1GameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/Lvl1UpperCity.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Obstacle_Maison2.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Abribus.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/gui/Characters200x300.png</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/background/house/House_Hostel.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Sign.java</file>
+        <file>file:/D:/Projects/Help-Game/core/assets/urbanObj/Obstacle_Maison5.png</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/Lvl1_2_Residence.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Speaker.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/StructureForeground.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Scaffolding.java</file>
+      </group>
     </open-files>
   </auxiliary>
 </gradle-project-properties>

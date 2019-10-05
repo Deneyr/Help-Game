@@ -365,7 +365,7 @@ public class BackgroundSolidObject extends SolidObject2D{
                     
                     break;
                 case TRAPDOOR:
-                    ground = new PolygonShape();
+                    /*ground = new PolygonShape();
                     ground.setAsBox(canvasWidth / 8 * P2M * ratioObject,
                                     canvasHeight / 20 * P2M * ratioObject, 
                                     new Vector2(-canvasWidth / 2 * P2M * ratioObject + canvasWidth / 8 * P2M * ratioObject, canvasHeight / 2 * P2M * ratioObject - canvasHeight / 20 * P2M * ratioObject), 0); 
@@ -380,6 +380,18 @@ public class BackgroundSolidObject extends SolidObject2D{
                     ground.setAsBox(canvasWidth / 8 * P2M * ratioObject,
                                     canvasHeight / 20 * P2M * ratioObject, 
                                     new Vector2(canvasWidth / 2 * P2M * ratioObject - canvasWidth / 8 * P2M * ratioObject, canvasHeight / 2 * P2M * ratioObject - canvasHeight / 20 * P2M * ratioObject), 0); 
+                    fixtureDef.shape = ground;
+                    
+                    fix = groundBody.createFixture(fixtureDef); 
+
+                    fix.setUserData(this);
+                    this.collisionFixture.add(fix);*/
+                    
+                    // Create a polygon shape
+                    ground = new PolygonShape();
+                    ground.setAsBox(canvasWidth / 3 * P2M * ratioObject, 
+                                    canvasHeight / 10 * P2M * ratioObject, 
+                                    new Vector2(-canvasWidth / 3 * P2M * ratioObject, canvasHeight / 3 * P2M * ratioObject), -1.05f); 
                     fixtureDef.shape = ground;
                     
                     fix = groundBody.createFixture(fixtureDef); 

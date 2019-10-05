@@ -5,7 +5,6 @@
  */
 package backgrounds;
 
-import static backgrounds.HostelBackground.HOSTEL;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.GameWorld;
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public class Lvl1_1_Residence extends HostelBackground{
             
             String[][] residenceMap = {
                 {"1:1:0", "1:1:1", "1:1:1", "1:1:2", "1:1:1", "1:1:3"},
-                {"0:1:0", "0:3:1", "0:0:2", "0:0:3", "0:0:5", "0:2:4"},
+                {"0:1:0", "0:3:1", "0:0:2", "2:0:1", "0:0:5", "0:2:4"},
                 {"2:1:0", "0:0:2", "0:0:4", "0:0:0", "2:1:5", "0:1:0"},
                 {"2:1:0", "2:0:3", "2:0:5", "2:1:5", "2:1:0", "2:1:0"},
                 {"0:1:1", "2:0:2", "2:1:5", "2:1:0", "2:1:0", "2:1:0"},
@@ -70,6 +69,9 @@ public class Lvl1_1_Residence extends HostelBackground{
         ArrayList<RoomCollisionType> listTrapRoof = new ArrayList<RoomCollisionType>();
         listTrapRoof.add(RoomCollisionType.TRAP_ROOF);
         
+        ArrayList<RoomCollisionType> listTrap = new ArrayList<RoomCollisionType>();
+        listTrap.add(RoomCollisionType.TRAPDOOR);
+        
         ArrayList<RoomCollisionType> listTopWindowRight = new ArrayList<RoomCollisionType>();
         listTopWindowRight.add(RoomCollisionType.TOP);
         listTopWindowRight.add(RoomCollisionType.RIGHT_WINDOW);
@@ -92,19 +94,19 @@ public class Lvl1_1_Residence extends HostelBackground{
         listStairOnlyRight.add(RoomCollisionType.STAIRS_ONLY_RIGHT);
        
         
-        ArrayList[][] residenceMap = {
+        this.residenceMap = new ArrayList[][]{
             {listLeftRoof, listRoof, listRoof, listTrapRoof, listRoof, listRightRoof},
-            {listWhole, listTopDoorRight, listTop, null, listTop, listTopWindowRight},
+            {listWhole, listTopDoorRight, listTop, listTrap, listTop, listTopWindowRight},
             {listWhole, listTop, listTop, listTop, listStairOnlyRight, listWhole},
             {listWhole, null, null, listStairOnlyRight, null, listWhole},
             {listOpenLeft, null, listStairOnlyRight, null, null, listWhole}
         };
         
-        this.createSolidObjFrom(gameWorld, residenceMap, 1f);
+        this.createSolidObjFrom(gameWorld, this.residenceMap, 1f);
     }
     
     @Override
     public void createForegroundObj(GameWorld gameWorld, StructureForeground structureForeground){
-        this.createForegroundObjFrom(gameWorld, structureForeground, 6, 4, 1f);
+        this.createForegroundObjFrom(gameWorld, structureForeground, 0, 1f);
     }
 }

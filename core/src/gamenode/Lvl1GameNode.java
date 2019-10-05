@@ -216,10 +216,6 @@ public class Lvl1GameNode extends LvlGameNode{
         tree = new TreeWithoutLeaf(game.getGameWorld().getWorld(), -500f, -110f);
         game.getGameWorld().addObject2DToWorld(tree);
         
-        Poutrelle poutrelle = new Poutrelle(game.getGameWorld().getWorld(), -1600f, -50f);
-        //poutrelle.physicBody.setTransform(poutrelle.physicBody.getPosition(), -70);
-        game.getGameWorld().addObject2DToWorld(poutrelle);
-        
         Ventilo ventilo = new Ventilo(game.getGameWorld().getWorld(), -2200f, -100f, 3f, (float) (Math.PI / 2), true);
         game.getGameWorld().addObject2DToWorld(ventilo);
         
