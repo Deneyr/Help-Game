@@ -83,7 +83,6 @@ public class Scaffolding extends SolidObject2D{
         this.collisionFixture.add(fix);
         
         this.physicBody = groundBody;
-        //this.physicBody.setLinearVelocity(new Vector2(0.5f, 0));
     }
     
     @Override

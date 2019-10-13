@@ -17,7 +17,7 @@ import ressourcesmanagers.TextureManager;
  * @author Deneyr
  */
 public class BackgroundMenuComponent extends GuiComponent{
-    private static final String TEXT = "background/cityBackground.jpg";
+    private static final String TEXT = "background/cityBackground.png";
     
     private static final float SCALE_X = 3f;
     private static final float SCALE_Y = 3f;

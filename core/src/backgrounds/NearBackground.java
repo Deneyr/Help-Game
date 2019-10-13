@@ -17,9 +17,9 @@ import ressourcesmanagers.TextureManager;
  */
 public class NearBackground extends BackgroundWorld{
 
-    public static final String BUILDING1 = "building/Obstacle_Maison.png";
-    public static final String BUILDING2 = "building/Obstacle_Maison10.png";
-    public static final String BUILDING3 = "building/Obstacle_Maison3.png";
+    public static final String BUILDING1 = "building/Background_Maison.png";
+    public static final String BUILDING2 = "building/Background_Maison10.png";
+    public static final String BUILDING3 = "building/Background_Maison3.png";
     
     
     public NearBackground(int seed){

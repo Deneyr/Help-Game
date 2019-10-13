@@ -36,19 +36,25 @@ public class Poutrelle extends SolidObject2D{
     private float angle;
     private float speed;
     private float maxRadius; 
+    private Vector2 direction;
     
     private Vector2 startPosition;
-    private int scalarSign;
     
-    public Poutrelle(World world, float posX, float posY, float angle, float speed, float maxRadius, float scale){
+    public Poutrelle(World world, float posX, float posY, float angle, Vector2 direction, float speed, float maxRadius, float scale){
         
         this.scale = scale;
         this.angle = angle;
         this.speed = speed;
         this.maxRadius = maxRadius;
         
+        if(direction != null 
+                && (direction.x != 0 || direction.y != 0)){
+            this.direction = direction.rotateRad(angle);
+        }else{
+            this.direction = new Vector2(1, 0).rotateRad(angle);
+        }
+        
         this.startPosition = new Vector2(posX * P2M, posY * P2M);
-        this.scalarSign = 1;
         
         // Part graphic
         this.assignTextures();
@@ -97,7 +103,7 @@ public class Poutrelle extends SolidObject2D{
         this.physicBody.setTransform(this.getPositionBody(), this.angle);
         
         if(this.speed > 0){
-            this.physicBody.setLinearVelocity(new Vector2(1, 0).rotateRad(this.angle).scl(this.speed * this.scalarSign));
+            this.physicBody.setLinearVelocity(new Vector2(this.direction).scl(this.speed));
 
             // ActionFixture
             Set<Fixture> setFixtures = new HashSet();
@@ -129,18 +135,18 @@ public class Poutrelle extends SolidObject2D{
         super.updateLogic(deltaTime);
         
         if(this.speed > 0){
-            Vector2 displacementVector = new Vector2(1, 0).rotateRad(angle);
+            
+            Vector2 displacementVector = new Vector2(this.direction);
 
             Vector2 distVector = this.getPositionBody().sub(this.startPosition);
             if(distVector.len2() > this.maxRadius * this.maxRadius){
-                if(distVector.crs(displacementVector) > 0){
-                    this.scalarSign = -1;
-
-                }else{
-                    this.scalarSign = 1;
+                
+                float scalarSign = 1;
+                if(distVector.dot(displacementVector) > 0){
+                    scalarSign = -1;
                 }
 
-                this.physicBody.setLinearVelocity(displacementVector.scl(this.speed * this.scalarSign));
+                this.physicBody.setLinearVelocity(displacementVector.scl(this.speed * scalarSign));
             }
 
             this.kinematicActionFixture.applyAction(deltaTime, this);

@@ -17,7 +17,7 @@ import ressourcesmanagers.TextureManager;
  */
 public class FarBackground extends BackgroundWorld{
 
-    public static final String FARBACKGROUND = "background/cityBackground.jpg";
+    public static final String FARBACKGROUND = "background/cityBackground.png";
     
     
     public FarBackground(int seed){

@@ -36,9 +36,11 @@ public class Pipe extends SolidObject2D{
     private boolean isThereString;
     private StringObject2D stringObject2D;
     
-    public Pipe(World world, float posX, float posY, boolean isThereString){
+    public Pipe(World world, float posX, float posY, float scale, boolean isThereString){
         
         this.isThereString = isThereString;
+        
+        this.scale = scale;
         
         // Part physic
         
@@ -58,7 +60,7 @@ public class Pipe extends SolidObject2D{
         // Create a polygon shape
         PolygonShape ground = new PolygonShape();
         
-        ground.setAsBox(128 * P2M * SCALE_X, 40 * P2M * SCALE_Y, new Vector2(0, 0), 0);
+        ground.setAsBox(128 * P2M * this.scale * SCALE_X, 40 * P2M * this.scale * SCALE_Y, new Vector2(0, 0), 0);
         
         FixtureDef fixtureDef = new FixtureDef();
         
@@ -79,7 +81,7 @@ public class Pipe extends SolidObject2D{
         
         this.stringObject2D = null;
         if(this.isThereString){
-            this.stringObject2D = new StringObject2D(this.physicBody, world, posX, posY + (200 * SCALE_Y * StringObject2D.SCALE_Y + 30 * SCALE_Y), 200 * SCALE_Y * StringObject2D.SCALE_Y + 30 * SCALE_Y);
+            this.stringObject2D = new StringObject2D(this.physicBody, world, posX, posY + (200 * this.scale * SCALE_Y * StringObject2D.SCALE_Y + 30 * this.scale * SCALE_Y), 200 * this.scale * SCALE_Y * StringObject2D.SCALE_Y + 30 * this.scale * SCALE_Y, this.scale);
         }
         
         // Part graphic
@@ -120,11 +122,13 @@ public class Pipe extends SolidObject2D{
         
         private Joint joint;
                 
-        private static final float SCALE_Y = 2f;
+        private static final float SCALE_Y = 4f;
         
-        public StringObject2D(Body ownerBody, World world, float posX, float posY, float offsetY){
+        public StringObject2D(Body ownerBody, World world, float posX, float posY, float offsetY, float scale){
             
             this.priority = 1;          
+            
+            this.scale = scale;
             
             // Part physic
             BodyDef groundBodyDef = new BodyDef();    
@@ -135,7 +139,7 @@ public class Pipe extends SolidObject2D{
        
             
             PolygonShape ground = new PolygonShape();
-            ground.setAsBox(88 * P2M * Pipe.SCALE_X, 199 * P2M * StringObject2D.SCALE_Y * Pipe.SCALE_Y, new Vector2(0, 0), 0);
+            ground.setAsBox(88 * P2M * this.scale * Pipe.SCALE_X, 199 * P2M * this.scale * StringObject2D.SCALE_Y * Pipe.SCALE_Y, new Vector2(0, 0), 0);
             // Set the polygon shape as a box which is twice the size of our view port and 20 high
             // (setAsBox takes half-width and half-height as arguments)
             FixtureDef fixtureDef = new FixtureDef();
