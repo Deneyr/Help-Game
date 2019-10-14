@@ -28,7 +28,9 @@ public class SoundMusicManager implements GameEventListener, Disposable{
     private float volume;
     
     private Music music;
+    private Music mainMusic;
     
+    private MusicChangeManager musicChangeManager;
     
     // Map Sound;
     private Map<String, List<String>> mapAttackSound; 
@@ -41,15 +43,24 @@ public class SoundMusicManager implements GameEventListener, Disposable{
     private Map<String, Long> mapIdLoopSound;
     private Set<String> setLoopSoundPathUsed;
     
+    private Map<String, String> mapEndCinematicMusic; 
+    private Map<String, String> mapCinematicMusic;  
+    private Map<String, String> mapLvlStartMusic;
+    
     // Timer score increase.
     private LocalDateTime lastScoreIncreaseTime;
     private int scoreNumber;
     
     public SoundMusicManager(){
-        this.volume = 0.6f;
+        this.volume = 0.3f;
+        
+        this.music = null;
+        this.mainMusic = null;
         
         this.scoreNumber = 0;
         this.lastScoreIncreaseTime = LocalDateTime.now();
+        
+        this.musicChangeManager = new MusicChangeManager();
         
         // Part attack sounds map fill.
         this.mapAttackSound = new HashMap<String, List<String>>();
@@ -91,17 +102,32 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         this.putLoopSound("ventiloWind", "sounds/environment/Ventilo_Wind_Loop.ogg");
         this.mapIdLoopSound = new HashMap<String, Long>();
         this.setLoopSoundPathUsed = new HashSet<String>();
+        
+        // Part musics.
+        this.mapEndCinematicMusic = new HashMap<String, String>();
+        this.mapEndCinematicMusic.put("1:L'orgueil\nd'une grand-mère", "sounds/first_lvl.ogg");
+        
+        this.mapCinematicMusic = new HashMap<String, String>();
+        this.mapCinematicMusic.put("encounterTemeri", "sounds/temeri.ogg");
+        
+        this.mapLvlStartMusic = new HashMap<String, String>();
+        this.mapLvlStartMusic.put("MainMenuGameNode", "sounds/Help_MainTitle.ogg");
     }
     
     
     @Override
     public void onGameEvent(EventType type, String details, Vector2 location) {
-        if(Math.abs(location.x) <= 1
+
+        if(type == EventType.LVLSTART
+                || type == EventType.CINEMATIC
+                || type == EventType.ENDCINEMATIC){
+            this.launchMusic(type, details);
+        }
+        
+        if(location != null 
+                && Math.abs(location.x) <= 1
                 && Math.abs(location.y) <= 1){
             switch(type){
-                case GAMESTART:
-                    //this.launchMusic(details);
-                    break;
                 case ATTACK:
                     this.launchSoundAttak(location, details);
                     break;
@@ -127,6 +153,10 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         }
     }
 
+    public void step(float deltaTime){
+        this.musicChangeManager.updateMusicVolume(deltaTime);
+    }
+    
     @Override
     public void onHelpGameEvent(HelpGame helpGame, EventType type, String details, Vector2 location) {
         this.onGameEvent(type, details, location);
@@ -139,6 +169,13 @@ public class SoundMusicManager implements GameEventListener, Disposable{
             this.music = null;
         }
         
+        if(this.mainMusic != null){
+            this.mainMusic.stop();
+            this.mainMusic = null;
+        }
+        
+        this.musicChangeManager.dispose();
+        
         this.clearAllLoopSound();
         
         this.setLoopSoundPathUsed.clear();
@@ -147,17 +184,65 @@ public class SoundMusicManager implements GameEventListener, Disposable{
     
     
     // Music launcher.
-    private void launchMusic(String details){
-        if(details.equals("MainMenuGameNode")){
-            this.music = MusicManager.getInstance().getMusic("sounds/Help_MainTitle.ogg");
-        }else if(details.equals("Lvl1GameNode")){
-            this.music = MusicManager.getInstance().getMusic("sounds/first_lvl.ogg");
+    private void launchMusic(EventType type, String details){ 
+        Music newMusic = null;
+        Music newMainMusic = null;
+        
+        switch (type) {
+            /*case GAMESTART:
+                if(this.mapEndCinematicMusic.containsKey(details)){
+                    newMusic = MusicManager.getInstance().getMusic(this.mapEndCinematicMusic.get(details));
+                    newMainMusic = newMusic;
+                }   
+                break;*/
+            case LVLSTART:
+                if(this.mapLvlStartMusic.containsKey(details)){
+                    newMusic = MusicManager.getInstance().getMusic(this.mapLvlStartMusic.get(details));
+                }   
+                break;
+            case CINEMATIC:
+                if(this.mapCinematicMusic.containsKey(details)){
+                    newMusic = MusicManager.getInstance().getMusic(this.mapCinematicMusic.get(details));
+                }   
+                break;
+            case ENDCINEMATIC:
+                newMusic = this.mainMusic;
+
+                if(this.mapEndCinematicMusic.containsKey(details)){
+                    newMusic = MusicManager.getInstance().getMusic(this.mapEndCinematicMusic.get(details));
+                    newMainMusic = newMusic;
+                }   
+                break;
+
         }
         
-        if(this.music != null){
-            this.music.setVolume(this.volume);
-            this.music.setLooping(true);
-            this.music.play();
+        boolean stop = true;
+        
+        if(newMainMusic != null && this.mainMusic != newMainMusic){
+            if(this.mainMusic != null){
+                this.mainMusic.stop();
+            }
+            
+            stop = false;
+            this.mainMusic = newMainMusic;
+        }
+        
+        if(newMusic != null && this.music != newMusic){
+            /*if(this.music != null && this.mainMusic == this.music){
+                this.music.pause();
+            }else if(this.music != null){
+                this.music.stop();
+            }*/
+            
+            this.music = newMusic;
+            this.musicChangeManager.changeMusic(this.music, this.volume, stop);
+            
+            /*
+            if(this.music != null){
+                this.music.setVolume(this.volume);
+                this.music.setLooping(true);
+                this.music.play();
+            }*/
         }
     }
     
@@ -328,6 +413,107 @@ public class SoundMusicManager implements GameEventListener, Disposable{
             Sound sound = SoundManager.getInstance().getSound(pathSound);
                 
             sound.stop();
+        }
+    }
+    
+    private class MusicChangeManager implements Disposable{
+        private static final float TOTALTIME = 3f;
+        private float currentTime;
+        private float startVolumeFirst;
+        
+        private boolean stop;
+        
+        private Music previousMusic;
+        private Music currentMusic;
+        private float volumeToReach;
+        
+        public MusicChangeManager(){
+            this.previousMusic = null;
+            this.currentMusic = null;
+            
+            this.stop = true;
+        }
+        
+        public void changeMusic(Music newMusic, float volumeToReach, boolean stop){
+            
+            if(this.previousMusic != null){
+                if(this.stop){
+                    this.previousMusic.stop();
+                }else{
+                    this.previousMusic.pause();
+                }
+            }
+            
+            this.previousMusic = this.currentMusic;
+            this.currentMusic = newMusic;
+            this.volumeToReach = volumeToReach;
+            
+            this.stop = stop;
+            
+            if(this.previousMusic != null){
+                this.startVolumeFirst = this.previousMusic.getVolume();
+            }else{
+                this.startVolumeFirst = 0;
+            }
+            
+            if(this.currentMusic != null){
+                this.currentMusic.setVolume(0);
+                this.currentMusic.setLooping(true);
+                this.currentMusic.play();
+            }
+            
+            this.currentTime = 0;
+        }
+        
+        public void updateMusicVolume(float deltaTime){
+            
+            if(this.previousMusic != null || this.currentMusic != null){
+                if(this.previousMusic != null){
+                    float newVolume = this.getVolumeLinear(this.startVolumeFirst, 0, this.currentTime);
+                    if(newVolume > 0){
+                        this.previousMusic.setVolume(newVolume);
+                    }else{
+                        if(this.stop){
+                            this.previousMusic.stop();
+                        }else{
+                            this.previousMusic.pause();
+                        }
+                        this.previousMusic = null;
+                    }
+                }
+
+                if(this.currentMusic != null){
+                    float newVolume = this.getVolumeLinear(0, this.volumeToReach, this.currentTime);
+                    if(newVolume < this.volumeToReach){
+                        this.currentMusic.setVolume(newVolume);
+                    }else{
+                        this.currentMusic.setVolume(this.volumeToReach);
+                    }
+                }
+
+                this.currentTime += deltaTime;
+            }
+        }
+
+        @Override
+        public void dispose() {
+            if(this.previousMusic != null){
+                this.previousMusic.stop();
+                this.previousMusic = null;
+            }
+            
+            if(this.currentMusic != null){
+                this.currentMusic.stop();
+                this.currentMusic = null;
+            }
+        } 
+        
+        private float getVolumeLinear(float startVolume, float endVolume, float currentTime){
+            if(currentTime > TOTALTIME){
+                return endVolume;
+            }
+            
+            return startVolume * (1 - currentTime / TOTALTIME) + endVolume * currentTime / TOTALTIME;
         }
     }
 }

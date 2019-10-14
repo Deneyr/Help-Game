@@ -787,15 +787,17 @@ public class Lvl1UpperCity extends LvlGameNode{
         game.getGameWorld().addObject2DToWorld(activableTrigger);
              
         // Music & Sounds.
-        
-        MusicManager.getInstance().registerResource("sounds/first_lvl.ogg");
-        
+              
         this.initSoundsLvl();
     }
     
     @Override
     protected void initSoundsLvl(){
         super.initSoundsLvl();
+        
+        // Musics
+        MusicManager.getInstance().registerResource("sounds/first_lvl.ogg");
+        MusicManager.getInstance().registerResource("sounds/temeri.ogg");
         
         // Cinematic sounds.
         SoundManager.getInstance().getSound("sounds/cinematic/backOnFeet.ogg");

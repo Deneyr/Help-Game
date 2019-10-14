@@ -386,13 +386,13 @@ public class GameWorld implements WorldPlane, GameEventListener{
     }
     
     public void notifyGameEventListeners(EventType event, String details, Vector2 location){
-        if(hero != null && this.screenFOV > 0){
-            float distHeroX = (float) ((location.x - hero.getPositionBody().x) * 2f / this.screenFOV);
-            float distHeroY = (float) ((location.y - hero.getPositionBody().y) * 2f / this.screenFOV);
+        if(location != null && this.hero != null && this.screenFOV > 0){
+            float distHeroX = (float) ((location.x - this.hero.getPositionBody().x) * 2f / this.screenFOV);
+            float distHeroY = (float) ((location.y - this.hero.getPositionBody().y) * 2f / this.screenFOV);
 
             location = new Vector2(distHeroX, distHeroY);
         }
-        
+
         if(event != EventType.LOOP
                 || (Math.abs(location.x) < 1.5 && Math.abs(location.y) < 1.5)){
             for(WeakReference<GameEventListener> refEventGameListener : this.listEventGameListeners){

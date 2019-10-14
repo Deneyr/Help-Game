@@ -124,9 +124,13 @@ public class CinematicManager implements Disposable{
         }
     }
     
-    private void notifyGameStart(Vector2 gameStartPosition){
+    private void notifyEndCinematic(Vector2 gameStartPosition, boolean gameStart){
         if(this.gameEventListener.get() != null){
-            this.gameEventListener.get().onGameEvent(GameEventListener.EventType.GAMESTART, this.levelId, gameStartPosition);
+            this.gameEventListener.get().onGameEvent(GameEventListener.EventType.ENDCINEMATIC, this.levelId, gameStartPosition);
+            
+            if(gameStart){
+                this.gameEventListener.get().onGameEvent(GameEventListener.EventType.GAMESTART, this.levelId, gameStartPosition);
+            }
         }
     }
     
@@ -150,9 +154,7 @@ public class CinematicManager implements Disposable{
                 }
             }
             
-            if(this.isStartCinematic){
-                this.notifyGameStart(gameStartPosition);
-            }
+            this.notifyEndCinematic(gameStartPosition, this.isStartCinematic);
             
             this.cinematicState = CinematicState.STOP;
         }

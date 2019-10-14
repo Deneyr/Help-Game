@@ -20,6 +20,7 @@ public interface GameEventListener {
     public enum EventType{
         SCORE,
         CINEMATIC,
+        ENDCINEMATIC,
         DAMAGE,
         ATTACK,
         LIFE,

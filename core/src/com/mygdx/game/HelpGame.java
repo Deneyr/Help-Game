@@ -147,7 +147,10 @@ public class HelpGame extends Game implements GameEventListener{
         // Render screens
         this.gameNodeManager.renderScreens(this, Gdx.graphics.getDeltaTime());
         
-        // Forward game events.
+        // Manage sounds & Musics
+        this.soundMusicManager.step(Gdx.graphics.getDeltaTime());
+        
+        // Forward game events
         synchronized(this.listGameEvents){
             this.computeGameEvents();
         }
