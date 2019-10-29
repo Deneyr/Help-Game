@@ -29,8 +29,11 @@ public class BarbedTriggeredObject2D extends TriggeredObject2D{
     private static final float SCALE_X = 0.5f;
     private static final float SCALE_Y = 0.5f;
     
+    private float angle;
     
-    public BarbedTriggeredObject2D(World world, float posX, float posY){
+    public BarbedTriggeredObject2D(World world, float posX, float posY, float angle){
+        
+        this.angle = angle;
         
         // Part graphic
         this.assignTextures();
@@ -71,6 +74,8 @@ public class BarbedTriggeredObject2D extends TriggeredObject2D{
         
         fix.setSensor(true);
         fix.setUserData(this);
+        
+        this.physicBody.setTransform(this.getPositionBody(), this.angle);
     }
     
     @Override

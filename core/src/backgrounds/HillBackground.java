@@ -71,7 +71,7 @@ public class HillBackground extends BackgroundWorld{
                 && cloud2 != null
                 && bird != null){
             
-            BackgroundPart part = new BackgroundPart(200 * P2M, new Vector2(-1000 * P2M, -75 * P2M),  new Vector2(2000 * P2M, -75 * P2M), 1f);
+            BackgroundPart part = new BackgroundPart(200 * P2M, new Vector2(-1000 * P2M, -75 * P2M),  new Vector2(50000 * P2M, -75 * P2M), 1f);
         
             part.addObject2D2Scenary(hill, 30);
             part.addObject2D2Scenary(building, 30);
@@ -81,10 +81,10 @@ public class HillBackground extends BackgroundWorld{
 
             // Dynamic elem
 
-            this.cloudsLogic = new CloudDynamicElemLogic(cloud, 1, -2000 * P2M, 2000 * P2M, 10);
-            this.cloudsLogic2 = new CloudDynamicElemLogic(cloud2, 1, -2000 * P2M, 2000 * P2M, 10);
-            this.cloudsLogic3 = new CloudDynamicElemLogic(cloud2, 1, -2000 * P2M, 2000 * P2M, 10);
-            this.birdsLogic = new BirdsDynamicElemLogic(bird, 2, -2000 * P2M, 2000 * P2M, 4);
+            this.cloudsLogic = new CloudDynamicElemLogic(cloud, 1, -2000 * P2M, 50000 * P2M, 10);
+            this.cloudsLogic2 = new CloudDynamicElemLogic(cloud2, 1, -2000 * P2M, 50000 * P2M, 10);
+            this.cloudsLogic3 = new CloudDynamicElemLogic(cloud2, 1, -2000 * P2M, 50000 * P2M, 10);
+            this.birdsLogic = new BirdsDynamicElemLogic(bird, 2, -2000 * P2M, 50000 * P2M, 4);
         }
         
     } 

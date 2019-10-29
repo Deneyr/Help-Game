@@ -216,14 +216,8 @@ public class SoundMusicManager implements GameEventListener, Disposable{
 
         }
         
-        boolean stop = true;
-        
         if(newMainMusic != null && this.mainMusic != newMainMusic){
-            if(this.mainMusic != null){
-                this.mainMusic.stop();
-            }
-            
-            stop = false;
+            this.musicChangeManager.setMainMusic(newMainMusic);
             this.mainMusic = newMainMusic;
         }
         
@@ -235,7 +229,7 @@ public class SoundMusicManager implements GameEventListener, Disposable{
             }*/
             
             this.music = newMusic;
-            this.musicChangeManager.changeMusic(this.music, this.volume, stop);
+            this.musicChangeManager.changeMusic(this.music, this.volume);
             
             /*
             if(this.music != null){
@@ -421,7 +415,7 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         private float currentTime;
         private float startVolumeFirst;
         
-        private boolean stop;
+        private Music mainMusic;
         
         private Music previousMusic;
         private Music currentMusic;
@@ -431,13 +425,13 @@ public class SoundMusicManager implements GameEventListener, Disposable{
             this.previousMusic = null;
             this.currentMusic = null;
             
-            this.stop = true;
+            this.mainMusic = null;
         }
         
-        public void changeMusic(Music newMusic, float volumeToReach, boolean stop){
+        public void changeMusic(Music newMusic, float volumeToReach){
             
             if(this.previousMusic != null){
-                if(this.stop){
+                if(this.previousMusic != this.mainMusic){
                     this.previousMusic.stop();
                 }else{
                     this.previousMusic.pause();
@@ -447,8 +441,6 @@ public class SoundMusicManager implements GameEventListener, Disposable{
             this.previousMusic = this.currentMusic;
             this.currentMusic = newMusic;
             this.volumeToReach = volumeToReach;
-            
-            this.stop = stop;
             
             if(this.previousMusic != null){
                 this.startVolumeFirst = this.previousMusic.getVolume();
@@ -473,7 +465,7 @@ public class SoundMusicManager implements GameEventListener, Disposable{
                     if(newVolume > 0){
                         this.previousMusic.setVolume(newVolume);
                     }else{
-                        if(this.stop){
+                        if(this.previousMusic != this.mainMusic){
                             this.previousMusic.stop();
                         }else{
                             this.previousMusic.pause();
@@ -495,6 +487,14 @@ public class SoundMusicManager implements GameEventListener, Disposable{
             }
         }
 
+        public void setMainMusic(Music mainMusic){
+            if(this.mainMusic != null){
+                this.mainMusic.stop();
+            }
+            
+            this.mainMusic = mainMusic;
+        }
+        
         @Override
         public void dispose() {
             if(this.previousMusic != null){

@@ -46,7 +46,7 @@ public class NearBackground extends BackgroundWorld{
                 && build2 != null
                 && build3 != null){
             
-            BackgroundPart part = new BackgroundPart(111 * P2M, new Vector2(-1000 * P2M, -25 * P2M),  new Vector2(2000 * P2M, -25 * P2M), 1f);
+            BackgroundPart part = new BackgroundPart(111 * P2M, new Vector2(-1000 * P2M, -25 * P2M),  new Vector2(50000 * P2M, -25 * P2M), 1f);
         
             part.addObject2D2Scenary(build1, 30);
             part.addObject2D2Scenary(build2, 30);

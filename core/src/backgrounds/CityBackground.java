@@ -39,7 +39,7 @@ public class CityBackground extends BackgroundWorld{
         Texture building = TextureManager.getInstance().getTexture(BUILDING, this);
         
         if(building != null){
-            BackgroundPart part = new BackgroundPart(111 * P2M, new Vector2(-1000 * P2M, -40 * P2M),  new Vector2(2000 * P2M, -40 * P2M), 1f);
+            BackgroundPart part = new BackgroundPart(111 * P2M, new Vector2(-1000 * P2M, -40 * P2M),  new Vector2(50000 * P2M, -40 * P2M), 1f);
         
             part.addObject2D2Scenary(building, 70);
             part.createSpriteList(this.seed);

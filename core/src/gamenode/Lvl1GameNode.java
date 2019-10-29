@@ -107,13 +107,13 @@ public class Lvl1GameNode extends LvlGameNode{
         
         // init solid objects
         
-        BarbedTriggeredObject2D barbed = new BarbedTriggeredObject2D(game.getGameWorld().getWorld(), -1900f, -185);
+        BarbedTriggeredObject2D barbed = new BarbedTriggeredObject2D(game.getGameWorld().getWorld(), -1900f, -185, 0);
         game.getGameWorld().addObject2DToWorld(barbed, true);
         
-        barbed = new BarbedTriggeredObject2D(game.getGameWorld().getWorld(), -1850f, -185);
+        barbed = new BarbedTriggeredObject2D(game.getGameWorld().getWorld(), -1850f, -185, 0);
         game.getGameWorld().addObject2DToWorld(barbed, true);
         
-        barbed = new BarbedTriggeredObject2D(game.getGameWorld().getWorld(), -1780f, -185);
+        barbed = new BarbedTriggeredObject2D(game.getGameWorld().getWorld(), -1780f, -185, 0);
         game.getGameWorld().addObject2DToWorld(barbed, true);
         
         // init checkpoints

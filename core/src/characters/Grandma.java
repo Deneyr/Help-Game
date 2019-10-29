@@ -20,6 +20,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.Character2D;
 import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
@@ -231,7 +232,7 @@ public class Grandma extends Character2D{
         
         createInfluences();
         
-        influences2Actions();
+        influences2Actions(deltaTime);
         
         // apply damages OR bounce
         updateShield(deltaTime);
@@ -319,7 +320,7 @@ public class Grandma extends Character2D{
             fix.setUserData(this);
             
             PolygonShape feet = new PolygonShape();
-            feet.setAsBox(8 * P2M, 3 * P2M, new Vector2(-LEFT_RIGHT_DIST * P2M, (72 - 70 - 36) * P2M), 0);
+            feet.setAsBox(4 * P2M, 3 * P2M, new Vector2(-LEFT_RIGHT_DIST * P2M, (72 - 70 - 36) * P2M), 0);
             fixtureDef = new FixtureDef();
             fixtureDef.shape = feet;
             fixtureDef.density = 1f; 
@@ -376,7 +377,7 @@ public class Grandma extends Character2D{
             fix.setUserData(this);
             
             PolygonShape feet = new PolygonShape();
-            feet.setAsBox(8 * P2M , 3 * P2M, new Vector2(LEFT_RIGHT_DIST * P2M, (72 - 70 - 36) * P2M), 0);
+            feet.setAsBox(4 * P2M , 3 * P2M, new Vector2(LEFT_RIGHT_DIST * P2M, (72 - 70 - 36) * P2M), 0);
             fixtureDef = new FixtureDef();
             fixtureDef.shape = feet;
             fixtureDef.density = 1f; 
@@ -481,7 +482,7 @@ public class Grandma extends Character2D{
         }
     }
     
-    private void influences2Actions(){            
+    private void influences2Actions(float deltaTime){            
         Iterator<GrandmaInfluence> it = Grandma.this.influences.iterator();
         boolean isWalking = false;
         this.gotPurse = false;
@@ -540,7 +541,7 @@ public class Grandma extends Character2D{
                 }
             }
         }
-        this.currentStateNode.updatePhysic();
+        this.currentStateNode.updatePhysic(deltaTime);
         
         this.influences.clear();
     }
@@ -634,6 +635,8 @@ public class Grandma extends Character2D{
         
         private boolean restartAnimation;
         
+        private boolean jumped = false;
+        private float currentJumpTime = -1f;
         
         public StateNode(GrandmaState state){
             this.stateNode = state;
@@ -1199,7 +1202,7 @@ public class Grandma extends Character2D{
         
         // Part physic
         
-        public void updatePhysic(){
+        public void updatePhysic(float deltaTime){
             Vector2 velocity = Grandma.this.physicBody.getLinearVelocity();
             
             if(Grandma.this.lifeState == LifeState.DEAD){
@@ -1277,8 +1280,8 @@ public class Grandma extends Character2D{
             }
             
             
-            if(!Grandma.this.isFlying() 
-                    && (this.stateNode == GrandmaState.JUMP_FOLDED
+            if(/*!Grandma.this.isFlying() 
+                    && */(this.stateNode == GrandmaState.JUMP_FOLDED
                     || this.stateNode == GrandmaState.JUMP_UNFOLDED_MIDDLE
                     || this.stateNode == GrandmaState.JUMP_UNFOLDED_UP)){
                 
@@ -1292,10 +1295,27 @@ public class Grandma extends Character2D{
                         isMove = true;
                     }
                 }
-                if(isMove){
-                    velocity.y += 4f;
+                if(isMove){ // && this.jumped == false){
+                    if(this.jumped == false){
+                        velocity.y = 0;
+                        this.jumped = true;
+                        this.currentJumpTime = 0;
+                    }
+                    
+                    if(this.currentJumpTime >= 0 && this.currentJumpTime < 0.10f){
+                        velocity.y += 110 * deltaTime;
+                        this.currentJumpTime += deltaTime;
+                    }else if(this.currentJumpTime >= 0.10f){
+                        velocity.y += 110 * (deltaTime - this.currentJumpTime + 0.10f);
+                        
+                        this.currentJumpTime = -1f;
+                    }
+
                 }
+            }else{
+                this.jumped = false;
             } 
+            
             
             // Clamp speed
 
@@ -1308,8 +1328,8 @@ public class Grandma extends Character2D{
             }
             
             Grandma.this.physicBody.setLinearVelocity(velocity);
-            
         }
+        
         
         public int isPauseAnimation(){
             return this.pauseAnimation;
