@@ -60,7 +60,7 @@ public class ObstacleHouse extends SolidObject2D{
         
         this.collisionFixture = new ArrayList<Fixture>();
         
-        this.priority = 3;
+        this.priority = 4;
         
         // Create a polygon shape
         

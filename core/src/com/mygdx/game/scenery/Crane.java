@@ -215,6 +215,9 @@ public class Crane extends SolidObject2D{
             // Set the polygon shape as a box which is twice the size of our view port and 20 high
             // (setAsBox takes half-width and half-height as arguments)
             FixtureDef fixtureDef = new FixtureDef();
+            
+            this.setCollisionFilterMask(fixtureDef, false);
+            
             fixtureDef.shape = ground;
             fixtureDef.density = 0f; 
             fixtureDef.friction = 0.05f;
@@ -308,6 +311,9 @@ public class Crane extends SolidObject2D{
             // Set the polygon shape as a box which is twice the size of our view port and 20 high
             // (setAsBox takes half-width and half-height as arguments)
             FixtureDef fixtureDef = new FixtureDef();
+            
+            this.setCollisionFilterMask(fixtureDef, false);
+            
             fixtureDef.shape = ground;
             fixtureDef.density = 1f; 
             fixtureDef.friction = 0.05f;
@@ -359,7 +365,7 @@ public class Crane extends SolidObject2D{
     
         public TopCraneObject2D(Body ownerBody, World world, float posX, float posY, float maxHeight){
 
-            this.priority = 1;          
+            this.priority = 3;          
 
             this.maxHeight = maxHeight;
             this.parentPosX = posX;

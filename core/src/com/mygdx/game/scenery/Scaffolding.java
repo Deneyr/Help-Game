@@ -31,12 +31,15 @@ public class Scaffolding extends SolidObject2D{
     
     private int scaffoldingIndex;
     
+    private boolean reverse;
+    
     private static final float SCALE_X = 0.5f;
     private static final float SCALE_Y = 0.5f;
     
-    public Scaffolding(World world, float posX, float posY, int index){
+    public Scaffolding(World world, float posX, float posY, int index, boolean reverse){
         
         this.scaffoldingIndex = index;
+        this.reverse = reverse;
         
         // Part graphic
         this.assignTextures();
@@ -54,7 +57,7 @@ public class Scaffolding extends SolidObject2D{
         
         this.collisionFixture = new ArrayList<Fixture>();
         
-        this.priority = 1;
+        this.priority = 3;
         
         // Create a polygon shape
         PolygonShape ground = new PolygonShape();
@@ -93,7 +96,13 @@ public class Scaffolding extends SolidObject2D{
     @Override
     public Sprite createCurrentSprite(){
         Sprite sprite = super.createCurrentSprite();
-        sprite.setScale(sprite.getScaleX() * SCALE_X, sprite.getScaleY() * SCALE_Y);
+        
+        if(this.reverse){
+            sprite.setScale(sprite.getScaleX() * SCALE_X, -sprite.getScaleY() * SCALE_Y);
+        }else{
+           sprite.setScale(sprite.getScaleX() * SCALE_X, sprite.getScaleY() * SCALE_Y); 
+        }
+        
         return sprite;
     }
 }

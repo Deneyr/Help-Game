@@ -28,7 +28,7 @@ import ressourcesmanagers.TextureManager;
 public class GroundUpperCity extends SolidObject2D {
     private static final String GROUNDTEXT = "ground/Sol.png";
     
-    private static final float SCALE_X = 100f;
+    private static final float SCALE_X = 3f;
     private static final float SCALE_Y = 3f;
     
     private int repeatWidth;
@@ -53,7 +53,7 @@ public class GroundUpperCity extends SolidObject2D {
         
         this.collisionFixture = new ArrayList<Fixture>();
         
-        this.priority = 4;
+        this.priority = 90;
         
         // Create a polygon shape
         PolygonShape ground = new PolygonShape();
@@ -92,11 +92,11 @@ public class GroundUpperCity extends SolidObject2D {
         Sprite sprite = super.createCurrentSprite();
         if(this.repeatWidth > 1){
             TextureRegion imgTextureRegion = new TextureRegion(this.texture);
-            imgTextureRegion.setRegion(0,0,this.texture.getWidth() * this.repeatWidth, this.texture.getHeight());
+            imgTextureRegion.setRegion(0, 0, this.texture.getWidth() * this.repeatWidth, this.texture.getHeight());
             sprite.setRegion(imgTextureRegion);
             
         }
-        sprite.setScale(sprite.getScaleX() * SCALE_X, sprite.getScaleY() * SCALE_Y);
+        sprite.setScale(sprite.getScaleX() * this.repeatWidth * SCALE_X, sprite.getScaleY() * SCALE_Y);
         return sprite;
     }
 }
