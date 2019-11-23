@@ -54,10 +54,12 @@ public class PlayerData implements Serializable{
      */
     public void setCurrentLevel(String currentLevel) {
         this.idCurrentLevel = currentLevel;
-
-        this.currentCheckpointIndex = -1;
     }
 
+    public void resetCheckpoint(){
+        this.currentCheckpointIndex = -1;
+    }
+    
     /**
      * @return the currentCheckpointInex
      */

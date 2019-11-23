@@ -32,6 +32,8 @@ public class OpponentDIST1 extends OpponentCAC1{
     public OpponentDIST1(World world, Object2D target, float posX, float posY){
         super(100, target);
        
+        this.spawnPoint = new Vector2(posX * P2M, posY * P2M);
+        
         // Part graphic
         this.assignTextures();
         

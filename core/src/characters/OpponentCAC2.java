@@ -38,6 +38,8 @@ public class OpponentCAC2 extends OpponentCAC1{
     public OpponentCAC2(World world, Object2D target, float posX, float posY){
         super(100, target);
         
+        this.spawnPoint = new Vector2(posX * P2M, posY * P2M);
+        
         this.maxSpeed = 4f;
         
         // Part graphic

@@ -97,7 +97,7 @@ public class BarbedTriggeredObject2D extends TriggeredObject2D{
             }else{
                 Character2D chara = (Character2D) objThatTriggered;
                 
-                damageApplied = chara.applyDamage(50, dirDamage, this);
+                damageApplied = chara.applyDamage(40, dirDamage, this);
             }
             
             if(damageApplied){

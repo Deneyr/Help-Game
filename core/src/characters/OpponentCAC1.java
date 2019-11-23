@@ -453,8 +453,8 @@ public class OpponentCAC1 extends Character2D{
         }
         
         if(this.maxDistanceFromSpawn > 0 
-                && (this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn
-                    || (this.isReseting && this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn / 2))){
+                && (Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn
+                    || (this.isReseting && Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn / 2))){
             if(!this.isReseting){
                 this.isReseting = true;
             }
@@ -511,9 +511,9 @@ public class OpponentCAC1 extends Character2D{
             return;
         }
         
-         if(this.maxDistanceFromSpawn > 0 
-                && (this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn
-                    || (this.isReseting && this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn / 2))){
+        if(this.maxDistanceFromSpawn > 0 
+                && (Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn
+                    || (this.isReseting && Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn / 2))){
             if(!this.isReseting){
                 this.isReseting = true;
             }
@@ -575,11 +575,12 @@ public class OpponentCAC1 extends Character2D{
         }
         
         if(this.maxDistanceFromSpawn > 0 
-                && (this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn
-                    || (this.isReseting && this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn / 2))){
+                && (Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn
+                    || (this.isReseting && Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn / 2))){
             if(!this.isReseting){
                 this.isReseting = true;
             }
+            
             if(this.spawnPoint.x - this.physicBody.getPosition().x > 0){
                 this.influences.add(OppInfluence.GO_RIGHT);
             }else{
@@ -640,8 +641,8 @@ public class OpponentCAC1 extends Character2D{
         }
         
         if(this.maxDistanceFromSpawn > 0 
-                && (this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn
-                    || (this.isReseting && this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn / 2))){
+                && (Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn
+                    || (this.isReseting && Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn / 2))){
             if(!this.isReseting){
                 this.isReseting = true;
             }

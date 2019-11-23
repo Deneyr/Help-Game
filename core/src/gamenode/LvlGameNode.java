@@ -146,7 +146,8 @@ public abstract class LvlGameNode extends GameNode{
         SoundManager.getInstance().getSound("sounds/action/Button_Click.ogg");
         SoundManager.getInstance().getSound("sounds/action/metalHit1.ogg");
         SoundManager.getInstance().getSound("sounds/action/metalHit2.ogg");
-        
+        SoundManager.getInstance().getSound("sounds/action/checkPointTaken.ogg");
+                
         // Damages taken.
         SoundManager.getInstance().getSound("sounds/damagesTaken/crash_box.ogg");
         SoundManager.getInstance().getSound("sounds/damagesTaken/metalHitDamage.ogg");

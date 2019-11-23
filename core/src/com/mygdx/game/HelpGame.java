@@ -291,6 +291,7 @@ public class HelpGame extends Game implements GameEventListener{
                 break;
                 case GAMEOVER:
                     if(gameEventContainer.details.equals("success")){
+                        this.getPlayerData().resetCheckpoint();
                         this.getPlayerData().setCurrentMoney(this.gameWorld.getCurrentMoney());
                     }
                 break;

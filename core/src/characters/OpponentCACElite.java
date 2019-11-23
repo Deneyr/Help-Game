@@ -40,6 +40,8 @@ public class OpponentCACElite extends OpponentCAC2{
         
         this.maxSpeed = 6f;
         
+        this.spawnPoint = new Vector2(posX * P2M, posY * P2M);
+        
         // Part graphic
         this.assignTextures();
         

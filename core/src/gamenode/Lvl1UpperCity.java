@@ -16,6 +16,8 @@ import backgrounds.NearBackground;
 import characters.AllyTemeri;
 import characters.Grandma;
 import characters.OpponentCAC1;
+import characters.OpponentCAC2;
+import characters.OpponentCACElite;
 import characters.OpponentThief;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -74,11 +76,10 @@ public class Lvl1UpperCity extends LvlGameNode{
     @Override
     protected Vector2 initCheckpoints(HelpGame game, int checkpointIndex)
     {   
-        /*CheckPointTriggeredObject2D checkPoint = new CheckPointTriggeredObject2D(game.getGameWorld().getWorld(), 600f, -0f);
+        CheckPointTriggeredObject2D checkPoint = new CheckPointTriggeredObject2D(game.getGameWorld().getWorld(), 25000f, 1100f);
         game.getGameWorld().addCheckPoint(checkPoint, checkpointIndex);
         
-        return game.getGameWorld().getPositionAtCheckpoint(checkpointIndex);*/
-        return null;
+        return game.getGameWorld().getPositionAtCheckpoint(checkpointIndex);
     }
     
     
@@ -669,13 +670,137 @@ public class Lvl1UpperCity extends LvlGameNode{
         if(heroPosition != null){
             hero = new Grandma(game.getGameWorld().getWorld(), heroPosition.x, heroPosition.y);
         }else{
-            hero = new Grandma(game.getGameWorld().getWorld(), 0, 0);//40800f, 700f);
+            hero = new Grandma(game.getGameWorld().getWorld(), 0, 0);
         }
         game.getGameWorld().setHero(hero);
         
         // init opponents
         OpponentThief thief = new OpponentThief(game.getGameWorld().getWorld(), hero, -390f, 0f);
         game.getGameWorld().addObject2DToWorld(thief, false);
+        
+        
+        OpponentCAC1 opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 27150, 700);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 27200f, 700f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 27250f, 700f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 28000f, 700f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 28060f, 700f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 28070f, 700f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 32100f, 700f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 32150f, 700f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 32200f, 700f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 32350f, 700f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 32400f, 700f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 32500f, 700f);
+        opp.setMaxDistance(40);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 32550f, 700f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 32600f, 700f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 32800f, 700f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 32850f, 700f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 33320f, 800f);
+        opp.setMaxDistance(30);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 35750f, 600f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 35800f, 600f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 35950f, 600f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 36000f, 600f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 36050f, 600f);
+        opp.setMaxDistance(40);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 35900f, 600f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 35950f, 600f);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 39400f, 900f);
+        opp.setMaxDistance(80);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 39420f, 900f);
+        opp.setMaxDistance(40);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 39900f, 900f);
+        opp.setMaxDistance(80);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 39920f, 900f);
+        opp.setMaxDistance(40);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 39880f, 900f);
+        opp.setMaxDistance(40);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 41020f, 900f);
+        opp.setMaxDistance(20);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 41030f, 900f);
+        opp.setMaxDistance(20);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        opp = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 41010f, 900f);
+        opp.setMaxDistance(20);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        
+        opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 41360f, 760f);
+        game.getGameWorld().addObject2DToWorld(opp, true);      
+        
+        opp = new OpponentCACElite(game.getGameWorld().getWorld(), hero, 41380f, 760f);
+        opp.setMaxDistance(200);
+        game.getGameWorld().addObject2DToWorld(opp, true);
+        
+        
         
         /*OpponentCAC1 opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -500, 0);
         opp.setMaxDistance(200);
@@ -990,7 +1115,7 @@ public class Lvl1UpperCity extends LvlGameNode{
         
         for(int i = 0; i < 6; i++){
             for(int j = 0; j < 2; j++){
-                box = new SmallBox(game.getGameWorld().getWorld(), 41000 + j * 40f, 660 + i * 40f);
+                box = new SmallBox(game.getGameWorld().getWorld(), 41000f + j * 40f, 660 + i * 40f);
                 game.getGameWorld().addObject2DToWorld(box, true);
             } 
         }  
@@ -1109,7 +1234,7 @@ public class Lvl1UpperCity extends LvlGameNode{
         charaTimeline.addEntry(9.2f, "per_walk");
         charaTimeline.addEntry(10.8f, "per_walk");
         charaTimeline.addEntry(10.2f, "per_jump");
-        charaTimeline.addEntry(10.25f, "per_jump");
+        charaTimeline.addEntry(10.28f, "per_jump");
         charaTimeline.addEntry(10.9f, "per_right");
         cin1.addCharacterTimeline(charaTimeline);
         

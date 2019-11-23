@@ -91,6 +91,7 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         this.putActionSound("metalHit", "sounds/action/metalHit2.ogg");
         this.putActionSound("onGround", "sounds/cinematic/onGround.ogg");
         this.putActionSound("onFeet", "sounds/cinematic/backOnFeet.ogg");
+        this.putActionSound("0", "sounds/action/checkPointTaken.ogg");
         
         // Part damages taken sounds map fill.
         this.mapDamagesTakenSound = new HashMap<String, List<String>>();
@@ -132,6 +133,7 @@ public class SoundMusicManager implements GameEventListener, Disposable{
                     this.launchSoundAttak(location, details);
                     break;
                 case ACTION:
+                case CHECKPOINT:
                     this.launchSoundAction(location, details);
                     break;
                 case DAMAGE:
