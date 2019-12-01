@@ -32,7 +32,7 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
     
     private static final int MAX_COSMETICS = 10;
     
-    WeakReference<GameWorld> gameWorld;
+    private WeakReference<GameWorld> gameWorld;
     
     private final Map<Object2D, Integer> currentAnimatedObjectsCounter;
     private final Map<Object2D, Object2DStateListener.Object2DState> currentAnimatedObjectsState;

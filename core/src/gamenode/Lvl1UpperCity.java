@@ -23,6 +23,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameEventListener;
+import com.mygdx.game.GameEventManager;
 import com.mygdx.game.HelpGame;
 import com.mygdx.game.scenery.Abribus;
 import com.mygdx.game.scenery.Bench;
@@ -670,13 +671,17 @@ public class Lvl1UpperCity extends LvlGameNode{
         if(heroPosition != null){
             hero = new Grandma(game.getGameWorld().getWorld(), heroPosition.x, heroPosition.y);
         }else{
-            hero = new Grandma(game.getGameWorld().getWorld(), 0, 0);
+            hero = new Grandma(game.getGameWorld().getWorld(), 6500, 0);
         }
         game.getGameWorld().setHero(hero);
         
         // init opponents
         OpponentThief thief = new OpponentThief(game.getGameWorld().getWorld(), hero, -390f, 0f);
         game.getGameWorld().addObject2DToWorld(thief, false);
+        
+        OpponentCAC1 module4_opp1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 6800f, 0f);
+        module4_opp1.setMaxDistance(200f);
+        game.getGameWorld().addObject2DToWorld(module4_opp1, true);  
         
         
         OpponentCAC1 opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 27150, 700);
@@ -1327,7 +1332,65 @@ public class Lvl1UpperCity extends LvlGameNode{
         
         ActivableTriggeredObject2D activableTrigger = new ActivableTriggeredObject2D(game.getGameWorld().getWorld(), temeri, Input.Keys.ENTER, GameEventListener.EventType.CINEMATIC, "dialogueTemeri", 50);
         game.getGameWorld().addObject2DToWorld(activableTrigger);
-             
+        
+        // module 4 opponent dialogue
+        
+        list = new ArrayList<Dialogue>();
+       
+        dialogue = new Dialogue();
+        dialogue.addReply("Hep hep hep !\nici faut payer un droit de passage\nau gang des kairas pour entrer !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.DEFAULT, 1);
+        dialogue.addReply("Alors par ici la monnaie la vieille !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.HAPPY, 1);
+        dialogue.addReply("Un droit de passage ?", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.HAPPY, 0);
+        dialogue.addReply("C'est l'envie d'ennuyer\nles honnete gens que\nje vais vous faire passer !!", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.HAPPY, 0);
+        
+        list.add(dialogue);
+        
+        cinematicManager = new CinematicManager("module4_opponentDialogue", list);
+        
+        charaTimeline = new CharacterTimeline(hero, CharacterTimeline.CinematicStatus.NORMAL);
+        charaTimeline.addEntry(0f, "per_walk");
+        charaTimeline.addEntry(0.2f, "per_right");
+        charaTimeline.addEntry(1f, "per_right");
+        charaTimeline.addEntry(1.2f, "per_walk");
+        cinematicManager.addCharacterTimeline(charaTimeline);
+        
+        charaTimeline = new CharacterTimeline(module4_opp1, CharacterTimeline.CinematicStatus.NORMAL);
+        charaTimeline.addEntry(0.6f, "per_left");
+        charaTimeline.addEntry(1f, "per_left");
+        cinematicManager.addCharacterTimeline(charaTimeline);
+        
+        cinematicManager.addDialogueTimeline(1.4f, 0);
+        game.getGameWorld().addCinematicManager(cinematicManager);
+        
+        trigger = new EventTriggeredObject2D(game.getGameWorld().getWorld(), 6700f, 0f, GameEventListener.EventType.CINEMATIC, "module4_opponentDialogue", 100f, 1000f, false);
+        game.getGameWorld().addObject2DToWorld(trigger);
+        
+        
+        list = new ArrayList<Dialogue>();
+       
+        dialogue = new Dialogue();
+        dialogue.addReply("J’espère que ça suffira !\nVous pouvez garder la monnaie !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("... ... ....\nLe ...\nle compte est bon ...", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.DEFAULT, 1);
+        dialogue.addReply("Je vous souhaite\nune agréable fin de soirée ...", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.DEFAULT, 1);
+        dialogue.addReply("Ben pas moi !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("(Rien de tel que quelques\narguments frappant pour apprendre\nla politesse à ces sacripants)", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.DEFAULT, 0);
+        
+        list.add(dialogue);
+        
+        cinematicManager = new CinematicManager("module4_opponentDialogueEnd", list);
+        
+        charaTimeline = new CharacterTimeline(hero, CharacterTimeline.CinematicStatus.NORMAL);
+        cinematicManager.addCharacterTimeline(charaTimeline);
+        
+        cinematicManager.addDialogueTimeline(0f, 0);
+        game.getGameWorld().addCinematicManager(cinematicManager);
+        
+        // Game Event logic
+        
+        // module 4 dialogue
+        game.getGameWorld().getGameEventManager().addGameEventContainer("module4_opponentDialogueEnd", GameEventManager.TriggerType.OR, GameEventListener.EventType.CINEMATIC, "module4_opponentDialogueEnd");
+        game.getGameWorld().getGameEventManager().addEventToCompleteTo("module4_opponentDialogueEnd", module4_opp1.getName(), GameEventListener.EventType.DEATH, module4_opp1.getName());
+        
         // Music & Sounds.
               
         this.initSoundsLvl();

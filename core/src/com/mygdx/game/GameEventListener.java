@@ -23,7 +23,7 @@ public interface GameEventListener {
         ENDCINEMATIC,
         DAMAGE,
         ATTACK,
-        LIFE,
+        DEATH, // A character2D is dead.
         ACTION,
         LOOP,
         LOOP_STOP,

@@ -12,11 +12,13 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
+import com.mygdx.game.GameEventListener.EventType;
 import static com.mygdx.game.HelpGame.P2M;
 import cosmetics.HitCosmeticObject2D;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -55,6 +57,8 @@ public abstract class Character2D extends Object2D{
 
     protected float slowingDown;
     
+    protected String name;
+    
     public Character2D(int lifePoints){
         super();
         
@@ -83,6 +87,12 @@ public abstract class Character2D extends Object2D{
         this.isCinematicEntity = false;
         
         this.slowingDown = 1;
+        
+        this.name = "Character2D_" + UUID.randomUUID().toString();
+    }
+    
+    public String getName(){
+        return this.name;
     }
     
     public void addStaticObj(){

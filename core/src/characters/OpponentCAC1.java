@@ -376,6 +376,8 @@ public class OpponentCAC1 extends Character2D{
         if(Math.random() < 0.1){
             this.notifyObject2D2CreateListener(TeethTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirVelocity.scl(-4f));
         }
+        
+        this.notifyGameEventListener(GameEventListener.EventType.DEATH, this.name, this.getPositionBody());
     }
     
     protected void createInfluencesDIST1(){

@@ -14,7 +14,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Timer;
 import static com.mygdx.game.HelpGame.P2M;
 import guicomponents.CinematicManager;
 import guicomponents.CinematicManager.CinematicState;
@@ -52,9 +51,11 @@ public class GameWorld implements WorldPlane, GameEventListener{
     
     protected List<WeakReference<GameEventListener>> listEventGameListeners;
     
-    // Aux module
+    // Auxiliary modules
     
     private StateAnimationHandler stateAnimationHandler;
+    
+    private GameEventManager gameEventManager;
     
     private Map<String, CinematicManager> mapCinematicManagers;
     
@@ -76,8 +77,11 @@ public class GameWorld implements WorldPlane, GameEventListener{
         
         this.listEventGameListeners = new ArrayList<WeakReference<GameEventListener>>();
         
-        
+        // Initialize modules.
         this.stateAnimationHandler = new StateAnimationHandler(this);
+        
+        this.gameEventManager = new GameEventManager(this);
+        this.addGameEventListener(this.gameEventManager);
         
         this.mapCinematicManagers = new HashMap<String, CinematicManager>();
     }
@@ -232,7 +236,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
         this.world = new World(new Vector2(0, -20f), true);
         this.listCurrentObject2D = new ArrayList();
         
-        this.stateAnimationHandler = new StateAnimationHandler(this);
+        this.stateAnimationHandler = new StateAnimationHandler(this);               
+        this.getGameEventManager().flushGameEventManager();
         
         this.world.setContactListener(new GameContactListener());
     }
@@ -247,7 +252,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
 
     @Override
     public void dispose() {
-        Timer.instance().clear();
+        //Timer.instance().clear();
         
         this.hero = null;
 
@@ -346,6 +351,13 @@ public class GameWorld implements WorldPlane, GameEventListener{
     
     public World getWorld(){
         return this.world;
+    }
+    
+    /**
+     * @return the gameEventManager
+     */
+    public GameEventManager getGameEventManager() {
+        return this.gameEventManager;
     }
     
     public void addObject2D2Flush(Object2D obj){
