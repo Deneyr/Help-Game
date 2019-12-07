@@ -178,6 +178,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
             cinematicManager.updateLogic(delta);
         }
         
+        this.gameEventManager.updateLogic(delta);
+        
         List<Object2D> copyListCurrentObject2D = new ArrayList<Object2D>(this.listCurrentObject2D);      
         for(Object2D obj : copyListCurrentObject2D)
         {

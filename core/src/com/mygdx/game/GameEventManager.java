@@ -22,10 +22,14 @@ public class GameEventManager implements GameEventListener{
     
     private HashMap<String, EventContainer> eventContainerDictionary;  
     
+    private ArrayList<EventContainer> eventsToSend;
+    
     public GameEventManager(GameEventListener gameEventListener){
         this.gameEventListener = new WeakReference<GameEventListener>(gameEventListener);
         
         this.eventContainerDictionary = new HashMap<String, EventContainer>();
+        
+        this.eventsToSend = new ArrayList<EventContainer>();
     }
     
     private void NotifyGameEventListener(EventType type, String details){
@@ -41,8 +45,19 @@ public class GameEventManager implements GameEventListener{
         }
         
         this.eventContainerDictionary.clear();
+        
+        this.eventsToSend.clear();
     }
 
+    public void updateLogic(float deltaTime){
+        ArrayList<EventContainer> currentEventsToSend = new ArrayList<EventContainer>(this.eventsToSend);
+        this.eventsToSend.clear();
+        
+        for(EventContainer event : currentEventsToSend){
+            this.NotifyGameEventListener(event.getEventToSend(), event.getDetailToSend());
+        }
+    }
+    
     @Override
     public void onGameEvent(EventType type, String details, Vector2 location) {
         for(EventContainer eventContainer : this.eventContainerDictionary.values()){
@@ -50,7 +65,9 @@ public class GameEventManager implements GameEventListener{
                 eventContainer.onGameEvent(type, details, location);
 
                 if(eventContainer.isComplete()){
-                    this.NotifyGameEventListener(eventContainer.getEventToSend(), eventContainer.getDetailToSend());
+                    
+                    this.eventsToSend.add(eventContainer);                 
+                    //this.NotifyGameEventListener(eventContainer.getEventToSend(), eventContainer.getDetailToSend());
                 }
             }
         }
@@ -67,9 +84,9 @@ public class GameEventManager implements GameEventListener{
         }
     }
     
-    public void addEventToCompleteTo(String id, String name, EventType eventToComplete, String detailToComplete){
+    public void addEventToCompleteTo(String id, EventType eventToComplete, String detailToComplete){
         if(this.eventContainerDictionary.containsKey(id)){
-            this.eventContainerDictionary.get(id).addEventToComplete(name, eventToComplete, detailToComplete);
+            this.eventContainerDictionary.get(id).addEventToComplete(eventToComplete, detailToComplete);
         }
     }
     
@@ -85,7 +102,7 @@ public class GameEventManager implements GameEventListener{
         private EventType eventToSend;
         private String detailToSend;
         
-        private HashMap<String, EventToComplete> character2DEventsToComplete;
+        private ArrayList<EventToComplete> character2DEventsToComplete;
         
         private boolean complete;
         
@@ -95,15 +112,13 @@ public class GameEventManager implements GameEventListener{
            this.eventToSend = eventToSend;
            this.detailToSend = detailToSend;
            
-           this.character2DEventsToComplete = new HashMap<String, EventToComplete>();
+           this.character2DEventsToComplete = new ArrayList<EventToComplete>();
            
            this.complete = false;
         }
 
-        public void addEventToComplete(String name, EventType eventToComplete, String detailToComplete){
-            if(!this.character2DEventsToComplete.containsKey(name)){
-                this.character2DEventsToComplete.put(name, new EventToComplete(eventToComplete, detailToComplete));
-            }
+        public void addEventToComplete(EventType eventToComplete, String detailToComplete){
+            this.character2DEventsToComplete.add(new EventToComplete(eventToComplete, detailToComplete));
         }
         
         @Override
@@ -115,7 +130,7 @@ public class GameEventManager implements GameEventListener{
             
             ArrayList<EventToComplete> listEventToComplete = new ArrayList<EventToComplete>();
             
-            for(EventToComplete eventContainer : this.character2DEventsToComplete.values()){
+            for(EventToComplete eventContainer : this.character2DEventsToComplete){
                 if(!eventContainer.isComplete() 
                         && (type == eventContainer.getEventToComplete() && (eventContainer.getDetailToComplete() == null || details.equals(eventContainer.getDetailToComplete())))){
                     eventContainer.setComplete(true);

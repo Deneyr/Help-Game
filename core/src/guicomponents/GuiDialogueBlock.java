@@ -43,7 +43,7 @@ public class GuiDialogueBlock extends GuiComponent{
         this.rightPortrait = new GuiPortrait(ReferenceCorner.RIGHT, 1f, -0.5f, true);
         this.leftPortrait = new GuiPortrait(ReferenceCorner.LEFT, -1f, -0.5f, false);
         
-        this.textBlock = new GuiTextBlock(0.1f, 0f, -0.5f, 1.6f, 0.6f);
+        this.textBlock = new GuiTextBlock(0.05f, 0f, -0.5f, 1.6f, 0.6f);
         
         this.indexCurrentDialogue = 0;
         this.indexCurrentReply = 0;
