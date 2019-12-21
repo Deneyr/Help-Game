@@ -61,6 +61,7 @@ import triggered.CannonBallTriggeredObject2D;
 import triggered.CheckPointTriggeredObject2D;
 import triggered.EventTriggeredObject2D;
 import triggered.TeethTriggeredObject2D;
+import triggered.TriangleDummyTriggerObject2D;
 import triggered.UpTriggeredObject2D;
 import triggered.VoidTriggeredObject2D;
 
@@ -671,7 +672,7 @@ public class Lvl1UpperCity extends LvlGameNode{
         if(heroPosition != null){
             hero = new Grandma(game.getGameWorld().getWorld(), heroPosition.x, heroPosition.y);
         }else{
-            hero = new Grandma(game.getGameWorld().getWorld(), 25000, 900);
+            hero = new Grandma(game.getGameWorld().getWorld(), 35000, 900);
         }
         game.getGameWorld().setHero(hero);
         
@@ -687,7 +688,14 @@ public class Lvl1UpperCity extends LvlGameNode{
         
         OpponentCAC1 module4_opp1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 6800f, 0f);
         module4_opp1.setMaxDistance(200f);
-        game.getGameWorld().addObject2DToWorld(module4_opp1, true);  
+        game.getGameWorld().addObject2DToWorld(module4_opp1, true); 
+        
+        OpponentCAC1 module7_opp1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 21210f, 240f);
+        game.getGameWorld().addObject2DToWorld(module7_opp1, true); 
+        
+        OpponentCAC2 module8_opp1 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 35600f, 800f);
+        module8_opp1.setMaxDistance(10f);
+        game.getGameWorld().addObject2DToWorld(module8_opp1, true); 
         
         
         OpponentCAC1 opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 27150, 700);
@@ -707,6 +715,7 @@ public class Lvl1UpperCity extends LvlGameNode{
         game.getGameWorld().addObject2DToWorld(opp, true);
         
         opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 28070f, 700f);
+        opp.setMaxDistance(200);
         game.getGameWorld().addObject2DToWorld(opp, true);
         
         
@@ -1459,8 +1468,120 @@ public class Lvl1UpperCity extends LvlGameNode{
         cinematicManager.addDialogueTimeline(0.6f, 0);
         game.getGameWorld().addCinematicManager(cinematicManager, index, 1);
         
-        trigger = new EventTriggeredObject2D(game.getGameWorld().getWorld(), 26650, 900f, GameEventListener.EventType.CINEMATIC, "module5_thiefDialogue2", 100f, 500f, false);
+        trigger = new EventTriggeredObject2D(game.getGameWorld().getWorld(), 26650f, 900f, GameEventListener.EventType.CINEMATIC, "module5_thiefDialogue2", 100f, 500f, false);
         game.getGameWorld().addObject2DToWorld(trigger);
+        
+        // Module 7 : box thief dialogue
+        
+        list = new ArrayList<Dialogue>();
+       
+        dialogue = new Dialogue();
+        dialogue.addReply("Pfiuu j’ai passé une heure\nà empiler ces caisses.", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.HAPPY, 1);
+        dialogue.addReply("j’espère que le boss sera content !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.HAPPY, 1);
+
+        list.add(dialogue);
+        
+        cinematicManager = new CinematicManager("module7_thiefDialogue", list);
+        
+        charaTimeline = new CharacterTimeline(hero, CharacterTimeline.CinematicStatus.NORMAL);
+        charaTimeline.addEntry(0f, "per_walk");
+        charaTimeline.addEntry(0.2f, "per_right");
+        charaTimeline.addEntry(1f, "per_right");
+        charaTimeline.addEntry(1.2f, "per_walk");
+        cinematicManager.addCharacterTimeline(charaTimeline);
+        
+        charaTimeline = new CharacterTimeline(module7_opp1, CharacterTimeline.CinematicStatus.NORMAL);
+        cinematicManager.addCharacterTimeline(charaTimeline);
+        
+        cinematicManager.addDialogueTimeline(1.4f, 0);
+        game.getGameWorld().addCinematicManager(cinematicManager, index, 0);
+        
+        trigger = new EventTriggeredObject2D(game.getGameWorld().getWorld(), 21000f, 200f, GameEventListener.EventType.CINEMATIC, "module7_thiefDialogue", 100f, 500f, false);
+        game.getGameWorld().addObject2DToWorld(trigger);
+        
+               
+        list = new ArrayList<Dialogue>();
+       
+        dialogue = new Dialogue();
+        dialogue.addReply("NOOOOOOOOOOOooooooon\nmes petites caisses ...", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.DEFAULT, 1);
+        dialogue.addReply("TU VAS PAYER !!", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.HAPPY, 1);
+
+        list.add(dialogue);
+        
+        cinematicManager = new CinematicManager("module7_thiefDialogue2", list);
+        
+        charaTimeline = new CharacterTimeline(hero, CharacterTimeline.CinematicStatus.NORMAL);
+        cinematicManager.addCharacterTimeline(charaTimeline);
+        
+        charaTimeline = new CharacterTimeline(module7_opp1, CharacterTimeline.CinematicStatus.NORMAL);
+        cinematicManager.addCharacterTimeline(charaTimeline);
+        
+        cinematicManager.addDialogueTimeline(0.2f, 0);
+        game.getGameWorld().addCinematicManager(cinematicManager, index, 0);
+        
+        TriangleDummyTriggerObject2D dummyTrigger = new TriangleDummyTriggerObject2D(game.getGameWorld().getWorld(), 21200f, 230f, GameEventListener.EventType.CINEMATIC, "module7_thiefDialogue2", 100, 200f, false);
+        game.getGameWorld().addObject2DToWorld(dummyTrigger);
+        
+        
+        list = new ArrayList<Dialogue>();
+       
+        dialogue = new Dialogue();
+        dialogue.addReply("Noooon ... argh", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.DEFAULT, 1);
+        dialogue.addReply("...\nCaisse numéro 12...\nsniff", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.DEFAULT, 1);
+        dialogue.addReply("Tu étais parfaitement imbriquée\navec caisse numéro 13….", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.DEFAULT, 1);
+
+        list.add(dialogue);
+        
+        cinematicManager = new CinematicManager("module7_thiefDialogueEnd", list);
+        
+        charaTimeline = new CharacterTimeline(hero, CharacterTimeline.CinematicStatus.NORMAL);
+        cinematicManager.addCharacterTimeline(charaTimeline);
+        
+        cinematicManager.addDialogueTimeline(0f, 0);
+        game.getGameWorld().addCinematicManager(cinematicManager, index, 0);
+        
+        // Module 8 : grave kaira
+        
+        list = new ArrayList<Dialogue>();
+       
+        dialogue = new Dialogue();
+        dialogue.addReply("Hé la vieille fais gaffe,\nne fais pas le fou avec moi\nparce que je suis un gros malade moi !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, GuiPortrait.Character.THIEF_BAT, GuiPortrait.Emotion.HAPPY, 1);
+        dialogue.addReply("Quand je m’énerve ...\nholala ça rigole pas, hein !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, GuiPortrait.Character.THIEF_BAT, GuiPortrait.Emotion.ANGRY, 1);
+        dialogue.addReply("(Gnn j’espère que j’étais assez crédible\net qu’elle ne voit pas que je manque\ncruellement de confiance en moi !)", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, GuiPortrait.Character.THIEF_BAT, GuiPortrait.Emotion.DEFAULT, 1);
+        dialogue.addReply("Laisse moi passer, garnement !!", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.THIEF_BAT, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("Haaaaaaaaaaaaaaa !!", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 1);
+
+        list.add(dialogue);
+        
+        dialogue = new Dialogue();
+        dialogue.addReply("Ha les jeunes d’aujourd’hui ...\nIls font moins les malin lorsqu’ils\nne sont plus cachés derrière leur écran !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
+        list.add(dialogue);
+        
+        cinematicManager = new CinematicManager("module8_thiefDialogue", list);
+        
+        charaTimeline = new CharacterTimeline(hero, CharacterTimeline.CinematicStatus.NORMAL);
+        charaTimeline.addEntry(0f, "per_walk");
+        charaTimeline.addEntry(0.2f, "per_right");
+        charaTimeline.addEntry(0.8f, "per_right");
+        charaTimeline.addEntry(1f, "per_walk");
+        cinematicManager.addCharacterTimeline(charaTimeline);
+        
+        charaTimeline = new CharacterTimeline(module8_opp1, CharacterTimeline.CinematicStatus.END_CINEMATIC);
+        charaTimeline.addEntry(0.5f, "per_left");
+        charaTimeline.addEntry(1f, "per_left");
+        charaTimeline.addEntry(1.6f, "per_right");
+        charaTimeline.addEntry(1.8f, "per_jump");
+        charaTimeline.addEntry(2.6f, "per_jump");
+        charaTimeline.addEntry(2.8f, "per_right");
+        cinematicManager.addCharacterTimeline(charaTimeline);
+        
+        cinematicManager.addDialogueTimeline(1.4f, 0);
+        cinematicManager.addDialogueTimeline(3f, 1);
+        game.getGameWorld().addCinematicManager(cinematicManager, index, 0);
+        
+        trigger = new EventTriggeredObject2D(game.getGameWorld().getWorld(), 35500, 400, GameEventListener.EventType.CINEMATIC, "module8_thiefDialogue", 100f, 500f, false);
+        game.getGameWorld().addObject2DToWorld(trigger);
+        
         // Game Event logic
         
         // module 4 dialogue
@@ -1468,6 +1589,9 @@ public class Lvl1UpperCity extends LvlGameNode{
         game.getGameWorld().getGameEventManager().addEventToCompleteTo("module4_opponentDialogueEnd", GameEventListener.EventType.CINEMATIC, "module4_opponentDialogue");
         game.getGameWorld().getGameEventManager().addEventToCompleteTo("module4_opponentDialogueEnd", GameEventListener.EventType.DEATH, module4_opp1.getName());
         
+        game.getGameWorld().getGameEventManager().addGameEventContainer("module7_thiefDialogueEnd", GameEventManager.TriggerType.AND, GameEventListener.EventType.CINEMATIC, "module7_thiefDialogueEnd");
+        game.getGameWorld().getGameEventManager().addEventToCompleteTo("module7_thiefDialogueEnd", GameEventListener.EventType.DEATH, module7_opp1.getName());
+
         // Music & Sounds.
               
         this.initSoundsLvl();

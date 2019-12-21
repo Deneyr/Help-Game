@@ -42,8 +42,8 @@ public class ShieldActionFixture extends DamageActionFixture{
 
             for(Object2D obj : this.setObject2DInside){
                 if(obj != owner){
-                    if(obj instanceof Character2D){
-                        Character2D chara = (Character2D) obj;
+                    if(obj instanceof Object2D){
+                        Object2D chara = (Object2D) obj;
 
                         Vector2 physicBody = new Vector2(chara.physicBody.getPosition());
                         Vector2 dirChara = physicBody.sub(owner.physicBody.getPosition());

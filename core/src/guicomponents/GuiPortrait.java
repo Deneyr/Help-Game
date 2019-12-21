@@ -167,12 +167,12 @@ public class GuiPortrait extends GuiComponent{
     }
     
     public enum Character{
-        NONE(-1, "Unamed"),
+        NONE(-1, ""),
         GRANDMA(0, "Grand-mère"),
         TEMERI(1, "Temeri"),
         PRIDE(2, "Voleur"),
-        THIEF_KNIFE(3, "Voleur au couteau"),
-        THIEF_BAT(4, "Voleur à la batte"),
+        THIEF_KNIFE(3, "Kaira au couteau"),
+        THIEF_BAT(4, "Kaira à la batte"),
         SPEAKER(5, "Haut-Parleur");
         
         private final int value;

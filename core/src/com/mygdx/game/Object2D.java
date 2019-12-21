@@ -105,6 +105,10 @@ public abstract class Object2D implements Disposable, GraphicalComponent{
         return false;
     }
     
+    public void applyBounce(Vector2 bounceVector, Object2D bounceOwner){
+        // To override
+    }
+    
     // getter & setter
     public void changeAnimation(int index, boolean isPause){
         this.currentAnimation = index;

@@ -12,7 +12,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-import com.mygdx.game.GameEventListener.EventType;
 import static com.mygdx.game.HelpGame.P2M;
 import cosmetics.HitCosmeticObject2D;
 import java.lang.ref.WeakReference;
@@ -293,6 +292,7 @@ public abstract class Character2D extends Object2D{
         return false;
     }
     
+    @Override
     public void applyBounce(Vector2 bounceVector, Object2D bounceOwner){
         if(this.canBeBounced){
             this.canBeBounced = false;
