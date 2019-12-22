@@ -131,7 +131,9 @@ public class CharacterTimeline{
             
             influences.addAll(this.persistentInfluences);
             
-            this.character.setInfluenceList(influences);
+            if(this.character.getLifePoints() > 0){
+                this.character.setInfluenceList(influences);
+            }
             
             if(this.timeline.lastEntry() == null || this.currentKey == this.timeline.lastEntry().getKey()){
                 result = true;

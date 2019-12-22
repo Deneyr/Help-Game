@@ -96,11 +96,10 @@ public class VoidTriggeredObject2D extends TriggeredObject2D{
         
         if(!this.isTriggered && 
                 (objThatTriggered instanceof Character2D)){
-            Vector2 dirDamage = new Vector2(0, -1);
             
             Character2D chara = (Character2D) objThatTriggered;
                 
-            boolean damageApplied = chara.applyDamage(100, Vector2.Zero, this);
+            chara.applyDamage(Integer.MAX_VALUE, Vector2.Zero, this);
             
             /*if(damageApplied){
                 this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "barbed", new Vector2(this.getPositionBody()));

@@ -71,7 +71,7 @@ public class MetalBox extends SmallBox{
     }
     
     @Override
-    protected void spawnLoot(Vector2 dirDamage)
+    protected void spawnLoot(Vector2 dirDamage, Object2D damageOwner)
     {
         dirDamage.scl(2f);
         
@@ -121,7 +121,7 @@ public class MetalBox extends SmallBox{
 
                     this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirDamage.scl(2f));
 
-                    this.spawnLoot(new Vector2(dirDamage.scl(2f)));
+                    this.spawnLoot(new Vector2(dirDamage.scl(2f)), damageOwner);
                 }
             }
 

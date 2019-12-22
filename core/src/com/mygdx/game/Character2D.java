@@ -255,6 +255,12 @@ public abstract class Character2D extends Object2D{
                 this.notifyCosmeticObj2D2CreateListener(damageOwner, this, HitCosmeticObject2D.class, damageOwner.getPositionBody().add(distance.scl(0.9f)).scl(1 / P2M), Vector2.Zero, ratioDamage);
                 
             }
+            
+            if(oldLifePoints >= this.lifePointMax / 4
+                    && this.lifePoints < this.lifePointMax / 4){
+                this.notifyGameEventListener(GameEventListener.EventType.LOWLIFE, this.getName(), new Vector2(this.getPositionBody()));
+            }
+            
             return true;
         }
         
@@ -262,7 +268,7 @@ public abstract class Character2D extends Object2D{
     }
     
     public boolean applyDamage(int damage, Vector2 dirDamage, Object2D damageOwner, Vector2 ptApplication){
-        if(damageOwner instanceof Character2D){
+        if(damageOwner instanceof Character2D && damageOwner != this){
             boolean isDamageEffective = ((Character2D) damageOwner).isAnOpponent ^ this.isAnOpponent;
             if(!isDamageEffective){
                 return false;

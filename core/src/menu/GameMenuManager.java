@@ -94,10 +94,30 @@ public class GameMenuManager extends MenuManager{
     private void onSuccess(String details){
         super.dispose();
         
+        // Part animation
+        GuiComponent halo = this.mapModelGuiComponents.get("halo");
+        
+        halo.setLocation(-1.6f, -2.2f);
+        this.addGuiComponent(halo, 0);
+        
+        Animation animation = new Animation(halo, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_INC, 0f, 0f, 1f);
+        animation.setScaleAnimation(new Vector2(20f, 20f), new Vector2(1f, 1f));      
+        this.addAnimation(animation);
+        
+        animation = new Animation(halo, Animation.RunType.RESTART, Interpolation.InterpolationType.QUADRA_INC, 1f, 0f, 1f);
+        animation.setScaleAnimation(new Vector2(1f, 1f), new Vector2(1.5f, 1.5f));      
+        this.addAnimation(animation);
+        
+        animation = new Animation(halo, Animation.RunType.RESTART, Interpolation.InterpolationType.QUADRA_INC, 1f, 1f, 1f);
+        animation.setScaleAnimation(new Vector2(1.5f, 1.5f), new Vector2(1f, 1f));      
+        this.addAnimation(animation);
+        
         // Part GUI
-        GuiMenuText guiMenuText = new GuiMenuText("", 0f, 0f);
-        guiMenuText.setEventDetails(GameEventListener.EventType.GAMENODECHANGE, details);
+        GuiMenuText guiMenuText = new GuiMenuText("Next level ...", 0f, 0.2f);
+        guiMenuText.setEventDetails(GameEventListener.EventType.GAMENODECHANGE, "Menu");
         this.addGuiMenuText(guiMenuText);
+        
+        this.setIndexCurrentText(0);
     }
     
     private void onDefeat(){

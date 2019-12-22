@@ -47,9 +47,10 @@ public class CinematicManager implements Disposable{
     private WeakReference<GameEventListener> gameEventListener;
     
     private boolean isStartCinematic;
+    private boolean isEndCinematic;
     private String levelId;
     
-    public CinematicManager(String id, List<Dialogue> dialogues, boolean isStartCinematic, String levelId){
+    public CinematicManager(String id, List<Dialogue> dialogues, boolean isStartCinematic, boolean isEndCinematic, String levelId){
         this.id = id;
         
         this.currentTime = 0;
@@ -63,6 +64,7 @@ public class CinematicManager implements Disposable{
         this.currentKeyDialogue = null;
         
         this.isStartCinematic = isStartCinematic;
+        this.isEndCinematic = isEndCinematic;
         this.levelId = levelId;
         
         this.dialogueBlock = new GuiDialogueBlock(dialogues);
@@ -82,6 +84,7 @@ public class CinematicManager implements Disposable{
         this.currentKeyDialogue = null;
         
         this.isStartCinematic = false;
+        this.isEndCinematic = false;
         this.levelId = new String();
         
         this.dialogueBlock = new GuiDialogueBlock(dialogues);
@@ -124,12 +127,16 @@ public class CinematicManager implements Disposable{
         }
     }
     
-    private void notifyEndCinematic(Vector2 gameStartPosition, boolean gameStart){
+    private void notifyEndCinematic(Vector2 cinematicEndPosition){
         if(this.gameEventListener.get() != null){
-            this.gameEventListener.get().onGameEvent(GameEventListener.EventType.ENDCINEMATIC, this.levelId, gameStartPosition);
+            this.gameEventListener.get().onGameEvent(GameEventListener.EventType.ENDCINEMATIC, this.levelId, cinematicEndPosition);
             
-            if(gameStart){
-                this.gameEventListener.get().onGameEvent(GameEventListener.EventType.GAMESTART, this.levelId, gameStartPosition);
+            if(this.isStartCinematic){
+                this.gameEventListener.get().onGameEvent(GameEventListener.EventType.GAMESTART, this.levelId, cinematicEndPosition);
+            }
+            
+            if(this.isEndCinematic){
+                this.gameEventListener.get().onGameEvent(GameEventListener.EventType.GAMEOVER, "menu", cinematicEndPosition);
             }
         }
     }
@@ -144,7 +151,9 @@ public class CinematicManager implements Disposable{
             Vector2 gameStartPosition = Vector2.Zero;
             for(CharacterTimeline timeline : this.charactersTimeline){
                 
-                timeline.getCharacter().isCinematicEntity(false);
+                if(this.isEndCinematic == false){
+                    timeline.getCharacter().isCinematicEntity(false);
+                }
                 
                 gameStartPosition = timeline.getCharacter().getPositionBody();
                 switch(timeline.getCinematicStatus()){
@@ -154,7 +163,7 @@ public class CinematicManager implements Disposable{
                 }
             }
             
-            this.notifyEndCinematic(gameStartPosition, this.isStartCinematic);
+            this.notifyEndCinematic(gameStartPosition);
             
             this.cinematicState = CinematicState.STOP;
         }

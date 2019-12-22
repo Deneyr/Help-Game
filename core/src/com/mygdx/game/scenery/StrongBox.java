@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
+import java.util.List;
 import ressourcesmanagers.TextureManager;
 import triggered.UpTriggeredObject2D;
 
@@ -74,8 +75,12 @@ public class StrongBox extends SmallBox{
     }
     
     @Override
-    protected void spawnLoot(Vector2 dirDamage)
+    protected void spawnLoot(Vector2 dirDamage, Object2D damageOwner)
     {
+        if(damageOwner == this){
+            return;
+        }
+        
         dirDamage.scl(2f);
         
         for(int i=0; i < 20; i++){
@@ -84,6 +89,16 @@ public class StrongBox extends SmallBox{
                 this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), (new Vector2(dirDamage)).rotate((float) Math.random()*360));
             }
 
+        }
+    }
+    
+    @Override
+    public void setInfluenceList(List<String> lInfluences){      
+        for(String influence : lInfluences){
+            influence = influence.toLowerCase();
+            if(lInfluences.contains("suicide")){
+                this.applyDamage(Integer.MAX_VALUE, Vector2.Zero, this);
+            }
         }
     }
     

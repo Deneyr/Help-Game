@@ -301,7 +301,7 @@ public class Lvl1GameNode extends LvlGameNode{
         dialogue.addReply("Ca va chauffer !!", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
         list.add(dialogue);
         
-        CinematicManager cin1 = new CinematicManager("roof", list, true, this.getId());
+        CinematicManager cin1 = new CinematicManager("roof", list, true, false, this.getId());
         
         cin1.addDialogueTimeline(1f, 0);
         cin1.addDialogueTimeline(2f, 1);

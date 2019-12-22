@@ -7,8 +7,9 @@ package characters;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
+import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import ressourcesmanagers.TextureManager;
 
@@ -20,11 +21,12 @@ public class OpponentThief extends OpponentCAC1{
     private static final String OPPTHIEFTEXT = "character/spritemapkairaVoleur-01.png";
     
     public OpponentThief(World world, Object2D target){
-        super(100, target);
+        super(400, target);
     }
     
     public OpponentThief(World world, Object2D target, float posX, float posY){
-        super(100, target);
+        super(400, target);
+        this.spawnPoint = new Vector2(posX * P2M, posY * P2M);
         
         this.maxSpeed = 6f;
         
