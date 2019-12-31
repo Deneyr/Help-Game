@@ -14,7 +14,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.Character2D;
 import com.mygdx.game.GameEventListener;
-import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DStateListener;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -136,7 +135,7 @@ public class CinematicManager implements Disposable{
             }
             
             if(this.isEndCinematic){
-                this.gameEventListener.get().onGameEvent(GameEventListener.EventType.GAMEOVER, "menu", cinematicEndPosition);
+                this.gameEventListener.get().onGameEvent(GameEventListener.EventType.GAMEOVER, "success", cinematicEndPosition);
             }
         }
     }

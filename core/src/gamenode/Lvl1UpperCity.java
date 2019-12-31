@@ -674,7 +674,7 @@ public class Lvl1UpperCity extends LvlGameNode{
         if(heroPosition != null){
             hero = new Grandma(game.getGameWorld().getWorld(), heroPosition.x, heroPosition.y);
         }else{
-            hero = new Grandma(game.getGameWorld().getWorld(), 40800, 900);
+            hero = new Grandma(game.getGameWorld().getWorld(), 20800, 100);
         }
         game.getGameWorld().setHero(hero);
         
@@ -987,86 +987,98 @@ public class Lvl1UpperCity extends LvlGameNode{
         game.getGameWorld().addObject2DToWorld(box, true);
         
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21110, 0f);
+        box = new SmallBox(game.getGameWorld().getWorld(), 21120, 0f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21115, 40f);
+        box = new SmallBox(game.getGameWorld().getWorld(), 21122, 30f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21120, 80f);
+        box = new SmallBox(game.getGameWorld().getWorld(), 21124, 60f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21125, 100f);
+        box = new SmallBox(game.getGameWorld().getWorld(), 21125, 90f);
         game.getGameWorld().addObject2DToWorld(box, true);
+        
+        /*box = new SmallBox(game.getGameWorld().getWorld(), 21180, 0f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new SmallBox(game.getGameWorld().getWorld(), 21180, 30f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new SmallBox(game.getGameWorld().getWorld(), 21180, 60f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new SmallBox(game.getGameWorld().getWorld(), 21180, 90f);
+        game.getGameWorld().addObject2DToWorld(box, true);*/
         
         box = new SmallBox(game.getGameWorld().getWorld(), 21200, 0f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21200, 40f);
+        box = new SmallBox(game.getGameWorld().getWorld(), 21200, 30f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21200, 80f);
+        box = new SmallBox(game.getGameWorld().getWorld(), 21200, 60f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21200, 100f);
+        box = new SmallBox(game.getGameWorld().getWorld(), 21200, 90f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21290, 0f);
+        box = new SmallBox(game.getGameWorld().getWorld(), 21280, 0f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21285, 40f);
+        box = new SmallBox(game.getGameWorld().getWorld(), 21278, 30f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21280, 80f);
+        box = new SmallBox(game.getGameWorld().getWorld(), 21276, 60f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21275, 100f);
+        box = new SmallBox(game.getGameWorld().getWorld(), 21275, 90f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        strongBox = new StrongBox(game.getGameWorld().getWorld(), 21160, 150f);
+        strongBox = new StrongBox(game.getGameWorld().getWorld(), 21160, 130f);
         game.getGameWorld().addObject2DToWorld(strongBox, true);
         
-        strongBox = new StrongBox(game.getGameWorld().getWorld(), 21240, 150f);
+        strongBox = new StrongBox(game.getGameWorld().getWorld(), 21240, 130f);
         game.getGameWorld().addObject2DToWorld(strongBox, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21140, 200f);
+        box = new SmallBox(game.getGameWorld().getWorld(), 21156, 180f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21145, 240f);
+        box = new SmallBox(game.getGameWorld().getWorld(), 21158, 210f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21150, 280f);
+        box = new SmallBox(game.getGameWorld().getWorld(), 21160, 240f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21155, 300f);
+        /*box = new SmallBox(game.getGameWorld().getWorld(), 21160, 270f);
+        game.getGameWorld().addObject2DToWorld(box, true);*/
+        
+        box = new SmallBox(game.getGameWorld().getWorld(), 21244, 180f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21260, 200f);
+        box = new SmallBox(game.getGameWorld().getWorld(), 21242, 210f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21255, 240f);
+        box = new SmallBox(game.getGameWorld().getWorld(), 21240, 240f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21250, 280f);
-        game.getGameWorld().addObject2DToWorld(box, true);
+        /*box = new SmallBox(game.getGameWorld().getWorld(), 21240, 270f);
+        game.getGameWorld().addObject2DToWorld(box, true);*/
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21245, 300f);
-        game.getGameWorld().addObject2DToWorld(box, true);
-        
-        strongBox = new StrongBox(game.getGameWorld().getWorld(), 21200, 350f);
+        strongBox = new StrongBox(game.getGameWorld().getWorld(), 21200, 270f);
         game.getGameWorld().addObject2DToWorld(strongBox, true);
+        
+        box = new SmallBox(game.getGameWorld().getWorld(), 21200, 330f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new SmallBox(game.getGameWorld().getWorld(), 21200, 370f);
+        game.getGameWorld().addObject2DToWorld(box, true);
         
         box = new SmallBox(game.getGameWorld().getWorld(), 21200, 400f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
-        box = new SmallBox(game.getGameWorld().getWorld(), 21200, 440f);
-        game.getGameWorld().addObject2DToWorld(box, true);
-        
-        box = new SmallBox(game.getGameWorld().getWorld(), 21200, 480f);
-        game.getGameWorld().addObject2DToWorld(box, true);
-        
-        box = new SmallBox(game.getGameWorld().getWorld(), 21200, 500f);
-        game.getGameWorld().addObject2DToWorld(box, true);
+        /*box = new SmallBox(game.getGameWorld().getWorld(), 21200, 460f);
+        game.getGameWorld().addObject2DToWorld(box, true);*/
         
         
         box = new MetalBox(game.getGameWorld().getWorld(), 23810f, 500f);
@@ -1184,7 +1196,7 @@ public class Lvl1UpperCity extends LvlGameNode{
         
         // Start cinematic
         dialogue = new Dialogue();
-        dialogue.addReply("Vous chercher\nUn monde exempt de souffrance ?\n Un mode exempt de mal ?\n  Exempt de criminels ?", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, -1);
+        dialogue.addReply("Vous cherchez\nUn monde exempt de souffrances ?\n Un mode exempt de mal ?\n  Exempt de criminels ?", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, -1);
         dialogue.addReply("Bienvenue à TEO Cité,\nla ville ou la criminalité est punie\npar le plus juste des chatiments :", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, -1);
         dialogue.addReply("Le banissement !", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, -1);
         dialogue.addReply("Nous vous garantissons\nune sécurité sans faille,\net ce, de 6h à 21h !", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, -1);
@@ -1223,7 +1235,7 @@ public class Lvl1UpperCity extends LvlGameNode{
         list.add(dialogue);
         
         dialogue = new Dialogue();  
-        dialogue.addReply(" Aie !!\nmais elle est completement folle !", GuiPortrait.Character.NONE, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.SORROW, 1);
+        dialogue.addReply(" Aie !!\nmais elle est complètement folle !", GuiPortrait.Character.NONE, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.SORROW, 1);
         dialogue.addReply("Petit polisson,\nrend moi mon sac à main !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.HAPPY, 0);
         dialogue.addReply("Jamais ! les bourges dans ton genre\nen ont de toute façon 36\ncomme ça à la maison !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.HAPPY, 1);
         dialogue.addReply("Ca va chauffer !!!", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.PRIDE, GuiPortrait.Emotion.HAPPY, 0);
@@ -1300,17 +1312,17 @@ public class Lvl1UpperCity extends LvlGameNode{
         
         dialogue = new Dialogue();
         
-        dialogue.addReply("Une jeune fille se tient devant vous,\nelle semble attendre quelqu'un ...", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, -1);
+        dialogue.addReply("Une jeune fille se tient\ndevant notre vénérable héroïne,\nelle semble attendre quelqu'un ...", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, -1);
         //dialogue.addReply("Il va falloir faire vite !\nNul n'est sensé se retrouver dehors\naprès le couvre-feu ...", GuiPortrait.Character.NONE, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.NONE, GuiPortrait.Emotion.DEFAULT, 0);
         
         list = new ArrayList<Dialogue>();
         list.add(dialogue);
         
         dialogue = new Dialogue();
-        dialogue.addReply("Que fais tu dehors à cette heure\nma petite ?\nLe couvre feu ne va pas tarder", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("Que fais tu dehors à cette heure\nma petite ?\nLe couvre feu ne va pas tarder.", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.DEFAULT, 0);
         dialogue.addReply("Je pourrais vous demander\nla même chose madame ...\n Vous semblez essouflée\ntout va bien ?", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.HAPPY, 1);
         dialogue.addReply("Oui ... non ...\nen fait un petit voyou\nm'a volé mon sac.", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.DEFAULT, 0);
-        dialogue.addReply("Lorsque je le retrouverais\nje lui ferais passer\nl'envie de nuir\naux honnètes gens !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("Lorsque je le retrouverai\nje lui ferai passer\nl'envie de nuir\naux honnètes gens !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.SORROW, GuiPortrait.Character.TEMERI, GuiPortrait.Emotion.DEFAULT, 0);
         list.add(dialogue);
         
         dialogue = new Dialogue();
@@ -1400,7 +1412,7 @@ public class Lvl1UpperCity extends LvlGameNode{
         list = new ArrayList<Dialogue>();
        
         dialogue = new Dialogue();
-        dialogue.addReply("J espère que ça suffira !\nVous pouvez garder la monnaie !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("J'espère que ça suffira !\nVous pouvez garder la monnaie !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.DEFAULT, 0);
         dialogue.addReply("... ... ....\n... Le ...\nLe compte est bon ...", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.DEFAULT, 1);
         dialogue.addReply("Je vous souhaite\nune agréable fin de soirée ...", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.DEFAULT, 1);
         dialogue.addReply("Ben pas moi !", GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.ANGRY, GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.DEFAULT, 0);
@@ -1512,8 +1524,8 @@ public class Lvl1UpperCity extends LvlGameNode{
         cinematicManager.addDialogueTimeline(1.4f, 0);
         game.getGameWorld().addCinematicManager(cinematicManager, index, 0);
         
-        trigger = new EventTriggeredObject2D(game.getGameWorld().getWorld(), 21000f, 200f, GameEventListener.EventType.CINEMATIC, "module7_thiefDialogue", 100f, 500f, false);
-        game.getGameWorld().addObject2DToWorld(trigger);
+        /*trigger = new EventTriggeredObject2D(game.getGameWorld().getWorld(), 21000f, 200f, GameEventListener.EventType.CINEMATIC, "module7_thiefDialogue", 100f, 500f, false);
+        game.getGameWorld().addObject2DToWorld(trigger);*/
         
                
         list = new ArrayList<Dialogue>();
@@ -1732,6 +1744,17 @@ public class Lvl1UpperCity extends LvlGameNode{
         game.getGameWorld().addCinematicManager(cinematicManager, index, 1);
         
         
+        cinematicManager = new CinematicManager("module10_PostEnd", list);
+        
+        charaTimeline = new CharacterTimeline(hero, CharacterTimeline.CinematicStatus.NORMAL);
+        charaTimeline.addEntry(0f, "per_walk");
+        charaTimeline.addEntry(0f, "per_right");
+        charaTimeline.addEntry(3.8f, "per_right");
+        charaTimeline.addEntry(4f, "per_walk");
+        cinematicManager.addCharacterTimeline(charaTimeline);
+        game.getGameWorld().addCinematicManager(cinematicManager, index, 1);
+        
+        
         // Game Event logic
         
         // module 4 dialogue
@@ -1749,6 +1772,9 @@ public class Lvl1UpperCity extends LvlGameNode{
         game.getGameWorld().getGameEventManager().addEventToCompleteTo("module10_End", GameEventListener.EventType.DEATH, module10_CAC1.getName());
         game.getGameWorld().getGameEventManager().addEventToCompleteTo("module10_End", GameEventListener.EventType.DEATH, module10_CAC2.getName());
         game.getGameWorld().getGameEventManager().addEventToCompleteTo("module10_End", GameEventListener.EventType.DEATH, module10_CACElite.getName());
+        
+        game.getGameWorld().getGameEventManager().addGameEventContainer("module10_PostEnd", GameEventManager.TriggerType.AND, GameEventListener.EventType.CINEMATIC, "module10_PostEnd");
+        game.getGameWorld().getGameEventManager().addEventToCompleteTo("module10_PostEnd", GameEventListener.EventType.GAMEOVER, "success");
         
         // Music & Sounds.
               

@@ -9,8 +9,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.Character2D;
+import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
+import cosmetics.HitCosmeticObject2D;
 import ressourcesmanagers.TextureManager;
 
 /**
@@ -40,6 +43,48 @@ public class OpponentThief extends OpponentCAC1{
         this.previousSide = this.side;
         
         this.hasLifeBar = false;
+    }
+    
+    @Override
+    public boolean applyDamage(int damage, Vector2 dirDamage, Object2D damageOwner){
+        
+        boolean isDamaged = super.applyDamage(damage, Vector2.Zero, damageOwner);
+        
+        if(isDamaged){
+            Vector2 upVector = new Vector2(0, 1);
+            float angle = dirDamage.angle(upVector) / 2f;
+            dirDamage = dirDamage.rotate(angle);
+            
+            float ratioDamage = damage / 100f;
+            if(ratioDamage > 0 && !dirDamage.epsilonEquals(Vector2.Zero, 0.01f)){
+                                
+                this.physicBody.applyLinearImpulse(dirDamage.scl(ratioDamage * 100.f * this.scaleDamageForce), Vector2.Zero, true);
+            }
+            
+            return true;
+        }
+        
+        return false;
+    }
+    
+    @Override
+    public boolean applyDamage(int damage, Vector2 dirDamage, Object2D damageOwner, Vector2 ptApplication){
+        boolean isDamaged = super.applyDamage(damage, Vector2.Zero, damageOwner, ptApplication);
+        
+        if(isDamaged){
+            
+            Vector2 upVector = new Vector2(0, 1);
+            float angle = dirDamage.angle(upVector) / 2f;
+            dirDamage = dirDamage.rotate(angle);
+            
+            float ratioDamage = damage / 100f;
+            if(ratioDamage > 0 && !dirDamage.epsilonEquals(Vector2.Zero, 0.01f)){                
+                this.physicBody.applyLinearImpulse(dirDamage.scl(ratioDamage * 100.f * this.scaleDamageForce), ptApplication, true);
+            }
+            return true;
+        }
+        
+        return false;
     }
     
     @Override

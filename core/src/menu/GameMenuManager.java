@@ -113,7 +113,7 @@ public class GameMenuManager extends MenuManager{
         this.addAnimation(animation);
         
         // Part GUI
-        GuiMenuText guiMenuText = new GuiMenuText("Next level ...", 0f, 0.2f);
+        GuiMenuText guiMenuText = new GuiMenuText("Victoire !", 0f, 0.2f);
         guiMenuText.setEventDetails(GameEventListener.EventType.GAMENODECHANGE, "Menu");
         this.addGuiMenuText(guiMenuText);
         
