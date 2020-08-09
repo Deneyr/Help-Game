@@ -47,6 +47,69 @@ public class SmallBox extends Character2D{
         super(lifePoint);
     }
     
+    public final void Initialize(World world, float posX, float posY, float radiusCollisionX, float radiusCollisionY, float centerX, float centerY, float density) {
+        
+        this.side = SideCharacter.RIGHT;   
+        
+        this.canSendEventBounce = true;
+        
+        // Part graphic
+        this.assignTextures();
+        
+        // Part Physic
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(posX * P2M, posY * P2M); 
+
+        Body body = world.createBody(bodyDef);
+        this.physicBody = body;
+
+        this.physicBody.setSleepingAllowed(true);
+        this.physicBody.setAwake(false);
+        
+        // Collision fixture
+        FixtureDef fixtureDef = new FixtureDef();
+        
+        this.setCollisionFilterMask(fixtureDef, false);
+        
+        PolygonShape collisionBox = new PolygonShape();
+        collisionBox.setAsBox(radiusCollisionX * P2M, radiusCollisionY * P2M, new Vector2( centerX * P2M, centerY * P2M), 0);
+        fixtureDef = new FixtureDef();
+        fixtureDef.shape = collisionBox;
+        fixtureDef.density = density; 
+        fixtureDef.friction = 0.9f;
+        fixtureDef.restitution = 0f; 
+
+        Fixture fix = this.physicBody.createFixture(fixtureDef);
+        
+        this.setCollisionFilterMask(fixtureDef, true);
+        
+        this.collisionFixture = new ArrayList<Fixture>();
+        this.collisionFixture.add(fix);
+        fix.setUserData(this);
+
+        // Feet fixture
+        PolygonShape feet = new PolygonShape();
+        feet.setAsBox((radiusCollisionX + 1) * P2M, (radiusCollisionY + 1) * P2M, new Vector2( centerX * P2M, centerY * P2M), 0);
+        fixtureDef = new FixtureDef();
+        fixtureDef.shape = feet;
+        fixtureDef.density = 1f; 
+        fixtureDef.friction = 0.8f;
+        fixtureDef.restitution = 0f; 
+
+        fix = body.createFixture(fixtureDef);
+        fix.setSensor(true);
+        fix.setUserData(this);
+        
+        // damage & bounce scale
+        //this.scaleDamageForce = 0.01f;
+        
+        this.feetFixture = fix;
+        
+        this.hasLifeBar = false;
+        
+    }
+    
     public final void Initialize(World world, float posX, float posY, float radiusCollisionX, float radiusCollisionY, float density) {
         
         this.side = SideCharacter.RIGHT;   
@@ -64,6 +127,9 @@ public class SmallBox extends Character2D{
         Body body = world.createBody(bodyDef);
         this.physicBody = body;
 
+        this.physicBody.setSleepingAllowed(true);
+        this.physicBody.setAwake(false);
+        
         // Collision fixture
         FixtureDef fixtureDef = new FixtureDef();
         

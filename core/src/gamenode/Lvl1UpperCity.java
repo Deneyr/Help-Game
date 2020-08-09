@@ -42,6 +42,7 @@ import com.mygdx.game.scenery.PoutrelleObstacle;
 import com.mygdx.game.scenery.Scaffolding;
 import com.mygdx.game.scenery.Speaker;
 import com.mygdx.game.scenery.StrongBox;
+import com.mygdx.game.scenery.StrongChest;
 import com.mygdx.game.scenery.Trashcan;
 import com.mygdx.game.scenery.TreeWithoutLeaf;
 import cosmetics.HitCosmeticObject2D;
@@ -674,7 +675,7 @@ public class Lvl1UpperCity extends LvlGameNode{
         if(heroPosition != null){
             hero = new Grandma(game.getGameWorld().getWorld(), heroPosition.x, heroPosition.y);
         }else{
-            hero = new Grandma(game.getGameWorld().getWorld(), 20800, 100);
+            hero = new Grandma(game.getGameWorld().getWorld(), 9300f, 600f);
         }
         game.getGameWorld().setHero(hero);
         
@@ -922,6 +923,9 @@ public class Lvl1UpperCity extends LvlGameNode{
         game.getGameWorld().addObject2DToWorld(box, true);
         
         box = new SmallBox(game.getGameWorld().getWorld(), 8925, 650f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new StrongChest(game.getGameWorld().getWorld(), 8850, 680f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
         box = new SmallBox(game.getGameWorld().getWorld(), 9200f, 1500f);
@@ -1370,6 +1374,9 @@ public class Lvl1UpperCity extends LvlGameNode{
         
         cinematicManager = new CinematicManager("dialogueTemeri", list);
         
+        charaTimeline = new CharacterTimeline(hero, CharacterTimeline.CinematicStatus.NORMAL);
+        cinematicManager.addCharacterTimeline(charaTimeline);
+        
         cinematicManager.addDialogueTimeline(0f, 0);
         game.getGameWorld().addCinematicManager(cinematicManager);
         
@@ -1397,7 +1404,7 @@ public class Lvl1UpperCity extends LvlGameNode{
         charaTimeline.addEntry(1.2f, "per_walk");
         cinematicManager.addCharacterTimeline(charaTimeline);
         
-        charaTimeline = new CharacterTimeline(module4_opp1, CharacterTimeline.CinematicStatus.NORMAL);
+        charaTimeline = new CharacterTimeline(module4_opp1, CharacterTimeline.CinematicStatus.START_CINEMATIC);
         charaTimeline.addEntry(0.6f, "per_left");
         charaTimeline.addEntry(1f, "per_left");
         cinematicManager.addCharacterTimeline(charaTimeline);
@@ -1518,14 +1525,14 @@ public class Lvl1UpperCity extends LvlGameNode{
         charaTimeline.addEntry(1.2f, "per_walk");
         cinematicManager.addCharacterTimeline(charaTimeline);
         
-        charaTimeline = new CharacterTimeline(module7_opp1, CharacterTimeline.CinematicStatus.NORMAL);
+        charaTimeline = new CharacterTimeline(module7_opp1, CharacterTimeline.CinematicStatus.START_CINEMATIC);
         cinematicManager.addCharacterTimeline(charaTimeline);
         
         cinematicManager.addDialogueTimeline(1.4f, 0);
         game.getGameWorld().addCinematicManager(cinematicManager, index, 0);
         
-        /*trigger = new EventTriggeredObject2D(game.getGameWorld().getWorld(), 21000f, 200f, GameEventListener.EventType.CINEMATIC, "module7_thiefDialogue", 100f, 500f, false);
-        game.getGameWorld().addObject2DToWorld(trigger);*/
+        trigger = new EventTriggeredObject2D(game.getGameWorld().getWorld(), 21000f, 200f, GameEventListener.EventType.CINEMATIC, "module7_thiefDialogue", 100f, 500f, false);
+        game.getGameWorld().addObject2DToWorld(trigger);
         
                
         list = new ArrayList<Dialogue>();

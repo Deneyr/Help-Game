@@ -6,6 +6,7 @@
 package com.mygdx.game;
 
 import characters.Grandma;
+import characters.OpponentCAC1;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -59,6 +60,11 @@ public class GameWorld implements WorldPlane, GameEventListener{
     
     private Map<String, CinematicManager> mapCinematicManagers;
     
+    // Screen shake
+    private float shakeTime;
+    private Vector2 targetOffsetCameraPoint;
+    private Vector2 offsetCameraPoint;
+    
     
     public GameWorld(){
         this.world = new World(new Vector2(0, -20f), true);
@@ -84,6 +90,11 @@ public class GameWorld implements WorldPlane, GameEventListener{
         this.addGameEventListener(this.gameEventManager);
         
         this.mapCinematicManagers = new HashMap<String, CinematicManager>();
+        
+        // Screen shake       
+        this.shakeTime = -1;
+        this.targetOffsetCameraPoint = null;
+        this.offsetCameraPoint = new Vector2(0, 0);
     }
     
     public void addCinematicManager(CinematicManager cinematicManager, int indexCheckpoint, int indexCinematic){    
@@ -134,6 +145,16 @@ public class GameWorld implements WorldPlane, GameEventListener{
         return listSprites;
     }
     
+    public List<Object2D> getObject2DInRegion(float lowerX, float lowerY, float upperX, float upperY){
+        ScreenQueryCallback query = new ScreenQueryCallback();
+        
+        this.world.QueryAABB(query, lowerX, lowerY, upperX, upperY);
+        
+        List<Object2D> listObject2D = query.getListObject2D();
+        
+        return listObject2D;
+    }
+    
     public List<Sprite> getLifeBarInRegion(float lowerX, float lowerY, float upperX, float upperY){
         this.screenFOV = Math.sqrt((upperY - lowerY) * (upperY - lowerY) + (upperX - lowerX) * (upperX - lowerX));
         
@@ -180,7 +201,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
         
         this.gameEventManager.updateLogic(delta);
         
-        List<Object2D> copyListCurrentObject2D = new ArrayList<Object2D>(this.listCurrentObject2D);      
+        List<Object2D> copyListCurrentObject2D = new ArrayList<Object2D>(this.listCurrentObject2D);
         for(Object2D obj : copyListCurrentObject2D)
         {
             obj.updateLogic(delta);
@@ -189,6 +210,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
         this.handleObject2D2Flush();
         
         this.world.step(delta, 6, 2);
+        
+        this.updateShakingScreen(delta);
         
         if(this.timerOutOfScreen > 1f){
             this.timerOutOfScreen = 0;
@@ -231,6 +254,10 @@ public class GameWorld implements WorldPlane, GameEventListener{
         addObject2DToWorld(hero, true);
     }
     
+    public Object2D getHero(){
+        return this.hero;
+    }
+    
     @Override
     public void flushWorld(){
         this.dispose();
@@ -244,12 +271,16 @@ public class GameWorld implements WorldPlane, GameEventListener{
         this.world.setContactListener(new GameContactListener());
     }
     
-    public Vector2 getHeroPosition(){
+    private Vector2 getHeroPosition(){
         if(this.hero.getSideCharacter() == Character2D.SideCharacter.LEFT){
             return new Vector2(this.hero.getPositionBody().add(Grandma.LEFT_RIGHT_DIST * P2M / 2f, 0));
         }else{
             return new Vector2(this.hero.getPositionBody().add(-Grandma.LEFT_RIGHT_DIST * P2M / 2f, 0));
         }
+    }
+    
+    public Vector2 getCameraPosition(){
+        return this.getHeroPosition().add(this.offsetCameraPoint);
     }
 
     @Override
@@ -292,9 +323,44 @@ public class GameWorld implements WorldPlane, GameEventListener{
                     cinematicManager.reset();
                 }
                 break;
+            case ATTACK:
+                if(details.equals("hitPunch")){
+                    this.shakeTime = 0;
+                    this.offsetCameraPoint = new Vector2(0, 0);
+                    this.targetOffsetCameraPoint = new Vector2((float) Math.random() * 0.2f, (float) Math.random() * 0.2f);
+                }
+                break;
         }
         
         this.notifyGameEventListeners(type, details, location);
+    }
+    
+    private void updateShakingScreen(float deltaTime){
+        if(this.shakeTime >= 0){
+            
+            Vector2 offsetDir = (new Vector2(this.targetOffsetCameraPoint)).sub(this.offsetCameraPoint);
+
+            Vector2 newOffset = (new Vector2(this.offsetCameraPoint)).add(offsetDir.setLength(deltaTime * 2));
+            
+            Vector2 newOffsetDir = (new Vector2(this.targetOffsetCameraPoint)).sub(newOffset);
+            
+            if(offsetDir.dot(newOffsetDir) < 0){
+                this.offsetCameraPoint = this.targetOffsetCameraPoint;
+                this.targetOffsetCameraPoint = new Vector2((float) Math.random() * 0.2f, (float) Math.random() * 0.2f);
+                
+                this.targetOffsetCameraPoint.setLength(this.targetOffsetCameraPoint.len() * (1 - this.shakeTime / 0.3f));
+            }else{
+                this.offsetCameraPoint = newOffset;
+            }
+            
+            this.shakeTime += deltaTime;
+            
+            if(this.shakeTime > 0.30){
+               this.shakeTime = -1; 
+               this.targetOffsetCameraPoint = null;
+               this.offsetCameraPoint = new Vector2(0, 0);
+            }            
+        }
     }
     
     private boolean isCinematicManagersFree(String key){
@@ -385,6 +451,16 @@ public class GameWorld implements WorldPlane, GameEventListener{
 
                     triggerObj2D.onOutOfScreen(margin);
                 }
+            }
+        }
+    }
+    
+    private void computeObjectsInScreen(float deltaTime){
+        for(Object2D obj : this.listCurrentObject2D){
+            Vector2 distHeroObj = obj.getPositionBody().sub(this.hero.getPositionBody());
+            double margin = this.screenFOV/2 - distHeroObj.len();
+            if(margin > 0){
+                obj.updateLogic(deltaTime);
             }
         }
     }

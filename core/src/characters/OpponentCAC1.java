@@ -35,7 +35,7 @@ import triggered.TeethTriggeredObject2D;
  * @author françois
  */
 public class OpponentCAC1 extends Character2D{
-
+   
     //private static final String OPPCAC1TEXT = "character" + File.separator + "opponentCAC1.png";
     private static final String OPPCAC1TEXT = "character/opponentCAC1.png";
     
@@ -47,7 +47,7 @@ public class OpponentCAC1 extends Character2D{
     
     protected Set<OppInfluence> influences = new HashSet<OppInfluence>();
     
-    protected final Object2D target;
+    protected Object2D target;
     
     protected DamageActionFixture damageActionFixture;
     
@@ -62,6 +62,10 @@ public class OpponentCAC1 extends Character2D{
     protected Vector2 spawnPoint;
     private float maxDistanceFromSpawn;
     private boolean isReseting;
+    
+    public OpponentCAC1(){
+       this(100, null);    
+    }
     
     public OpponentCAC1(int lifePoint, Object2D target){
         super(lifePoint);
@@ -85,6 +89,32 @@ public class OpponentCAC1 extends Character2D{
     
     public OpponentCAC1(World world, Object2D target, float posX, float posY) {
         super(100);
+        this.target = target;
+        
+        this.side = SideCharacter.RIGHT;
+        
+        this.currentStateNode = new OpponentCAC1.StateNode(OpponentCAC1.OppState.NORMAL);
+        
+        this.canAttack = true;
+        
+        this.maxSpeed = 2f;
+        
+        this.noPurse = false;
+        
+        this.spawnPoint = new Vector2(posX * P2M, posY * P2M);
+        this.maxDistanceFromSpawn = -1f;
+        this.isReseting = false;
+        
+        // Part graphic
+        this.assignTextures();
+        
+        // Part Physic
+        this.initializePhysicCAC1(world, posX, posY);
+        
+        this.previousSide = this.side;
+    }
+    
+    public void initialize(World world, Object2D target, float posX, float posY){
         this.target = target;
         
         this.side = SideCharacter.RIGHT;

@@ -5,6 +5,7 @@
  */
 package com.mygdx.game;
 
+import characters.OpponentCAC1;
 import triggered.UpTriggeredObject2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
@@ -43,6 +44,7 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
     
     // Part Pool create
     private final Map<Class, FactoryPool> object2DFactoriesPool;
+    private final Map<Class, OpponentPool> object2DOpponentsPool;
     
     private List<CosmeticObject2D> cosmeticObject2DPool;
     private final Map<Class, CosmeticFactoryPool> cosmeticObj2DFactoriesPool;
@@ -57,12 +59,14 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
         this.cosmeticObj2DFactoriesPool = new HashMap<Class, CosmeticFactoryPool>();
         
         // Set pool factory
-        this.object2DFactoriesPool = new HashMap<Class, FactoryPool>();
-        
+        this.object2DFactoriesPool = new HashMap<Class, FactoryPool>();       
         this.object2DFactoriesPool.put(UpTriggeredObject2D.class, new Object2DFactoryPool<UpTriggeredObject2D>(UpTriggeredObject2D.class));
         this.object2DFactoriesPool.put(TeethTriggeredObject2D.class, new Object2DFactoryPool<TeethTriggeredObject2D>(TeethTriggeredObject2D.class));
         this.object2DFactoriesPool.put(CannonBallTriggeredObject2D.class, new Object2DFactoryPool<CannonBallTriggeredObject2D>(CannonBallTriggeredObject2D.class));
         this.object2DFactoriesPool.put(BulletTriggeredObject2D.class, new Object2DFactoryPool<BulletTriggeredObject2D>(BulletTriggeredObject2D.class));
+        
+        this.object2DOpponentsPool = new HashMap<Class, OpponentPool>();
+        this.object2DOpponentsPool.put(OpponentCAC1.class, new OpponentFactoryPool<OpponentCAC1>(OpponentCAC1.class));
         
         // Set Pool cosmetic
         this.cosmeticObj2DFactoriesPool.put(HitCosmeticObject2D.class, new CosmeticFactoryPool<HitCosmeticObject2D>(HitCosmeticObject2D.class));
@@ -186,11 +190,18 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
     @Override
     public void onObject2D2Create(Object2D notifier, Class obj2DClass, Vector2 position, Vector2 speed){
         
-        if(this.object2DFactoriesPool.containsKey(obj2DClass) && this.gameWorld.get() != null){
-            FactoryPool factoryPool = this.object2DFactoriesPool.get(obj2DClass);
-            TriggeredObject2D triggeredObj2D = factoryPool.obtainTriggeredObject2D(this.gameWorld.get().getWorld(), position, speed);
-            
-            this.gameWorld.get().addObject2DToWorld(triggeredObj2D, true);
+        if(this.gameWorld.get() != null){
+            if(this.object2DFactoriesPool.containsKey(obj2DClass)){
+                FactoryPool factoryPool = this.object2DFactoriesPool.get(obj2DClass);
+                TriggeredObject2D triggeredObject2D = factoryPool.obtainTriggeredObject2D(this.gameWorld.get().getWorld(), position, speed);
+
+                this.gameWorld.get().addObject2DToWorld(triggeredObject2D, true);
+            }else if(this.object2DOpponentsPool.containsKey(obj2DClass)){
+                OpponentPool factoryPool = this.object2DOpponentsPool.get(obj2DClass);
+                OpponentCAC1 newObject2D = factoryPool.obtainTriggeredObject2D(this.gameWorld.get().getWorld(), this.gameWorld.get().getHero(), position.x, position.y);
+
+                this.gameWorld.get().addObject2DToWorld(newObject2D, true);
+            }    
         }
     }
     

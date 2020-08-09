@@ -57,7 +57,7 @@ public class GUIScreen implements Screen{
 
     @Override
     public void render(float delta) {
-        this.camera.position.set(this.gameWorld.getHeroPosition().x / P2M, this.gameWorld.getHeroPosition().y / P2M, 0);
+        this.camera.position.set(this.gameWorld.getCameraPosition().x / P2M, this.gameWorld.getCameraPosition().y / P2M, 0);
         this.camera.update();
         this.shapeRenderer.setProjectionMatrix(camera.combined);
         this.shapeRenderer.begin(ShapeType.Filled);

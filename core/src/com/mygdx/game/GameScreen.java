@@ -54,7 +54,7 @@ public class GameScreen implements Screen{
         
         
         // Update camera (center on hero)
-        this.getCamera().position.set(this.gameWorld.getHeroPosition().x / P2M, this.gameWorld.getHeroPosition().y / P2M, 0);
+        this.getCamera().position.set(this.gameWorld.getCameraPosition().x / P2M, this.gameWorld.getCameraPosition().y / P2M, 0);
         this.getCamera().update();
         this.batch.setProjectionMatrix(this.getCamera().combined);
        

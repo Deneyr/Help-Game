@@ -92,7 +92,7 @@ public class BarbedTriggeredObject2D extends TriggeredObject2D{
             if(objThatTriggered instanceof Grandma){
                 Grandma grandma = (Grandma) objThatTriggered;
                 
-                damageApplied = grandma.applyDamage(10, dirDamage, this);
+                damageApplied = grandma.applyDamage(4, dirDamage, this);
                 
             }else{
                 Character2D chara = (Character2D) objThatTriggered;
