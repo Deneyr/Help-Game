@@ -46,6 +46,7 @@ public class SoundMusicManager implements GameEventListener, Disposable{
     private Map<String, String> mapEndCinematicMusic; 
     private Map<String, String> mapCinematicMusic;  
     private Map<String, String> mapLvlStartMusic;
+    private Map<String, String> mapLvlEndMusic;
     
     // Timer score increase.
     private LocalDateTime lastScoreIncreaseTime;
@@ -115,6 +116,9 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         
         this.mapLvlStartMusic = new HashMap<String, String>();
         this.mapLvlStartMusic.put("MainMenuGameNode", "sounds/Help_MainTitle.ogg");
+        
+        this.mapLvlEndMusic = new HashMap<String, String>();
+        this.mapLvlEndMusic.put("defeat", "sounds/GameOver.ogg");
     }
     
     
@@ -123,6 +127,7 @@ public class SoundMusicManager implements GameEventListener, Disposable{
 
         if(type == EventType.LVLSTART
                 || type == EventType.GAMESTART
+                || type == EventType.GAMEOVER
                 || type == EventType.CINEMATIC
                 || type == EventType.ENDCINEMATIC){
             this.launchMusic(type, details);
@@ -203,6 +208,11 @@ public class SoundMusicManager implements GameEventListener, Disposable{
             case LVLSTART:
                 if(this.mapLvlStartMusic.containsKey(details)){
                     newMusic = MusicManager.getInstance().getMusic(this.mapLvlStartMusic.get(details));
+                }   
+                break;
+            case GAMEOVER:
+                if(this.mapLvlEndMusic.containsKey(details)){
+                    newMusic = MusicManager.getInstance().getMusic(this.mapLvlEndMusic.get(details));
                 }   
                 break;
             case CINEMATIC:

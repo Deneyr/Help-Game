@@ -82,6 +82,16 @@ public class StrongChest extends SmallBox{
                     this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), (new Vector2(dirDamage)).rotate((float) Math.random()*360));
                 }
             }
+            
+            double dialogue = Math.random();
+            if(dialogue > 0.6){
+                this.notifyGameEventListener(GameEventListener.EventType.CINEMATIC, "dialogueKaira", new Vector2(this.getPositionBody()));
+            }else if(dialogue > 0.3){
+                this.notifyGameEventListener(GameEventListener.EventType.CINEMATIC, "dialogueKaira2", new Vector2(this.getPositionBody()));
+            }else{
+                this.notifyGameEventListener(GameEventListener.EventType.CINEMATIC, "dialogueKaira3", new Vector2(this.getPositionBody()));
+            }
+            
             this.notifyObject2D2CreateListener(OpponentCAC1.class, this.getPositionBody().scl(1 / P2M), (new Vector2(dirDamage)).rotate((float) Math.random()*360));
         //}
     }

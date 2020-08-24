@@ -301,6 +301,16 @@ public class Lvl1UpperCity extends LvlGameNode{
         pipe = new Pipe(game.getGameWorld().getWorld(), 20000, 500f, 0.5f, true);
         game.getGameWorld().addObject2DToWorld(pipe);
         
+        
+        trashcan = new Trashcan(game.getGameWorld().getWorld(), 19000, 0, 1, 1);
+        game.getGameWorld().addObject2DToWorld(trashcan);
+        
+        trashcan = new Trashcan(game.getGameWorld().getWorld(), 19100, 0, 0, 1);
+        game.getGameWorld().addObject2DToWorld(trashcan);
+        
+        bus = new Bus(game.getGameWorld().getWorld(), 19400, 60f, 0, 1);
+        game.getGameWorld().addObject2DToWorld(bus);
+        
         // Balloons
         Balloon balloon = new Balloon(game.getGameWorld().getWorld(), 17000f, 150);
         game.getGameWorld().addObject2DToWorld(balloon);
@@ -689,7 +699,7 @@ public class Lvl1UpperCity extends LvlGameNode{
             
             this.isRestarted = true;
         }else{
-            hero = new Grandma(game.getGameWorld().getWorld(), 20000f, 0f);
+            hero = new Grandma(game.getGameWorld().getWorld(), 0f, 0f);
         }
         game.getGameWorld().setHero(hero);
         
@@ -1782,6 +1792,55 @@ public class Lvl1UpperCity extends LvlGameNode{
         cinematicManager.addCharacterTimeline(charaTimeline);
         game.getGameWorld().addCinematicManager(cinematicManager, index, 1);
         
+        // Random Dialogues
+        
+        list = new ArrayList<Dialogue>();
+       
+        dialogue = new Dialogue();
+        dialogue.addReply("Surprise !!", GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, 0);
+        
+        list.add(dialogue);
+        
+        cinematicManager = new CinematicManager("dialogueKaira", list);
+        
+        cinematicManager.addDialogueTimeline(0f, 0);
+        game.getGameWorld().addCinematicManager(cinematicManager);
+        
+        list = new ArrayList<Dialogue>();
+       
+        dialogue = new Dialogue();
+        dialogue.addReply("Le monde est un coffre dont nous sommes les pieces !", GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, 0);
+        
+        list.add(dialogue);
+        
+        cinematicManager = new CinematicManager("dialogueKaira2", list);
+        
+        cinematicManager.addDialogueTimeline(0f, 0);
+        game.getGameWorld().addCinematicManager(cinematicManager);
+        
+        list = new ArrayList<Dialogue>();
+       
+        dialogue = new Dialogue();
+        dialogue.addReply("J'aime les pièces !\nDans 10-20 ans il n'y en aura plus !", GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, 0);
+        
+        list.add(dialogue);
+        
+        cinematicManager = new CinematicManager("dialogueKaira3", list);
+        
+        cinematicManager.addDialogueTimeline(0f, 0);
+        game.getGameWorld().addCinematicManager(cinematicManager);
+        
+        list = new ArrayList<Dialogue>();
+       
+        dialogue = new Dialogue();
+        dialogue.addReply("Coucou !\nTu veux voir ma batte ?", GuiPortrait.Character.THIEF_BAT, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, 0);
+        
+        list.add(dialogue);
+        
+        cinematicManager = new CinematicManager("dialogueKaira4", list);
+        
+        cinematicManager.addDialogueTimeline(0f, 0);
+        game.getGameWorld().addCinematicManager(cinematicManager);
         
         // Game Event logic
         

@@ -74,6 +74,8 @@ public class PhoneBox extends StrongChest{
         
             dirDamage.scl(2.1f);
 
+            this.notifyGameEventListener(GameEventListener.EventType.CINEMATIC, "dialogueKaira4", new Vector2(this.getPositionBody()));
+            
             this.notifyObject2D2CreateListener(OpponentCAC1.class, this.getPositionBody().scl(1 / P2M), (new Vector2(dirDamage)).rotate((float) Math.random()*360));
             
             this.notifyObject2D2CreateListener(OpponentCAC2.class, this.getPositionBody().scl(1 / P2M), (new Vector2(dirDamage)).rotate((float) Math.random()*360));
