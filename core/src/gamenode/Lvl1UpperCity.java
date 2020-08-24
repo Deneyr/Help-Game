@@ -26,6 +26,7 @@ import com.mygdx.game.GameEventListener;
 import com.mygdx.game.GameEventManager;
 import com.mygdx.game.HelpGame;
 import com.mygdx.game.scenery.Abribus;
+import com.mygdx.game.scenery.Balloon;
 import com.mygdx.game.scenery.Bench;
 import com.mygdx.game.scenery.Bus;
 import com.mygdx.game.scenery.Car;
@@ -34,6 +35,7 @@ import com.mygdx.game.scenery.Crane;
 import com.mygdx.game.scenery.GroundCity;
 import com.mygdx.game.scenery.MetalBox;
 import com.mygdx.game.scenery.ObstacleHouse;
+import com.mygdx.game.scenery.PhoneBox;
 import com.mygdx.game.scenery.Sign;
 import com.mygdx.game.scenery.SmallBox;
 import com.mygdx.game.scenery.Pipe;
@@ -298,6 +300,16 @@ public class Lvl1UpperCity extends LvlGameNode{
         
         pipe = new Pipe(game.getGameWorld().getWorld(), 20000, 500f, 0.5f, true);
         game.getGameWorld().addObject2DToWorld(pipe);
+        
+        // Balloons
+        Balloon balloon = new Balloon(game.getGameWorld().getWorld(), 17000f, 150);
+        game.getGameWorld().addObject2DToWorld(balloon);
+        
+        balloon = new Balloon(game.getGameWorld().getWorld(), 17200f, 200);
+        game.getGameWorld().addObject2DToWorld(balloon);
+        
+        balloon = new Balloon(game.getGameWorld().getWorld(), 17400f, 200);
+        game.getGameWorld().addObject2DToWorld(balloon);
         
         obstacleHouse = new ObstacleHouse(game.getGameWorld().getWorld(), 20600, 190f, 5); 
         game.getGameWorld().addObject2DToWorld(obstacleHouse);
@@ -674,8 +686,10 @@ public class Lvl1UpperCity extends LvlGameNode{
         Grandma hero = null;
         if(heroPosition != null){
             hero = new Grandma(game.getGameWorld().getWorld(), heroPosition.x, heroPosition.y);
+            
+            this.isRestarted = true;
         }else{
-            hero = new Grandma(game.getGameWorld().getWorld(), 9300f, 600f);
+            hero = new Grandma(game.getGameWorld().getWorld(), 20000f, 0f);
         }
         game.getGameWorld().setHero(hero);
         
@@ -966,6 +980,13 @@ public class Lvl1UpperCity extends LvlGameNode{
         game.getGameWorld().addObject2DToWorld(box, true);
                     
         box = new MetalBox(game.getGameWorld().getWorld(), 16350f, 250f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        
+        box = new StrongChest(game.getGameWorld().getWorld(), 17425f, 260f);
+        game.getGameWorld().addObject2DToWorld(box, true);
+        
+        box = new PhoneBox(game.getGameWorld().getWorld(), 20000f, 0f);
         game.getGameWorld().addObject2DToWorld(box, true);
         
         
@@ -1286,7 +1307,7 @@ public class Lvl1UpperCity extends LvlGameNode{
         charaTimeline.addEntry(9.2f, "per_walk");
         charaTimeline.addEntry(10.8f, "per_walk");
         charaTimeline.addEntry(10.2f, "per_jump");
-        charaTimeline.addEntry(10.28f, "per_jump");
+        charaTimeline.addEntry(10.32f, "per_jump");
         charaTimeline.addEntry(10.9f, "per_right");
         cin1.addCharacterTimeline(charaTimeline);
         
@@ -1793,7 +1814,7 @@ public class Lvl1UpperCity extends LvlGameNode{
         super.initSoundsLvl();
         
         // Musics
-        MusicManager.getInstance().registerResource("sounds/first_lvl.ogg");
+        MusicManager.getInstance().registerResource("sounds/Help_Niveau1.mp3");
         MusicManager.getInstance().registerResource("sounds/temeri.ogg");
         
         // Cinematic sounds.

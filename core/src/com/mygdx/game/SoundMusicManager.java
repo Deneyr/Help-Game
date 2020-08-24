@@ -92,6 +92,7 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         this.putActionSound("onGround", "sounds/cinematic/onGround.ogg");
         this.putActionSound("onFeet", "sounds/cinematic/backOnFeet.ogg");
         this.putActionSound("strongChestOpen", "sounds/action/StrongChestOpen.ogg");
+        this.putActionSound("phoneBoxOpen", "sounds/action/PhoneBoxOpen.ogg");
         this.putActionSound("0", "sounds/action/checkPointTaken.ogg");
         
         // Part damages taken sounds map fill.
@@ -107,7 +108,7 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         
         // Part musics.
         this.mapEndCinematicMusic = new HashMap<String, String>();
-        this.mapEndCinematicMusic.put("1:L'orgueil\nd'une grand-mère", "sounds/first_lvl.ogg");
+        this.mapEndCinematicMusic.put("1:L'orgueil\nd'une grand-mère", "sounds/Help_Niveau1.mp3");
         
         this.mapCinematicMusic = new HashMap<String, String>();
         this.mapCinematicMusic.put("encounterTemeri", "sounds/temeri.ogg");
@@ -121,6 +122,7 @@ public class SoundMusicManager implements GameEventListener, Disposable{
     public void onGameEvent(EventType type, String details, Vector2 location) {
 
         if(type == EventType.LVLSTART
+                || type == EventType.GAMESTART
                 || type == EventType.CINEMATIC
                 || type == EventType.ENDCINEMATIC){
             this.launchMusic(type, details);
@@ -192,12 +194,12 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         Music newMainMusic = null;
         
         switch (type) {
-            /*case GAMESTART:
+            case GAMESTART:
                 if(this.mapEndCinematicMusic.containsKey(details)){
                     newMusic = MusicManager.getInstance().getMusic(this.mapEndCinematicMusic.get(details));
                     newMainMusic = newMusic;
                 }   
-                break;*/
+                break;
             case LVLSTART:
                 if(this.mapLvlStartMusic.containsKey(details)){
                     newMusic = MusicManager.getInstance().getMusic(this.mapLvlStartMusic.get(details));

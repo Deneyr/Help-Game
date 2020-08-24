@@ -35,7 +35,7 @@ public abstract class Character2D extends Object2D{
     protected int nbStaticObjUnderFeet;
     
     protected LifeState lifeState;
-    private int lifePoints;
+    protected int lifePoints;
     final private int lifePointMax;
     
     protected SideCharacter side;

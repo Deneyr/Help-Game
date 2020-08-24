@@ -60,8 +60,8 @@ public class OpponentCAC1 extends Character2D{
     protected boolean noPurse;
     
     protected Vector2 spawnPoint;
-    private float maxDistanceFromSpawn;
-    private boolean isReseting;
+    protected float maxDistanceFromSpawn;
+    protected boolean isReseting;
     
     public OpponentCAC1(){
        this(100, null);    
@@ -115,6 +115,8 @@ public class OpponentCAC1 extends Character2D{
     }
     
     public void initialize(World world, Object2D target, float posX, float posY){
+        this.lifePoints = 100;
+        
         this.target = target;
         
         this.side = SideCharacter.RIGHT;

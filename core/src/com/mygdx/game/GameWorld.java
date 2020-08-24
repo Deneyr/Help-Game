@@ -510,6 +510,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
         Vector2 position = this.listCheckpoints.get(index).getPositionBody();
         position.x /= HelpGame.P2M;
         position.y /= HelpGame.P2M;
+        
         return position;
     }
     

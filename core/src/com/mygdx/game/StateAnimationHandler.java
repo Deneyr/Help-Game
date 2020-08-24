@@ -6,6 +6,7 @@
 package com.mygdx.game;
 
 import characters.OpponentCAC1;
+import characters.OpponentCAC2;
 import triggered.UpTriggeredObject2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
@@ -67,6 +68,8 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
         
         this.object2DOpponentsPool = new HashMap<Class, OpponentPool>();
         this.object2DOpponentsPool.put(OpponentCAC1.class, new OpponentFactoryPool<OpponentCAC1>(OpponentCAC1.class));
+        this.object2DOpponentsPool.put(OpponentCAC2.class, new OpponentFactoryPool<OpponentCAC2>(OpponentCAC2.class));
+
         
         // Set Pool cosmetic
         this.cosmeticObj2DFactoriesPool.put(HitCosmeticObject2D.class, new CosmeticFactoryPool<HitCosmeticObject2D>(HitCosmeticObject2D.class));

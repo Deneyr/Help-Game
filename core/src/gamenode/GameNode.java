@@ -29,6 +29,8 @@ public abstract class GameNode {
     
     private boolean isFirstUpdate;
     
+    protected boolean isRestarted;
+    
     public GameNode(String id){
         this.outputGameNode = new HashMap<String, GameNode>();
         
@@ -37,6 +39,8 @@ public abstract class GameNode {
         this.id = id;
         
         this.isFirstUpdate = true;
+        
+        this.isRestarted = false;
     }
     
     public void updateLogic(HelpGame game, float deltaTime){
@@ -49,7 +53,11 @@ public abstract class GameNode {
     
     protected void onStartingGame(HelpGame game)
     {
-        game.onGameEvent(GameEventListener.EventType.LVLSTART, this.getId(), Vector2.Zero);
+        if(this.isRestarted){
+            game.onGameEvent(GameEventListener.EventType.GAMESTART, this.getId(), Vector2.Zero);
+        }else{
+            game.onGameEvent(GameEventListener.EventType.LVLSTART, this.getId(), Vector2.Zero);
+        }
     }
     
     public void renderScreens(HelpGame game, float deltaTime){

@@ -128,14 +128,13 @@ public class CinematicManager implements Disposable{
     
     private void notifyEndCinematic(Vector2 cinematicEndPosition){
         if(this.gameEventListener.get() != null){
-            this.gameEventListener.get().onGameEvent(GameEventListener.EventType.ENDCINEMATIC, this.levelId, cinematicEndPosition);
-            
+
             if(this.isStartCinematic){
                 this.gameEventListener.get().onGameEvent(GameEventListener.EventType.GAMESTART, this.levelId, cinematicEndPosition);
-            }
-            
-            if(this.isEndCinematic){
+            }else if(this.isEndCinematic){
                 this.gameEventListener.get().onGameEvent(GameEventListener.EventType.GAMEOVER, "success", cinematicEndPosition);
+            }else{
+                this.gameEventListener.get().onGameEvent(GameEventListener.EventType.ENDCINEMATIC, this.levelId, cinematicEndPosition);
             }
         }
     }

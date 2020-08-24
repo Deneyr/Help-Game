@@ -6,16 +6,24 @@
 package com.mygdx.game.scenery;
 
 import characters.OpponentCAC1;
+import characters.OpponentCAC2;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
+import com.mygdx.game.SolidObject2D;
+import java.util.ArrayList;
 import ressourcesmanagers.TextureManager;
 import triggered.UpTriggeredObject2D;
 
@@ -23,42 +31,32 @@ import triggered.UpTriggeredObject2D;
  *
  * @author Deneyr
  */
-public class StrongChest extends SmallBox{
+public class PhoneBox extends StrongChest{
+    private static final String PHONEBOXTEXT = "urbanObj/PhoneBox_800x132.png";
     
-    private static final String STRONGCHESTBOXTEXT = "destroyable/Help_Props_2052x128_Coffre.png";
+    private static final float SCALE_X = 0.75f;
+    private static final float SCALE_Y = 0.75f;
     
-    private static final float SCALE_X = 0.5f;
-    private static final float SCALE_Y = 0.5f;
     
-    protected boolean canBeHitAgain;
-    
-    public StrongChest(World world, float posX, float posY) {
-        super(world, posX, posY, 2);
+    public PhoneBox(World world, float posX, float posY){
+        super(world, posX, posY, 2); 
         
-        this.Initialize(world, posX, posY, 62f * SCALE_X, 62f * SCALE_Y, -40f * SCALE_X, 0, 30f);
-        
-        this.canBeHitAgain = true;
+        this.Initialize(world, posX, posY, 45f * SCALE_X, 60f * SCALE_Y, -50f * SCALE_X, 0, 50f);
     }
-    
-    public StrongChest(World world, float posX, float posY, int lifePoint) {
-        super(world, posX, posY, lifePoint);
-        
-        this.canBeHitAgain = true;
-    }
+   
     
     @Override
     public void assignTextures(){
-        this.texture = TextureManager.getInstance().getTexture(STRONGCHESTBOXTEXT, this);
+        this.texture = TextureManager.getInstance().getTexture(PHONEBOXTEXT, this);
         
         if(this.texture != null){
-            TextureRegion[][] tmp = TextureRegion.split(this.texture, 228, 129);
-            // walk folded
+            TextureRegion[][] tmp = TextureRegion.split(this.texture, 200, 132);
+        
             Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
-            array.removeRange(1, 8);
+            array.removeRange(1, 3);
             this.listAnimations.add(new Animation(0.2f, array));
-
+            
             array = new Array<TextureRegion>(tmp[0]);
-            //array.removeRange(0, 0);
             this.listAnimations.add(new Animation(0.2f, array));
 
             this.changeAnimation(0, true);
@@ -76,19 +74,11 @@ public class StrongChest extends SmallBox{
         
             dirDamage.scl(2.1f);
 
-            for(int i=0; i < 20; i++){
-
-                if(Math.random() < 0.5){
-                    this.notifyObject2D2CreateListener(UpTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), (new Vector2(dirDamage)).rotate((float) Math.random()*360));
-                }
-            }
             this.notifyObject2D2CreateListener(OpponentCAC1.class, this.getPositionBody().scl(1 / P2M), (new Vector2(dirDamage)).rotate((float) Math.random()*360));
+            
+            this.notifyObject2D2CreateListener(OpponentCAC2.class, this.getPositionBody().scl(1 / P2M), (new Vector2(dirDamage)).rotate((float) Math.random()*360));
+
         //}
-    }
-    
-    @Override
-    public void applyBounce(Vector2 bounceVector, Object2D bounceOwner){
-        // Nothing to do
     }
     
     @Override
@@ -116,7 +106,7 @@ public class StrongChest extends SmallBox{
 
             if(result && this.getLifePoints() <= 1){
 
-                this.notifyGameEventListener(GameEventListener.EventType.ACTION, "strongChestOpen", new Vector2(this.getPositionBody()));
+                this.notifyGameEventListener(GameEventListener.EventType.ACTION, "phoneBoxOpen", new Vector2(this.getPositionBody()));
 
                 Vector2 upVector = new Vector2(0, 1);
                 float angle = dirDamage.nor().angle(upVector) / 2f;
@@ -130,9 +120,9 @@ public class StrongChest extends SmallBox{
                 Timer.schedule(new Timer.Task(){
                     @Override
                     public void run() {
-                        StrongChest.this.spawnLoot(new Vector2(finalDirDamage.scl(2f)), finalDamageOwner);
+                        PhoneBox.this.spawnLoot(new Vector2(finalDirDamage.scl(2f)), finalDamageOwner);
                     }
-                }, 1.5f);
+                }, 1f);
             }
         }else{
             if(this.canBeHitAgain){
@@ -142,7 +132,7 @@ public class StrongChest extends SmallBox{
                 Timer.schedule(new Timer.Task(){
                     @Override
                     public void run() {
-                        StrongChest.this.canBeHitAgain = true;
+                        PhoneBox.this.canBeHitAgain = true;
                     }
                 }, 0.5f);
             }
@@ -154,9 +144,7 @@ public class StrongChest extends SmallBox{
     @Override
     public Sprite createCurrentSprite(){
         Sprite sprite = super.createCurrentSprite();
-        sprite.setScale(sprite.getScaleX() * SCALE_X, sprite.getScaleY() * SCALE_Y);
+        sprite.setScale( SCALE_X, SCALE_Y);
         return sprite;
     }
-    
 }
-

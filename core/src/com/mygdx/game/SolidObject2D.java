@@ -13,11 +13,11 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
  * @author françois
  */
 public abstract class SolidObject2D extends Object2D{
+    
     @Override
     public boolean applyDamage(int damage, Vector2 dirDamage, Object2D damageOwner){
         return true;
-    }
-    
+    } 
     
     @Override
     protected void setCollisionFilterMask(FixtureDef fixtureDef, boolean reset){

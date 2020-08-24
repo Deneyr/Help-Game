@@ -31,12 +31,47 @@ public class OpponentCAC2 extends OpponentCAC1{
     
     private static final String OPPCAC2TEXT = "character/spritemapkaira_batte-01.png";
     
+    public OpponentCAC2(){
+       super(100, null);    
+    }
+    
     public OpponentCAC2(World world, Object2D target){
         super(100, target);
     }
     
     public OpponentCAC2(World world, Object2D target, float posX, float posY){
         super(100, target);
+        
+        this.spawnPoint = new Vector2(posX * P2M, posY * P2M);
+        
+        this.maxSpeed = 4f;
+        
+        // Part graphic
+        this.assignTextures();
+        
+        this.initializePhysicCAC2(world, posX, posY);
+        
+        this.updateFixture();
+        
+        this.previousSide = this.side;
+    }
+    
+    @Override
+    public void initialize(World world, Object2D target, float posX, float posY){
+        this.lifePoints = 100;
+        
+        this.side = SideCharacter.RIGHT;
+        
+        this.currentStateNode = new OpponentCAC1.StateNode(OpponentCAC1.OppState.NORMAL);
+        
+        this.canAttack = true;
+        
+        this.target = target;
+        
+        this.noPurse = false;
+        
+        this.maxDistanceFromSpawn = -1f;
+        this.isReseting = false;
         
         this.spawnPoint = new Vector2(posX * P2M, posY * P2M);
         
