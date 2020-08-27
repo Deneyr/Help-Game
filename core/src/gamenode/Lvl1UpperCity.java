@@ -1809,7 +1809,7 @@ public class Lvl1UpperCity extends LvlGameNode{
         list = new ArrayList<Dialogue>();
        
         dialogue = new Dialogue();
-        dialogue.addReply("Le monde est un coffre dont nous sommes les pieces !", GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, 0);
+        dialogue.addReply("Le monde est un coffre\ndont nous sommes les pieces !", GuiPortrait.Character.THIEF_KNIFE, GuiPortrait.Emotion.HAPPY, GuiPortrait.Character.GRANDMA, GuiPortrait.Emotion.DEFAULT, 0);
         
         list.add(dialogue);
         
