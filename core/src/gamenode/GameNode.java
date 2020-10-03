@@ -9,6 +9,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameEventListener;
 import com.mygdx.game.HelpGame;
+import com.mygdx.game.ScreenTouchListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.Map;
  *
  * @author Deneyr
  */
-public abstract class GameNode {
+public abstract class GameNode implements ScreenTouchListener {
    
     private String id;
     
@@ -75,6 +76,15 @@ public abstract class GameNode {
         this.isFirstUpdate = true;
         
         return true;
+    }
+    
+    @Override
+    public void OnScreenClick(int screenX, int screenY, int pointer, int button){
+        for(Screen screen : this.screensDisplayed){
+            if(screen instanceof ScreenTouchListener){
+                ((ScreenTouchListener) screen).OnScreenClick(screenX, screenY, pointer, button);
+            }
+        }
     }
     
     public void onEndingNode(HelpGame game){

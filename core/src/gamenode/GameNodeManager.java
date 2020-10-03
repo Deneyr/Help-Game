@@ -5,11 +5,13 @@
  */
 package gamenode;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.GameEventListener;
 import com.mygdx.game.HelpGame;
+import com.mygdx.game.ScreenTouchListener;
 import java.util.HashMap;
 import java.util.Map;
 import ressourcesmanagers.ResourceManagerListener;
@@ -84,6 +86,11 @@ public class GameNodeManager extends GameNode implements Disposable, ResourceMan
         }else{
             this.currentGameNode.renderScreens(game, deltaTime);
         }
+    }
+    
+    @Override
+    public void OnScreenClick(int screenX, int screenY, int pointer, int button){
+        this.currentGameNode.OnScreenClick(screenX, screenY, pointer, button);
     }
     
     @Override

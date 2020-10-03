@@ -252,7 +252,6 @@ public class OpponentCAC1 extends Character2D{
         array = new Array<TextureRegion>(tmp[3]);
         array.removeRange(0, 6);
         this.listAnimations.add(new Animation(0.3f, array));
-        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.REVERSED);
         // flying
         array = new Array<TextureRegion>(tmp[0]);
         array.removeRange(0, 8);

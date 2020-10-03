@@ -12,6 +12,10 @@ public class DesktopLauncher {
         config.title = "HELP - A Grandma Odyssey";
         config.addIcon("HelpIcon.png", Files.FileType.Internal);
 
-        LwjglApplication lwjglApplication = new LwjglApplication(new HelpGame(), config);
+        if(arg.length == 1){
+            LwjglApplication lwjglApplication = new LwjglApplication(new HelpGame(arg[0]), config);
+        }else{
+            LwjglApplication lwjglApplication = new LwjglApplication(new HelpGame(), config);
+        }
     }
 }

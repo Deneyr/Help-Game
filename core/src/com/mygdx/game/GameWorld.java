@@ -58,6 +58,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
     
     private GameEventManager gameEventManager;
     
+    private GameEditorManager gameEditorManager;
+    
     private Map<String, CinematicManager> mapCinematicManagers;
     
     // Screen shake
@@ -88,6 +90,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
         
         this.gameEventManager = new GameEventManager(this);
         this.addGameEventListener(this.gameEventManager);
+        
+        this.gameEditorManager = new GameEditorManager();
         
         this.mapCinematicManagers = new HashMap<String, CinematicManager>();
         
@@ -128,6 +132,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
     
     @Override
     public List<Sprite> getSpritesInRegion(float lowerX, float lowerY, float upperX, float upperY){
+        this.screenFOV = Math.sqrt((upperY - lowerY) * (upperY - lowerY) + (upperX - lowerX) * (upperX - lowerX));
+        
         ScreenQueryCallback query = new ScreenQueryCallback();
         
         this.world.QueryAABB(query, lowerX, lowerY, upperX, upperY);
@@ -146,17 +152,17 @@ public class GameWorld implements WorldPlane, GameEventListener{
     }
     
     public List<Object2D> getObject2DInRegion(float lowerX, float lowerY, float upperX, float upperY){
+        
         ScreenQueryCallback query = new ScreenQueryCallback();
         
         this.world.QueryAABB(query, lowerX, lowerY, upperX, upperY);
-        
+
         List<Object2D> listObject2D = query.getListObject2D();
         
         return listObject2D;
     }
     
     public List<Sprite> getLifeBarInRegion(float lowerX, float lowerY, float upperX, float upperY){
-        this.screenFOV = Math.sqrt((upperY - lowerY) * (upperY - lowerY) + (upperX - lowerX) * (upperX - lowerX));
         
         ScreenQueryCallback query = new ScreenQueryCallback();
         
@@ -200,6 +206,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
         }
         
         this.gameEventManager.updateLogic(delta);
+        
+        this.gameEditorManager.updateLogic(delta);
         
         List<Object2D> copyListCurrentObject2D = new ArrayList<Object2D>(this.listCurrentObject2D);
         for(Object2D obj : copyListCurrentObject2D)
@@ -529,6 +537,87 @@ public class GameWorld implements WorldPlane, GameEventListener{
         
         if(this.currentMoney < 0){
             this.currentMoney = 0;
+        }
+    }
+    
+    public void OnScreenTouch(float positionX, float positionY, int pointer, int button){
+        this.gameEditorManager.OnScreenTouch(this, positionX, positionY, pointer, button);
+    }
+    
+    private class GameEditorManager{
+        
+        private Object2D objectTouched;
+        
+        public GameEditorManager(){
+            this.objectTouched = null;
+        }
+        
+        public void OnScreenTouch(GameWorld world, float positionX, float positionY, int pointer, int button){
+            
+            if(button == 0){
+                
+                System.out.println(world.screenFOV / 2);
+                List<Object2D> listObject2D = world.getObject2DInRegion(
+                        (float) (positionX - world.screenFOV / 2), 
+                        (float) (positionY - world.screenFOV / 2), 
+                        (float) (positionX + world.screenFOV / 2), 
+                        (float) (positionY + world.screenFOV / 2));
+
+                if(listObject2D.size() > 0){ 
+
+                    Object2D nearestObject = null;
+                    float minimalDist2 = 0;
+                    for(Object2D obj : listObject2D){
+                        Vector2 positionObj = obj.getPositionBody();
+                        float distObj = Vector2.dst2(positionObj.x, positionObj.y, positionX, positionY);
+
+                        if(nearestObject == null || distObj < minimalDist2){
+                            nearestObject = obj;
+                            minimalDist2 = distObj;
+                        }
+                    }
+
+                    if(this.objectTouched != nearestObject){
+                        this.objectTouched = nearestObject;
+                        
+                        this.UpdateObject2D(world);
+                    }
+
+                    System.out.println(listObject2D.size() + "object touched : " + this.objectTouched);                   
+                }    
+            }
+            else
+            {
+                this.objectTouched = null;
+                
+                this.UpdateObject2D(world);
+            }
+        }
+        
+        private void UpdateObject2D(GameWorld world){
+            for(Object2D obj : world.listCurrentObject2D){
+                if(obj != this.objectTouched){
+                    obj.setAlpha(0.3f);
+                }
+            }
+            
+            if(this.objectTouched != null){
+                this.objectTouched.setAlpha(1f);
+                
+                for(Object2D obj : world.listCurrentObject2D){
+                    if(obj != this.objectTouched){
+                        obj.setAlpha(0.3f);
+                    }
+                }
+            }else{
+                for(Object2D obj : world.listCurrentObject2D){
+                    obj.setAlpha(1f);
+                }         
+            }
+        }
+        
+        public void updateLogic(float delta){
+            
         }
     }
 }

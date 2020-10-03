@@ -7,8 +7,10 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import gamenode.EditorGameNode;
 import java.util.TreeMap;
 import gamenode.GameNode;
 import gamenode.GameNodeManager;
@@ -55,12 +57,23 @@ public class HelpGame extends Game implements GameEventListener{
     // PlayerData
     private PlayerData playerData;
     
+    // Editor
+    private String editorLevelPath;
+    
     public HelpGame(){
         super();
         
         this.listGameEvents = new ArrayList<GameEventContainer>();
         
         this.playerData = new PlayerData();
+        
+        this.editorLevelPath = null;
+    }
+    
+    public HelpGame(String editorLevelPath){
+        this();
+        
+        this.editorLevelPath = editorLevelPath;
     }
     
     public boolean LoadSaveFile(String filePath){
@@ -117,25 +130,40 @@ public class HelpGame extends Game implements GameEventListener{
         this.gameNodeManager = new GameNodeManager(this.batch);
         
         // Add Node Part
-        GameNode gameNode = new Lvl1GameNode(this, this.batch);    
-        this.gameNodeManager.addGameNode(gameNode);
-        
-        gameNode = new Lvl1UpperCity(this, this.batch);    
-        this.gameNodeManager.addGameNode(gameNode);
-        
-        GameNode menuNode = new MainMenuGameNode(this, this.batch);    
-        this.gameNodeManager.addGameNode(menuNode);
-        
-        // Link Nodes Part
-        gameNode.addNextNode("Menu", menuNode);
-        menuNode.addNextNode("Start", gameNode);
-        
-        // Load save file
-        this.LoadSaveFile("profil.save");
+        GameNode menuNode;
+        if(this.editorLevelPath != null){
+            GameNode gameNode = new Lvl1GameNode(this, this.batch);    
+            this.gameNodeManager.addGameNode(gameNode);
+
+            gameNode = new Lvl1UpperCity(this, this.batch);    
+            this.gameNodeManager.addGameNode(gameNode);
+
+            menuNode = new MainMenuGameNode(this, this.batch);    
+            this.gameNodeManager.addGameNode(menuNode);
+
+            // Link Nodes Part
+            gameNode.addNextNode("Menu", menuNode);
+            menuNode.addNextNode("Start", gameNode);
+
+            // Load save file
+            this.LoadSaveFile("profil.save");
+        }else{
+            menuNode = new EditorGameNode(this, this.batch);
+            this.gameNodeManager.addGameNode(menuNode);
+            
+            Gdx.input.setInputProcessor(new InputAdapter(){
+
+                @Override
+                public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+                    HelpGame.this.gameNodeManager.OnScreenClick(screenX, screenY, pointer, button);                  
+                    return true;
+                }
+
+            });
+        }
         
         // Initialize first node
-        this.gameNodeManager.changeCurrentGameNode(this, menuNode);
-        
+        this.gameNodeManager.changeCurrentGameNode(this, menuNode);  
     }
     
     @Override
