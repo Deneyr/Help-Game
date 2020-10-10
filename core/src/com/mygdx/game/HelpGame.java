@@ -131,7 +131,7 @@ public class HelpGame extends Game implements GameEventListener{
         
         // Add Node Part
         GameNode menuNode;
-        if(this.editorLevelPath != null){
+        if(this.editorLevelPath == null){
             GameNode gameNode = new Lvl1GameNode(this, this.batch);    
             this.gameNodeManager.addGameNode(gameNode);
 
@@ -155,10 +155,27 @@ public class HelpGame extends Game implements GameEventListener{
 
                 @Override
                 public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                    HelpGame.this.gameNodeManager.OnScreenClick(screenX, screenY, pointer, button);                  
+                    HelpGame.this.gameNodeManager.touchDown(screenX, screenY, pointer, button);                  
+                    return true;
+                }
+                
+                @Override
+                public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+                    HelpGame.this.gameNodeManager.touchUp(screenX, screenY, pointer, button);
+                    return true;   
+                }
+
+                @Override
+                public boolean touchDragged(int screenX, int screenY, int pointer) {
+                    HelpGame.this.gameNodeManager.touchDragged(screenX, screenY, pointer);
                     return true;
                 }
 
+                @Override
+                public boolean mouseMoved(int screenX, int screenY) {
+                    HelpGame.this.gameNodeManager.mouseMoved(screenX, screenY);
+                    return true;
+                }
             });
         }
         
@@ -243,6 +260,13 @@ public class HelpGame extends Game implements GameEventListener{
      */
     public TreeMap<Float, WorldPlane> getMapBackgroundPlanes() {
         return this.mapBackgroundPlanes;
+    }
+    
+    /**
+     * @return the mapBackgroundPlanes
+     */
+    public String getEditorLevelPath() {
+        return this.editorLevelPath;
     }
     
     /**

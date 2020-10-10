@@ -15,7 +15,7 @@ public class DesktopLauncher {
         if(arg.length == 1){
             LwjglApplication lwjglApplication = new LwjglApplication(new HelpGame(arg[0]), config);
         }else{
-            LwjglApplication lwjglApplication = new LwjglApplication(new HelpGame(), config);
+            LwjglApplication lwjglApplication = new LwjglApplication(new HelpGame("D:\\Projects\\Help-Game\\desktop\\build\\libs\\level.txt"), config);
         }
     }
 }

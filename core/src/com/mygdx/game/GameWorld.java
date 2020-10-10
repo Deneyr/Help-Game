@@ -540,19 +540,37 @@ public class GameWorld implements WorldPlane, GameEventListener{
         }
     }
     
-    public void OnScreenTouch(float positionX, float positionY, int pointer, int button){
-        this.gameEditorManager.OnScreenTouch(this, positionX, positionY, pointer, button);
+    public void onTouchDown(float positionX, float positionY, int pointer, int button){
+        this.gameEditorManager.onTouchDown(this, positionX, positionY, pointer, button);
+    }
+    
+    public void onTouchUp(float positionX, float positionY, int pointer, int button){
+        this.gameEditorManager.onTouchUp(this, positionX, positionY, pointer, button);
+    }
+
+    public void onTouchDragged(float positionX, float positionY, int pointer){
+        this.gameEditorManager.onTouchDragged(this, positionX, positionY, pointer);
+    }
+
+    public void onMouseMoved(float positionX, float positionY){
+        this.gameEditorManager.onMouseMoved(this, positionX, positionY);
     }
     
     private class GameEditorManager{
         
         private Object2D objectTouched;
         
+        private boolean isTouchedAgain; 
+        
         public GameEditorManager(){
             this.objectTouched = null;
+            
+            this.isTouchedAgain = false;
         }
         
-        public void OnScreenTouch(GameWorld world, float positionX, float positionY, int pointer, int button){
+        public void onTouchDown(GameWorld world, float positionX, float positionY, int pointer, int button){
+            
+            boolean isCurrentTouchedAgain = false;
             
             if(button == 0){
                 
@@ -581,6 +599,9 @@ public class GameWorld implements WorldPlane, GameEventListener{
                         this.objectTouched = nearestObject;
                         
                         this.UpdateObject2D(world);
+                        
+                    }else{
+                        isCurrentTouchedAgain = true;
                     }
 
                     System.out.println(listObject2D.size() + "object touched : " + this.objectTouched);                   
@@ -592,6 +613,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
                 
                 this.UpdateObject2D(world);
             }
+            
+            this.isTouchedAgain = isCurrentTouchedAgain;
         }
         
         private void UpdateObject2D(GameWorld world){
@@ -614,6 +637,20 @@ public class GameWorld implements WorldPlane, GameEventListener{
                     obj.setAlpha(1f);
                 }         
             }
+        }
+        
+        public void onTouchUp(GameWorld world, float positionX, float positionY, int pointer, int button){
+
+        }
+
+        public void onTouchDragged(GameWorld world, float positionX, float positionY, int pointer){
+            if(this.objectTouched != null && this.isTouchedAgain){
+                this.objectTouched.physicBody.setTransform(new Vector2(positionX, positionY), this.objectTouched.physicBody.getAngle());
+            }
+        }
+
+        public void onMouseMoved(GameWorld world, float positionX, float positionY){
+            
         }
         
         public void updateLogic(float delta){

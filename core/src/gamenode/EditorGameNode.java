@@ -15,12 +15,18 @@ import com.mygdx.game.GameScreen;
 import com.mygdx.game.HelpGame;
 import com.mygdx.game.MenuScreen;
 import com.mygdx.game.Object2D;
+import com.mygdx.game.Object2DEditorFactory;
 import com.mygdx.game.WorldPlane;
 import com.mygdx.game.scenery.Car;
 import com.mygdx.game.scenery.GroundCity;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -100,7 +106,18 @@ public class EditorGameNode extends GameNode{
         GroundCity ground = new GroundCity(game.getGameWorld().getWorld(), 10000, -150f, 150);
         game.getGameWorld().addObject2DToWorld(ground);
         
-        try {
+        System.out.println(game.getEditorLevelPath());
+        
+        List<Object2DEditorFactory> factories = this.loadObject2DEditorFactories(game.getEditorLevelPath());
+        
+        for(Object2DEditorFactory factory : factories){
+            factory.createTemplate(game.getGameWorld().getWorld());
+            System.out.println(factory.getTemplate());
+            System.out.println(factory);
+            System.out.println("-------");
+        }
+
+        /*try {
             Class<?> act = Class.forName("com.mygdx.game.scenery.Abribus");
             
             Constructor<?> constructor = act.getConstructor(World.class, float.class, float.class);
@@ -125,7 +142,42 @@ public class EditorGameNode extends GameNode{
             Logger.getLogger(EditorGameNode.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvocationTargetException ex) {
             Logger.getLogger(EditorGameNode.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+    }
+    
+    private List<Object2DEditorFactory> loadObject2DEditorFactories(String path){
+        List<Object2DEditorFactory> listObject2DEditorFactories = new ArrayList<Object2DEditorFactory>();
+        
+        File file = new File(path);
+        
+        if(file.exists()){
+            Scanner sc; 
+            try {
+                sc = new Scanner(file);
+                
+                while (sc.hasNextLine()){
+                    String line = sc.nextLine(); 
+                    
+                    String[] tokens = line.split("\\(");
+                    
+                    Object2DEditorFactory factory = new Object2DEditorFactory(tokens[0]);
+                    
+                    tokens = tokens[1].split("\\)");
+                    tokens = tokens[0].split(",");
+                    
+                    for(String token : tokens){
+                        factory.addArgument(token);
+                    }
+
+                    listObject2DEditorFactories.add(factory);
+                }               
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(EditorGameNode.class.getName()).log(Level.SEVERE, null, ex);
+            }
+ 
         }
+        
+        return listObject2DEditorFactories;
     }
     
     @Override

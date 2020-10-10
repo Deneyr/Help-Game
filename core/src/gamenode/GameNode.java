@@ -79,10 +79,37 @@ public abstract class GameNode implements ScreenTouchListener {
     }
     
     @Override
-    public void OnScreenClick(int screenX, int screenY, int pointer, int button){
+    public void touchDown(int screenX, int screenY, int pointer, int button){
         for(Screen screen : this.screensDisplayed){
             if(screen instanceof ScreenTouchListener){
-                ((ScreenTouchListener) screen).OnScreenClick(screenX, screenY, pointer, button);
+                ((ScreenTouchListener) screen).touchDown(screenX, screenY, pointer, button);
+            }
+        }
+    }
+    
+    @Override
+    public void touchUp(int screenX, int screenY, int pointer, int button){
+        for(Screen screen : this.screensDisplayed){
+            if(screen instanceof ScreenTouchListener){
+                ((ScreenTouchListener) screen).touchUp(screenX, screenY, pointer, button);
+            }
+        }
+    }
+
+    @Override
+    public void touchDragged(int screenX, int screenY, int pointer){
+        for(Screen screen : this.screensDisplayed){
+            if(screen instanceof ScreenTouchListener){
+                ((ScreenTouchListener) screen).touchDragged(screenX, screenY, pointer);
+            }
+        }
+    }
+
+    @Override
+    public void mouseMoved(int screenX, int screenY){
+        for(Screen screen : this.screensDisplayed){
+            if(screen instanceof ScreenTouchListener){
+                ((ScreenTouchListener) screen).mouseMoved(screenX, screenY);
             }
         }
     }

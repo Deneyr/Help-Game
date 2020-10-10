@@ -11,6 +11,11 @@ package com.mygdx.game;
  */
 public interface ScreenTouchListener {
     
-    void OnScreenClick(int screenX, int screenY, int pointer, int button);
+    void touchDown(int screenX, int screenY, int pointer, int button);
     
+    void touchUp(int screenX, int screenY, int pointer, int button);
+
+    void touchDragged(int screenX, int screenY, int pointer);
+
+    void mouseMoved(int screenX, int screenY);
 }

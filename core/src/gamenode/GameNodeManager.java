@@ -89,8 +89,23 @@ public class GameNodeManager extends GameNode implements Disposable, ResourceMan
     }
     
     @Override
-    public void OnScreenClick(int screenX, int screenY, int pointer, int button){
-        this.currentGameNode.OnScreenClick(screenX, screenY, pointer, button);
+    public void touchDown(int screenX, int screenY, int pointer, int button){
+        this.currentGameNode.touchDown(screenX, screenY, pointer, button);
+    }
+    
+    @Override
+    public void touchUp(int screenX, int screenY, int pointer, int button){
+        this.currentGameNode.touchUp(screenX, screenY, pointer, button);
+    }
+
+    @Override
+    public void touchDragged(int screenX, int screenY, int pointer){
+        this.currentGameNode.touchDragged(screenX, screenY, pointer);
+    }
+
+    @Override
+    public void mouseMoved(int screenX, int screenY){
+        this.currentGameNode.mouseMoved(screenX, screenY);
     }
     
     @Override

@@ -143,17 +143,43 @@ public class EditorScreen implements Screen, ScreenTouchListener{
         return camera;
     }
 
-    @Override
-    public void OnScreenClick(int screenX, int screenY, int pointer, int button) {        
+    private Vector2 getWorldCoordinate(float screenX, float screenY){
         float visualX = this.camera.position.x - this.getCamera().viewportWidth / 2 + screenX;
         float visualY = this.camera.position.y + this.getCamera().viewportHeight / 2 - screenY;
         
-        System.out.println("x : " + visualX);
-        System.out.println("y : " + visualY);
-        System.out.println("x : " + this.getCamera().viewportWidth);
-        System.out.println("y : " + this.getCamera().viewportHeight);
+        return new Vector2(visualX * P2M, visualY * P2M);
+    }
+    
+    @Override
+    public void touchDown(int screenX, int screenY, int pointer, int button) {        
+        
+        Vector2 position = this.getWorldCoordinate(screenX, screenY);
+
+        System.out.println("x : " + position.x);
+        System.out.println("y : " + position.y);
         System.out.println("----------------");
         
-        this.gameWorld.OnScreenTouch(visualX * P2M, visualY * P2M, pointer, button);
+        this.gameWorld.onTouchDown(position.x, position.y, pointer, button);
+    }
+    
+    @Override
+    public void touchUp(int screenX, int screenY, int pointer, int button){
+        Vector2 position = this.getWorldCoordinate(screenX, screenY);
+        
+        this.gameWorld.onTouchUp(position.x, position.y, pointer, button);
+    }
+
+    @Override
+    public void touchDragged(int screenX, int screenY, int pointer){
+        Vector2 position = this.getWorldCoordinate(screenX, screenY);
+        
+        this.gameWorld.onTouchDragged(position.x, position.y, pointer);
+    }
+
+    @Override
+    public void mouseMoved(int screenX, int screenY){
+        Vector2 position = this.getWorldCoordinate(screenX, screenY);
+        
+        this.gameWorld.onMouseMoved(position.x, position.y);
     }
 }
