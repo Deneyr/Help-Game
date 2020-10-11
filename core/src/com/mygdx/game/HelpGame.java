@@ -19,6 +19,7 @@ import gamenode.Lvl1UpperCity;
 import gamenode.MainMenuGameNode;
 import java.util.ArrayList;
 import java.util.List;
+import menu.EditorMenuManager;
 import menu.GameMenuManager;
 import menu.MenuManager;
 
@@ -42,6 +43,8 @@ public class HelpGame extends Game implements GameEventListener{
     private final MenuManager menuManager = new MenuManager();
     
     private final GameMenuManager gameMenuManager = new GameMenuManager();
+    
+    private final EditorMenuManager editorMenuManager = new EditorMenuManager();
     
     private final SoundMusicManager soundMusicManager = new SoundMusicManager();
    
@@ -148,6 +151,9 @@ public class HelpGame extends Game implements GameEventListener{
             // Load save file
             this.LoadSaveFile("profil.save");
         }else{
+            // Game Menu Manager
+            this.editorMenuManager.addGameEventListener(this);
+            
             menuNode = new EditorGameNode(this, this.batch);
             this.gameNodeManager.addGameNode(menuNode);
             
@@ -177,6 +183,7 @@ public class HelpGame extends Game implements GameEventListener{
                     return true;
                 }
             });
+                       
         }
         
         // Initialize first node
@@ -229,6 +236,8 @@ public class HelpGame extends Game implements GameEventListener{
         
         this.gameMenuManager.dispose();
         
+        this.editorMenuManager.dispose();
+        
         this.soundMusicManager.dispose();
 
         this.batch.flush();
@@ -253,6 +262,13 @@ public class HelpGame extends Game implements GameEventListener{
      */
     public GameMenuManager getGameMenuManager() {
         return gameMenuManager;
+    }
+    
+     /**
+     * @return the editorMenuManager
+     */
+    public EditorMenuManager getEditorMenuManager() {
+        return editorMenuManager;
     }
     
     /**
@@ -317,6 +333,10 @@ public class HelpGame extends Game implements GameEventListener{
                     this.gameNodeManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
                     
                     this.gameMenuManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
+                    
+                    if(this.editorLevelPath != null){
+                        this.editorMenuManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
+                    }
             }
         }
         
@@ -327,6 +347,10 @@ public class HelpGame extends Game implements GameEventListener{
             this.gameNodeManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
             
             this.gameMenuManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
+            
+            if(this.editorLevelPath != null){
+                this.editorMenuManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
+            }
         }
         this.listGameEvents.clear();
     }

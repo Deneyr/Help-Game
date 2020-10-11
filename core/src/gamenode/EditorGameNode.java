@@ -19,6 +19,8 @@ import com.mygdx.game.Object2DEditorFactory;
 import com.mygdx.game.WorldPlane;
 import com.mygdx.game.scenery.Car;
 import com.mygdx.game.scenery.GroundCity;
+import guicomponents.GuiComponent;
+import guicomponents.GuiEditorBlock;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Constructor;
@@ -50,7 +52,9 @@ public class EditorGameNode extends GameNode{
         this.screensDisplayed.add(new ForegroundScreen(batch, game.getGameWorld(), game.getMapForegroundPlanes()));
         //this.screensDisplayed.add(new GUIScreen(batch, game.getGameWorld()));
         
-        this.screensDisplayed.add(new MenuScreen(batch, game.getGameMenuManager()));       
+        this.screensDisplayed.add(new MenuScreen(batch, game.getGameMenuManager()));  
+        
+        this.screensDisplayed.add(new MenuScreen(batch, game.getEditorMenuManager()));  
     }
     
     @Override
@@ -72,6 +76,8 @@ public class EditorGameNode extends GameNode{
         
         // Compute the next step of the Menu manager Logic.
         game.getGameMenuManager().step(deltaTime);
+        
+        game.getEditorMenuManager().step(deltaTime);
     }
 
     
@@ -79,6 +85,8 @@ public class EditorGameNode extends GameNode{
         game.getGameWorld().flushWorld();
         
         game.getGameMenuManager().dispose();
+        
+        game.getEditorMenuManager().dispose();
     }
     
     @Override
@@ -101,8 +109,11 @@ public class EditorGameNode extends GameNode{
     }
     
     protected void initializeLevel(HelpGame game){
-        // Init Game Menu Manager.
+        // Init Editor Menu Manager.
+        GuiEditorBlock editorBlock = new GuiEditorBlock();
+        game.getEditorMenuManager().setCanevas(editorBlock);
         
+        // Init Editor Level
         GroundCity ground = new GroundCity(game.getGameWorld().getWorld(), 10000, -150f, 150);
         game.getGameWorld().addObject2DToWorld(ground);
         
@@ -112,37 +123,9 @@ public class EditorGameNode extends GameNode{
         
         for(Object2DEditorFactory factory : factories){
             factory.createTemplate(game.getGameWorld().getWorld());
-            System.out.println(factory.getTemplate());
-            System.out.println(factory);
-            System.out.println("-------");
-        }
 
-        /*try {
-            Class<?> act = Class.forName("com.mygdx.game.scenery.Abribus");
-            
-            Constructor<?> constructor = act.getConstructor(World.class, float.class, float.class);
-            
-            Object2D obj = (Object2D)constructor.newInstance(game.getGameWorld().getWorld(), 0f, 50f);
-            game.getGameWorld().addObject2DToWorld(obj);
-            
-            obj = (Object2D)constructor.newInstance(game.getGameWorld().getWorld(), 200f, 70f);
-            game.getGameWorld().addObject2DToWorld(obj);
-            
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EditorGameNode.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchMethodException ex) {
-            Logger.getLogger(EditorGameNode.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SecurityException ex) {
-            Logger.getLogger(EditorGameNode.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(EditorGameNode.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(EditorGameNode.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(EditorGameNode.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvocationTargetException ex) {
-            Logger.getLogger(EditorGameNode.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+            game.getEditorMenuManager().AddObject2DAsComponent(factory);
+        }      
     }
     
     private List<Object2DEditorFactory> loadObject2DEditorFactories(String path){
