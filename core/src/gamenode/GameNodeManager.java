@@ -109,6 +109,11 @@ public class GameNodeManager extends GameNode implements Disposable, ResourceMan
     }
     
     @Override
+    public void scrolled(int amount) {
+        this.currentGameNode.scrolled(amount);
+    }
+    
+    @Override
     public void dispose() {
         
     }

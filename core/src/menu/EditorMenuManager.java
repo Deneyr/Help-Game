@@ -5,7 +5,10 @@
  */
 package menu;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.HelpGame;
 import com.mygdx.game.Object2D;
@@ -27,8 +30,20 @@ public class EditorMenuManager extends MenuManager{
     
     private GuiEditorBlock canevas;
     
+    private GuiEditorItem selectedItem;
+    
+    private float positionCursorX;
+    private float positionCursorY;
+    
     public EditorMenuManager(){
         super();
+        
+        this.canevas = null;
+        
+        this.selectedItem = null;
+        
+        positionCursorX = 0;
+        positionCursorY = 0;
     }
     
     @Override
@@ -57,6 +72,26 @@ public class EditorMenuManager extends MenuManager{
     }
     
     @Override
+    public void drawBatch(Camera camera, Batch batch){
+        super.drawBatch(camera, batch);
+        
+        if(this.selectedItem != null){
+            
+            Sprite sprite = this.selectedItem.createNewSprite();
+            
+            sprite.setPosition(this.positionCursorX - sprite.getWidth() / 2, this.positionCursorY - sprite.getHeight() / 2);
+            
+            batch.setColor(sprite.getColor());
+            batch.draw(sprite , 
+                sprite.getX(), sprite.getY(),
+                sprite.getOriginX(), sprite.getOriginY(),
+                sprite.getWidth(), sprite.getHeight(),
+                sprite.getScaleX(), sprite.getScaleY(),
+                sprite.getRotation());
+        }
+    }
+    
+    @Override
     public void dispose(){
         super.dispose();
     }
@@ -70,5 +105,41 @@ public class EditorMenuManager extends MenuManager{
      */
     public void setCanevas(GuiEditorBlock canevas) {
         this.canevas = canevas;
+    }
+    
+    @Override
+    public void onTouchDown(float positionX, float positionY, int pointer, int button){
+        if(button == 0){
+            GuiEditorItem item = this.canevas.getSelectedGuiComponentAt(positionX, positionY);
+            
+            if(item != null){                
+                this.selectedItem = item;
+            }else if(this.selectedItem != null){
+                //this.notifyGameEventListeners(EventType.DEATH, details, Vector2.Zero);
+            }
+        }else if(button == 1){
+            this.selectedItem = null;
+        }
+    }
+    
+    @Override
+    public void onTouchUp(float positionX, float positionY, int pointer, int button){
+        
+    }
+
+    @Override
+    public void onTouchDragged(float positionX, float positionY, int pointer){
+        
+    }
+
+    @Override
+    public void onMouseMoved(float positionX, float positionY){
+        this.positionCursorX = positionX;
+        this.positionCursorY = positionY;
+    }
+    
+    @Override
+    public void onScrolled(int amount) {
+        this.canevas.scroll(amount);
     }
 }

@@ -182,6 +182,12 @@ public class HelpGame extends Game implements GameEventListener{
                     HelpGame.this.gameNodeManager.mouseMoved(screenX, screenY);
                     return true;
                 }
+                
+                @Override
+                public boolean scrolled(int amount) {
+                    HelpGame.this.gameNodeManager.scrolled(amount);
+                    return true;
+                }
             });
                        
         }

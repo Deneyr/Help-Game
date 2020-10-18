@@ -290,5 +290,25 @@ public class MenuManager implements Disposable, GameEventListener{
     public void onHelpGameEvent(HelpGame helpGame, EventType type, String details, Vector2 location) {
         // Nothing to do.
     }
+    
+    public void onTouchDown(float positionX, float positionY, int pointer, int button){
+        
+    }
+    
+    public void onTouchUp(float positionX, float positionY, int pointer, int button){
+        
+    }
+
+    public void onTouchDragged(float positionX, float positionY, int pointer){
+        
+    }
+
+    public void onMouseMoved(float positionX, float positionY){
+        
+    }
+    
+    public void onScrolled(int amount) {
+        // nothing to do for now.
+    }
 
 }

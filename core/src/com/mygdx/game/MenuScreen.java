@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import menu.MenuManager;
 
@@ -20,7 +21,7 @@ import menu.MenuManager;
  *
  * @author françois
  */
-public class MenuScreen implements Screen{
+public class MenuScreen implements Screen, ScreenTouchListener{
 
     /*public static final String TITLE = "HELP";
     public static final String SUBTITLE = "PRESS        ENTER";*/
@@ -40,6 +41,8 @@ public class MenuScreen implements Screen{
     
     Sprite umbrella;
     
+    // ShapeRenderer shapeRenderer = new ShapeRenderer();
+    
     public MenuScreen(Batch batch, MenuManager menuManager){
         this.menuManager = menuManager;
        
@@ -47,7 +50,7 @@ public class MenuScreen implements Screen{
         this.camera = new OrthographicCamera(this.cameraSize.x, this.cameraSize.y);
         
         this.batch = batch;
-        
+
         /*// Part ressources initialization
         
         FreeTypeFontParameter fontParameters = new FreeTypeFontParameter();
@@ -91,6 +94,9 @@ public class MenuScreen implements Screen{
         this.menuManager.drawBatch(this.camera, this.batch);
         
         this.batch.end();
+        
+        /*shapeRenderer.setProjectionMatrix(camera.combined);
+        this.menuManager.drawShapeRenderer(this.camera, shapeRenderer);*/
     }
 
     @Override
@@ -121,6 +127,46 @@ public class MenuScreen implements Screen{
     @Override
     public void dispose() {
         
+    }
+    
+    private Vector2 getWorldCoordinate(float screenX, float screenY){
+        float visualX = this.camera.position.x - this.camera.viewportWidth / 2 + screenX;
+        float visualY = this.camera.position.y + this.camera.viewportHeight / 2 - screenY;
+        
+        return new Vector2(visualX , visualY );
+    }
+    
+    @Override
+    public void touchDown(int screenX, int screenY, int pointer, int button) {              
+        Vector2 position = this.getWorldCoordinate(screenX, screenY);
+        
+        this.menuManager.onTouchDown(position.x, position.y, pointer, button);
+    }
+    
+    @Override
+    public void touchUp(int screenX, int screenY, int pointer, int button){
+        Vector2 position = this.getWorldCoordinate(screenX, screenY);
+        
+        this.menuManager.onTouchUp(position.x, position.y, pointer, button);
+    }
+
+    @Override
+    public void touchDragged(int screenX, int screenY, int pointer){
+        Vector2 position = this.getWorldCoordinate(screenX, screenY);
+        
+        this.menuManager.onTouchDragged(position.x, position.y, pointer);
+    }
+
+    @Override
+    public void mouseMoved(int screenX, int screenY){
+        Vector2 position = this.getWorldCoordinate(screenX, screenY);
+        
+        this.menuManager.onMouseMoved(position.x, position.y);
+    }
+    
+    @Override
+    public void scrolled(int amount) {
+        this.menuManager.onScrolled(amount);
     }
     
 }

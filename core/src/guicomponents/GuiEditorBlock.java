@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Object2DEditorFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +31,10 @@ public class GuiEditorBlock extends GuiComponent{
     
     private int startLine;
     
+    private int maxLine;
+    
+    private volatile List<GuiEditorItem> itemsToDraw;
+    
     
     public GuiEditorBlock(){
         super();
@@ -35,6 +42,10 @@ public class GuiEditorBlock extends GuiComponent{
         this.assignTextures();
         
         this.startLine = 0;
+        
+        this.maxLine = 1;
+        
+        this.itemsToDraw = new ArrayList<GuiEditorItem>();
     }
     
     @Override
@@ -53,10 +64,11 @@ public class GuiEditorBlock extends GuiComponent{
         int nbItemLine = (int) ((totalWidth - 120) / width);
         int nbItemRow = (int) ((totalHeight - 50) / width);
         
+        
         int i = 0;
         int j = 0;
         
-        List<GuiEditorItem> itemsToDraw = new ArrayList<GuiEditorItem>();
+        this.itemsToDraw.clear();
         for(GuiEditorItem editorItem : this.mapModelGuiComponents.keySet()){           
             
             if(j >= this.startLine && (j - this.startLine) < nbItemRow){            
@@ -64,16 +76,18 @@ public class GuiEditorBlock extends GuiComponent{
 
                 spriteItem.setScale(width / spriteItem.getRegionWidth(), width / spriteItem.getRegionHeight());
 
-                editorItem.setLocation(sprite.getX() + 70 + (width) * i, sprite.getY() + sprite.getHeight() - 70 - (width) * j);
-                i++;
-                if(i >= nbItemLine){
-                    i = 0;
-                    j++;
-                }
+                editorItem.setLocation(sprite.getX() + 70 + (width) * i, sprite.getY() + sprite.getHeight() - 70 - (width) * (j - this.startLine));
                 
-                itemsToDraw.add(editorItem);
+                this.itemsToDraw.add(editorItem);
+            }
+            i++;
+            if(i >= nbItemLine){
+                i = 0;
+                j++;
             }
         }
+        
+        this.maxLine = j + 1;
         
         if(sprite != null){
             batch.setColor(sprite.getColor());
@@ -85,20 +99,34 @@ public class GuiEditorBlock extends GuiComponent{
                 sprite.getRotation());
         }
         
-        for(GuiEditorItem editorItem : itemsToDraw){
+        for(GuiEditorItem editorItem : this.itemsToDraw){
             editorItem.drawBatch(camera, batch);
         }
     }
     
+    @Override
     public void updateLogic(float deltaTime){
         super.updateLogic(deltaTime);
         
-        
+      
     }
 
     @Override
     public void drawShapeRenderer(Camera camera, ShapeRenderer shapeRenderer) {
-        
+        for(GuiEditorItem editorItem : this.itemsToDraw){
+            Sprite sprite = editorItem.getSprite();
+            
+            Vector2 locationItem = editorItem.getLocation();
+            float width = sprite.getWidth() * sprite.getScaleX();
+            float height = sprite.getHeight() * sprite.getScaleY();
+            
+            Rectangle rectangle = new Rectangle(locationItem.x - width/2, locationItem.y - height/2, width, height);
+            shapeRenderer.begin(ShapeType.Filled);
+            shapeRenderer.setColor(1, 0, 0, 1);
+            shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+            shapeRenderer.end();
+ 
+        }
     }
     
     public void AddObject2DAsComponent(Object2DEditorFactory factory){
@@ -114,6 +142,39 @@ public class GuiEditorBlock extends GuiComponent{
         this.mapModelGuiComponents.clear();
         
         super.dispose();
+    }
+    
+    public void scroll(int amount){
+        
+        if(this.startLine + amount < 0){
+            this.startLine = 0;
+        }else if(this.startLine + amount > this.maxLine - 1){
+            this.startLine = this.maxLine - 1;
+        }else{
+            this.startLine += amount;
+        }      
+    }
+    
+    public Object2DEditorFactory getFactoryFrom(GuiEditorItem item){
+        return this.mapModelGuiComponents.get(item);
+    }
+    
+    public GuiEditorItem getSelectedGuiComponentAt(float screenX, float screenY){
+        Vector2 point = new Vector2(screenX, screenY);
+        
+        for(GuiEditorItem editorItem : this.itemsToDraw){
+            Sprite sprite = editorItem.getSprite();
+            
+            Vector2 locationItem = editorItem.getLocation();
+            float width = sprite.getWidth() * sprite.getScaleX();
+            float height = sprite.getHeight() * sprite.getScaleY();
+            
+            Rectangle rectangle = new Rectangle(locationItem.x - width/2, locationItem.y - height/2, width, height);
+            if(rectangle.contains(point)){
+                return editorItem;
+            }
+        }
+        return null;
     }
     
 }

@@ -73,7 +73,7 @@ public abstract class GuiComponent extends Object2D{
                 }
 
                 if(this.spriteRotation != sprite.getRotation()){
-                    sprite.setColor(this.spriteColor);
+                    sprite.setRotation(this.spriteRotation);
                 }
 
                 if(this.spriteScale.x != sprite.getScaleX() || this.spriteScale.y != sprite.getScaleX()){

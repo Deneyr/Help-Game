@@ -182,4 +182,9 @@ public class EditorScreen implements Screen, ScreenTouchListener{
         
         this.gameWorld.onMouseMoved(position.x, position.y);
     }
+    
+    @Override
+    public void scrolled(int amount) {
+        // nothing to do for now.
+    }
 }

@@ -114,6 +114,15 @@ public abstract class GameNode implements ScreenTouchListener {
         }
     }
     
+    @Override
+    public void scrolled(int amount) {
+        for(Screen screen : this.screensDisplayed){
+            if(screen instanceof ScreenTouchListener){
+                ((ScreenTouchListener) screen).scrolled(amount);
+            }
+        }
+    }
+    
     public void onEndingNode(HelpGame game){
         // Nothing to do.
     }

@@ -18,4 +18,6 @@ public interface ScreenTouchListener {
     void touchDragged(int screenX, int screenY, int pointer);
 
     void mouseMoved(int screenX, int screenY);
+    
+    void scrolled(int amount);
 }

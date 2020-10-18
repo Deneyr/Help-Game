@@ -64,7 +64,7 @@ public class GuiEditorItem extends GuiComponent{
                 }
 
                 if(this.spriteRotation != this.sprite.getRotation()){
-                    this.sprite.setColor(this.spriteColor);
+                    this.sprite.setRotation(this.spriteRotation);
                 }
 
                 this.sprite.setPosition(this.location.x - this.sprite.getWidth() / 2, this.location.y - this.sprite.getHeight() / 2);
@@ -96,5 +96,8 @@ public class GuiEditorItem extends GuiComponent{
         
         return this.sprite;
     }
-
+    
+    public Sprite createNewSprite(){
+        return this.getObject2D().createCurrentSprite();
+    }
 }
