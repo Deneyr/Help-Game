@@ -5,6 +5,9 @@
  */
 package gamenode;
 
+import characters.Grandma;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.BackgroundScreen;
@@ -72,7 +75,9 @@ public class EditorGameNode extends GameNode{
         }
         
         // Compute the next step of the environment game logic.
-        // game.getGameWorld().step(deltaTime);
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+            game.getGameWorld().step(deltaTime);
+        }
         
         // Compute the next step of the Menu manager Logic.
         game.getGameMenuManager().step(deltaTime);

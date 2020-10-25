@@ -420,6 +420,10 @@ public class OpponentCAC1 extends Character2D{
             return;
         }
         
+        if(this.target == null){
+            return;
+        }
+        
         if(this.maxDistanceFromSpawn > 0 
                 && (this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn
                     || (this.isReseting && this.physicBody.getPosition().dst(this.spawnPoint) > this.maxDistanceFromSpawn / 2))){
@@ -485,6 +489,10 @@ public class OpponentCAC1 extends Character2D{
             return;
         }
         
+        if(this.target == null){
+            return;
+        }
+        
         if(this.maxDistanceFromSpawn > 0 
                 && (Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn
                     || (this.isReseting && Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn / 2))){
@@ -541,6 +549,10 @@ public class OpponentCAC1 extends Character2D{
         }
         
         if(this.isCinematicEntity){
+            return;
+        }
+        
+        if(this.target == null){
             return;
         }
         
@@ -607,6 +619,10 @@ public class OpponentCAC1 extends Character2D{
             return;
         }
         
+        if(this.target == null){
+            return;
+        }       
+        
         if(this.maxDistanceFromSpawn > 0 
                 && (Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn
                     || (this.isReseting && Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn / 2))){
@@ -672,6 +688,11 @@ public class OpponentCAC1 extends Character2D{
         if(this.isCinematicEntity){
             return;
         }
+        
+        if(this.target == null){
+            return;
+        }
+        
         
         if(this.maxDistanceFromSpawn > 0 
                 && (Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn
