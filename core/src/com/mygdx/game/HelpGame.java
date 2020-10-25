@@ -333,6 +333,16 @@ public class HelpGame extends Game implements GameEventListener{
                         worldPlane.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
                     }
                     break;
+                    // Editor
+                case EDITORADDOBJECT:                   
+                    this.gameWorld.createObject(this.editorMenuManager.getFactoryFromID(gameEvent.details), new Vector2(gameEvent.location.x, gameEvent.location.y));
+                    break;
+                case EDITORSELECTFACTORY:
+                    this.gameWorld.onFactorySelected();
+                    break;
+                case EDITORUNSELECTFACTORY:
+                    this.gameWorld.onFactoryUnSelected();
+                    break;
                 default:
                     this.soundMusicManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
 
@@ -402,9 +412,9 @@ public class HelpGame extends Game implements GameEventListener{
             this.location = location;
         }
         
-        public EventType eventType;
-        public String details;
-        public Vector2 location;
+        public final EventType eventType;
+        public final String details;
+        public final Vector2 location;
     }
    
 }

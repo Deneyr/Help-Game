@@ -36,6 +36,10 @@ public interface GameEventListener {
         GAMESTART, // Used to display the start level banner.
         CHECKPOINT, // reached
         MENUOPTION, // move, select
-        GAMENODECHANGE // restart, [id gamenode]
+        GAMENODECHANGE, // restart, [id gamenode]
+        
+        EDITORADDOBJECT,
+        EDITORSELECTFACTORY,
+        EDITORUNSELECTFACTORY
     }
 }

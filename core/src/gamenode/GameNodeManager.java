@@ -125,6 +125,7 @@ public class GameNodeManager extends GameNode implements Disposable, ResourceMan
 
     @Override
     public void onHelpGameEvent(HelpGame helpGame, EventType type, String details, Vector2 location){
+        
         if(this.currentGameNode != null){
             switch(type){
                 case GAMENODECHANGE:

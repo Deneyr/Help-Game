@@ -556,23 +556,49 @@ public class GameWorld implements WorldPlane, GameEventListener{
         this.gameEditorManager.onMouseMoved(this, positionX, positionY);
     }
     
+    public void createObject(Object2DEditorFactory factory, Vector2 position){
+        this.gameEditorManager.createObject2D(this, factory);
+    }
+    
+    public void onFactorySelected(){
+        this.gameEditorManager.setIsFactorySelected(this, true);
+    }
+    
+    public void onFactoryUnSelected(){
+        this.gameEditorManager.setIsFactorySelected(this, false);
+    }
+    
     private class GameEditorManager{
-        
+
         private Object2D objectTouched;
         
         private boolean isTouchedAgain; 
+        
+        private boolean isFactorySelected;
+        
+        private Map<Object2D, Object2DEditorFactory> mapObject2DToFactory;
+        
+        private float positionCursorX;
+        private float positionCursorY;
         
         public GameEditorManager(){
             this.objectTouched = null;
             
             this.isTouchedAgain = false;
+            
+            this.isFactorySelected = false;
+            
+            this.mapObject2DToFactory = new HashMap<Object2D, Object2DEditorFactory>();
+            
+            this.positionCursorX = 0;
+            this.positionCursorY = 0;
         }
         
         public void onTouchDown(GameWorld world, float positionX, float positionY, int pointer, int button){
             
             boolean isCurrentTouchedAgain = false;
             
-            if(button == 0){
+            if(button == 0 && this.isFactorySelected == false){
                 
                 System.out.println(world.screenFOV / 2);
                 List<Object2D> listObject2D = world.getObject2DInRegion(
@@ -650,8 +676,29 @@ public class GameWorld implements WorldPlane, GameEventListener{
         }
 
         public void onMouseMoved(GameWorld world, float positionX, float positionY){
-            
+            this.positionCursorX = positionX;
+            this.positionCursorY = positionY;
         }
+        
+        public void createObject2D(GameWorld world, Object2DEditorFactory factory){
+            Object2D object = factory.createObject2D(world.world, this.positionCursorX / P2M, this.positionCursorY / P2M);
+
+            world.addObject2DToWorld(object);
+                 
+            this.mapObject2DToFactory.put(object, factory);
+        }
+        
+        /**
+         * @param isFactorySelected the isFactorySelected to set
+         */
+        public void setIsFactorySelected(GameWorld world, boolean isFactorySelected) {
+            this.isFactorySelected = isFactorySelected;
+            
+            this.objectTouched = null;
+                
+            this.UpdateObject2D(world);
+        }
+
         
         public void updateLogic(float delta){
             

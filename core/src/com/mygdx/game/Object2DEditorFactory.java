@@ -11,6 +11,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,6 +20,8 @@ import java.util.logging.Logger;
  * @author Deneyr
  */
 public class Object2DEditorFactory {
+    
+    public final String ID;
     
     private String className;
     
@@ -30,6 +33,8 @@ public class Object2DEditorFactory {
         this.className = className;
         
         this.listArgument = new ArrayList<Object>();
+        
+        this.ID = UUID.randomUUID().toString();
     }
     
     public void addArgument(String argument){
@@ -59,13 +64,13 @@ public class Object2DEditorFactory {
             List<Class<?>> argumentClassList = new ArrayList<Class<?>>();
             
             
-            List<Object> cloneArgument = new ArrayList<Object>(this.listArgument);
+            List<Object> argumentsListCloned = new ArrayList<Object>(this.listArgument);
             int i = 0;
-            for(Object obj : cloneArgument){
+            for(Object obj : argumentsListCloned){
                 Class<?> actArgument = Object.class;
                 try{
                     actArgument = Class.forName(obj.toString());
-                    this.listArgument.set(i, null); 
+                    argumentsListCloned.set(i, null); 
                 }
                 catch (ClassNotFoundException e)
                 {
@@ -73,15 +78,15 @@ public class Object2DEditorFactory {
                         if(obj.equals("W")){
                             actArgument = World.class;
                             
-                            this.listArgument.set(i, world); 
+                            argumentsListCloned.set(i, world); 
                         }else if(obj.equals("X")){
                             actArgument = float.class;
-                            
-                            this.listArgument.set(i, posX); 
+
+                            argumentsListCloned.set(i, posX); 
                         }else if(obj.equals("Y")){
                             actArgument = float.class;
                             
-                            this.listArgument.set(i, posY); 
+                            argumentsListCloned.set(i, posY); 
                         }else{
                             actArgument = obj.getClass();
                         }
@@ -109,15 +114,15 @@ public class Object2DEditorFactory {
                 i++;
             } 
             
-            Object[] argumentArray = new Object[this.listArgument.size()];
+            Object[] argumentArray = new Object[argumentsListCloned.size()];
             i = 0;
-            for(Object obj : this.listArgument){
+            for(Object obj : argumentsListCloned){
                 argumentArray[i] = obj;  
                 i++;
             } 
             
             Constructor<?> constructor = act.getConstructor(argumentClassArray);
-
+            
             return (Object2D)constructor.newInstance(argumentArray);
           
         } catch (NoSuchMethodException ex) {

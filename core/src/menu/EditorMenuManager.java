@@ -35,6 +35,8 @@ public class EditorMenuManager extends MenuManager{
     private float positionCursorX;
     private float positionCursorY;
     
+    private Map<String, Object2DEditorFactory> mapIDToFactory; 
+    
     public EditorMenuManager(){
         super();
         
@@ -44,6 +46,8 @@ public class EditorMenuManager extends MenuManager{
         
         positionCursorX = 0;
         positionCursorY = 0;
+        
+        this.mapIDToFactory = new HashMap<String, Object2DEditorFactory>();
     }
     
     @Override
@@ -94,10 +98,14 @@ public class EditorMenuManager extends MenuManager{
     @Override
     public void dispose(){
         super.dispose();
+        
+        this.mapListAnimations.clear();
     }
 
     public void AddObject2DAsComponent(Object2DEditorFactory factory){
         this.canevas.AddObject2DAsComponent(factory);
+        
+        this.mapIDToFactory.put(factory.ID, factory);
     }
     
     /**
@@ -107,6 +115,10 @@ public class EditorMenuManager extends MenuManager{
         this.canevas = canevas;
     }
     
+    public Object2DEditorFactory getFactoryFromID(String id){
+        return this.mapIDToFactory.get(id);
+    }
+    
     @Override
     public void onTouchDown(float positionX, float positionY, int pointer, int button){
         if(button == 0){
@@ -114,11 +126,13 @@ public class EditorMenuManager extends MenuManager{
             
             if(item != null){                
                 this.selectedItem = item;
+                this.notifyGameEventListeners(EventType.EDITORSELECTFACTORY, this.canevas.getFactoryFrom(this.selectedItem).ID, new Vector2(this.positionCursorX, this.positionCursorY));
             }else if(this.selectedItem != null){
-                //this.notifyGameEventListeners(EventType.DEATH, details, Vector2.Zero);
+                this.notifyGameEventListeners(EventType.EDITORADDOBJECT, this.canevas.getFactoryFrom(this.selectedItem).ID, new Vector2(this.positionCursorX, this.positionCursorY));
             }
         }else if(button == 1){
             this.selectedItem = null;
+            this.notifyGameEventListeners(EventType.EDITORUNSELECTFACTORY, "", new Vector2(positionX, positionY));
         }
     }
     
@@ -142,4 +156,6 @@ public class EditorMenuManager extends MenuManager{
     public void onScrolled(int amount) {
         this.canevas.scroll(amount);
     }
+    
+    
 }
