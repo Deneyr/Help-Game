@@ -1,76 +1,59 @@
+Pipe pipe;
 SmallBox smallBox;
-MetalBox metalBox;
-Crane crane;
 OpponentCAC1 opponentCAC1;
 DirectCannonCorpus directCannonCorpus;
+MetalBox metalBox;
+Crane crane;
 
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), -504.92017f, -5.358252f);
+pipe = new Pipe(game.getGameWorld().getWorld(), -76.0f, 76.0f, 1.0f, true); //com.mygdx.game.scenery.PipeWXY1ftrue
+game.getGameWorld().addObject2DToWorld(pipe, true);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 171.98413f, -5.3617864f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), -354.20486f, -1.3609918f);
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 225.91216f, -5.362457f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), -387.58813f, -1.3625249f);
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 198.91803f, 27.274652f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), -463.12955f, -1.294104f);
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 277.94308f, -5.360033f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), -539.10004f, 25.640242f);
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 196.05542f, 112.8064f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 276.925f, 29.853258f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+pipe = new Pipe(game.getGameWorld().getWorld(), 373.9496f, 140.56021f, 1.0f, true); //com.mygdx.game.scenery.PipeWXY1ftrue
+game.getGameWorld().addObject2DToWorld(pipe, true);
+
+pipe = new Pipe(game.getGameWorld().getWorld(), 113.94961f, 255.56023f, 1.0f, false); //com.mygdx.game.scenery.PipeWXY1ffalse
+game.getGameWorld().addObject2DToWorld(pipe, true);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 63.462204f, 312.3547f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), -571.67267f, -1.3598161f);
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 136.4622f, 312.3749f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), -234.32759f, 16.636766f);
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 336.46222f, 197.24849f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -97.5378f, 132.78052f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+
+directCannonCorpus = new DirectCannonCorpus(game.getGameWorld().getWorld(), hero, -8.537796f, 143.5368f, 0.0f); //com.mygdx.game.scenery.DirectCannonCorpusWcom.mygdx.game.Object2DXYA
+game.getGameWorld().addObject2DToWorld(directCannonCorpus, true);
+
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 421.7128f, 219.19948f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), -316.37784f, 51.153263f);
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 403.85962f, 295.8383f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), -225.787f, 93.27027f);
-game.getGameWorld().addObject2DToWorld(metalBox, true);
-
-metalBox = new MetalBox(game.getGameWorld().getWorld(), -223.84108f, 169.90692f);
-game.getGameWorld().addObject2DToWorld(metalBox, true);
-
-crane = new Crane(game.getGameWorld().getWorld(), 78.0f, 281.5f, 0.5, 0.5, 0.5, 0.5, false);
+crane = new Crane(game.getGameWorld().getWorld(), 751.342f, 282.30408f, 0.5f, 0.5f, 0.5f, 0.5f, false); //com.mygdx.game.scenery.CraneWXY0.5f0.5f0.5f0.5ffalse
 game.getGameWorld().addObject2DToWorld(crane, true);
-
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -478.36084f, 37.853813f);
-game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
-
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -386.855f, 37.84475f);
-game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
-
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -369.9625f, 71.63952f);
-game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
-
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -205.0f, 451.92447f);
-game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
-
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -155.0f, 451.7981f);
-game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
-
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 92.0f, 450.7689f);
-game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
-
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 206.0f, 450.82925f);
-game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
-
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 323.0f, 450.71326f);
-game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
-
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 468.0f, 450.9127f);
-game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
-
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 560.0f, 450.90918f);
-game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
-
-directCannonCorpus = new DirectCannonCorpus(game.getGameWorld().getWorld(), hero, 274.0f, 5.51355f, 0.0f);
-game.getGameWorld().addObject2DToWorld(directCannonCorpus, true);
-
-directCannonCorpus = new DirectCannonCorpus(game.getGameWorld().getWorld(), hero, 24.0f, 67.51355f, 0.7663436f);
-game.getGameWorld().addObject2DToWorld(directCannonCorpus, true);
 

@@ -124,7 +124,7 @@ public class EditorMenuManager extends MenuManager{
     public void AddObject2DAsComponent(Object2DEditorFactory factory){
         this.canevas.AddObject2DAsComponent(factory);
         
-        this.mapIDToFactory.put(factory.ID, factory);
+        this.mapIDToFactory.put(factory.getID(), factory);
     }
     
     /**
@@ -145,9 +145,9 @@ public class EditorMenuManager extends MenuManager{
             
             if(item != null){                
                 this.selectedItem = item;
-                this.notifyGameEventListeners(EventType.EDITORSELECTFACTORY, this.canevas.getFactoryFrom(this.selectedItem).ID, new Vector2(this.positionCursorX, this.positionCursorY));
+                this.notifyGameEventListeners(EventType.EDITORSELECTFACTORY, this.canevas.getFactoryFrom(this.selectedItem).getID(), new Vector2(this.positionCursorX, this.positionCursorY));
             }else if(this.selectedItem != null){
-                this.notifyGameEventListeners(EventType.EDITORADDOBJECT, this.canevas.getFactoryFrom(this.selectedItem).ID, new Vector2(this.positionCursorX, this.positionCursorY));
+                this.notifyGameEventListeners(EventType.EDITORADDOBJECT, this.canevas.getFactoryFrom(this.selectedItem).getID(), new Vector2(this.positionCursorX, this.positionCursorY));
             }
         }else if(button == 1){
             this.selectedItem = null;

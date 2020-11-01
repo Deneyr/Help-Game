@@ -141,6 +141,53 @@ public class EditorGameNode extends GameNode{
 
             game.getEditorMenuManager().AddObject2DAsComponent(factory);
         }      
+        
+        // Load level
+        this.loadObject2Ds(game, SAVEFILENAME);
+    }
+    
+    private void loadObject2Ds(HelpGame game, String path){
+        File file = new File(path);
+        if(file.exists()){
+            Scanner sc;
+            try {
+                sc = new Scanner(file);
+                
+                while (sc.hasNextLine()){
+                    String line = sc.nextLine();
+                    if(line.contains("//")){
+                        String[] tokens = line.split("//");
+                        
+                        String classID = tokens[tokens.length - 1];
+                        
+                        Object2DEditorFactory factory = game.getEditorMenuManager().getFactoryFromID(classID);
+                        
+                        if(factory != null){
+                            
+                            int startIndex = line.indexOf("(");
+                            String subString = line.substring(startIndex + 1);
+
+                            int endIndex = subString.lastIndexOf(")");
+                            subString = subString.substring(0, endIndex);
+                            
+                            tokens = subString.split(",");
+                            
+                            Vector2 position = new Vector2(Float.parseFloat(tokens[factory.getIndexPosX()])
+                                                        , Float.parseFloat(tokens[factory.getIndexPosY()]));
+                            
+                            float angle = 0;
+                            if(factory.getIndexPosA() > 0){
+                                angle = Float.parseFloat(tokens[factory.getIndexPosA()]);
+                            }
+                            
+                            game.getGameWorld().createObject(factory, position, angle);
+                        }                        
+                    }                
+                }
+            }catch (FileNotFoundException ex) {
+                Logger.getLogger(EditorGameNode.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     private List<Object2DEditorFactory> loadObject2DEditorFactories(String path){

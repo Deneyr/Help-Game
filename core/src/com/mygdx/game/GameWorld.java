@@ -563,8 +563,12 @@ public class GameWorld implements WorldPlane, GameEventListener{
         this.gameEditorManager.onMouseMoved(this, positionX, positionY);
     }
     
-    public void createObject(Object2DEditorFactory factory, Vector2 position){
+    public void createObject(Object2DEditorFactory factory){
         this.gameEditorManager.createObject2D(this, factory);
+    }
+    
+    public void createObject(Object2DEditorFactory factory, Vector2 position, float angle){
+        this.gameEditorManager.createObject2D(this, factory, position, angle);
     }
     
     public void onFactorySelected(){
@@ -707,9 +711,19 @@ public class GameWorld implements WorldPlane, GameEventListener{
             this.mapObject2DToFactory.put(object, factory);
         }
         
+        public void createObject2D(GameWorld world, Object2DEditorFactory factory, Vector2 position, float angle){
+            Object2D object = factory.createObject2D(world.world, position.x, position.y, angle);
+
+            world.addObject2DToWorld(object);
+                 
+            this.mapObject2DToFactory.put(object, factory);
+        }
+        
         public void deleteTouchedObj(GameWorld world){
             if(this.objectTouched != null){
                 world.addObject2D2Flush(objectTouched); 
+                
+                this.mapObject2DToFactory.remove(this.objectTouched);
                 
                 this.objectTouched = null;
                 

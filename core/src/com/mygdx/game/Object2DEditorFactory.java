@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class Object2DEditorFactory {
     
-    public final String ID;
+    private String ID;
     
     private String className;
     
@@ -34,7 +34,7 @@ public class Object2DEditorFactory {
         
         this.listArgument = new ArrayList<Object>();
         
-        this.ID = UUID.randomUUID().toString();
+        this.ID = this.className;
     }
     
     public void addArgument(String argument){
@@ -53,7 +53,9 @@ public class Object2DEditorFactory {
             this.listArgument.add(false);
         }else{
             this.listArgument.add(argument);
-        }       
+        }   
+        
+        this.ID += argument;
     }
     
     public Object2D createObject2D(World world, float posX, float posY, float angle){
@@ -178,6 +180,10 @@ public class Object2DEditorFactory {
                     }else if(obj.equals("com.mygdx.game.Object2D")){
                         argument = "hero";
                     }
+                }else if(obj instanceof Float){
+                    argument += "f";
+                }else if(obj instanceof Double){
+                    argument += "d";
                 }
             }
             
@@ -189,7 +195,7 @@ public class Object2DEditorFactory {
             i++;
         }        
         
-        result += ");\n";
+        result += "); //" + this.ID + "\n";
         
         result += "game.getGameWorld().addObject2DToWorld(" + variableName + ", true);\n\n";
         
@@ -197,9 +203,9 @@ public class Object2DEditorFactory {
     }
     
     public String serializeStartVariable(){
-        String[] token = this.className.split("\\.");
+        String[] tokens = this.className.split("\\.");
         
-        String classNameShort = token[token.length - 1];
+        String classNameShort = tokens[tokens.length - 1];
         String variableName = classNameShort.substring(0, 1).toLowerCase() + classNameShort.substring(1);
         
         return classNameShort + " " + variableName + ";\n";
@@ -212,6 +218,45 @@ public class Object2DEditorFactory {
         this.template.physicBody.setFixedRotation(true);
     }
 
+    public int getIndexPosX(){
+        int i = 0;
+        for(Object obj : this.listArgument){
+            if(obj != null){
+                if(obj.toString().equals("X")){
+                    return i;
+                }
+            }
+            i++;
+        }
+        return -1;
+    }
+    
+    public int getIndexPosY(){
+        int i = 0;
+        for(Object obj : this.listArgument){
+            if(obj != null){
+                if(obj.toString().equals("Y")){
+                    return i;
+                }
+            }
+            i++;
+        }
+        return -1;
+    }
+    
+    public int getIndexPosA(){
+        int i = 0;
+        for(Object obj : this.listArgument){
+            if(obj != null){
+                if(obj.toString().equals("A")){
+                    return i;
+                }
+            }
+            i++;
+        }
+        return -1;
+    }
+    
     /**
      * @return the template
      */
@@ -230,5 +275,12 @@ public class Object2DEditorFactory {
             }
         }
         return result;
+    }
+    
+    /**
+     * @return the ID
+     */
+    public String getID() {
+        return ID;
     }
 }

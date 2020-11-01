@@ -338,7 +338,7 @@ public class HelpGame extends Game implements GameEventListener{
                     break;
                     // Editor
                 case EDITORADDOBJECT:                   
-                    this.gameWorld.createObject(this.editorMenuManager.getFactoryFromID(gameEvent.details), new Vector2(gameEvent.location.x, gameEvent.location.y));
+                    this.gameWorld.createObject(this.editorMenuManager.getFactoryFromID(gameEvent.details));
                     break;
                 case EDITORSELECTFACTORY:
                     this.gameWorld.onFactorySelected();
