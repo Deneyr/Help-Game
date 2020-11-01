@@ -1,0 +1,76 @@
+SmallBox smallBox;
+MetalBox metalBox;
+Crane crane;
+OpponentCAC1 opponentCAC1;
+DirectCannonCorpus directCannonCorpus;
+
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -504.92017f, -5.358252f);
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -354.20486f, -1.3609918f);
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -387.58813f, -1.3625249f);
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -463.12955f, -1.294104f);
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -539.10004f, 25.640242f);
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -571.67267f, -1.3598161f);
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+
+metalBox = new MetalBox(game.getGameWorld().getWorld(), -234.32759f, 16.636766f);
+game.getGameWorld().addObject2DToWorld(metalBox, true);
+
+metalBox = new MetalBox(game.getGameWorld().getWorld(), -316.37784f, 51.153263f);
+game.getGameWorld().addObject2DToWorld(metalBox, true);
+
+metalBox = new MetalBox(game.getGameWorld().getWorld(), -225.787f, 93.27027f);
+game.getGameWorld().addObject2DToWorld(metalBox, true);
+
+metalBox = new MetalBox(game.getGameWorld().getWorld(), -223.84108f, 169.90692f);
+game.getGameWorld().addObject2DToWorld(metalBox, true);
+
+crane = new Crane(game.getGameWorld().getWorld(), 78.0f, 281.5f, 0.5, 0.5, 0.5, 0.5, false);
+game.getGameWorld().addObject2DToWorld(crane, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -478.36084f, 37.853813f);
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -386.855f, 37.84475f);
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -369.9625f, 71.63952f);
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -205.0f, 451.92447f);
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -155.0f, 451.7981f);
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 92.0f, 450.7689f);
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 206.0f, 450.82925f);
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 323.0f, 450.71326f);
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 468.0f, 450.9127f);
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 560.0f, 450.90918f);
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+directCannonCorpus = new DirectCannonCorpus(game.getGameWorld().getWorld(), hero, 274.0f, 5.51355f, 0.0f);
+game.getGameWorld().addObject2DToWorld(directCannonCorpus, true);
+
+directCannonCorpus = new DirectCannonCorpus(game.getGameWorld().getWorld(), hero, 24.0f, 67.51355f, 0.7663436f);
+game.getGameWorld().addObject2DToWorld(directCannonCorpus, true);
+

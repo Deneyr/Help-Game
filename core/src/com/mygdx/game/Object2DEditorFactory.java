@@ -56,7 +56,7 @@ public class Object2DEditorFactory {
         }       
     }
     
-    public Object2D createObject2D(World world, float posX, float posY){
+    public Object2D createObject2D(World world, float posX, float posY, float angle){
 
         try {
             Class<?> act = Class.forName(this.className);
@@ -87,6 +87,10 @@ public class Object2DEditorFactory {
                             actArgument = float.class;
                             
                             argumentsListCloned.set(i, posY); 
+                        }else if(obj.equals("A")){
+                            actArgument = float.class;
+                            
+                            argumentsListCloned.set(i, angle); 
                         }else{
                             actArgument = obj.getClass();
                         }
@@ -144,8 +148,68 @@ public class Object2DEditorFactory {
         return null;
     }
     
+    public String serializeObject2D(float posX, float posY, float angle){
+        
+        String[] token = this.className.split("\\.");
+        
+        String classNameShort = token[token.length - 1];
+        String variableName = classNameShort.substring(0, 1).toLowerCase() + classNameShort.substring(1);
+        
+        String result = variableName + " = new " + classNameShort + "(";
+        
+        List<Object> argumentsListCloned = new ArrayList<Object>(this.listArgument);
+        int i = 0;
+        for(Object obj : argumentsListCloned){
+            String argument = "null";
+            
+            if(obj != null){
+            
+                argument = obj.toString();
+                
+                if(obj instanceof String){
+                    if(obj.equals("W")){
+                        argument = "game.getGameWorld().getWorld()" ;
+                    }else if(obj.equals("X")){
+                        argument = Float.toString(posX) + "f";
+                    }else if(obj.equals("Y")){
+                        argument = Float.toString(posY) + "f";
+                    }else if(obj.equals("A")){
+                        argument = Float.toString(angle) + "f";
+                    }else if(obj.equals("com.mygdx.game.Object2D")){
+                        argument = "hero";
+                    }
+                }
+            }
+            
+            if(i > 0){
+                result += ", ";
+            }
+            result += argument;
+            
+            i++;
+        }        
+        
+        result += ");\n";
+        
+        result += "game.getGameWorld().addObject2DToWorld(" + variableName + ", true);\n\n";
+        
+        return result;
+    }
+    
+    public String serializeStartVariable(){
+        String[] token = this.className.split("\\.");
+        
+        String classNameShort = token[token.length - 1];
+        String variableName = classNameShort.substring(0, 1).toLowerCase() + classNameShort.substring(1);
+        
+        return classNameShort + " " + variableName + ";\n";
+    }
+    
     public void createTemplate(World world){
-        this.template = this.createObject2D(world, 0, -100000f);
+        this.template = this.createObject2D(world, 0, -100000f, 0);
+        
+        this.template.physicBody.setGravityScale(0);
+        this.template.physicBody.setFixedRotation(true);
     }
 
     /**

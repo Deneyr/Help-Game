@@ -209,9 +209,7 @@ public class HelpGame extends Game implements GameEventListener{
         this.soundMusicManager.step(Gdx.graphics.getDeltaTime());
         
         // Forward game events
-        synchronized(this.listGameEvents){
-            this.computeGameEvents();
-        }
+        this.computeGameEvents();
     }
     
     public void renderScreen(){
@@ -313,8 +311,13 @@ public class HelpGame extends Game implements GameEventListener{
     public void computeGameEvents(){
         
         List<GameEventContainer> endGameEventContainerList = new ArrayList<GameEventContainer>();
-                
-        for(GameEventContainer gameEvent : this.listGameEvents){
+         
+        List<GameEventContainer> localListGameEvents;
+        synchronized(this.listGameEvents){
+            localListGameEvents = new ArrayList<GameEventContainer>(this.listGameEvents);
+        }
+        
+        for(GameEventContainer gameEvent : localListGameEvents){
 
             this.updatePlayerData(gameEvent);
             
@@ -342,6 +345,13 @@ public class HelpGame extends Game implements GameEventListener{
                     break;
                 case EDITORUNSELECTFACTORY:
                     this.gameWorld.onFactoryUnSelected();
+                    break;
+                case EDITORDELETETOUCHEDOBJ:
+                    this.gameWorld.onDeleteTouchedObj();
+                    break;
+                case EDITORROTATIONRIGHT:
+                case EDITORROTATIONLEFT:
+                    this.gameWorld.onRotateObj(gameEvent.eventType, Float.parseFloat(gameEvent.details));
                     break;
                 default:
                     this.soundMusicManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);

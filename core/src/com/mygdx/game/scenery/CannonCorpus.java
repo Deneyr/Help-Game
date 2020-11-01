@@ -269,6 +269,11 @@ public abstract class CannonCorpus extends SolidObject2D{
         }
         
         protected void createInfluences(){
+            
+            if(this.target == null){
+                return;
+            }
+            
             if(this.target.getPositionBody().sub(this.getPositionBody()).len() < 400 * P2M){
                 Vector2 dirCannon = new Vector2(-1, 0).rotate((float) (this.physicBody.getAngle() * 180 / Math.PI));
                 Vector2 dirTarget = new Vector2(Cannon.this.target.getPositionBody().sub(Cannon.this.getPositionBody())).nor();

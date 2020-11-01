@@ -130,6 +130,13 @@ public abstract class Object2D implements Disposable, GraphicalComponent{
         return new Vector2();
     }
     
+     public float getAngleBody(){
+        if(this.physicBody != null){
+            return this.physicBody.getAngle();
+        }
+        return 0;
+    }
+    
     public BodyType getBodyType(){
         return this.physicBody.getType();
     }

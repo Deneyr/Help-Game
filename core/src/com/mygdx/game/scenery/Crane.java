@@ -472,6 +472,15 @@ public class Crane extends SolidObject2D{
         }
 
         @Override
+        public void removeBody(World world){
+
+            if(this.hookCraneObject2D != null){
+                this.hookCraneObject2D.removeBody(world);
+            }
+            super.removeBody(world);
+        }
+        
+        @Override
         public Sprite createCurrentSprite(){
             Sprite sprite = super.createCurrentSprite();
             sprite.setScale(sprite.getScaleX() * Crane.SCALE_X, sprite.getScaleY() * Crane.SCALE_Y * this.ratioStringHeight);

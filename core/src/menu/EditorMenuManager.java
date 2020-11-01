@@ -5,6 +5,8 @@
  */
 package menu;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -73,6 +75,23 @@ public class EditorMenuManager extends MenuManager{
         animation = new Animation(this.canevas, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_INC, 0.5f, 0f, 0.5f);
         animation.setPositionAnimation(new Vector2(-1f, -2f), new Vector2(-1f, -1f));      
         this.addAnimation(animation);
+    }
+    
+    
+    @Override
+    public void step(float deltaTime)
+    {
+        super.step(deltaTime);
+        
+        if(Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL)){
+            this.notifyGameEventListeners(EventType.EDITORDELETETOUCHEDOBJ, "", Vector2.Zero);
+        }
+        
+        if(Gdx.input.isKeyPressed(Input.Keys.E)){
+            this.notifyGameEventListeners(EventType.EDITORROTATIONRIGHT, String.valueOf(deltaTime), Vector2.Zero);
+        }else if(Gdx.input.isKeyPressed(Input.Keys.A)){
+            this.notifyGameEventListeners(EventType.EDITORROTATIONLEFT, String.valueOf(deltaTime), Vector2.Zero);
+        }
     }
     
     @Override

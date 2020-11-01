@@ -7,6 +7,8 @@ package com.mygdx.game;
 
 import characters.Grandma;
 import characters.OpponentCAC1;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -18,6 +20,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import static com.mygdx.game.HelpGame.P2M;
 import guicomponents.CinematicManager;
 import guicomponents.CinematicManager.CinematicState;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -27,6 +32,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import triggered.CheckPointTriggeredObject2D;
 
 /**
@@ -205,9 +212,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
             cinematicManager.updateLogic(delta);
         }
         
-        this.gameEventManager.updateLogic(delta);
-        
-        this.gameEditorManager.updateLogic(delta);
+        this.gameEventManager.updateLogic(delta);      
         
         List<Object2D> copyListCurrentObject2D = new ArrayList<Object2D>(this.listCurrentObject2D);
         for(Object2D obj : copyListCurrentObject2D)
@@ -540,6 +545,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
         }
     }
     
+    // Editor part
+    
     public void onTouchDown(float positionX, float positionY, int pointer, int button){
         this.gameEditorManager.onTouchDown(this, positionX, positionY, pointer, button);
     }
@@ -568,6 +575,18 @@ public class GameWorld implements WorldPlane, GameEventListener{
         this.gameEditorManager.setIsFactorySelected(this, false);
     }
     
+    public void onDeleteTouchedObj(){
+        this.gameEditorManager.deleteTouchedObj(this);
+    }
+    
+    public void onRotateObj(EventType eventType, float deltaTime){
+        this.gameEditorManager.rotateSelectedObject(eventType, deltaTime);
+    }
+    
+    public void saveObject2Ds(String filename){
+        this.gameEditorManager.saveObject2Ds(this, filename);
+    }
+    
     private class GameEditorManager{
 
         private Object2D objectTouched;
@@ -579,7 +598,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
         private Map<Object2D, Object2DEditorFactory> mapObject2DToFactory;
         
         private float positionCursorX;
-        private float positionCursorY;
+        private float positionCursorY;     
         
         public GameEditorManager(){
             this.objectTouched = null;
@@ -591,7 +610,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
             this.mapObject2DToFactory = new HashMap<Object2D, Object2DEditorFactory>();
             
             this.positionCursorX = 0;
-            this.positionCursorY = 0;
+            this.positionCursorY = 0;           
         }
         
         public void onTouchDown(GameWorld world, float positionX, float positionY, int pointer, int button){
@@ -681,11 +700,80 @@ public class GameWorld implements WorldPlane, GameEventListener{
         }
         
         public void createObject2D(GameWorld world, Object2DEditorFactory factory){
-            Object2D object = factory.createObject2D(world.world, this.positionCursorX / P2M, this.positionCursorY / P2M);
+            Object2D object = factory.createObject2D(world.world, this.positionCursorX / P2M, this.positionCursorY / P2M, 0);
 
             world.addObject2DToWorld(object);
                  
             this.mapObject2DToFactory.put(object, factory);
+        }
+        
+        public void deleteTouchedObj(GameWorld world){
+            if(this.objectTouched != null){
+                world.addObject2D2Flush(objectTouched); 
+                
+                this.objectTouched = null;
+                
+                this.UpdateObject2D(world); 
+                
+                world.step(0);
+            }
+        }
+        
+        public void rotateSelectedObject(EventType eventType, float deltaTime){
+            if(this.objectTouched != null){
+                if(eventType == EventType.EDITORROTATIONRIGHT){
+                    this.objectTouched.physicBody.setTransform(this.objectTouched.getPositionBody(), this.objectTouched.physicBody.getAngle() - deltaTime * 2);
+                }else if(eventType == EventType.EDITORROTATIONLEFT){
+                    this.objectTouched.physicBody.setTransform(this.objectTouched.getPositionBody(), this.objectTouched.physicBody.getAngle() + deltaTime * 2);
+                }
+            }
+        }
+        
+        public void saveObject2Ds(GameWorld world, String fileName){
+            File saveFile = new File(fileName);
+            
+            if (saveFile.exists() && saveFile.isFile()) 
+            { 
+                saveFile.delete(); 
+            } 
+            try { 
+                saveFile.createNewFile();
+            } catch (IOException ex) {
+                Logger.getLogger(GameWorld.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            try {
+                FileWriter writer = new FileWriter(saveFile);
+                
+                HashSet<String> hashSet = new HashSet<String>();
+                for(Object2D obj : world.listCurrentObject2D){
+                    Object2DEditorFactory factory = this.mapObject2DToFactory.get(obj);
+                    
+                    if(factory != null){                      
+                        String line = factory.serializeStartVariable();
+                        if(hashSet.contains(line) == false){
+                            writer.write(line);
+                            hashSet.add(line);
+                        }
+                    }
+                }
+                
+                writer.write("\n\n");
+                
+                for(Object2D obj : world.listCurrentObject2D){
+                    Object2DEditorFactory factory = this.mapObject2DToFactory.get(obj);
+                    
+                    if(factory != null){
+                        Vector2 position = obj.getPositionBody();
+                        String line = factory.serializeObject2D(position.x / P2M, position.y / P2M, obj.getAngleBody());
+                        writer.write(line);
+                    }
+                }
+                
+                writer.close();
+            } catch (IOException ex) {
+                Logger.getLogger(GameWorld.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         /**
@@ -697,11 +785,6 @@ public class GameWorld implements WorldPlane, GameEventListener{
             this.objectTouched = null;
                 
             this.UpdateObject2D(world);
-        }
-
-        
-        public void updateLogic(float delta){
-            
         }
     }
 }

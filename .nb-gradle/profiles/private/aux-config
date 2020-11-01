@@ -4,7 +4,34 @@
   <auxiliary>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-      <group/>
+      <group>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/GroundUpperCity.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/MetalBox.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/EditorGameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/GameNodeManager.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Pipe.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/LvlGameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Crane.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/BackgroundSolidObject.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/GroundCity.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/HelpGame.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/CosmeticFactoryPool.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/DirectCannonCorpus.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/MenuScreen.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Abribus.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/CannonCorpus.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/menu/GameMenuManager.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Object2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Object2DEditorFactory.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/SmallBox.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/EditorScreen.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/menu/EditorMenuManager.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Object2DFactoryPool.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/SolidObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentCAC1.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/GameWorld.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Ventilo.java</file>
+      </group>
     </open-files>
     <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">

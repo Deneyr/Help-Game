@@ -9,6 +9,7 @@ import characters.Grandma;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.BackgroundScreen;
 import com.mygdx.game.EditorScreen;
@@ -44,6 +45,8 @@ import ressourcesmanagers.TextureManager;
  * @author Deneyr
  */
 public class EditorGameNode extends GameNode{
+    
+    private final String SAVEFILENAME = "savedLevel.txt";
     
     public EditorGameNode(HelpGame game, Batch batch){
         super("Editor");
@@ -83,6 +86,13 @@ public class EditorGameNode extends GameNode{
         game.getGameMenuManager().step(deltaTime);
         
         game.getEditorMenuManager().step(deltaTime);
+        
+        if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)){
+            if(Gdx.input.isKeyJustPressed(Input.Keys.S)){
+                game.getGameWorld().saveObject2Ds(SAVEFILENAME);
+                System.out.println("----- Level Saved -----");
+            }
+        }
     }
 
     
