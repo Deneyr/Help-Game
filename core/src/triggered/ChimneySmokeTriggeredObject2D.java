@@ -6,15 +6,13 @@
 package triggered;
 
 import characters.Grandma;
-import com.badlogic.gdx.graphics.g2d.Animation;
+import characters.OpponentCAC1;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Character2D;
 import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
@@ -26,18 +24,18 @@ import ressourcesmanagers.TextureManager;
 
 /**
  *
- * @author françois
+ * @author Deneyr
  */
-public class CannonBallTriggeredObject2D extends TriggeredObject2D{
+public class ChimneySmokeTriggeredObject2D extends TriggeredObject2D{
 
-    public static final String CANNONBALLTEXTURE = "Canon_Boulet.png";
+    public static final String CHIMNEYSMOKETEXTURE = "ChimneySmoke.png";
     
     private int damageInflicted;
     
-    public CannonBallTriggeredObject2D(){
+    public ChimneySmokeTriggeredObject2D(){
         super();
         
-        this.damageInflicted = 2;
+        this.damageInflicted = 1;
         
         // Part graphic
         this.assignTextures();
@@ -45,24 +43,16 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
     
     @Override
     public void assignTextures(){
-        this.texture = TextureManager.getInstance().getTexture(CANNONBALLTEXTURE, this);
+        this.texture = TextureManager.getInstance().getTexture(CHIMNEYSMOKETEXTURE, this);
         
         if(this.texture != null){
-            TextureRegion[][] tmp = TextureRegion.split(this.texture, 50, 50);
-            // walk folded
-            Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
-            array.removeRange(1, 3);
-            this.listAnimations.add(new Animation(0.2f, array));
 
-            array = new Array<TextureRegion>(tmp[0]);
-            array.removeRange(0, 0);
-            this.listAnimations.add(new Animation(0.2f, array));
         }
     }
     
     @Override
     public void initialize(World world, Vector2 position, Vector2 speed) {
-        float radius = 25;
+        float radius = 13;
 
         super.initialize(world, position, speed, radius * 1.1f);
         
@@ -83,9 +73,9 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
         this.collisionFixture = new ArrayList<Fixture>();
         this.collisionFixture.add(fix);
         fix.setUserData(this);
-        fix.setSensor(true);
+        fix.setSensor(true);     
         
-        this.changeAnimation(0, true);
+        this.physicBody.setTransform(this.physicBody.getPosition(), (float) (2 * Math.PI * Math.random()));
     }
     
     @Override
@@ -102,15 +92,13 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
                 Grandma grandma = (Grandma) objThatTriggered;
                 
                 grandma.applyDamage(this.damageInflicted, dirDamage, this);
-                
-                this.changeAnimation(1, false);
 
-                super.trigger(objThatTriggered);
-            }else{
+            }else if(objThatTriggered instanceof OpponentCAC1){
                 Character2D chara = (Character2D) objThatTriggered;
                 
-                chara.applyDamage(50, dirDamage, this);
+                chara.applyDamage(this.damageInflicted, dirDamage, this);
             }
+            super.trigger(objThatTriggered);
         }
     }
     
@@ -126,7 +114,7 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
         Sprite sprite = super.createCurrentSprite();
         
         if(sprite != null){
-            sprite.setColor(0.5f, 0.5f, 0.5f, 1f);
+            sprite.setColor(0.5f, 0.5f, 0.5f, 0.5f);
         }
         return sprite;
     }

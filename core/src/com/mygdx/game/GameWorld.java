@@ -141,6 +141,11 @@ public class GameWorld implements WorldPlane, GameEventListener{
     public List<Sprite> getSpritesInRegion(float lowerX, float lowerY, float upperX, float upperY){
         this.screenFOV = Math.sqrt((upperY - lowerY) * (upperY - lowerY) + (upperX - lowerX) * (upperX - lowerX));
         
+        if(this.hero == null){
+            this.gameEditorManager.setCameraPosition(new Vector2((upperX - lowerX) / 2 + lowerX, (upperY - lowerY) / 2 + lowerY));
+        }
+        
+        
         ScreenQueryCallback query = new ScreenQueryCallback();
         
         this.world.QueryAABB(query, lowerX, lowerY, upperX, upperY);
@@ -293,6 +298,9 @@ public class GameWorld implements WorldPlane, GameEventListener{
     }
     
     public Vector2 getCameraPosition(){
+        if(this.hero == null){
+            return this.gameEditorManager.getCameraPosition();
+        }
         return this.getHeroPosition().add(this.offsetCameraPoint);
     }
 
@@ -457,7 +465,10 @@ public class GameWorld implements WorldPlane, GameEventListener{
     private void computeObjectsOutOfScreen(){
         for(Object2D obj : this.listCurrentObject2D){
             if(obj instanceof TriggeredObject2D){
-                Vector2 distHeroObj = obj.getPositionBody().sub(this.hero.getPositionBody());
+                
+                Vector2 heroPosition = this.getCameraPosition();
+                
+                Vector2 distHeroObj = obj.getPositionBody().sub(heroPosition);
                 double margin = distHeroObj.len() - this.screenFOV/2;
                 if(margin > 0){
                     TriggeredObject2D triggerObj2D = (TriggeredObject2D) obj;
@@ -602,7 +613,9 @@ public class GameWorld implements WorldPlane, GameEventListener{
         private Map<Object2D, Object2DEditorFactory> mapObject2DToFactory;
         
         private float positionCursorX;
-        private float positionCursorY;     
+        private float positionCursorY; 
+        
+        private Vector2 cameraPosition;
         
         public GameEditorManager(){
             this.objectTouched = null;
@@ -614,7 +627,9 @@ public class GameWorld implements WorldPlane, GameEventListener{
             this.mapObject2DToFactory = new HashMap<Object2D, Object2DEditorFactory>();
             
             this.positionCursorX = 0;
-            this.positionCursorY = 0;           
+            this.positionCursorY = 0;   
+            
+            this.cameraPosition = new Vector2();
         }
         
         public void onTouchDown(GameWorld world, float positionX, float positionY, int pointer, int button){
@@ -706,7 +721,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
         public void createObject2D(GameWorld world, Object2DEditorFactory factory){
             Object2D object = factory.createObject2D(world.world, this.positionCursorX / P2M, this.positionCursorY / P2M, 0);
 
-            world.addObject2DToWorld(object);
+            world.addObject2DToWorld(object, true);
                  
             this.mapObject2DToFactory.put(object, factory);
         }
@@ -714,7 +729,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
         public void createObject2D(GameWorld world, Object2DEditorFactory factory, Vector2 position, float angle){
             Object2D object = factory.createObject2D(world.world, position.x, position.y, angle);
 
-            world.addObject2DToWorld(object);
+            world.addObject2DToWorld(object, true);
                  
             this.mapObject2DToFactory.put(object, factory);
         }
@@ -799,6 +814,20 @@ public class GameWorld implements WorldPlane, GameEventListener{
             this.objectTouched = null;
                 
             this.UpdateObject2D(world);
+        }
+        
+                /**
+         * @return the cameraPosition
+         */
+        public Vector2 getCameraPosition() {
+            return cameraPosition;
+        }
+
+        /**
+         * @param cameraPosition the cameraPosition to set
+         */
+        public void setCameraPosition(Vector2 cameraPosition) {
+            this.cameraPosition = cameraPosition;
         }
     }
 }

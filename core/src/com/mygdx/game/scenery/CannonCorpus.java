@@ -150,9 +150,7 @@ public abstract class CannonCorpus extends SolidObject2D{
         private int angularDir = -1;
         
         protected Object2D target;
-        
-        private float timerFire;
-        
+
         private StateNode currentStateNode;      
         protected Set<CannonInfluence> influences = new HashSet<CannonInfluence>();
         
@@ -167,8 +165,6 @@ public abstract class CannonCorpus extends SolidObject2D{
             
             this.isInvulnerable = true;
             this.hasLifeBar = false;
-            
-            this.timerFire = 0;
             
             this.currentStateNode = new StateNode(CannonState.STOP);
             

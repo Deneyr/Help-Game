@@ -62,6 +62,7 @@ import triggered.BarbedTriggeredObject2D;
 import triggered.BulletTriggeredObject2D;
 import triggered.CannonBallTriggeredObject2D;
 import triggered.CheckPointTriggeredObject2D;
+import triggered.ChimneySmokeTriggeredObject2D;
 import triggered.EventTriggeredObject2D;
 import triggered.TeethTriggeredObject2D;
 import triggered.TriangleDummyTriggerObject2D;
@@ -99,6 +100,8 @@ public class Lvl1UpperCity extends LvlGameNode{
         TextureManager.getInstance().getTexture(BulletTriggeredObject2D.BULLETTEXTURE, null);
         
         TextureManager.getInstance().getTexture(CannonBallTriggeredObject2D.CANNONBALLTEXTURE, null);
+        
+        TextureManager.getInstance().getTexture(ChimneySmokeTriggeredObject2D.CHIMNEYSMOKETEXTURE, null);
         
         TextureManager.getInstance().getTexture(TeethTriggeredObject2D.TEETHTEXTURE, null);
         

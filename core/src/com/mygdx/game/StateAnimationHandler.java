@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import triggered.BulletTriggeredObject2D;
 import triggered.CannonBallTriggeredObject2D;
+import triggered.ChimneySmokeTriggeredObject2D;
 import triggered.TeethTriggeredObject2D;
 
 /**
@@ -64,6 +65,7 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
         this.object2DFactoriesPool.put(UpTriggeredObject2D.class, new Object2DFactoryPool<UpTriggeredObject2D>(UpTriggeredObject2D.class));
         this.object2DFactoriesPool.put(TeethTriggeredObject2D.class, new Object2DFactoryPool<TeethTriggeredObject2D>(TeethTriggeredObject2D.class));
         this.object2DFactoriesPool.put(CannonBallTriggeredObject2D.class, new Object2DFactoryPool<CannonBallTriggeredObject2D>(CannonBallTriggeredObject2D.class));
+        this.object2DFactoriesPool.put(ChimneySmokeTriggeredObject2D.class, new Object2DFactoryPool<ChimneySmokeTriggeredObject2D>(ChimneySmokeTriggeredObject2D.class));
         this.object2DFactoriesPool.put(BulletTriggeredObject2D.class, new Object2DFactoryPool<BulletTriggeredObject2D>(BulletTriggeredObject2D.class));
         
         this.object2DOpponentsPool = new HashMap<Class, OpponentPool>();

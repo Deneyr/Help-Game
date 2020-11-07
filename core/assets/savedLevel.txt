@@ -4,27 +4,28 @@ OpponentCAC1 opponentCAC1;
 DirectCannonCorpus directCannonCorpus;
 MetalBox metalBox;
 Crane crane;
+Chimney chimney;
 
 
 pipe = new Pipe(game.getGameWorld().getWorld(), -76.0f, 76.0f, 1.0f, true); //com.mygdx.game.scenery.PipeWXY1ftrue
 game.getGameWorld().addObject2DToWorld(pipe, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 171.98413f, -5.3617864f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 172.02766f, -5.3627763f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 225.91216f, -5.362457f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 225.73753f, -5.3623233f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 198.91803f, 27.274652f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 198.89137f, 27.273651f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 277.94308f, -5.360033f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 277.93893f, -5.1589117f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 196.05542f, 112.8064f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 196.04942f, 62.48291f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 276.925f, 29.853258f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 276.91788f, 30.054415f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
 pipe = new Pipe(game.getGameWorld().getWorld(), 373.9496f, 140.56021f, 1.0f, true); //com.mygdx.game.scenery.PipeWXY1ftrue
@@ -33,27 +34,57 @@ game.getGameWorld().addObject2DToWorld(pipe, true);
 pipe = new Pipe(game.getGameWorld().getWorld(), 113.94961f, 255.56023f, 1.0f, false); //com.mygdx.game.scenery.PipeWXY1ffalse
 game.getGameWorld().addObject2DToWorld(pipe, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 63.462204f, 312.3547f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 63.462204f, 312.2001f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 136.4622f, 312.3749f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 136.4622f, 312.2001f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 336.46222f, 197.24849f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 336.46222f, 197.20012f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), -97.5378f, 132.78052f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -97.5378f, 132.63994f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
 directCannonCorpus = new DirectCannonCorpus(game.getGameWorld().getWorld(), hero, -8.537796f, 143.5368f, 0.0f); //com.mygdx.game.scenery.DirectCannonCorpusWcom.mygdx.game.Object2DXYA
 game.getGameWorld().addObject2DToWorld(directCannonCorpus, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 421.7128f, 219.19948f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 421.60007f, 219.36327f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 403.85962f, 295.8383f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 403.59775f, 295.9977f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
 
 crane = new Crane(game.getGameWorld().getWorld(), 751.342f, 282.30408f, 0.5f, 0.5f, 0.5f, 0.5f, false); //com.mygdx.game.scenery.CraneWXY0.5f0.5f0.5f0.5ffalse
 game.getGameWorld().addObject2DToWorld(crane, true);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -402.7856f, -5.3770814f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -401.09512f, 27.227655f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -402.19492f, 59.838512f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -401.0869f, 92.454704f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -397.64542f, 125.078766f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -315.705f, -5.3600364f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -312.9608f, 29.853249f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+chimney = new Chimney(game.getGameWorld().getWorld(), -187.0f, 143.09851f, 0.0f, 1.0f, 4.0f, 3.0f); //com.mygdx.game.scenery.ChimneyWXYA1f4f3f
+game.getGameWorld().addObject2DToWorld(chimney, true);
+
+chimney = new Chimney(game.getGameWorld().getWorld(), 3.0f, 325.0985f, 0.0f, 1.0f, 4.0f, 3.0f); //com.mygdx.game.scenery.ChimneyWXYA1f4f3f
+game.getGameWorld().addObject2DToWorld(chimney, true);
+
+chimney = new Chimney(game.getGameWorld().getWorld(), 66.0f, 98.09851f, -1.5670036f, 1.0f, 4.0f, 3.0f); //com.mygdx.game.scenery.ChimneyWXYA1f4f3f
+game.getGameWorld().addObject2DToWorld(chimney, true);
 

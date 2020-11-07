@@ -23,6 +23,7 @@ import com.mygdx.game.Object2DEditorFactory;
 import com.mygdx.game.WorldPlane;
 import com.mygdx.game.scenery.Car;
 import com.mygdx.game.scenery.GroundCity;
+import cosmetics.HitCosmeticObject2D;
 import guicomponents.GuiComponent;
 import guicomponents.GuiEditorBlock;
 import java.io.File;
@@ -39,6 +40,11 @@ import java.util.logging.Logger;
 import ressourcesmanagers.MusicManager;
 import ressourcesmanagers.SoundManager;
 import ressourcesmanagers.TextureManager;
+import triggered.BulletTriggeredObject2D;
+import triggered.CannonBallTriggeredObject2D;
+import triggered.ChimneySmokeTriggeredObject2D;
+import triggered.TeethTriggeredObject2D;
+import triggered.UpTriggeredObject2D;
 
 /**
  *
@@ -124,6 +130,19 @@ public class EditorGameNode extends GameNode{
     }
     
     protected void initializeLevel(HelpGame game){
+        // import dynamic resources (created at runtime).
+        TextureManager.getInstance().getTexture(BulletTriggeredObject2D.BULLETTEXTURE, null);
+        
+        TextureManager.getInstance().getTexture(CannonBallTriggeredObject2D.CANNONBALLTEXTURE, null);
+        
+        TextureManager.getInstance().getTexture(ChimneySmokeTriggeredObject2D.CHIMNEYSMOKETEXTURE, null);
+        
+        TextureManager.getInstance().getTexture(TeethTriggeredObject2D.TEETHTEXTURE, null);
+        
+        TextureManager.getInstance().getTexture(UpTriggeredObject2D.UPTEXTURE, null);
+        
+        TextureManager.getInstance().getTexture(HitCosmeticObject2D.HIT_TEXTURE, null);
+        
         // Init Editor Menu Manager.
         GuiEditorBlock editorBlock = new GuiEditorBlock();
         game.getEditorMenuManager().setCanevas(editorBlock);
