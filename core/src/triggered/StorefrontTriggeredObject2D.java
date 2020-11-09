@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Character2D;
+import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.TriggeredObject2D;
@@ -53,8 +54,9 @@ public class StorefrontTriggeredObject2D extends TriggeredObject2D{
             TextureRegion[][] tmp = TextureRegion.split(this.texture, 120, 60);
 
             Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
+            array.removeIndex(0);
             array.add(tmp[0][0]);
-            this.listAnimations.add(new Animation(0.15f, array));
+            this.listAnimations.add(new Animation(0.1f, array));
         }
     }
     
@@ -70,24 +72,32 @@ public class StorefrontTriggeredObject2D extends TriggeredObject2D{
     public void initialize(World world, Vector2 position, Vector2 speed) {
         PolygonShape damageShape = new PolygonShape();
         damageShape.set(new float[]{
+            -30 * P2M, 0,
+            30 * P2M, 0,
+            30 * P2M * this.side, 10 * P2M,
+            -30 * P2M * this.side, 35 * P2M
+        });
+        
+        super.initialize(world, position, speed, damageShape);
+
+        damageShape = new PolygonShape();
+        damageShape.set(new float[]{
             -35 * P2M, 0,
             35 * P2M, 0,
             -35 * P2M * this.side, 25 * P2M
         });
         
-        super.initialize(world, position, speed, damageShape);
-
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = damageShape;
         fixtureDef.density = 0f; 
         fixtureDef.friction = 0.05f;
-        fixtureDef.restitution = 0.1f; 
+        fixtureDef.restitution = 1.5f; 
               
         Fixture fix = this.physicBody.createFixture(fixtureDef);       
         
         fix.setUserData(this);
         
-        this.changeAnimation(0, true);
+        this.changeAnimation(0, true, 1);
     }
     
     @Override
@@ -96,11 +106,8 @@ public class StorefrontTriggeredObject2D extends TriggeredObject2D{
         if(!this.isTriggered && 
                 (objThatTriggered instanceof Character2D)){
             
-            Vector2 dirVector = new Vector2(30 * this.side, 50); 
-            
-            objThatTriggered.applyBounce(dirVector, this);
-            
             this.changeAnimation(0, false);
+            this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "hitBounce", new Vector2(this.getPositionBody()));
         }
     }
 }

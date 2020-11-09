@@ -1052,6 +1052,12 @@ public class OpponentCAC1 extends Character2D{
             if(Math.abs(velocity.x) > OpponentCAC1.this.maxSpeed){
                 velocity.x = OpponentCAC1.this.maxSpeed * (float)Math.signum(velocity.x);
             }
+            
+            // Clamp speed
+            if(Math.abs(velocity.y) > 15.f){
+                velocity.y = 15.f * (float)Math.signum(velocity.y);
+            }
+            
             OpponentCAC1.this.physicBody.setLinearVelocity(velocity);
         }
          

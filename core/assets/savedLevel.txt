@@ -708,3 +708,6 @@ game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 trampolineTriggeredObject2D = new TrampolineTriggeredObject2D(game.getGameWorld().getWorld(), 2114.515f, 15.711304f, -0.7332847f); //triggered.TrampolineTriggeredObject2DWXYA
 game.getGameWorld().addObject2DToWorld(trampolineTriggeredObject2D, true);
 
+trampolineTriggeredObject2D = new TrampolineTriggeredObject2D(game.getGameWorld().getWorld(), 2327.681f, -5.815918f, 0.0f); //triggered.TrampolineTriggeredObject2DWXYA
+game.getGameWorld().addObject2DToWorld(trampolineTriggeredObject2D, true);
+

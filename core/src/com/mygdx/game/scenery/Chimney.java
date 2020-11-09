@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.Character2D;
 import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
-import com.mygdx.game.Object2D;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -208,7 +207,7 @@ public class Chimney extends Character2D{
 
                         Chimney.this.notifyObject2D2CreateListener(ChimneySmokeTriggeredObject2D.class, Chimney.this.getPositionBody().add(dirBall.scl(Chimney.this.texture.getHeight() / 3 * P2M)).scl(1 / P2M), dirBall.scl(80 * P2M));
 
-                        Chimney.this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "chimney", Chimney.this.getPositionBody());
+                        Chimney.this.notifyGameEventListener(GameEventListener.EventType.ACTION, "smoke", Chimney.this.getPositionBody());
                     }
 
             }, 0.6f);

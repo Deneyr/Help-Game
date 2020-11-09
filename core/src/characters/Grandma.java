@@ -1318,7 +1318,6 @@ public class Grandma extends Character2D{
             
             
             // Clamp speed
-
             if(Math.abs(velocity.x) > 6.f * Grandma.this.slowingDown){
                 velocity.x = 6.f * Grandma.this.slowingDown * (float)Math.signum(velocity.x);
             }
