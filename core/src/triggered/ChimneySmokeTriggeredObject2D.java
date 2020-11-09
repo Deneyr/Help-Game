@@ -96,7 +96,7 @@ public class ChimneySmokeTriggeredObject2D extends TriggeredObject2D{
             }else if(objThatTriggered instanceof OpponentCAC1){
                 Character2D chara = (Character2D) objThatTriggered;
                 
-                chara.applyDamage(this.damageInflicted, dirDamage, this);
+                chara.applyDamage(20, dirDamage, this);
             }
             super.trigger(objThatTriggered);
         }

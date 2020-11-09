@@ -35,7 +35,7 @@ public class StrongChest extends SmallBox{
     public StrongChest(World world, float posX, float posY) {
         super(world, posX, posY, 2);
         
-        this.Initialize(world, posX, posY, 62f * SCALE_X, 62f * SCALE_Y, -40f * SCALE_X, 0, 30f);
+        this.Initialize(world, posX, posY, 58f * SCALE_X, 62f * SCALE_Y, -50f * SCALE_X, 0, 30f);
         
         this.canBeHitAgain = true;
     }

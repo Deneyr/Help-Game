@@ -126,7 +126,7 @@ public class Object2DEditorFactory {
                 argumentArray[i] = obj;  
                 i++;
             } 
-            
+
             Constructor<?> constructor = act.getConstructor(argumentClassArray);
             
             return (Object2D)constructor.newInstance(argumentArray);

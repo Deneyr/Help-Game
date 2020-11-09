@@ -28,6 +28,7 @@ public class GuiEditorBlock extends GuiComponent{
     private static final String TEXT = "gui/BulleDialogue3.png";
     
     private Map<GuiEditorItem, Object2DEditorFactory> mapModelGuiComponents = new HashMap<GuiEditorItem, Object2DEditorFactory>();
+    private List<GuiEditorItem> editorItemsList = new ArrayList<GuiEditorItem>();
     
     private int startLine;
     
@@ -69,7 +70,7 @@ public class GuiEditorBlock extends GuiComponent{
         int j = 0;
         
         this.itemsToDraw.clear();
-        for(GuiEditorItem editorItem : this.mapModelGuiComponents.keySet()){           
+        for(GuiEditorItem editorItem : this.editorItemsList){           
             
             if(j >= this.startLine && (j - this.startLine) < nbItemRow){            
                 Sprite spriteItem = editorItem.getSprite();
@@ -130,15 +131,19 @@ public class GuiEditorBlock extends GuiComponent{
     }
     
     public void AddObject2DAsComponent(Object2DEditorFactory factory){
-        this.mapModelGuiComponents.put(new GuiEditorItem(factory.getTemplate()), factory);
+        GuiEditorItem editorItem = new GuiEditorItem(factory.getTemplate());
+        
+        this.mapModelGuiComponents.put(editorItem, factory);
+        this.editorItemsList.add(editorItem);
     }
     
     @Override
     public void dispose(){
-        for(GuiEditorItem item : this.mapModelGuiComponents.keySet()){
+        for(GuiEditorItem item : this.editorItemsList){
             item.dispose();
         }
         
+        this.editorItemsList.clear();
         this.mapModelGuiComponents.clear();
         
         super.dispose();
