@@ -22,27 +22,28 @@ CheckPointTriggeredObject2D checkPointTriggeredObject2D;
 ObstacleHouse obstacleHouse;
 BarbedTriggeredObject2D barbedTriggeredObject2D;
 TrampolineTriggeredObject2D trampolineTriggeredObject2D;
+IvyObstacle ivyObstacle;
 
 
 pipe = new Pipe(game.getGameWorld().getWorld(), -76.0f, 76.0f, 1.0f, true); //com.mygdx.game.scenery.PipeWXY1ftrue
 game.getGameWorld().addObject2DToWorld(pipe, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 172.04675f, -5.363243f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 172.05904f, -5.36317f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 225.672f, -5.362711f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 225.628f, -5.362675f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 198.8546f, 27.272598f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 198.826f, 27.272688f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 277.93533f, -5.2381663f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 277.93274f, -5.2274756f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 196.04492f, 62.481197f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 196.0354f, 62.481277f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 276.91217f, 29.97516f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 276.90793f, 29.98585f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
 pipe = new Pipe(game.getGameWorld().getWorld(), 373.9496f, 140.56021f, 1.0f, true); //com.mygdx.game.scenery.PipeWXY1ftrue
@@ -51,49 +52,49 @@ game.getGameWorld().addObject2DToWorld(pipe, true);
 pipe = new Pipe(game.getGameWorld().getWorld(), 113.94961f, 255.56023f, 1.0f, false); //com.mygdx.game.scenery.PipeWXY1ffalse
 game.getGameWorld().addObject2DToWorld(pipe, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 63.462204f, 312.2001f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 63.462204f, 312.212f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 136.4622f, 312.2001f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 136.4622f, 312.212f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 336.46222f, 197.20012f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 336.46222f, 197.21199f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), -97.5378f, 132.63994f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -97.5378f, 132.65181f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
 directCannonCorpus = new DirectCannonCorpus(game.getGameWorld().getWorld(), hero, -8.537796f, 143.5368f, 0.0f); //com.mygdx.game.scenery.DirectCannonCorpusWcom.mygdx.game.Object2DXYA
 game.getGameWorld().addObject2DToWorld(directCannonCorpus, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 421.484f, 219.24113f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 421.34732f, 219.23228f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 403.3301f, 295.8746f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 403.01413f, 295.86142f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
 
 crane = new Crane(game.getGameWorld().getWorld(), 751.342f, 282.30408f, 0.5f, 0.5f, 0.5f, 0.5f, false); //com.mygdx.game.scenery.CraneWXY0.5f0.5f0.5f0.5ffalse
 game.getGameWorld().addObject2DToWorld(crane, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), -402.71597f, -5.371891f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -402.6838f, -5.3781657f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), -400.87363f, 27.24395f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -400.82236f, 27.22426f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), -401.9231f, 59.863083f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -401.77274f, 59.833282f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), -401.10745f, 92.48708f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -400.8182f, 92.44767f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), -398.27942f, 125.1181f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -397.78793f, 125.0702f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), -315.69522f, -5.360431f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), -315.6882f, -5.349983f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -312.94556f, 29.852343f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -312.93423f, 29.863304f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
 chimney = new Chimney(game.getGameWorld().getWorld(), -187.0f, 143.09851f, 0.0f, 1.0f, 4.0f, 3.0f); //com.mygdx.game.scenery.ChimneyWXYA1f4f3f
@@ -129,13 +130,13 @@ game.getGameWorld().addObject2DToWorld(balloon, true);
 balloon = new Balloon(game.getGameWorld().getWorld(), -298.1986f, 480.23657f); //com.mygdx.game.scenery.BalloonWXY
 game.getGameWorld().addObject2DToWorld(balloon, true);
 
-opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, -590.53577f, 216.46208f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, -590.53577f, 216.473f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
 
-opponentCACElite = new OpponentCACElite(game.getGameWorld().getWorld(), hero, -473.22653f, 222.46259f); //characters.OpponentCACEliteWcom.mygdx.game.Object2DXY
+opponentCACElite = new OpponentCACElite(game.getGameWorld().getWorld(), hero, -473.2399f, 222.47351f); //characters.OpponentCACEliteWcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCACElite, true);
 
-opponentCACElite = new OpponentCACElite(game.getGameWorld().getWorld(), hero, -507.1986f, 384.57715f); //characters.OpponentCACEliteWcom.mygdx.game.Object2DXY
+opponentCACElite = new OpponentCACElite(game.getGameWorld().getWorld(), hero, -507.1986f, 384.54086f); //characters.OpponentCACEliteWcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCACElite, true);
 
 opponentCACElite = new OpponentCACElite(game.getGameWorld().getWorld(), hero, -390.1986f, 466.44983f); //characters.OpponentCACEliteWcom.mygdx.game.Object2DXY
@@ -165,19 +166,19 @@ game.getGameWorld().addObject2DToWorld(treeWithoutLeaf, true);
 treeWithoutLeaf = new TreeWithoutLeaf(game.getGameWorld().getWorld(), -617.749f, 289.4911f); //com.mygdx.game.scenery.TreeWithoutLeafWXY
 game.getGameWorld().addObject2DToWorld(treeWithoutLeaf, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), -1125.6566f, 100.91681f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), -1125.7601f, 100.91058f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), -1128.5853f, 177.54236f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), -1128.8668f, 177.51546f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
 
-strongChest = new StrongChest(game.getGameWorld().getWorld(), -1114.9976f, 247.18109f); //com.mygdx.game.scenery.StrongChestWXY
+strongChest = new StrongChest(game.getGameWorld().getWorld(), -1115.5148f, 247.15392f); //com.mygdx.game.scenery.StrongChestWXY
 game.getGameWorld().addObject2DToWorld(strongChest, true);
 
-strongChest = new StrongChest(game.getGameWorld().getWorld(), -1177.5518f, 9.639997f); //com.mygdx.game.scenery.StrongChestWXY
+strongChest = new StrongChest(game.getGameWorld().getWorld(), -1177.5507f, 9.639865f); //com.mygdx.game.scenery.StrongChestWXY
 game.getGameWorld().addObject2DToWorld(strongChest, true);
 
-strongChest = new StrongChest(game.getGameWorld().getWorld(), -1201.5079f, 72.39526f); //com.mygdx.game.scenery.StrongChestWXY
+strongChest = new StrongChest(game.getGameWorld().getWorld(), -1201.4865f, 72.32522f); //com.mygdx.game.scenery.StrongChestWXY
 game.getGameWorld().addObject2DToWorld(strongChest, true);
 
 pipe = new Pipe(game.getGameWorld().getWorld(), -1098.749f, 513.4911f, 1.0f, false); //com.mygdx.game.scenery.PipeWXY1ffalse
@@ -201,34 +202,34 @@ game.getGameWorld().addObject2DToWorld(chimney, true);
 speaker = new Speaker(game.getGameWorld().getWorld(), -1450.8726f, 504.02573f); //com.mygdx.game.scenery.SpeakerWXY
 game.getGameWorld().addObject2DToWorld(speaker, true);
 
-strongBox = new StrongBox(game.getGameWorld().getWorld(), -1617.5541f, 372.84158f); //com.mygdx.game.scenery.StrongBoxWXY
+strongBox = new StrongBox(game.getGameWorld().getWorld(), -1617.4323f, 372.8455f); //com.mygdx.game.scenery.StrongBoxWXY
 game.getGameWorld().addObject2DToWorld(strongBox, true);
 
-strongBox = new StrongBox(game.getGameWorld().getWorld(), -1614.8107f, 445.47427f); //com.mygdx.game.scenery.StrongBoxWXY
+strongBox = new StrongBox(game.getGameWorld().getWorld(), -1614.4697f, 445.44833f); //com.mygdx.game.scenery.StrongBoxWXY
 game.getGameWorld().addObject2DToWorld(strongBox, true);
 
-strongBox = new StrongBox(game.getGameWorld().getWorld(), -1601.042f, 518.092f); //com.mygdx.game.scenery.StrongBoxWXY
+strongBox = new StrongBox(game.getGameWorld().getWorld(), -1600.3912f, 518.0308f); //com.mygdx.game.scenery.StrongBoxWXY
 game.getGameWorld().addObject2DToWorld(strongBox, true);
 
-opponentDIST1 = new OpponentDIST1(game.getGameWorld().getWorld(), hero, -1603.8522f, 573.3085f); //characters.OpponentDIST1Wcom.mygdx.game.Object2DXY
+opponentDIST1 = new OpponentDIST1(game.getGameWorld().getWorld(), hero, -1603.2349f, 573.24493f); //characters.OpponentDIST1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentDIST1, true);
 
-opponentDIST1 = new OpponentDIST1(game.getGameWorld().getWorld(), hero, -1463.8726f, 595.3537f); //characters.OpponentDIST1Wcom.mygdx.game.Object2DXY
+opponentDIST1 = new OpponentDIST1(game.getGameWorld().getWorld(), hero, -1463.8726f, 595.36554f); //characters.OpponentDIST1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentDIST1, true);
 
-opponentDIST1 = new OpponentDIST1(game.getGameWorld().getWorld(), hero, -1424.8726f, 595.29f); //characters.OpponentDIST1Wcom.mygdx.game.Object2DXY
+opponentDIST1 = new OpponentDIST1(game.getGameWorld().getWorld(), hero, -1424.8726f, 595.3018f); //characters.OpponentDIST1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentDIST1, true);
 
-opponentCACElite = new OpponentCACElite(game.getGameWorld().getWorld(), hero, -1145.0571f, 297.37683f); //characters.OpponentCACEliteWcom.mygdx.game.Object2DXY
+opponentCACElite = new OpponentCACElite(game.getGameWorld().getWorld(), hero, -1145.5485f, 297.319f); //characters.OpponentCACEliteWcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCACElite, true);
 
 checkPointTriggeredObject2D = new CheckPointTriggeredObject2D(game.getGameWorld().getWorld(), 1104.1113f, 466.64612f); //triggered.CheckPointTriggeredObject2DWXY
 game.getGameWorld().addObject2DToWorld(checkPointTriggeredObject2D, true);
 
-opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 1091.1113f, 451.51733f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 1091.1113f, 451.5292f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
 
-opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 974.1113f, 451.51733f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 974.1113f, 451.5292f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
 
 obstacleHouse = new ObstacleHouse(game.getGameWorld().getWorld(), 1795.8964f, 221.14612f, 9); //com.mygdx.game.scenery.ObstacleHouseWXY9i
@@ -237,31 +238,31 @@ game.getGameWorld().addObject2DToWorld(obstacleHouse, true);
 obstacleHouse = new ObstacleHouse(game.getGameWorld().getWorld(), 1975.8964f, 708.1462f, 9); //com.mygdx.game.scenery.ObstacleHouseWXY9i
 game.getGameWorld().addObject2DToWorld(obstacleHouse, true);
 
-opponentCACElite = new OpponentCACElite(game.getGameWorld().getWorld(), hero, 1599.8964f, 484.35925f); //characters.OpponentCACEliteWcom.mygdx.game.Object2DXY
+opponentCACElite = new OpponentCACElite(game.getGameWorld().getWorld(), hero, 1599.8964f, 484.37122f); //characters.OpponentCACEliteWcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCACElite, true);
 
-opponentCACElite = new OpponentCACElite(game.getGameWorld().getWorld(), hero, 1472.8964f, -2.7867832f); //characters.OpponentCACEliteWcom.mygdx.game.Object2DXY
+opponentCACElite = new OpponentCACElite(game.getGameWorld().getWorld(), hero, 1459.4893f, -2.7866805f); //characters.OpponentCACEliteWcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCACElite, true);
 
 pipe = new Pipe(game.getGameWorld().getWorld(), 1404.2863f, 153.41687f, 1.0f, false); //com.mygdx.game.scenery.PipeWXY1ffalse
 game.getGameWorld().addObject2DToWorld(pipe, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1497.044f, 146.9029f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1497.2172f, -2.7586699f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-strongBox = new StrongBox(game.getGameWorld().getWorld(), 1475.7573f, 215.54967f); //com.mygdx.game.scenery.StrongBoxWXY
+strongBox = new StrongBox(game.getGameWorld().getWorld(), 1475.4595f, 229.96855f); //com.mygdx.game.scenery.StrongBoxWXY
 game.getGameWorld().addObject2DToWorld(strongBox, true);
 
-strongBox = new StrongBox(game.getGameWorld().getWorld(), 1458.5309f, 288.1883f); //com.mygdx.game.scenery.StrongBoxWXY
+strongBox = new StrongBox(game.getGameWorld().getWorld(), 1458.2188f, 302.45303f); //com.mygdx.game.scenery.StrongBoxWXY
 game.getGameWorld().addObject2DToWorld(strongBox, true);
 
-strongBox = new StrongBox(game.getGameWorld().getWorld(), 1471.8086f, 360.82736f); //com.mygdx.game.scenery.StrongBoxWXY
+strongBox = new StrongBox(game.getGameWorld().getWorld(), 1471.6031f, 375.02478f); //com.mygdx.game.scenery.StrongBoxWXY
 game.getGameWorld().addObject2DToWorld(strongBox, true);
 
 obstacleHouse = new ObstacleHouse(game.getGameWorld().getWorld(), 2678.3716f, 249.22913f, 6); //com.mygdx.game.scenery.ObstacleHouseWXY6i
 game.getGameWorld().addObject2DToWorld(obstacleHouse, true);
 
-opponentCACElite = new OpponentCACElite(game.getGameWorld().getWorld(), hero, 2709.3716f, 542.5509f); //characters.OpponentCACEliteWcom.mygdx.game.Object2DXY
+opponentCACElite = new OpponentCACElite(game.getGameWorld().getWorld(), hero, 2709.3716f, 542.5628f); //characters.OpponentCACEliteWcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCACElite, true);
 
 barbedTriggeredObject2D = new BarbedTriggeredObject2D(game.getGameWorld().getWorld(), 971.2781f, -4.571411f, 0.0f); //triggered.BarbedTriggeredObject2DWXYA
@@ -276,115 +277,115 @@ game.getGameWorld().addObject2DToWorld(barbedTriggeredObject2D, true);
 barbedTriggeredObject2D = new BarbedTriggeredObject2D(game.getGameWorld().getWorld(), 1197.2781f, -3.5714111f, 0.0f); //triggered.BarbedTriggeredObject2DWXYA
 game.getGameWorld().addObject2DToWorld(barbedTriggeredObject2D, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1419.1376f, -3.1697502f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1421.7511f, -2.7866676f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 809.98175f, -3.1692417f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 810.5551f, -2.7314856f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1191.471f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1233.6605f, -3.3601544f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1117.9271f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1158.6726f, -3.3607216f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 846.6599f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 848.34784f, -2.7866676f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 911.56006f, -3.3654912f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 927.13275f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 948.31256f, -3.3619995f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 973.76324f, -3.3600452f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1081.1173f, -3.3600018f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1107.4581f, -3.3611984f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1120.7533f, 13.279994f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1160.1451f, 13.278575f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1044.4349f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1069.9945f, -3.3612812f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1228.2922f, -3.3600044f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1289.7535f, 29.984766f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1154.7085f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1196.9805f, -3.3601773f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1380.6554f, -3.163554f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1384.0245f, -2.7866867f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1159.3611f, 13.279994f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1196.7991f, 13.391978f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1228.3197f, 13.279988f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1233.5831f, 13.279334f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1078.5201f, 13.288304f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1085.7017f, 13.276398f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1265.5686f, -2.7866676f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1270.7828f, -2.7866356f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 846.6987f, 13.281277f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 829.57074f, 30.021528f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1088.9863f, 29.928305f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1123.5055f, 13.277984f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 933.3445f, 13.272843f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 936.9112f, 13.28246f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 987.2486f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 973.6788f, 13.279845f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1078.143f, 47.141632f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 984.67114f, 29.919754f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 896.2837f, 13.259885f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 889.8808f, -2.780469f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1039.9629f, 13.282401f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1030.0365f, -3.3600018f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 883.4436f, 29.89181f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 869.12177f, 28.800661f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1076.8208f, 84.905136f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1123.37f, 29.917015f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1052.3445f, 30.002335f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1037.152f, 13.367965f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1341.5166f, -2.769677f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1346.2894f, -2.7545245f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1126.6575f, 29.919989f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1234.5698f, 29.918747f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1303.517f, -2.7472343f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1308.5436f, -2.7891638f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1116.8949f, 47.133297f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1220.8605f, 47.13139f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1040.3145f, 47.226124f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1086.5492f, 29.912672f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 1015.6035f, 30.045044f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 947.89795f, 29.922525f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 883.50665f, 47.09662f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 850.4495f, 61.662846f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 972.353f, 13.279991f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 947.9002f, 46.562546f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 920.8367f, 29.910416f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 910.6211f, 28.80559f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 974.91797f, 29.919985f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 985.1862f, 47.132977f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
 barbedTriggeredObject2D = new BarbedTriggeredObject2D(game.getGameWorld().getWorld(), 1756.232f, -7.571411f, 0.0f); //triggered.BarbedTriggeredObject2DWXYA
@@ -501,208 +502,208 @@ game.getGameWorld().addObject2DToWorld(barbedTriggeredObject2D, true);
 barbedTriggeredObject2D = new BarbedTriggeredObject2D(game.getGameWorld().getWorld(), 3325.7627f, 60.42859f, 0.0f); //triggered.BarbedTriggeredObject2DWXYA
 game.getGameWorld().addObject2DToWorld(barbedTriggeredObject2D, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3338.112f, -3.4129524f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3409.8174f, -3.3600018f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3504.5642f, 13.263507f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3583.8633f, 13.343606f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3394.8933f, -3.3616893f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3499.169f, 13.280261f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3073.7542f, -3.3079174f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3056.2952f, -2.7866697f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3556.8594f, -3.3652508f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3626.9238f, 13.332348f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3499.6292f, -3.3642018f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3536.626f, -3.3599713f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 4380.8887f, -3.354318f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 4380.8887f, -2.7818916f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 4033.2317f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 4032.6453f, -2.7820683f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3548.9912f, 13.261735f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3620.696f, 29.98758f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 4070.0234f, -3.3600159f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 4070.4324f, -2.6340506f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3435.4602f, -3.3600185f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3499.1423f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3516.5974f, 29.895538f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3526.9568f, 29.92691f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3550.4932f, 46.5268f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3317.0752f, 13.337209f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3467.28f, 13.279944f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3546.9094f, 13.285061f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3995.3845f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3994.8574f, -2.7804377f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3479.8928f, 29.923014f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3489.3357f, 29.920698f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3944.4075f, -3.360007f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3944.6143f, -2.7866719f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3553.3057f, 29.892319f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3563.802f, 29.98362f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 4329.155f, -3.162028f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 4329.155f, -2.7866676f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3118.07f, -3.2450016f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3094.0803f, -2.7866433f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3513.6719f, 46.56322f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3491.0234f, 46.566986f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3446.8916f, 46.62644f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3461.4407f, -3.1767032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3891.6785f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3901.3606f, -2.7866676f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3854.7903f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3863.557f, -2.7862358f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3818.0264f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3825.7715f, -2.7867987f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3781.098f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3785.4417f, -2.7866676f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3845.6963f, 13.279995f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3844.541f, 30.038774f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3331.4727f, 29.608686f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3245.2214f, -2.7357378f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3332.3252f, 13.09097f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3321.748f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3380.2412f, 13.274345f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3358.5713f, -3.3600018f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3171.6973f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3169.6506f, -2.7861626f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3230.0203f, -3.360503f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3284.9954f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3744.2942f, -3.3600018f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3875.3203f, 67.252495f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3142.3125f, 13.394998f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3131.8655f, -2.7866676f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3601.6902f, 46.43044f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3600.6296f, 46.6366f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3594.3284f, 63.06084f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3527.8284f, 46.623837f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3630.9822f, 63.056293f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3710.909f, 63.20049f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3668.0784f, -3.3786228f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3610.129f, -3.3309402f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3707.5645f, -3.3600018f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3674.407f, -3.3600032f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3781.2668f, 13.279992f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3748.0515f, 13.280509f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3627.2551f, -3.375941f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3573.3303f, -3.3597882f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3744.4133f, 13.361313f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3773.7893f, 49.57726f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3701.2927f, 29.83504f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3700.423f, 29.919603f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3670.7112f, 13.214513f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3711.2275f, 13.2797575f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3660.756f, 29.821245f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3723.176f, -3.3600693f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3618.0105f, 13.223924f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3663.6853f, 13.279996f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3956.7473f, 13.2799835f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3969.6133f, 25.548462f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3661.5723f, 46.433323f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3700.419f, 46.559483f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 4208.171f, -3.177676f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 4208.171f, -2.7866766f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3623.9016f, 29.826494f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3637.4353f, 46.714664f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3650.7266f, 79.67939f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3438.9036f, 63.202023f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3687.5447f, 63.061188f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3749.9363f, 29.920507f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3476.8557f, 63.412384f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3318.7932f, 30.141214f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3661.4297f, 96.31183f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3660.4355f, 79.83954f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3440.0227f, 63.274567f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3392.2458f, 29.920237f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3182.3943f, 13.279996f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3207.4363f, -2.7866676f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3408.136f, 29.911707f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3454.366f, 46.561123f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3360.8464f, 46.153152f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3353.9092f, 13.281213f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3586.0696f, 79.79362f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3605.8193f, 63.43405f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3809.385f, 29.91999f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3805.634f, 29.186577f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3919.055f, 13.279996f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3922.9756f, 28.247408f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3882.3357f, 13.279996f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3882.377f, 30.033358f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 4144.761f, -3.173444f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 4146.0054f, -2.7866676f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3726.4502f, 46.470898f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3737.223f, 46.5605f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 4103.2515f, 13.279949f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 4108.219f, -2.6320555f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3386.612f, 62.734512f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3415.4011f, 13.280113f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3557.664f, 63.157757f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3355.596f, 29.927958f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3515.8064f, 63.203243f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 3674.2087f, 63.199413f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
 trampolineTriggeredObject2D = new TrampolineTriggeredObject2D(game.getGameWorld().getWorld(), 2114.515f, 15.711304f, -0.7332847f); //triggered.TrampolineTriggeredObject2DWXYA
@@ -710,4 +711,121 @@ game.getGameWorld().addObject2DToWorld(trampolineTriggeredObject2D, true);
 
 trampolineTriggeredObject2D = new TrampolineTriggeredObject2D(game.getGameWorld().getWorld(), 2327.681f, -5.815918f, 0.0f); //triggered.TrampolineTriggeredObject2DWXYA
 game.getGameWorld().addObject2DToWorld(trampolineTriggeredObject2D, true);
+
+ivyObstacle = new IvyObstacle(game.getGameWorld().getWorld(), 2495.2744f, -2.0036926f, 0.0f, 5); //com.mygdx.game.scenery.IvyObstacleWXYA5i
+game.getGameWorld().addObject2DToWorld(ivyObstacle, true);
+
+ivyObstacle = new IvyObstacle(game.getGameWorld().getWorld(), 2625.8704f, 543.14764f, 0.0f, 5); //com.mygdx.game.scenery.IvyObstacleWXYA5i
+game.getGameWorld().addObject2DToWorld(ivyObstacle, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 2627.8704f, 580.3609f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 2665.8704f, 580.41925f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 2377.1597f, -2.6406667f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 2568.8704f, 580.3609f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+ivyObstacle = new IvyObstacle(game.getGameWorld().getWorld(), 2927.1055f, -0.8139343f, 0.0f, 3); //com.mygdx.game.scenery.IvyObstacleWXYA3i
+game.getGameWorld().addObject2DToWorld(ivyObstacle, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 2918.469f, 42.62837f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 2997.449f, 28.72777f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 2877.7822f, -2.6390088f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 2976.506f, -2.7866676f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+ivyObstacle = new IvyObstacle(game.getGameWorld().getWorld(), 2805.0735f, 114.186066f, 0.0f, 1); //com.mygdx.game.scenery.IvyObstacleWXYA1i
+game.getGameWorld().addObject2DToWorld(ivyObstacle, true);
+
+ivyObstacle = new IvyObstacle(game.getGameWorld().getWorld(), 2804.0735f, 232.79626f, 0.0f, 1); //com.mygdx.game.scenery.IvyObstacleWXYA1i
+game.getGameWorld().addObject2DToWorld(ivyObstacle, true);
+
+ivyObstacle = new IvyObstacle(game.getGameWorld().getWorld(), 2805.0735f, 350.79626f, 0.0f, 1); //com.mygdx.game.scenery.IvyObstacleWXYA1i
+game.getGameWorld().addObject2DToWorld(ivyObstacle, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 2811.5842f, 430.1582f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 2835.8352f, -2.7866676f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 2856.5417f, 28.827301f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 2811.5842f, 26.196974f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+ivyObstacle = new IvyObstacle(game.getGameWorld().getWorld(), 2214.384f, -2.7781982f, 0.0f, 5); //com.mygdx.game.scenery.IvyObstacleWXYA5i
+game.getGameWorld().addObject2DToWorld(ivyObstacle, true);
+
+ivyObstacle = new IvyObstacle(game.getGameWorld().getWorld(), 2089.1702f, 197.3648f, 1.5668819f, 4); //com.mygdx.game.scenery.IvyObstacleWXYA4i
+game.getGameWorld().addObject2DToWorld(ivyObstacle, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 2094.612f, 276.63507f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 2217.3682f, 34.43511f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 2333.3682f, 23.268967f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 2484.3682f, 35.24737f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 2553.5151f, 35.41634f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 2415.9329f, -2.7867215f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+ivyObstacle = new IvyObstacle(game.getGameWorld().getWorld(), 2911.5916f, -36.58496f, 0.0f, 1); //com.mygdx.game.scenery.IvyObstacleWXYA1i
+game.getGameWorld().addObject2DToWorld(ivyObstacle, true);
+
+ivyObstacle = new IvyObstacle(game.getGameWorld().getWorld(), 2981.049f, 214.31854f, 0.0f, 2); //com.mygdx.game.scenery.IvyObstacleWXYA2i
+game.getGameWorld().addObject2DToWorld(ivyObstacle, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 2988.1658f, 293.53183f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 2883.085f, 55.88881f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 2956.4473f, 38.399395f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+ivyObstacle = new IvyObstacle(game.getGameWorld().getWorld(), 3235.3298f, 298.67468f, 1.5997126f, 2); //com.mygdx.game.scenery.IvyObstacleWXYA2i
+game.getGameWorld().addObject2DToWorld(ivyObstacle, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 3238.3154f, 338.19476f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 3295.3455f, 339.77158f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 3187.3164f, 336.64706f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 3018.51f, -2.683037f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 2941.2395f, 72.99654f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
+
+ivyObstacle = new IvyObstacle(game.getGameWorld().getWorld(), 4273.979f, -2.624649f, 0.0f, 3); //com.mygdx.game.scenery.IvyObstacleWXYA3i
+game.getGameWorld().addObject2DToWorld(ivyObstacle, true);
+
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 4273.979f, 36.772022f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
