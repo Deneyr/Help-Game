@@ -72,6 +72,11 @@ public class GuiEditorBlock extends GuiComponent{
         this.itemsToDraw.clear();
         for(GuiEditorItem editorItem : this.editorItemsList){           
             
+            if(i >= nbItemLine){
+                i = 0;
+                j++;
+            }
+            
             if(j >= this.startLine && (j - this.startLine) < nbItemRow){            
                 Sprite spriteItem = editorItem.getSprite();
 
@@ -79,15 +84,10 @@ public class GuiEditorBlock extends GuiComponent{
 
                 editorItem.setLocation(sprite.getX() + 70 + (width) * i, sprite.getY() + sprite.getHeight() - 70 - (width) * (j - this.startLine));
                 
-                this.itemsToDraw.add(editorItem);
+                this.itemsToDraw.add(editorItem);               
             }
             i++;
-            if(i >= nbItemLine){
-                i = 0;
-                j++;
-            }
         }
-        
         this.maxLine = j + 1;
         
         if(sprite != null){

@@ -35,10 +35,7 @@ public class EditorScreen implements Screen, ScreenTouchListener{
     
     private ShapeRenderer shapeRenderer;
     
-    private Vector3 cameraPosition;
-    
-    private boolean isGameRunning;
-    
+    private Vector3 cameraPosition;   
     
     public EditorScreen(Batch batch, GameWorld gameWorld){
         this.gameWorld = gameWorld;
@@ -50,8 +47,6 @@ public class EditorScreen implements Screen, ScreenTouchListener{
         this.shapeRenderer = new ShapeRenderer();
         
         this.cameraPosition = new Vector3(0, 0, 0);
-       
-        this.isGameRunning = false;
     }
     
     @Override
@@ -62,7 +57,7 @@ public class EditorScreen implements Screen, ScreenTouchListener{
     @Override
     public void render(float f) {
 
-        if(this.isGameRunning == false || this.gameWorld.getHero() == null){
+        if(this.gameWorld.getGameEditorManager().isGameRunning() == false || this.gameWorld.getHero() == null){
             if(Gdx.input.isKeyPressed(Input.Keys.Q)){
                 this.cameraPosition.x -= f * 1000; 
             }else if(Gdx.input.isKeyPressed(Input.Keys.D)){
@@ -149,13 +144,6 @@ public class EditorScreen implements Screen, ScreenTouchListener{
      */
     public OrthographicCamera getCamera() {
         return camera;
-    }
-
-    /**
-     * @param isGameRunning the isGameRunning to set
-     */
-    public void setIsGameRunning(boolean isGameRunning) {
-        this.isGameRunning = isGameRunning;
     }
     
     private Vector2 getWorldCoordinate(float screenX, float screenY){

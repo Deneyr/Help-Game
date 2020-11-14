@@ -72,13 +72,183 @@ public class Statue extends SolidObject2D{
         PolygonShape ground;
         Fixture fix;
         
-        ground = new PolygonShape();
-        ground.setAsBox(20 * P2M * SCALE_X, 50 * P2M * SCALE_Y, new Vector2(0, 15 * P2M * SCALE_Y), 0);
-
-        fixtureDef.shape = ground;
-        fix = groundBody.createFixture(fixtureDef); 
-        fix.setUserData(this);
-        this.collisionFixture.add(fix);
+        switch(this.statueIndex){
+            case 0:
+                ground = new PolygonShape();
+                ground.setAsBox(30 * P2M * SCALE_X, 60 * P2M * SCALE_Y);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                
+                ground = new PolygonShape();
+                ground.setAsBox(40 * P2M * SCALE_X, 10 * P2M * SCALE_Y, new Vector2(20 * P2M * SCALE_X, 50 * P2M * SCALE_Y), (float) Math.PI / 6);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                break;
+            case 1:
+                ground = new PolygonShape();
+                ground.setAsBox(30 * P2M * SCALE_X, 60 * P2M * SCALE_Y);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                
+                ground = new PolygonShape();
+                ground.setAsBox(60 * P2M * SCALE_X, 30 * P2M * SCALE_Y, new Vector2(0, 35 * P2M * SCALE_Y), 0);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                break;
+            case 2:
+                ground = new PolygonShape();
+                ground.setAsBox(15 * P2M * SCALE_X, 30 * P2M * SCALE_Y, new Vector2(0, 30 * P2M * SCALE_Y), 0);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                
+                ground = new PolygonShape();
+                ground.setAsBox(40 * P2M * SCALE_X, 10 * P2M * SCALE_Y, new Vector2(20 * P2M * SCALE_X, 50 * P2M * SCALE_Y), (float) Math.PI / 6);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                
+                ground = new PolygonShape();
+                ground.setAsBox(40 * P2M * SCALE_X, 10 * P2M * SCALE_Y, new Vector2(-20 * P2M * SCALE_X, 20 * P2M * SCALE_Y), (float) Math.PI / 6);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                break;
+            case 3:
+                ground = new PolygonShape();
+                ground.setAsBox(15 * P2M * SCALE_X, 20 * P2M * SCALE_Y);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                
+                ground = new PolygonShape();
+                ground.setAsBox(30 * P2M * SCALE_X, 10 * P2M * SCALE_Y, new Vector2(20 * P2M * SCALE_X, 45 * P2M * SCALE_Y), (float) Math.PI / 4);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                
+                ground = new PolygonShape();
+                ground.setAsBox(30 * P2M * SCALE_X, 10 * P2M * SCALE_Y, new Vector2(-20 * P2M * SCALE_X, 45 * P2M * SCALE_Y), (float) (3 * Math.PI / 4));
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                
+                ground = new PolygonShape();
+                ground.setAsBox(40 * P2M * SCALE_X, 10 * P2M * SCALE_Y, new Vector2(20 * P2M * SCALE_X, -10 * P2M * SCALE_Y), 0);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                
+                ground = new PolygonShape();
+                ground.setAsBox(40 * P2M * SCALE_X, 10 * P2M * SCALE_Y, new Vector2(-20 * P2M * SCALE_X, -10 * P2M * SCALE_Y), 0);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                break; 
+            case 4:
+                ground = new PolygonShape();
+                ground.setAsBox(15 * P2M * SCALE_X, 50 * P2M * SCALE_Y, new Vector2(0, 20 * P2M * SCALE_Y), 0);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                
+                ground = new PolygonShape();
+                ground.setAsBox(40 * P2M * SCALE_X, 10 * P2M * SCALE_Y, new Vector2(20 * P2M * SCALE_X, 35 * P2M * SCALE_Y), 0);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                
+                ground = new PolygonShape();
+                ground.setAsBox(40 * P2M * SCALE_X, 10 * P2M * SCALE_Y, new Vector2(-20 * P2M * SCALE_X, 35 * P2M * SCALE_Y), 0);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                break; 
+            case 5:
+                ground = new PolygonShape();
+                ground.setAsBox(15 * P2M * SCALE_X, 50 * P2M * SCALE_Y, new Vector2(0, 20 * P2M * SCALE_Y), 0);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                
+                ground = new PolygonShape();
+                ground.setAsBox(30 * P2M * SCALE_X, 10 * P2M * SCALE_Y, new Vector2(20 * P2M * SCALE_X, 20 * P2M * SCALE_Y), -(float) Math.PI / 4);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                
+                ground = new PolygonShape();
+                ground.setAsBox(30 * P2M * SCALE_X, 10 * P2M * SCALE_Y, new Vector2(-20 * P2M * SCALE_X, 20 * P2M * SCALE_Y), -(float) (3 * Math.PI / 4));
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                break;     
+            case 6:
+                ground = new PolygonShape();
+                ground.setAsBox(15 * P2M * SCALE_X, 50 * P2M * SCALE_Y, new Vector2(0, 20 * P2M * SCALE_Y), 0);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                
+                ground = new PolygonShape();
+                ground.setAsBox(40 * P2M * SCALE_X, 10 * P2M * SCALE_Y, new Vector2(20 * P2M * SCALE_X, 50 * P2M * SCALE_Y), 0);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                
+                ground = new PolygonShape();
+                ground.setAsBox(40 * P2M * SCALE_X, 10 * P2M * SCALE_Y, new Vector2(-20 * P2M * SCALE_X, 50 * P2M * SCALE_Y), 0);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                break;     
+        }
         
         this.physicBody = groundBody;
     }

@@ -21,6 +21,7 @@ import com.mygdx.game.HelpGame;
 import com.mygdx.game.MenuScreen;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DEditorFactory;
+import com.mygdx.game.ScreenTouchListener;
 import com.mygdx.game.WorldPlane;
 import com.mygdx.game.scenery.Car;
 import com.mygdx.game.scenery.GroundCity;
@@ -55,6 +56,8 @@ public class EditorGameNode extends GameNode{
     
     private final String SAVEFILENAME = "savedLevel.txt";
     
+    
+    
     public EditorGameNode(HelpGame game, Batch batch){
         super("Editor");
         
@@ -84,22 +87,16 @@ public class EditorGameNode extends GameNode{
             plane.getValue().step(deltaTime);
         }
         
+        
+        
         // Compute the next step of the environment game logic.
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-            game.getGameWorld().step(deltaTime);
-            
-            for(Screen screen : this.screensDisplayed){
-                if(screen instanceof EditorScreen){
-                    ((EditorScreen) screen).setIsGameRunning(true);
-                }
-            }
-        }else{
-            for(Screen screen : this.screensDisplayed){
-                if(screen instanceof EditorScreen){
-                    ((EditorScreen) screen).setIsGameRunning(false);
-                }
-            }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){       
+            game.getGameWorld().getGameEditorManager().setGameRunning(!game.getGameWorld().getGameEditorManager().isGameRunning());
         }
+            
+        if(game.getGameWorld().getGameEditorManager().isGameRunning()){
+            game.getGameWorld().step(deltaTime);        
+        }   
         
         // Compute the next step of the Menu manager Logic.
         game.getGameMenuManager().step(deltaTime);
@@ -221,7 +218,7 @@ public class EditorGameNode extends GameNode{
             }
         }
     }
-    
+       
     private List<Object2DEditorFactory> loadObject2DEditorFactories(String path){
         List<Object2DEditorFactory> listObject2DEditorFactories = new ArrayList<Object2DEditorFactory>();
         

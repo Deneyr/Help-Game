@@ -616,7 +616,15 @@ public class GameWorld implements WorldPlane, GameEventListener{
         this.gameEditorManager.saveObject2Ds(this, filename);
     }
     
-    private class GameEditorManager{
+    /**
+     *
+     * @return
+     */
+    public GameEditorManager getGameEditorManager(){
+        return this.gameEditorManager;
+    }
+    
+    public class GameEditorManager{
 
         private Object2D objectTouched;
         
@@ -631,6 +639,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
         
         private Vector2 cameraPosition;
         
+        private boolean gameRunning;
+        
         public GameEditorManager(){
             this.objectTouched = null;
             
@@ -642,6 +652,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
             
             this.positionCursorX = 0;
             this.positionCursorY = 0;   
+            
+            this.gameRunning = false;
             
             this.cameraPosition = new Vector2();
         }
@@ -840,7 +852,6 @@ public class GameWorld implements WorldPlane, GameEventListener{
         public Object2D getObjectTouched() {
             return objectTouched;
         }
-
         
         /**
          * @return the cameraPosition
@@ -854,6 +865,20 @@ public class GameWorld implements WorldPlane, GameEventListener{
          */
         public void setCameraPosition(Vector2 cameraPosition) {
             this.cameraPosition = cameraPosition;
+        }
+        
+        /**
+         * @return the gameRunning
+         */
+        public boolean isGameRunning() {
+            return gameRunning;
+        }
+
+        /**
+         * @param gameRunning the gameRunning to set
+         */
+        public void setGameRunning(boolean gameRunning) {
+            this.gameRunning = gameRunning;
         }
     }
 }
