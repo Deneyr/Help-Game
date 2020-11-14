@@ -72,7 +72,7 @@ public abstract class TriggeredObject2D extends Object2D{
             circle.setRadius(radius * P2M);
             circle.setPosition(new Vector2(0, 0));
 
-            FixtureDef fixtureDef = new FixtureDef();
+            FixtureDef fixtureDef = new FixtureDef();         
             fixtureDef.shape = circle;
 
             body.setFixedRotation(true);

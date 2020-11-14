@@ -37,6 +37,8 @@ public class EditorScreen implements Screen, ScreenTouchListener{
     
     private Vector3 cameraPosition;
     
+    private boolean isGameRunning;
+    
     
     public EditorScreen(Batch batch, GameWorld gameWorld){
         this.gameWorld = gameWorld;
@@ -49,6 +51,7 @@ public class EditorScreen implements Screen, ScreenTouchListener{
         
         this.cameraPosition = new Vector3(0, 0, 0);
        
+        this.isGameRunning = false;
     }
     
     @Override
@@ -59,18 +62,23 @@ public class EditorScreen implements Screen, ScreenTouchListener{
     @Override
     public void render(float f) {
 
-        if(Gdx.input.isKeyPressed(Input.Keys.Q)){
-            this.cameraPosition.x -= f * 1000; 
-        }else if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            this.cameraPosition.x += f * 1000;  
+        if(this.isGameRunning == false || this.gameWorld.getHero() == null){
+            if(Gdx.input.isKeyPressed(Input.Keys.Q)){
+                this.cameraPosition.x -= f * 1000; 
+            }else if(Gdx.input.isKeyPressed(Input.Keys.D)){
+                this.cameraPosition.x += f * 1000;  
+            }
+
+            if(Gdx.input.isKeyPressed(Input.Keys.Z)){
+                this.cameraPosition.y += f * 1000; 
+            }else if(Gdx.input.isKeyPressed(Input.Keys.S)){
+                this.cameraPosition.y -= f * 1000; 
+            }
+            this.getCamera().position.set(this.cameraPosition);
+        }else{
+            Vector2 worldCameraPosition = this.gameWorld.getCameraPosition();
+            this.getCamera().position.set(worldCameraPosition.x / P2M, worldCameraPosition.y / P2M, 0);
         }
-        
-        if(Gdx.input.isKeyPressed(Input.Keys.Z)){
-            this.cameraPosition.y += f * 1000; 
-        }else if(Gdx.input.isKeyPressed(Input.Keys.S)){
-            this.cameraPosition.y -= f * 1000; 
-        }
-        this.getCamera().position.set(this.cameraPosition);
         
         // Update camera (center on hero)
         //this.getCamera().position.set(this.gameWorld.getCameraPosition().x / P2M, this.gameWorld.getCameraPosition().y / P2M, 0);
@@ -143,6 +151,13 @@ public class EditorScreen implements Screen, ScreenTouchListener{
         return camera;
     }
 
+    /**
+     * @param isGameRunning the isGameRunning to set
+     */
+    public void setIsGameRunning(boolean isGameRunning) {
+        this.isGameRunning = isGameRunning;
+    }
+    
     private Vector2 getWorldCoordinate(float screenX, float screenY){
         float visualX = this.camera.position.x - this.getCamera().viewportWidth / 2 + screenX;
         float visualY = this.camera.position.y + this.getCamera().viewportHeight / 2 - screenY;

@@ -125,7 +125,7 @@ public class ChimneySmokeTriggeredObject2D extends TriggeredObject2D{
             this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "hitProjectile", new Vector2(this.getPositionBody()));
             
             this.physicBody.setLinearVelocity(Vector2.Zero);
-            this.changeAnimation(1, false);
+
             super.trigger(reflecter);
         }
     }

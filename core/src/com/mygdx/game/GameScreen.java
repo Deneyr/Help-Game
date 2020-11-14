@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import java.util.Iterator;
 import java.util.List;
 
@@ -54,7 +55,8 @@ public class GameScreen implements Screen{
         
         
         // Update camera (center on hero)
-        this.getCamera().position.set(this.gameWorld.getCameraPosition().x / P2M, this.gameWorld.getCameraPosition().y / P2M, 0);
+        Vector2 cameraPosition = this.gameWorld.getCameraPosition();
+        this.getCamera().position.set(cameraPosition.x / P2M, cameraPosition.y / P2M, 0);
         this.getCamera().update();
         this.batch.setProjectionMatrix(this.getCamera().combined);
        

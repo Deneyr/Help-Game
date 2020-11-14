@@ -575,11 +575,19 @@ public class GameWorld implements WorldPlane, GameEventListener{
     }
     
     public void createObject(Object2DEditorFactory factory){
-        this.gameEditorManager.createObject2D(this, factory);
+        Object2D obj = this.gameEditorManager.createObject2D(this, factory);
+        
+        if(obj instanceof Grandma){
+            this.hero = (Grandma) obj;
+        }
     }
     
     public void createObject(Object2DEditorFactory factory, Vector2 position, float angle){
-        this.gameEditorManager.createObject2D(this, factory, position, angle);
+        Object2D obj = this.gameEditorManager.createObject2D(this, factory, position, angle);
+        
+        if(obj instanceof Grandma){
+            this.hero = (Grandma) obj;
+        }
     }
     
     public void onFactorySelected(){
@@ -591,6 +599,12 @@ public class GameWorld implements WorldPlane, GameEventListener{
     }
     
     public void onDeleteTouchedObj(){
+        
+        if(this.gameEditorManager.getObjectTouched() != null 
+            && this.gameEditorManager.getObjectTouched() instanceof Grandma){
+            this.hero = null;
+        }
+        
         this.gameEditorManager.deleteTouchedObj(this);
     }
     
@@ -718,20 +732,24 @@ public class GameWorld implements WorldPlane, GameEventListener{
             this.positionCursorY = positionY;
         }
         
-        public void createObject2D(GameWorld world, Object2DEditorFactory factory){
+        public Object2D createObject2D(GameWorld world, Object2DEditorFactory factory){
             Object2D object = factory.createObject2D(world.world, this.positionCursorX / P2M, this.positionCursorY / P2M, 0);
 
             world.addObject2DToWorld(object, true);
                  
             this.mapObject2DToFactory.put(object, factory);
+            
+            return object;
         }
         
-        public void createObject2D(GameWorld world, Object2DEditorFactory factory, Vector2 position, float angle){
+        public Object2D createObject2D(GameWorld world, Object2DEditorFactory factory, Vector2 position, float angle){
             Object2D object = factory.createObject2D(world.world, position.x, position.y, angle);
 
             world.addObject2DToWorld(object, true);
                  
             this.mapObject2DToFactory.put(object, factory);
+            
+            return object;
         }
         
         public void deleteTouchedObj(GameWorld world){
@@ -744,7 +762,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
                 
                 this.UpdateObject2D(world); 
                 
-                world.step(0);
+                world.step(0); 
             }
         }
         
@@ -816,7 +834,15 @@ public class GameWorld implements WorldPlane, GameEventListener{
             this.UpdateObject2D(world);
         }
         
-                /**
+        /**
+         * @return the objectTouched
+         */
+        public Object2D getObjectTouched() {
+            return objectTouched;
+        }
+
+        
+        /**
          * @return the cameraPosition
          */
         public Vector2 getCameraPosition() {

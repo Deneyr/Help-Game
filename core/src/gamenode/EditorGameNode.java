@@ -8,6 +8,7 @@ package gamenode;
 import characters.Grandma;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -86,6 +87,18 @@ public class EditorGameNode extends GameNode{
         // Compute the next step of the environment game logic.
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
             game.getGameWorld().step(deltaTime);
+            
+            for(Screen screen : this.screensDisplayed){
+                if(screen instanceof EditorScreen){
+                    ((EditorScreen) screen).setIsGameRunning(true);
+                }
+            }
+        }else{
+            for(Screen screen : this.screensDisplayed){
+                if(screen instanceof EditorScreen){
+                    ((EditorScreen) screen).setIsGameRunning(false);
+                }
+            }
         }
         
         // Compute the next step of the Menu manager Logic.

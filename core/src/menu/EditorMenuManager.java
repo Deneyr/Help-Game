@@ -65,16 +65,18 @@ public class EditorMenuManager extends MenuManager{
     private void onStart(){
         super.dispose();
         
-        this.canevas.setLocation(-1f, -2f);
-        this.addGuiComponent(this.canevas, 0);
-        
-        Animation animation = new Animation(this.canevas, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_INC, 0f, 0f, 1f);
-        animation.setColorAnimation(new Color(1, 1, 1, 0), new Color(1, 1, 1, 1));      
-        this.addAnimation(animation);
-        
-        animation = new Animation(this.canevas, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_INC, 0.5f, 0f, 0.5f);
-        animation.setPositionAnimation(new Vector2(-1f, -2f), new Vector2(-1f, -1f));      
-        this.addAnimation(animation);
+        if(this.canevas != null){
+            this.canevas.setLocation(-1f, -2f);
+            this.addGuiComponent(this.canevas, 0);
+
+            Animation animation = new Animation(this.canevas, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_INC, 0f, 0f, 1f);
+            animation.setColorAnimation(new Color(1, 1, 1, 0), new Color(1, 1, 1, 1));      
+            this.addAnimation(animation);
+
+            animation = new Animation(this.canevas, Animation.RunType.NORMAL, Interpolation.InterpolationType.QUADRA_INC, 0.5f, 0f, 0.5f);
+            animation.setPositionAnimation(new Vector2(-1f, -2f), new Vector2(-1f, -1f));      
+            this.addAnimation(animation);
+        }
     }
     
     

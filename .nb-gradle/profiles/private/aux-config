@@ -5,14 +5,77 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
       <group>
-        <file>file:/D:/Projects/Help-Game/desktop/src/com/mygdx/game/desktop/DesktopLauncher.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/GroundUpperCity.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/TriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentCACElite.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/EditorGameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/TreeWithoutLeaf.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/guicomponents/GuiEditorBlock.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/GameNodeManager.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/CityString.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/ObstacleObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Bus.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Crane.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/GroundCity.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/HelpGame.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/ShieldActionFixture.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Statue.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/triggered/TrampolineTriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/cosmetics/HitCosmeticObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/GameScreen.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/ActionFixtures.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/AutoCannonCorpus.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Character2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/StrongChest.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/DirectCannonCorpus.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/MenuScreen.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/Lvl1UpperCity.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/ObstacleHouse.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentCAC2.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/StateAnimationHandler.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/CannonCorpus.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/triggered/BedTriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/triggered/BulletTriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/triggered/CheckPointTriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Object2DEditorFactory.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/EditorScreen.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Object2DFactoryPool.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Speaker.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Scaffolding.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Ventilo.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/ActivableVentilo.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/Object2DStateListener.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/SoundMusicManager.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/DamageActionFixture.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Pipe.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/gamenode/GameNode.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/backgrounds/BackgroundSolidObject.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/triggered/StorefrontTriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Orphanage.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/CosmeticFactoryPool.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/PhoneBox.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/IvyObstacle.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/StrongBox.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/triggered/ChimneySmokeTriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/triggered/BarbedTriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/triggered/CannonBallTriggeredObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentDIST1.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Bench.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Poutrelle.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Abribus.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Chimney.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/menu/EditorMenuManager.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/Grandma.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Balloon.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/scenery/Trashcan.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/SolidObject2D.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/characters/OpponentCAC1.java</file>
+        <file>file:/D:/Projects/Help-Game/core/src/com/mygdx/game/GameWorld.java</file>
       </group>
     </open-files>
     <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-      <group>
-        <file>file:/D:/Projects/Help-Game/desktop/src/com/mygdx/game/desktop/DesktopLauncher.java</file>
-      </group>
+      <group/>
     </open-files>
   </auxiliary>
 </gradle-project-properties>

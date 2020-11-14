@@ -206,7 +206,7 @@ public class Chimney extends Character2D{
                         Vector2 dirBall = new Vector2(0, 1).rotate((float) (Chimney.this.physicBody.getAngle() * 180 / Math.PI));
 
                         Chimney.this.notifyObject2D2CreateListener(ChimneySmokeTriggeredObject2D.class, Chimney.this.getPositionBody().add(dirBall.scl(Chimney.this.texture.getHeight() / 3 * P2M)).scl(1 / P2M), dirBall.scl(80 * P2M));
-
+                        
                         Chimney.this.notifyGameEventListener(GameEventListener.EventType.ACTION, "smoke", Chimney.this.getPositionBody());
                     }
 

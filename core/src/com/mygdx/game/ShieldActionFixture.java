@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Timer;
 import java.util.Set;
-import triggered.BulletTriggeredObject2D;
 
 /**
  *
@@ -34,7 +33,6 @@ public class ShieldActionFixture extends DamageActionFixture{
 
     @Override
     public void applyAction(final float deltaTime, final Object2D owner) {
-        
         if(this.applyDamage){
             super.applyAction(deltaTime, owner);
         }else{
@@ -42,7 +40,12 @@ public class ShieldActionFixture extends DamageActionFixture{
 
             for(Object2D obj : this.setObject2DInside){
                 if(obj != owner){
-                    if(obj instanceof Object2D){
+                    if(obj instanceof TriggeredObject2D){
+                        TriggeredObject2D triggeredObject2D = (TriggeredObject2D) obj;
+                                        
+                        triggeredObject2D.reflectBullet(owner);
+                        
+                    }else if(obj instanceof Object2D){
                         Object2D chara = (Object2D) obj;
 
                         Vector2 physicBody = new Vector2(chara.physicBody.getPosition());
@@ -59,12 +62,6 @@ public class ShieldActionFixture extends DamageActionFixture{
                         dirDamage = dirDamage.scl(this.ratioBounce * 100);
 
                         chara.applyBounce(dirDamage, owner);
-                    }else if(obj instanceof TriggeredObject2D){
-
-                        TriggeredObject2D triggeredObject2D = (TriggeredObject2D) obj;
-                                        
-                        triggeredObject2D.reflectBullet(owner);
-                        
                     }
                 }
             }

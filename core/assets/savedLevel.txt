@@ -23,6 +23,7 @@ ObstacleHouse obstacleHouse;
 BarbedTriggeredObject2D barbedTriggeredObject2D;
 TrampolineTriggeredObject2D trampolineTriggeredObject2D;
 IvyObstacle ivyObstacle;
+Grandma grandma;
 
 
 pipe = new Pipe(game.getGameWorld().getWorld(), -76.0f, 76.0f, 1.0f, true); //com.mygdx.game.scenery.PipeWXY1ftrue
@@ -828,4 +829,10 @@ game.getGameWorld().addObject2DToWorld(ivyObstacle, true);
 
 opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 4273.979f, 36.772022f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
+
+grandma = new Grandma(game.getGameWorld().getWorld(), 10.311737f, 11.6579895f); //characters.GrandmaWXY
+game.getGameWorld().addObject2DToWorld(grandma, true);
+
+chimney = new Chimney(game.getGameWorld().getWorld(), -176.68828f, -3.3420105f, -1.5639611f, 1.0f, 4.0f, 3.0f); //com.mygdx.game.scenery.ChimneyWXYA1f4f3f
+game.getGameWorld().addObject2DToWorld(chimney, true);
 
