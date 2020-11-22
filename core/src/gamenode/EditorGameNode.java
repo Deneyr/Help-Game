@@ -24,7 +24,8 @@ import com.mygdx.game.Object2DEditorFactory;
 import com.mygdx.game.ScreenTouchListener;
 import com.mygdx.game.WorldPlane;
 import com.mygdx.game.scenery.Car;
-import com.mygdx.game.scenery.GroundCity;
+import com.mygdx.game.scenery.GroundLowerCity;
+import com.mygdx.game.scenery.GroundUpperCity;
 import cosmetics.HitCosmeticObject2D;
 import guicomponents.GuiComponent;
 import guicomponents.GuiEditorBlock;
@@ -158,7 +159,7 @@ public class EditorGameNode extends GameNode{
         game.getEditorMenuManager().setCanevas(editorBlock);
         
         // Init Editor Level
-        GroundCity ground = new GroundCity(game.getGameWorld().getWorld(), 10000, -150f, 150);
+        GroundUpperCity ground = new GroundUpperCity(game.getGameWorld().getWorld(), 10000, -150f, 150);
         game.getGameWorld().addObject2DToWorld(ground);
         
         System.out.println(game.getEditorLevelPath());

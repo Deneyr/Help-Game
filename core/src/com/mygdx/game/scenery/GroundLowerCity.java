@@ -24,7 +24,7 @@ import ressourcesmanagers.TextureManager;
  *
  * @author Deneyr
  */
-public class GroundCity extends SolidObject2D {
+public class GroundLowerCity extends SolidObject2D {
     private static final String GROUNDTEXT = "ground/ground.png";
     
     private static final float SCALE_X = 1f;
@@ -32,7 +32,7 @@ public class GroundCity extends SolidObject2D {
     
     private int repeatWidth;
     
-    public GroundCity(World world, float posX, float posY, int repeatWidth){
+    public GroundLowerCity(World world, float posX, float posY, int repeatWidth){
         
         this.repeatWidth = repeatWidth;
         

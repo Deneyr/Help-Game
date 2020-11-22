@@ -1,11 +1,12 @@
 Statue statue;
 Grandma grandma;
+Signboard signboard;
 
 
 statue = new Statue(game.getGameWorld().getWorld(), 1.0f, 74.0f, 0); //com.mygdx.game.scenery.StatueWXY0i
 game.getGameWorld().addObject2DToWorld(statue, true);
 
-grandma = new Grandma(game.getGameWorld().getWorld(), 1439.4966f, 8.320316f); //characters.GrandmaWXY
+grandma = new Grandma(game.getGameWorld().getWorld(), 6546.076f, 353.71524f); //characters.GrandmaWXY
 game.getGameWorld().addObject2DToWorld(grandma, true);
 
 statue = new Statue(game.getGameWorld().getWorld(), 329.84875f, 62.213333f, 1); //com.mygdx.game.scenery.StatueWXY1i
@@ -25,4 +26,43 @@ game.getGameWorld().addObject2DToWorld(statue, true);
 
 statue = new Statue(game.getGameWorld().getWorld(), 1764.0172f, 76.0f, 6); //com.mygdx.game.scenery.StatueWXY6i
 game.getGameWorld().addObject2DToWorld(statue, true);
+
+signboard = new Signboard(game.getGameWorld().getWorld(), 2367.9268f, 123.80267f, 0.0f, 0); //com.mygdx.game.scenery.SignboardWXYA0i
+game.getGameWorld().addObject2DToWorld(signboard, true);
+
+signboard = new Signboard(game.getGameWorld().getWorld(), 2731.6267f, 167.38956f, 0.0f, 1); //com.mygdx.game.scenery.SignboardWXYA1i
+game.getGameWorld().addObject2DToWorld(signboard, true);
+
+signboard = new Signboard(game.getGameWorld().getWorld(), 3069.2117f, 349.10266f, 0.0f, 2); //com.mygdx.game.scenery.SignboardWXYA2i
+game.getGameWorld().addObject2DToWorld(signboard, true);
+
+signboard = new Signboard(game.getGameWorld().getWorld(), 3419.1936f, 209.71332f, 0.0f, 3); //com.mygdx.game.scenery.SignboardWXYA3i
+game.getGameWorld().addObject2DToWorld(signboard, true);
+
+signboard = new Signboard(game.getGameWorld().getWorld(), 3888.4338f, 167.71332f, 0.0f, 4); //com.mygdx.game.scenery.SignboardWXYA4i
+game.getGameWorld().addObject2DToWorld(signboard, true);
+
+signboard = new Signboard(game.getGameWorld().getWorld(), 4330.434f, 129.71332f, 0.0f, 5); //com.mygdx.game.scenery.SignboardWXYA5i
+game.getGameWorld().addObject2DToWorld(signboard, true);
+
+signboard = new Signboard(game.getGameWorld().getWorld(), 4654.497f, 184.60797f, 0.0f, 6); //com.mygdx.game.scenery.SignboardWXYA6i
+game.getGameWorld().addObject2DToWorld(signboard, true);
+
+signboard = new Signboard(game.getGameWorld().getWorld(), 4168.6675f, 487.3213f, 0.0f, 3); //com.mygdx.game.scenery.SignboardWXYA3i
+game.getGameWorld().addObject2DToWorld(signboard, true);
+
+signboard = new Signboard(game.getGameWorld().getWorld(), 5076.6997f, 189.32129f, 0.0f, 7); //com.mygdx.game.scenery.SignboardWXYA7i
+game.getGameWorld().addObject2DToWorld(signboard, true);
+
+signboard = new Signboard(game.getGameWorld().getWorld(), 4919.6997f, 189.32129f, 0.0f, 7); //com.mygdx.game.scenery.SignboardWXYA7i
+game.getGameWorld().addObject2DToWorld(signboard, true);
+
+signboard = new Signboard(game.getGameWorld().getWorld(), 5400.528f, 287.03455f, 0.0f, 8); //com.mygdx.game.scenery.SignboardWXYA8i
+game.getGameWorld().addObject2DToWorld(signboard, true);
+
+signboard = new Signboard(game.getGameWorld().getWorld(), 5971.9824f, 291.7478f, 0.0f, 9); //com.mygdx.game.scenery.SignboardWXYA9i
+game.getGameWorld().addObject2DToWorld(signboard, true);
+
+signboard = new Signboard(game.getGameWorld().getWorld(), 6493.732f, 235.46106f, 0.0f, 10); //com.mygdx.game.scenery.SignboardWXYA10i
+game.getGameWorld().addObject2DToWorld(signboard, true);
 

@@ -26,10 +26,10 @@ import ressourcesmanagers.TextureManager;
  * @author françois
  */
 public class GroundUpperCity extends SolidObject2D {
-    private static final String GROUNDTEXT = "ground/Sol.png";
+    private static final String GROUNDTEXT = "ground/groundHighCity.png";
     
-    private static final float SCALE_X = 3f;
-    private static final float SCALE_Y = 3f;
+    private static final float SCALE_X = 1f;
+    private static final float SCALE_Y = 1f;
     
     private int repeatWidth;
     
@@ -40,8 +40,7 @@ public class GroundUpperCity extends SolidObject2D {
         // Part graphic
         this.assignTextures();
         
-        // Part physic
-        
+        // Part physic 
         BodyDef groundBodyDef = new BodyDef();  
         // Set its world position
         groundBodyDef.position.set(new Vector2(posX * P2M, posY * P2M)); 
@@ -57,7 +56,7 @@ public class GroundUpperCity extends SolidObject2D {
         
         // Create a polygon shape
         PolygonShape ground = new PolygonShape();
-        ground.setAsBox(95 * P2M * SCALE_X, 77 * P2M * SCALE_Y, new Vector2(0, 0), 0);
+        ground.setAsBox(128 * P2M * SCALE_X * this.repeatWidth, 128 * P2M * SCALE_Y, new Vector2(0, 0), 0);
         // Set the polygon shape as a box which is twice the size of our view port and 20 high
         // (setAsBox takes half-width and half-height as arguments)
         FixtureDef fixtureDef = new FixtureDef();
@@ -83,7 +82,7 @@ public class GroundUpperCity extends SolidObject2D {
         this.texture = TextureManager.getInstance().getTexture(GROUNDTEXT, this);
         
         if(this.texture != null){
-            this.texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.ClampToEdge);
+            this.texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         }
     }
     
@@ -94,9 +93,10 @@ public class GroundUpperCity extends SolidObject2D {
             TextureRegion imgTextureRegion = new TextureRegion(this.texture);
             imgTextureRegion.setRegion(0, 0, this.texture.getWidth() * this.repeatWidth, this.texture.getHeight());
             sprite.setRegion(imgTextureRegion);
-            
+            sprite.setSize(this.texture.getWidth() * this.repeatWidth, this.texture.getHeight());
+            sprite.setPosition(this.physicBody.getPosition().x / P2M - sprite.getWidth() / 2.f, this.physicBody.getPosition().y / P2M - sprite.getHeight() / 2.f);
         }
-        sprite.setScale(sprite.getScaleX() * this.repeatWidth * SCALE_X, sprite.getScaleY() * SCALE_Y);
+        sprite.setScale(sprite.getScaleX() * SCALE_X, sprite.getScaleY() * SCALE_Y);
         return sprite;
     }
 }

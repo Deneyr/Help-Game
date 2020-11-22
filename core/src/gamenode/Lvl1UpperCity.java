@@ -32,7 +32,7 @@ import com.mygdx.game.scenery.Bus;
 import com.mygdx.game.scenery.Car;
 import com.mygdx.game.scenery.CityString;
 import com.mygdx.game.scenery.Crane;
-import com.mygdx.game.scenery.GroundCity;
+import com.mygdx.game.scenery.GroundLowerCity;
 import com.mygdx.game.scenery.MetalBox;
 import com.mygdx.game.scenery.ObstacleHouse;
 import com.mygdx.game.scenery.PhoneBox;
@@ -157,13 +157,13 @@ public class Lvl1UpperCity extends LvlGameNode{
         
         // init solid objects
         
-        GroundCity ground = new GroundCity(game.getGameWorld().getWorld(), 10000, -150f, 150);
+        GroundLowerCity ground = new GroundLowerCity(game.getGameWorld().getWorld(), 10000, -150f, 150);
         game.getGameWorld().addObject2DToWorld(ground);
         
-        ground = new GroundCity(game.getGameWorld().getWorld(), 35570, 100f, 5);
+        ground = new GroundLowerCity(game.getGameWorld().getWorld(), 35570, 100f, 5);
         game.getGameWorld().addObject2DToWorld(ground);
         
-        ground = new GroundCity(game.getGameWorld().getWorld(), 41670, 50f, 3);
+        ground = new GroundLowerCity(game.getGameWorld().getWorld(), 41670, 50f, 3);
         game.getGameWorld().addObject2DToWorld(ground);
         
         Sign sign = new Sign(game.getGameWorld().getWorld(), 1100f, 0, 0.02f, 2);
