@@ -1,12 +1,13 @@
 Statue statue;
 Grandma grandma;
 Signboard signboard;
+Elevator elevator;
 
 
 statue = new Statue(game.getGameWorld().getWorld(), 1.0f, 74.0f, 0); //com.mygdx.game.scenery.StatueWXY0i
 game.getGameWorld().addObject2DToWorld(statue, true);
 
-grandma = new Grandma(game.getGameWorld().getWorld(), 6546.076f, 353.71524f); //characters.GrandmaWXY
+grandma = new Grandma(game.getGameWorld().getWorld(), 6555.266f, 353.67435f); //characters.GrandmaWXY
 game.getGameWorld().addObject2DToWorld(grandma, true);
 
 statue = new Statue(game.getGameWorld().getWorld(), 329.84875f, 62.213333f, 1); //com.mygdx.game.scenery.StatueWXY1i
@@ -65,4 +66,13 @@ game.getGameWorld().addObject2DToWorld(signboard, true);
 
 signboard = new Signboard(game.getGameWorld().getWorld(), 6493.732f, 235.46106f, 0.0f, 10); //com.mygdx.game.scenery.SignboardWXYA10i
 game.getGameWorld().addObject2DToWorld(signboard, true);
+
+grandma = new Grandma(game.getGameWorld().getWorld(), 357.82092f, 157.42665f); //characters.GrandmaWXY
+game.getGameWorld().addObject2DToWorld(grandma, true);
+
+elevator = new Elevator(game.getGameWorld().getWorld(), -341.08325f, 141.7367f, 0.0f, 500.0f, 70.0f); //com.mygdx.game.scenery.ElevatorWXY0f500f70f
+game.getGameWorld().addObject2DToWorld(elevator, true);
+
+grandma = new Grandma(game.getGameWorld().getWorld(), -315.08325f, 132.7367f); //characters.GrandmaWXY
+game.getGameWorld().addObject2DToWorld(grandma, true);
 

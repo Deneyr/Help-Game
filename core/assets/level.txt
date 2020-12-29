@@ -76,3 +76,4 @@ com.mygdx.game.scenery.Signboard(W, X, Y, A, 7i)
 com.mygdx.game.scenery.Signboard(W, X, Y, A, 8i)
 com.mygdx.game.scenery.Signboard(W, X, Y, A, 9i)
 com.mygdx.game.scenery.Signboard(W, X, Y, A, 10i)
+com.mygdx.game.scenery.Elevator(W, X, Y, 0f, 500f, 70f);
