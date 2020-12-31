@@ -2,12 +2,13 @@ Statue statue;
 Grandma grandma;
 Signboard signboard;
 Elevator elevator;
+AdvertisingBoard advertisingBoard;
 
 
 statue = new Statue(game.getGameWorld().getWorld(), 1.0f, 74.0f, 0); //com.mygdx.game.scenery.StatueWXY0i
 game.getGameWorld().addObject2DToWorld(statue, true);
 
-grandma = new Grandma(game.getGameWorld().getWorld(), 6555.266f, 353.67435f); //characters.GrandmaWXY
+grandma = new Grandma(game.getGameWorld().getWorld(), 5267.571f, 8.398507f); //characters.GrandmaWXY
 game.getGameWorld().addObject2DToWorld(grandma, true);
 
 statue = new Statue(game.getGameWorld().getWorld(), 329.84875f, 62.213333f, 1); //com.mygdx.game.scenery.StatueWXY1i
@@ -67,12 +68,42 @@ game.getGameWorld().addObject2DToWorld(signboard, true);
 signboard = new Signboard(game.getGameWorld().getWorld(), 6493.732f, 235.46106f, 0.0f, 10); //com.mygdx.game.scenery.SignboardWXYA10i
 game.getGameWorld().addObject2DToWorld(signboard, true);
 
-grandma = new Grandma(game.getGameWorld().getWorld(), 357.82092f, 157.42665f); //characters.GrandmaWXY
-game.getGameWorld().addObject2DToWorld(grandma, true);
-
-elevator = new Elevator(game.getGameWorld().getWorld(), -341.08325f, 141.7367f, 0.0f, 500.0f, 70.0f); //com.mygdx.game.scenery.ElevatorWXY0f500f70f
+elevator = new Elevator(game.getGameWorld().getWorld(), -341.08325f, 586.7693f, 0.0f, 500.0f, 70.0f); //com.mygdx.game.scenery.ElevatorWXY0f500f70f
 game.getGameWorld().addObject2DToWorld(elevator, true);
 
-grandma = new Grandma(game.getGameWorld().getWorld(), -315.08325f, 132.7367f); //characters.GrandmaWXY
+advertisingBoard = new AdvertisingBoard(game.getGameWorld().getWorld(), -1164.8767f, 365.85733f, 0); //com.mygdx.game.scenery.AdvertisingBoardWXY0i
+game.getGameWorld().addObject2DToWorld(advertisingBoard, true);
+
+advertisingBoard = new AdvertisingBoard(game.getGameWorld().getWorld(), -1919.0088f, 261.85736f, 1); //com.mygdx.game.scenery.AdvertisingBoardWXY1i
+game.getGameWorld().addObject2DToWorld(advertisingBoard, true);
+
+advertisingBoard = new AdvertisingBoard(game.getGameWorld().getWorld(), -2639.017f, 164.85736f, 2); //com.mygdx.game.scenery.AdvertisingBoardWXY2i
+game.getGameWorld().addObject2DToWorld(advertisingBoard, true);
+
+advertisingBoard = new AdvertisingBoard(game.getGameWorld().getWorld(), -3329.2688f, 165.85736f, 3); //com.mygdx.game.scenery.AdvertisingBoardWXY3i
+game.getGameWorld().addObject2DToWorld(advertisingBoard, true);
+
+advertisingBoard = new AdvertisingBoard(game.getGameWorld().getWorld(), -4051.339f, 164.85736f, 4); //com.mygdx.game.scenery.AdvertisingBoardWXY4i
+game.getGameWorld().addObject2DToWorld(advertisingBoard, true);
+
+advertisingBoard = new AdvertisingBoard(game.getGameWorld().getWorld(), -4790.266f, 365.85733f, 5); //com.mygdx.game.scenery.AdvertisingBoardWXY5i
+game.getGameWorld().addObject2DToWorld(advertisingBoard, true);
+
+advertisingBoard = new AdvertisingBoard(game.getGameWorld().getWorld(), -5533.682f, 166.85736f, 6); //com.mygdx.game.scenery.AdvertisingBoardWXY6i
+game.getGameWorld().addObject2DToWorld(advertisingBoard, true);
+
+advertisingBoard = new AdvertisingBoard(game.getGameWorld().getWorld(), -6283.9985f, 165.6565f, 7); //com.mygdx.game.scenery.AdvertisingBoardWXY7i
+game.getGameWorld().addObject2DToWorld(advertisingBoard, true);
+
+advertisingBoard = new AdvertisingBoard(game.getGameWorld().getWorld(), -6984.4f, 341.1386f, 10); //com.mygdx.game.scenery.AdvertisingBoardWXY10i
+game.getGameWorld().addObject2DToWorld(advertisingBoard, true);
+
+advertisingBoard = new AdvertisingBoard(game.getGameWorld().getWorld(), -6298.4f, 479.182f, 9); //com.mygdx.game.scenery.AdvertisingBoardWXY9i
+game.getGameWorld().addObject2DToWorld(advertisingBoard, true);
+
+advertisingBoard = new AdvertisingBoard(game.getGameWorld().getWorld(), -5580.151f, 526.0867f, 8); //com.mygdx.game.scenery.AdvertisingBoardWXY8i
+game.getGameWorld().addObject2DToWorld(advertisingBoard, true);
+
+grandma = new Grandma(game.getGameWorld().getWorld(), -4977.7417f, 666.08295f); //characters.GrandmaWXY
 game.getGameWorld().addObject2DToWorld(grandma, true);
 
