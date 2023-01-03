@@ -1,0 +1,2 @@
+- selection multiple (carré de selection)
+- ballon hit box plus grande

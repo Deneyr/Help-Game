@@ -600,16 +600,28 @@ public class GameWorld implements WorldPlane, GameEventListener{
     
     public void onDeleteTouchedObj(){
         
-        if(this.gameEditorManager.getObjectTouched() != null 
-            && this.gameEditorManager.getObjectTouched() instanceof Grandma){
-            this.hero = null;
-        }
+        HashSet<Object2D> objTouched = this.gameEditorManager.getSelectedObjects();
         
-        this.gameEditorManager.deleteTouchedObj(this);
+        if(objTouched.size() > 0){
+            if(objTouched.contains(this.hero)){
+                System.out.println("hero deletion");
+                this.hero = null;
+            }
+            
+            this.gameEditorManager.deleteSelectedObjects(this);
+        }
     }
     
     public void onRotateObj(EventType eventType, float deltaTime){
-        this.gameEditorManager.rotateSelectedObject(eventType, deltaTime);
+        this.gameEditorManager.rotateSelectedObjects(eventType, deltaTime);
+    }
+    
+    public void onMultipleSelectionStateChanged(EventType eventType){
+        if(eventType == EventType.EDITORCTRLPRESSED){
+            this.gameEditorManager.setMultipleSelectionState(true);
+        }else if(eventType == EventType.EDITORCTRLRELEASED){
+            this.gameEditorManager.setMultipleSelectionState(false);
+        }
     }
     
     public void saveObject2Ds(String filename){
@@ -626,7 +638,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
     
     public class GameEditorManager{
 
-        private Object2D objectTouched;
+        private HashSet<Object2D> touchedObjects;
         
         private boolean isTouchedAgain; 
         
@@ -639,10 +651,14 @@ public class GameWorld implements WorldPlane, GameEventListener{
         
         private Vector2 cameraPosition;
         
+        private Vector2 positionTouched;
+        
         private boolean gameRunning;
         
+        private boolean multipleSelectionState;
+        
         public GameEditorManager(){
-            this.objectTouched = null;
+            this.touchedObjects = new HashSet<Object2D>();
             
             this.isTouchedAgain = false;
             
@@ -656,11 +672,17 @@ public class GameWorld implements WorldPlane, GameEventListener{
             this.gameRunning = false;
             
             this.cameraPosition = new Vector2();
+            
+            this.positionTouched = new Vector2();
+            
+            this.multipleSelectionState = false;
         }
         
         public void onTouchDown(GameWorld world, float positionX, float positionY, int pointer, int button){
             
             boolean isCurrentTouchedAgain = false;
+            
+            this.positionTouched = new Vector2(positionX, positionY);
             
             if(button == 0 && this.isFactorySelected == false){
                 
@@ -685,21 +707,24 @@ public class GameWorld implements WorldPlane, GameEventListener{
                         }
                     }
 
-                    if(this.objectTouched != nearestObject){
-                        this.objectTouched = nearestObject;
+                    if(this.touchedObjects.contains(nearestObject) == false){
+                        if(this.multipleSelectionState == false){
+                            this.touchedObjects.clear();
+                        }
+                        
+                        this.touchedObjects.add(nearestObject);
                         
                         this.UpdateObject2D(world);
                         
+                        System.out.println(listObject2D.size() + "object touched : " + nearestObject);
                     }else{
                         isCurrentTouchedAgain = true;
-                    }
-
-                    System.out.println(listObject2D.size() + "object touched : " + this.objectTouched);                   
+                    }                   
                 }    
             }
             else
             {
-                this.objectTouched = null;
+                this.touchedObjects.clear();
                 
                 this.UpdateObject2D(world);
             }
@@ -707,25 +732,17 @@ public class GameWorld implements WorldPlane, GameEventListener{
             this.isTouchedAgain = isCurrentTouchedAgain;
         }
         
-        private void UpdateObject2D(GameWorld world){
+        private void UpdateObject2D(GameWorld world){          
             for(Object2D obj : world.listCurrentObject2D){
-                if(obj != this.objectTouched){
-                    obj.setAlpha(0.3f);
-                }
-            }
-            
-            if(this.objectTouched != null){
-                this.objectTouched.setAlpha(1f);
-                
-                for(Object2D obj : world.listCurrentObject2D){
-                    if(obj != this.objectTouched){
+                if(this.touchedObjects.size() > 0){
+                    if(this.touchedObjects.contains(obj) == false){
                         obj.setAlpha(0.3f);
+                    }else{
+                        obj.setAlpha(1f);
                     }
-                }
-            }else{
-                for(Object2D obj : world.listCurrentObject2D){
+                }else{
                     obj.setAlpha(1f);
-                }         
+                }
             }
         }
         
@@ -734,9 +751,16 @@ public class GameWorld implements WorldPlane, GameEventListener{
         }
 
         public void onTouchDragged(GameWorld world, float positionX, float positionY, int pointer){
-            if(this.objectTouched != null && this.isTouchedAgain){
-                this.objectTouched.physicBody.setTransform(new Vector2(positionX, positionY), this.objectTouched.physicBody.getAngle());
+            
+            Vector2 offsetPosition = (new Vector2(positionX, positionY)).sub(this.positionTouched);
+            
+            if(this.isTouchedAgain){
+                for(Object2D obj : this.touchedObjects){
+                    obj.physicBody.setTransform(obj.physicBody.getPosition().add(offsetPosition), obj.physicBody.getAngle());
+                }
             }
+            
+            this.positionTouched = new Vector2(positionX, positionY);
         }
 
         public void onMouseMoved(GameWorld world, float positionX, float positionY){
@@ -764,26 +788,26 @@ public class GameWorld implements WorldPlane, GameEventListener{
             return object;
         }
         
-        public void deleteTouchedObj(GameWorld world){
-            if(this.objectTouched != null){
-                world.addObject2D2Flush(objectTouched); 
+        public void deleteSelectedObjects(GameWorld world){
+            for(Object2D obj : this.touchedObjects){
+                world.addObject2D2Flush(obj); 
                 
-                this.mapObject2DToFactory.remove(this.objectTouched);
-                
-                this.objectTouched = null;
+                this.mapObject2DToFactory.remove(obj);
                 
                 this.UpdateObject2D(world); 
                 
                 world.step(0); 
             }
+            
+            this.touchedObjects.clear();
         }
         
-        public void rotateSelectedObject(EventType eventType, float deltaTime){
-            if(this.objectTouched != null){
+        public void rotateSelectedObjects(EventType eventType, float deltaTime){
+            for(Object2D obj : this.touchedObjects){
                 if(eventType == EventType.EDITORROTATIONRIGHT){
-                    this.objectTouched.physicBody.setTransform(this.objectTouched.getPositionBody(), this.objectTouched.physicBody.getAngle() - deltaTime * 2);
+                    obj.physicBody.setTransform(obj.getPositionBody(), obj.physicBody.getAngle() - deltaTime * 2);
                 }else if(eventType == EventType.EDITORROTATIONLEFT){
-                    this.objectTouched.physicBody.setTransform(this.objectTouched.getPositionBody(), this.objectTouched.physicBody.getAngle() + deltaTime * 2);
+                    obj.physicBody.setTransform(obj.getPositionBody(), obj.physicBody.getAngle() + deltaTime * 2);
                 }
             }
         }
@@ -841,7 +865,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
         public void setIsFactorySelected(GameWorld world, boolean isFactorySelected) {
             this.isFactorySelected = isFactorySelected;
             
-            this.objectTouched = null;
+            this.touchedObjects.clear();
                 
             this.UpdateObject2D(world);
         }
@@ -849,15 +873,15 @@ public class GameWorld implements WorldPlane, GameEventListener{
         /**
          * @return the objectTouched
          */
-        public Object2D getObjectTouched() {
-            return objectTouched;
+        public HashSet<Object2D> getSelectedObjects() {
+            return this.touchedObjects;
         }
         
         /**
          * @return the cameraPosition
          */
         public Vector2 getCameraPosition() {
-            return cameraPosition;
+            return this.cameraPosition;
         }
 
         /**
@@ -874,6 +898,13 @@ public class GameWorld implements WorldPlane, GameEventListener{
             return gameRunning;
         }
 
+        /**
+         * @param multipleSelectionState the multipleSelectionState to set
+         */
+        public void setMultipleSelectionState(boolean multipleSelectionState) {
+            this.multipleSelectionState = multipleSelectionState;
+        }
+        
         /**
          * @param gameRunning the gameRunning to set
          */

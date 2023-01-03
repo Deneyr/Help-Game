@@ -353,6 +353,11 @@ public class HelpGame extends Game implements GameEventListener{
                 case EDITORROTATIONLEFT:
                     this.gameWorld.onRotateObj(gameEvent.eventType, Float.parseFloat(gameEvent.details));
                     break;
+                case EDITORCTRLPRESSED:
+                case EDITORCTRLRELEASED:
+                    this.gameWorld.onMultipleSelectionStateChanged(gameEvent.eventType);
+                    System.out.println(gameEvent.eventType);
+                    break;
                 default:
                     this.soundMusicManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
 

@@ -39,6 +39,8 @@ public class EditorMenuManager extends MenuManager{
     
     private Map<String, Object2DEditorFactory> mapIDToFactory; 
     
+    private boolean isCtrlPressed;
+    
     public EditorMenuManager(){
         super();
         
@@ -50,6 +52,8 @@ public class EditorMenuManager extends MenuManager{
         positionCursorY = 0;
         
         this.mapIDToFactory = new HashMap<String, Object2DEditorFactory>();
+        
+        this.isCtrlPressed = true;
     }
     
     @Override
@@ -60,6 +64,21 @@ public class EditorMenuManager extends MenuManager{
                 break;
         }
         
+    }
+    
+    /**
+     * @param isCtrlPressed the isCtrlPressed to set
+     */
+    public void setIsCtrlPressed(boolean isCtrlPressed) {
+        if(this.isCtrlPressed != isCtrlPressed){                      
+            this.isCtrlPressed = isCtrlPressed;
+            
+            if(this.isCtrlPressed){
+                this.notifyGameEventListeners(EventType.EDITORCTRLPRESSED, null, Vector2.Zero);
+            }else{
+                this.notifyGameEventListeners(EventType.EDITORCTRLRELEASED, null, Vector2.Zero);
+            }
+        }
     }
     
     private void onStart(){
@@ -93,6 +112,12 @@ public class EditorMenuManager extends MenuManager{
             this.notifyGameEventListeners(EventType.EDITORROTATIONRIGHT, String.valueOf(deltaTime), Vector2.Zero);
         }else if(Gdx.input.isKeyPressed(Input.Keys.A)){
             this.notifyGameEventListeners(EventType.EDITORROTATIONLEFT, String.valueOf(deltaTime), Vector2.Zero);
+        }
+        
+        if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)){
+            this.setIsCtrlPressed(true);
+        }else{
+            this.setIsCtrlPressed(false);
         }
     }
     
