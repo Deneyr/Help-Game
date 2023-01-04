@@ -142,7 +142,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
         this.screenFOV = Math.sqrt((upperY - lowerY) * (upperY - lowerY) + (upperX - lowerX) * (upperX - lowerX));
         
         if(this.hero == null){
-            this.gameEditorManager.setCameraPosition(new Vector2((upperX - lowerX) / 2 + lowerX, (upperY - lowerY) / 2 + lowerY));
+            this.getGameEditorManager().setCameraPosition(new Vector2((upperX - lowerX) / 2 + lowerX, (upperY - lowerY) / 2 + lowerY));
         }
         
         
@@ -299,7 +299,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
     
     public Vector2 getCameraPosition(){
         if(this.hero == null){
-            return this.gameEditorManager.getCameraPosition();
+            return this.getGameEditorManager().getCameraPosition();
         }
         return this.getHeroPosition().add(this.offsetCameraPoint);
     }
@@ -559,23 +559,23 @@ public class GameWorld implements WorldPlane, GameEventListener{
     // Editor part
     
     public void onTouchDown(float positionX, float positionY, int pointer, int button){
-        this.gameEditorManager.onTouchDown(this, positionX, positionY, pointer, button);
+        this.getGameEditorManager().onTouchDown(this, positionX, positionY, pointer, button);
     }
     
     public void onTouchUp(float positionX, float positionY, int pointer, int button){
-        this.gameEditorManager.onTouchUp(this, positionX, positionY, pointer, button);
+        this.getGameEditorManager().onTouchUp(this, positionX, positionY, pointer, button);
     }
 
     public void onTouchDragged(float positionX, float positionY, int pointer){
-        this.gameEditorManager.onTouchDragged(this, positionX, positionY, pointer);
+        this.getGameEditorManager().onTouchDragged(this, positionX, positionY, pointer);
     }
 
     public void onMouseMoved(float positionX, float positionY){
-        this.gameEditorManager.onMouseMoved(this, positionX, positionY);
+        this.getGameEditorManager().onMouseMoved(this, positionX, positionY);
     }
     
     public void createObject(Object2DEditorFactory factory){
-        Object2D obj = this.gameEditorManager.createObject2D(this, factory);
+        Object2D obj = this.getGameEditorManager().createObject2D(this, factory);
         
         if(obj instanceof Grandma){
             this.hero = (Grandma) obj;
@@ -583,7 +583,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
     }
     
     public void createObject(Object2DEditorFactory factory, Vector2 position, float angle){
-        Object2D obj = this.gameEditorManager.createObject2D(this, factory, position, angle);
+        Object2D obj = this.getGameEditorManager().createObject2D(this, factory, position, angle);
         
         if(obj instanceof Grandma){
             this.hero = (Grandma) obj;
@@ -591,16 +591,16 @@ public class GameWorld implements WorldPlane, GameEventListener{
     }
     
     public void onFactorySelected(){
-        this.gameEditorManager.setIsFactorySelected(this, true);
+        this.getGameEditorManager().setIsFactorySelected(this, true);
     }
     
     public void onFactoryUnSelected(){
-        this.gameEditorManager.setIsFactorySelected(this, false);
+        this.getGameEditorManager().setIsFactorySelected(this, false);
     }
     
     public void onDeleteTouchedObj(){
         
-        HashSet<Object2D> objTouched = this.gameEditorManager.getSelectedObjects();
+        HashSet<Object2D> objTouched = this.getGameEditorManager().getSelectedObjects();
         
         if(objTouched.size() > 0){
             if(objTouched.contains(this.hero)){
@@ -608,24 +608,24 @@ public class GameWorld implements WorldPlane, GameEventListener{
                 this.hero = null;
             }
             
-            this.gameEditorManager.deleteSelectedObjects(this);
+            this.getGameEditorManager().deleteSelectedObjects(this);
         }
     }
     
     public void onRotateObj(EventType eventType, float deltaTime){
-        this.gameEditorManager.rotateSelectedObjects(eventType, deltaTime);
+        this.getGameEditorManager().rotateSelectedObjects(eventType, deltaTime);
     }
     
     public void onMultipleSelectionStateChanged(EventType eventType){
         if(eventType == EventType.EDITORCTRLPRESSED){
-            this.gameEditorManager.setMultipleSelectionState(true);
+            this.getGameEditorManager().setMultipleSelectionState(true);
         }else if(eventType == EventType.EDITORCTRLRELEASED){
-            this.gameEditorManager.setMultipleSelectionState(false);
+            this.getGameEditorManager().setMultipleSelectionState(false);
         }
     }
     
     public void saveObject2Ds(String filename){
-        this.gameEditorManager.saveObject2Ds(this, filename);
+        this.getGameEditorManager().saveObject2Ds(this, filename);
     }
     
     /**
@@ -652,6 +652,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
         private Vector2 cameraPosition;
         
         private Vector2 positionTouched;
+        private Vector2 firstPositionTouched;
         
         private boolean gameRunning;
         
@@ -674,6 +675,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
             this.cameraPosition = new Vector2();
             
             this.positionTouched = new Vector2();
+            this.firstPositionTouched = null;
             
             this.multipleSelectionState = false;
         }
@@ -682,54 +684,110 @@ public class GameWorld implements WorldPlane, GameEventListener{
             
             boolean isCurrentTouchedAgain = false;
             
-            this.positionTouched = new Vector2(positionX, positionY);
+            this.firstPositionTouched = new Vector2(positionX, positionY);
+            this.positionTouched = new Vector2(this.getFirstPositionTouched());
             
             if(button == 0 && this.isFactorySelected == false){
                 
                 System.out.println(world.screenFOV / 2);
-                List<Object2D> listObject2D = world.getObject2DInRegion(
-                        (float) (positionX - world.screenFOV / 2), 
-                        (float) (positionY - world.screenFOV / 2), 
-                        (float) (positionX + world.screenFOV / 2), 
-                        (float) (positionY + world.screenFOV / 2));
-
-                if(listObject2D.size() > 0){ 
-
-                    Object2D nearestObject = null;
-                    float minimalDist2 = 0;
-                    for(Object2D obj : listObject2D){
-                        Vector2 positionObj = obj.getPositionBody();
-                        float distObj = Vector2.dst2(positionObj.x, positionObj.y, positionX, positionY);
-
-                        if(nearestObject == null || distObj < minimalDist2){
-                            nearestObject = obj;
-                            minimalDist2 = distObj;
-                        }
+                
+                Object2D nearestObject2D = this.getObject2DInNearestPosition(world, new Vector2(positionX, positionY)); 
+                
+                if(nearestObject2D == null || this.touchedObjects.contains(nearestObject2D)){
+                    this.firstPositionTouched = null;
+                    isCurrentTouchedAgain = true;
+                }else{
+                    if(this.multipleSelectionState == false){
+                        this.touchedObjects.clear();
                     }
+                    
+                    this.touchedObjects.add(nearestObject2D);
+                    
+                    this.UpdateObject2D(world);
+                }             
+                                                       
+                /*if(this.multipleSelectionState)
+                {
+                    List<Object2D> listObject2D = this.getObject2DInSelectionArea(world);
 
-                    if(this.touchedObjects.contains(nearestObject) == false){
-                        if(this.multipleSelectionState == false){
-                            this.touchedObjects.clear();
-                        }
-                        
-                        this.touchedObjects.add(nearestObject);
+                    if(listObject2D != null && listObject2D.size() > 0){ 
+                        this.touchedObjects = new HashSet<Object2D>(listObject2D);
                         
                         this.UpdateObject2D(world);
-                        
-                        System.out.println(listObject2D.size() + "object touched : " + nearestObject);
+                    }
+                }else{
+                    Object2D nearestObject2D = this.getObject2DInNearestPosition(world, new Vector2(positionX, positionY));
+
+                    if(nearestObject2D != null && this.touchedObjects.contains(nearestObject2D) == false){
+                        this.touchedObjects.clear();
+
+                        this.touchedObjects.add(nearestObject2D);
+
+                        this.UpdateObject2D(world);
+
+                        System.out.println("object touched : " + nearestObject2D);
                     }else{
                         isCurrentTouchedAgain = true;
                     }                   
-                }    
+                }*/
             }
             else
             {
+                this.firstPositionTouched = null;
+                
                 this.touchedObjects.clear();
                 
                 this.UpdateObject2D(world);
             }
             
             this.isTouchedAgain = isCurrentTouchedAgain;
+        }
+        
+        private List<Object2D> getObject2DInSelectionArea(GameWorld world){
+            List<Object2D> listObject2D = new ArrayList<Object2D>();
+            if(this.getFirstPositionTouched() != null){
+                
+                float lowerX = Math.min(this.getFirstPositionTouched().x, this.getPositionTouched().x);
+                float upperX = Math.max(this.getFirstPositionTouched().x, this.getPositionTouched().x);
+                
+                float lowerY = Math.min(this.getFirstPositionTouched().y, this.getPositionTouched().y);
+                float upperY = Math.max(this.getFirstPositionTouched().y, this.getPositionTouched().y);
+                
+                listObject2D = world.getObject2DInRegion(
+                        lowerX - 2f, 
+                        lowerY - 2f, 
+                        upperX + 2f, 
+                        upperY + 2f);
+            }
+            return listObject2D;
+        }
+        
+        private Object2D getObject2DInNearestPosition(GameWorld world, Vector2 position){
+             
+            Object2D nearestObject2D = null;
+            
+            List<Object2D> listObject2D = world.getObject2DInRegion(
+                            (float) (position.x - world.screenFOV / 2), 
+                            (float) (position.y - world.screenFOV / 2), 
+                            (float) (position.x + world.screenFOV / 2), 
+                            (float) (position.y + world.screenFOV / 2));
+
+            if(listObject2D.size() > 0){ 
+
+                nearestObject2D = null;
+                float minimalDist2 = 0;
+                for(Object2D obj : listObject2D){
+                    Vector2 positionObj = obj.getPositionBody();
+                    float distObj = Vector2.dst2(positionObj.x, positionObj.y, position.x, position.y);
+
+                    if(nearestObject2D == null || distObj < minimalDist2){
+                        nearestObject2D = obj;
+                        minimalDist2 = distObj;
+                    }
+                }                  
+            }
+            
+            return nearestObject2D;
         }
         
         private void UpdateObject2D(GameWorld world){          
@@ -747,12 +805,12 @@ public class GameWorld implements WorldPlane, GameEventListener{
         }
         
         public void onTouchUp(GameWorld world, float positionX, float positionY, int pointer, int button){
-
+            this.firstPositionTouched = null;
         }
 
         public void onTouchDragged(GameWorld world, float positionX, float positionY, int pointer){
             
-            Vector2 offsetPosition = (new Vector2(positionX, positionY)).sub(this.positionTouched);
+            Vector2 offsetPosition = (new Vector2(positionX, positionY)).sub(this.getPositionTouched());
             
             if(this.isTouchedAgain){
                 for(Object2D obj : this.touchedObjects){
@@ -761,6 +819,22 @@ public class GameWorld implements WorldPlane, GameEventListener{
             }
             
             this.positionTouched = new Vector2(positionX, positionY);
+            
+            if(this.getFirstPositionTouched() != null){
+                if(this.isTouchedAgain == false && this.getFirstPositionTouched().equals(this.getPositionTouched()) == false){
+                    List<Object2D> listObject2D = this.getObject2DInSelectionArea(world);
+
+                    if(this.multipleSelectionState == false){
+                        this.touchedObjects.clear();
+                    }
+
+                    for(Object2D object2DSelected : listObject2D){
+                        this.touchedObjects.add(object2DSelected);
+                    }
+
+                    this.UpdateObject2D(world);             
+                }
+            }
         }
 
         public void onMouseMoved(GameWorld world, float positionX, float positionY){
@@ -910,6 +984,20 @@ public class GameWorld implements WorldPlane, GameEventListener{
          */
         public void setGameRunning(boolean gameRunning) {
             this.gameRunning = gameRunning;
+        }
+
+        /**
+         * @return the positionTouched
+         */
+        public Vector2 getPositionTouched() {
+            return positionTouched;
+        }
+
+        /**
+         * @return the firstPositionTouched
+         */
+        public Vector2 getFirstPositionTouched() {
+            return firstPositionTouched;
         }
     }
 }

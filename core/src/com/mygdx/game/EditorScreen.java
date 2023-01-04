@@ -87,6 +87,7 @@ public class EditorScreen implements Screen, ScreenTouchListener{
         this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         this.shapeRenderer.setColor(1f, 1f, 1f, 0.5f);
         this.shapeRenderer.rect(this.getCamera().position.x - this.getCamera().viewportWidth * 1.1f / 2, this.getCamera().position.y - this.getCamera().viewportHeight * 1.1f / 2, this.getCamera().viewportWidth * 1.1f, this.getCamera().viewportHeight * 1.1f);
+        this.drawSelectionRectangle();
         this.shapeRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
         
@@ -112,6 +113,23 @@ public class EditorScreen implements Screen, ScreenTouchListener{
             }
         }
         this.batch.end();
+    }
+    
+    private void drawSelectionRectangle(){
+        
+        Vector2 firstPositionTouched = this.gameWorld.getGameEditorManager().getFirstPositionTouched();
+        Vector2 positionTouched = this.gameWorld.getGameEditorManager().getPositionTouched();
+        
+        if(firstPositionTouched != null && firstPositionTouched.equals(positionTouched) == false){
+            float lowerX = Math.min(firstPositionTouched.x, positionTouched.x) / P2M;
+            float upperX = Math.max(firstPositionTouched.x, positionTouched.x) / P2M;
+
+            float lowerY = Math.min(firstPositionTouched.y, positionTouched.y) / P2M;
+            float upperY = Math.max(firstPositionTouched.y, positionTouched.y) / P2M;
+            
+            this.shapeRenderer.setColor(1f, 0f, 0f, 0.5f);
+            this.shapeRenderer.rect(lowerX, lowerY, upperX - lowerX, upperY - lowerY);
+        }
     }
 
     @Override
