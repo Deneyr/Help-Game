@@ -1,2 +1,5 @@
-- selection multiple (carré de selection)
-- ballon hit box plus grande
+- envoyé le copier-coller du début
+- pas de selection du sol
+- bug ventilo
+- agrandir la palette ?
+- grand mère au même endroit que 

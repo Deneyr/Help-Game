@@ -30,8 +30,8 @@ import ressourcesmanagers.TextureManager;
 public class Balloon extends SolidObject2D{
     private static final String BALLOONTEXT = "urbanObj/Balloon_240x90.png";
     
-    private static final float SCALE_X = 1f;
-    private static final float SCALE_Y = 1f;
+    private static final float SCALE_X = 1.25f;
+    private static final float SCALE_Y = 1.25f;
     
     public Balloon(World world, float posX, float posY){
         

@@ -172,8 +172,52 @@ public class EditorGameNode extends GameNode{
             game.getEditorMenuManager().AddObject2DAsComponent(factory);
         }      
         
+        // Music & Sounds.          
+        this.initSoundsLvl();
+        
         // Load level
         this.loadObject2Ds(game, SAVEFILENAME);
+    }
+    
+    protected void initSoundsLvl(){
+        
+        // Swing.
+        SoundManager.getInstance().getSound("sounds/attacks/swingUmbrella.ogg");    
+        SoundManager.getInstance().getSound("sounds/attacks/swingBat.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/swingPunch.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/swingBigPunch.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/shot.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/reloadGun.ogg");
+        
+        // Hit.
+        SoundManager.getInstance().getSound("sounds/attacks/hitPunch.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/hitPunch2.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/Cannon_Explosion_1.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/Cannon_Explosion_2.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/bounce_1.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/bounce_2.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/bounce_3.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/bounce_4.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/bounce_5.ogg");
+        SoundManager.getInstance().getSound("sounds/attacks/Metal_Wire.ogg");
+        
+        //Action.
+        SoundManager.getInstance().getSound("sounds/action/umbrellaOpen.ogg");
+        SoundManager.getInstance().getSound("sounds/action/umbrellaClose.ogg");
+        SoundManager.getInstance().getSound("sounds/action/music_note.ogg");
+        SoundManager.getInstance().getSound("sounds/action/Button_Click.ogg");
+        SoundManager.getInstance().getSound("sounds/action/metalHit1.ogg");
+        SoundManager.getInstance().getSound("sounds/action/metalHit2.ogg");
+        SoundManager.getInstance().getSound("sounds/action/checkPointTaken.ogg");
+        SoundManager.getInstance().getSound("sounds/action/StrongChestOpen.ogg");
+        SoundManager.getInstance().getSound("sounds/action/PhoneBoxOpen.ogg");
+                
+        // Damages taken.
+        SoundManager.getInstance().getSound("sounds/damagesTaken/crash_box.ogg");
+        SoundManager.getInstance().getSound("sounds/damagesTaken/metalHitDamage.ogg");
+        
+        // Environment sounds.
+        SoundManager.getInstance().getSound("sounds/environment/Ventilo_Wind_Loop.ogg");
     }
     
     private void loadObject2Ds(HelpGame game, String path){

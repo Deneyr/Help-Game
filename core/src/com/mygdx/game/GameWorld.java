@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import static com.mygdx.game.HelpGame.P2M;
+import com.mygdx.game.scenery.GroundUpperCity;
 import guicomponents.CinematicManager;
 import guicomponents.CinematicManager.CinematicState;
 import java.io.File;
@@ -140,11 +141,6 @@ public class GameWorld implements WorldPlane, GameEventListener{
     @Override
     public List<Sprite> getSpritesInRegion(float lowerX, float lowerY, float upperX, float upperY){
         this.screenFOV = Math.sqrt((upperY - lowerY) * (upperY - lowerY) + (upperX - lowerX) * (upperX - lowerX));
-        
-        if(this.hero == null){
-            this.getGameEditorManager().setCameraPosition(new Vector2((upperX - lowerX) / 2 + lowerX, (upperY - lowerY) / 2 + lowerY));
-        }
-        
         
         ScreenQueryCallback query = new ScreenQueryCallback();
         
@@ -298,10 +294,22 @@ public class GameWorld implements WorldPlane, GameEventListener{
     }
     
     public Vector2 getCameraPosition(){
-        if(this.hero == null){
+        /*if(this.hero == null){
             return this.getGameEditorManager().getCameraPosition();
+        }*/
+        if(this.hero != null){
+            return this.getHeroPosition().add(this.offsetCameraPoint);
         }
-        return this.getHeroPosition().add(this.offsetCameraPoint);
+        return Vector2.Zero;
+    }
+    
+    public void setCameraPosition(Vector2 newPosition){
+        /*if(this.hero == null){
+            return this.getGameEditorManager().getCameraPosition();
+        }*/
+        if(this.hero != null){
+            this.hero.setPosition(new Vector2(newPosition.x, newPosition.y));
+        }
     }
 
     @Override
@@ -649,7 +657,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
         private float positionCursorX;
         private float positionCursorY; 
         
-        private Vector2 cameraPosition;
+        //private Vector2 cameraPosition;
         
         private Vector2 positionTouched;
         private Vector2 firstPositionTouched;
@@ -672,7 +680,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
             
             this.gameRunning = false;
             
-            this.cameraPosition = new Vector2();
+            //this.cameraPosition = new Vector2();
             
             this.positionTouched = new Vector2();
             this.firstPositionTouched = null;
@@ -753,11 +761,17 @@ public class GameWorld implements WorldPlane, GameEventListener{
                 float lowerY = Math.min(this.getFirstPositionTouched().y, this.getPositionTouched().y);
                 float upperY = Math.max(this.getFirstPositionTouched().y, this.getPositionTouched().y);
                 
-                listObject2D = world.getObject2DInRegion(
-                        lowerX - 2f, 
-                        lowerY - 2f, 
-                        upperX + 2f, 
-                        upperY + 2f);
+                List<Object2D> requestListObject2D = world.getObject2DInRegion(
+                                                        lowerX - 2f, 
+                                                        lowerY - 2f, 
+                                                        upperX + 2f, 
+                                                        upperY + 2f);
+                
+                for(Object2D obj2D : requestListObject2D){
+                    if(this.IsObject2DSelectable(obj2D)){
+                        listObject2D.add(obj2D);
+                    }
+                }             
             }
             return listObject2D;
         }
@@ -777,17 +791,26 @@ public class GameWorld implements WorldPlane, GameEventListener{
                 nearestObject2D = null;
                 float minimalDist2 = 0;
                 for(Object2D obj : listObject2D){
-                    Vector2 positionObj = obj.getPositionBody();
-                    float distObj = Vector2.dst2(positionObj.x, positionObj.y, position.x, position.y);
+                    if(this.IsObject2DSelectable(obj)){
+                        Vector2 positionObj = obj.getPositionBody();
+                        float distObj = Vector2.dst2(positionObj.x, positionObj.y, position.x, position.y);
 
-                    if(nearestObject2D == null || distObj < minimalDist2){
-                        nearestObject2D = obj;
-                        minimalDist2 = distObj;
+                        if(nearestObject2D == null || distObj < minimalDist2){
+                            nearestObject2D = obj;
+                            minimalDist2 = distObj;
+                        }
                     }
                 }                  
             }
             
             return nearestObject2D;
+        }
+        
+        private boolean IsObject2DSelectable(Object2D obj2D){
+            if(obj2D instanceof GroundUpperCity){
+                return false;
+            }
+            return true;
         }
         
         private void UpdateObject2D(GameWorld world){          
@@ -954,16 +977,16 @@ public class GameWorld implements WorldPlane, GameEventListener{
         /**
          * @return the cameraPosition
          */
-        public Vector2 getCameraPosition() {
+        /*public Vector2 getCameraPosition() {
             return this.cameraPosition;
-        }
+        }*/
 
         /**
          * @param cameraPosition the cameraPosition to set
          */
-        public void setCameraPosition(Vector2 cameraPosition) {
+        /*public void setCameraPosition(Vector2 cameraPosition) {
             this.cameraPosition = cameraPosition;
-        }
+        }*/
         
         /**
          * @return the gameRunning

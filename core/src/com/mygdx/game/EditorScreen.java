@@ -37,6 +37,8 @@ public class EditorScreen implements Screen, ScreenTouchListener{
     
     private Vector3 cameraPosition;   
     
+    private boolean previousIsGameRunning;
+    
     public EditorScreen(Batch batch, GameWorld gameWorld){
         this.gameWorld = gameWorld;
         
@@ -45,6 +47,8 @@ public class EditorScreen implements Screen, ScreenTouchListener{
         this.camera = new OrthographicCamera(800, 480);
         
         this.shapeRenderer = new ShapeRenderer();
+        
+        this.previousIsGameRunning = false;
         
         this.cameraPosition = new Vector3(0, 0, 0);
     }
@@ -57,7 +61,17 @@ public class EditorScreen implements Screen, ScreenTouchListener{
     @Override
     public void render(float f) {
 
-        if(this.gameWorld.getGameEditorManager().isGameRunning() == false || this.gameWorld.getHero() == null){
+        boolean isGameRunning = this.gameWorld.getGameEditorManager().isGameRunning();
+        if(this.previousIsGameRunning != isGameRunning){
+            
+            if(isGameRunning){
+                this.gameWorld.setCameraPosition(new Vector2(this.cameraPosition.x * P2M, this.cameraPosition.y * P2M));
+            }
+            
+            this.previousIsGameRunning = isGameRunning;
+        }
+        
+        if(isGameRunning == false || this.gameWorld.getHero() == null){
             if(Gdx.input.isKeyPressed(Input.Keys.Q)){
                 this.cameraPosition.x -= f * 1000; 
             }else if(Gdx.input.isKeyPressed(Input.Keys.D)){
@@ -69,11 +83,15 @@ public class EditorScreen implements Screen, ScreenTouchListener{
             }else if(Gdx.input.isKeyPressed(Input.Keys.S)){
                 this.cameraPosition.y -= f * 1000; 
             }
-            this.getCamera().position.set(this.cameraPosition);
+            //this.getCamera().position.set(this.cameraPosition);
+            
+            //this.gameWorld.getGameEditorManager().setCameraPosition(new Vector2(this.cameraPosition.x * P2M, this.cameraPosition.y * P2M));
         }else{
             Vector2 worldCameraPosition = this.gameWorld.getCameraPosition();
-            this.getCamera().position.set(worldCameraPosition.x / P2M, worldCameraPosition.y / P2M, 0);
+            this.cameraPosition.set(worldCameraPosition.x / P2M, worldCameraPosition.y / P2M, 0);
         }
+        
+        this.getCamera().position.set(this.cameraPosition);
         
         // Update camera (center on hero)
         //this.getCamera().position.set(this.gameWorld.getCameraPosition().x / P2M, this.gameWorld.getCameraPosition().y / P2M, 0);
