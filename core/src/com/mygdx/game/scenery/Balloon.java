@@ -30,8 +30,8 @@ import ressourcesmanagers.TextureManager;
 public class Balloon extends SolidObject2D{
     private static final String BALLOONTEXT = "urbanObj/Balloon_240x90.png";
     
-    private static final float SCALE_X = 1.25f;
-    private static final float SCALE_Y = 1.25f;
+    private static final float SCALE_X = 1.5f;
+    private static final float SCALE_Y = 1.5f;
     
     public Balloon(World world, float posX, float posY){
         
@@ -55,7 +55,7 @@ public class Balloon extends SolidObject2D{
         
         // Create a polygon shape
         PolygonShape ground = new PolygonShape();
-        ground.setAsBox(20 * P2M * SCALE_X, 15 * P2M * SCALE_Y, new Vector2(0, 10 * P2M * SCALE_Y), 0);
+        ground.setAsBox(15 * P2M * SCALE_X, 15 * P2M * SCALE_Y, new Vector2(0, 10 * P2M * SCALE_Y), 0);
         // Set the polygon shape as a box which is twice the size of our view port and 20 high
         // (setAsBox takes half-width and half-height as arguments)
         FixtureDef fixtureDef = new FixtureDef();

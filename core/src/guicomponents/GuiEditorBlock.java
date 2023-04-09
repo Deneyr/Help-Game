@@ -25,7 +25,7 @@ import ressourcesmanagers.TextureManager;
  */
 public class GuiEditorBlock extends GuiComponent{
 
-    private static final String TEXT = "gui/BulleDialogue3.png";
+    private static final String TEXT = "gui/BulleDialogueEditor.png";
     
     private Map<GuiEditorItem, Object2DEditorFactory> mapModelGuiComponents = new HashMap<GuiEditorItem, Object2DEditorFactory>();
     private List<GuiEditorItem> editorItemsList = new ArrayList<GuiEditorItem>();
