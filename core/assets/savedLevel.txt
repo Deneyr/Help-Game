@@ -1,82 +1,101 @@
 Sign sign;
 Pipe pipe;
+Grandma grandma;
 Abribus abribus;
-Bench banc;
-Car car;
-TreeWithoutLeaf tree;
+Bench bench;
+TreeWithoutLeaf treeWithoutLeaf;
 Trashcan trashcan;
 Bus bus;
-PoutrelleObstacle poutrelleObst;
-Crane crane;
+PoutrelleObstacle poutrelleObstacle;
 CityString cityString;
 Speaker speaker;
 Scaffolding scaffolding;
+Poutrelle poutrelle;
+BarbedTriggeredObject2D barbedTriggeredObject2D;
+Crane crane;
 
-sign = new Sign(game.getGameWorld().getWorld(), 1100f, 0, 0.02f, 2);
-game.getGameWorld().addObject2DToWorld(sign);
-        
-sign = new Sign(game.getGameWorld().getWorld(), 1200f, 0, -0.05f, 1);
-game.getGameWorld().addObject2DToWorld(sign);
-        
-sign = new Sign(game.getGameWorld().getWorld(), 1700f, 0, 0, 6);
-game.getGameWorld().addObject2DToWorld(sign);
-        
-pipe = new Pipe(game.getGameWorld().getWorld(), 1900f, 20f, 1, false);
-game.getGameWorld().addObject2DToWorld(pipe);
 
-abribus = new Abribus(game.getGameWorld().getWorld(), 2400f, 15f);
-game.getGameWorld().addObject2DToWorld(abribus);
+sign = new Sign(game.getGameWorld().getWorld(), 98.33594f, 0.54382324f, 0.0f, 2); //com.mygdx.game.scenery.SignWXYA2i
+game.getGameWorld().addObject2DToWorld(sign, true);
 
-banc = new Bench(game.getGameWorld().getWorld(), 2400f, -15f);
-game.getGameWorld().addObject2DToWorld(banc);
+sign = new Sign(game.getGameWorld().getWorld(), 202.33594f, 1.5438232f, 0.0f, 1); //com.mygdx.game.scenery.SignWXYA1i
+game.getGameWorld().addObject2DToWorld(sign, true);
 
-pipe = new Pipe(game.getGameWorld().getWorld(), 2700f, 150f, 1, true);
-game.getGameWorld().addObject2DToWorld(pipe);
+sign = new Sign(game.getGameWorld().getWorld(), 701.221f, 0.54382324f, 0.0f, 6); //com.mygdx.game.scenery.SignWXYA6i
+game.getGameWorld().addObject2DToWorld(sign, true);
 
-car = new Car(game.getGameWorld().getWorld(), 3000f, 10f, 0, 1);
-game.getGameWorld().addObject2DToWorld(car);
+pipe = new Pipe(game.getGameWorld().getWorld(), 899.4155f, 20.543823f, 1.0f, false); //com.mygdx.game.scenery.PipeWXY1ffalse
+game.getGameWorld().addObject2DToWorld(pipe, true);
 
-pipe = new Pipe(game.getGameWorld().getWorld(), 3200f, 150f, 1, true);
-game.getGameWorld().addObject2DToWorld(pipe);
+grandma = new Grandma(game.getGameWorld().getWorld(), 11606.3955f, 8.213164f); //characters.GrandmaWXY
+game.getGameWorld().addObject2DToWorld(grandma, true);
 
-pipe = new Pipe(game.getGameWorld().getWorld(), 3500f, 220f, 1, true);
-game.getGameWorld().addObject2DToWorld(pipe);
+abribus = new Abribus(game.getGameWorld().getWorld(), 1399.6486f, 15.26123f); //com.mygdx.game.scenery.AbribusWXY
+game.getGameWorld().addObject2DToWorld(abribus, true);
 
-tree = new TreeWithoutLeaf(game.getGameWorld().getWorld(), 3800f, 70f);
-game.getGameWorld().addObject2DToWorld(tree);
+bench = new Bench(game.getGameWorld().getWorld(), 1400.6486f, -13.73877f); //com.mygdx.game.scenery.BenchWXY
+game.getGameWorld().addObject2DToWorld(bench, true);
 
-trashcan = new Trashcan(game.getGameWorld().getWorld(), 4000f, 0, 1, 1);
-game.getGameWorld().addObject2DToWorld(trashcan);
+pipe = new Pipe(game.getGameWorld().getWorld(), 1700.6664f, 152.46472f, 1.0f, true); //com.mygdx.game.scenery.PipeWXY1ftrue
+game.getGameWorld().addObject2DToWorld(pipe, true);
 
-trashcan = new Trashcan(game.getGameWorld().getWorld(), 4150f, 0, 0, 1);
-game.getGameWorld().addObject2DToWorld(trashcan);
+pipe = new Pipe(game.getGameWorld().getWorld(), 2199.6663f, 152.46472f, 1.0f, true); //com.mygdx.game.scenery.PipeWXY1ftrue
+game.getGameWorld().addObject2DToWorld(pipe, true);
 
-bus = new Bus(game.getGameWorld().getWorld(), 4500f, 60f, 0, -1);
-game.getGameWorld().addObject2DToWorld(bus);
+pipe = new Pipe(game.getGameWorld().getWorld(), 2499.475f, 220.46472f, 1.0f, true); //com.mygdx.game.scenery.PipeWXY1ftrue
+game.getGameWorld().addObject2DToWorld(pipe, true);
 
-pipe = new Pipe(game.getGameWorld().getWorld(), 4000f, 420f, 1, true);
-game.getGameWorld().addObject2DToWorld(pipe);
+pipe = new Pipe(game.getGameWorld().getWorld(), 2999.9893f, 419.46472f, 1.0f, true); //com.mygdx.game.scenery.PipeWXY1ftrue
+game.getGameWorld().addObject2DToWorld(pipe, true);
 
-pipe = new Pipe(game.getGameWorld().getWorld(), 4400f, 320f, 1, true);
-game.getGameWorld().addObject2DToWorld(pipe);
+pipe = new Pipe(game.getGameWorld().getWorld(), 3398.1846f, 320.46472f, 1.0f, true); //com.mygdx.game.scenery.PipeWXY1ftrue
+game.getGameWorld().addObject2DToWorld(pipe, true);
 
-pipe = new Pipe(game.getGameWorld().getWorld(), 4800f, 220f, 1, true);
-game.getGameWorld().addObject2DToWorld(pipe);
+pipe = new Pipe(game.getGameWorld().getWorld(), 3801.318f, 220.46472f, 1.0f, true); //com.mygdx.game.scenery.PipeWXY1ftrue
+game.getGameWorld().addObject2DToWorld(pipe, true);
 
-sign = new Sign(game.getGameWorld().getWorld(), 5200f, 0, -0.05f, 4);
-game.getGameWorld().addObject2DToWorld(sign);
+treeWithoutLeaf = new TreeWithoutLeaf(game.getGameWorld().getWorld(), 2800.0515f, 71.46472f); //com.mygdx.game.scenery.TreeWithoutLeafWXY
+game.getGameWorld().addObject2DToWorld(treeWithoutLeaf, true);
 
-poutrelleObst = new PoutrelleObstacle(game.getGameWorld().getWorld(), 5360f, 210f, (float)Math.PI/2, 0, 1);
-game.getGameWorld().addObject2DToWorld(poutrelleObst);
+trashcan = new Trashcan(game.getGameWorld().getWorld(), 3000.2273f, 0.46472168f, 1, 1); //com.mygdx.game.scenery.TrashcanWXY1i1i
+game.getGameWorld().addObject2DToWorld(trashcan, true);
 
-crane = new Crane(game.getGameWorld().getWorld(), 6000f, 270, 0.8f, 0.1f, 0.9f, 0.2f, true);
-game.getGameWorld().addObject2DToWorld(crane);
+trashcan = new Trashcan(game.getGameWorld().getWorld(), 3150.2273f, 0.46472168f, 0, 1); //com.mygdx.game.scenery.TrashcanWXY0i1i
+game.getGameWorld().addObject2DToWorld(trashcan, true);
 
-cityString = new CityString(game.getGameWorld().getWorld(), 8000f, 600f);
-game.getGameWorld().addObject2DToWorld(cityString);
-        
-speaker = new Speaker(game.getGameWorld().getWorld(), 10000f, 15f);
-game.getGameWorld().addObject2DToWorld(speaker);
+bus = new Bus(game.getGameWorld().getWorld(), 3499.8503f, 59.088013f, 0, -1); //com.mygdx.game.scenery.BusWXY0i-1i
+game.getGameWorld().addObject2DToWorld(bus, true);
 
-scaffolding = new Scaffolding(game.getGameWorld().getWorld(), 10300f, 70f, 2, false); 
-game.getGameWorld().addObject2DToWorld(scaffolding);
+sign = new Sign(game.getGameWorld().getWorld(), 4202.6943f, 1.138916f, 0.0f, 4); //com.mygdx.game.scenery.SignWXYA4i
+game.getGameWorld().addObject2DToWorld(sign, true);
+
+poutrelleObstacle = new PoutrelleObstacle(game.getGameWorld().getWorld(), 4354.1514f, 212.6128f, -1.5713828f, 0, 1); //com.mygdx.game.scenery.PoutrelleObstacleWXYA0i1i
+game.getGameWorld().addObject2DToWorld(poutrelleObstacle, true);
+
+cityString = new CityString(game.getGameWorld().getWorld(), 7000.2876f, 600.8342f); //com.mygdx.game.scenery.CityStringWXY
+game.getGameWorld().addObject2DToWorld(cityString, true);
+
+speaker = new Speaker(game.getGameWorld().getWorld(), 9000.2295f, 15.2508545f); //com.mygdx.game.scenery.SpeakerWXY
+game.getGameWorld().addObject2DToWorld(speaker, true);
+
+scaffolding = new Scaffolding(game.getGameWorld().getWorld(), 9599.929f, 110.48114f, 0, false); //com.mygdx.game.scenery.ScaffoldingWXY0ifalse
+game.getGameWorld().addObject2DToWorld(scaffolding, true);
+
+scaffolding = new Scaffolding(game.getGameWorld().getWorld(), 9299.929f, 70.48114f, 2, false); //com.mygdx.game.scenery.ScaffoldingWXY2ifalse
+game.getGameWorld().addObject2DToWorld(scaffolding, true);
+
+scaffolding = new Scaffolding(game.getGameWorld().getWorld(), 11456.25f, 69.20398f, 2, false); //com.mygdx.game.scenery.ScaffoldingWXY2ifalse
+game.getGameWorld().addObject2DToWorld(scaffolding, true);
+
+scaffolding = new Scaffolding(game.getGameWorld().getWorld(), 12000.746f, 110.20398f, 1, false); //com.mygdx.game.scenery.ScaffoldingWXY1ifalse
+game.getGameWorld().addObject2DToWorld(scaffolding, true);
+
+poutrelle = new Poutrelle(game.getGameWorld().getWorld(), 12300.495f, 99.20398f, 1.5710813f, new Vector2(0.0f, 0.0f), 0.0f, 0.0f, 1.0f); //com.mygdx.game.scenery.PoutrelleWXYA0;00f0f1f
+game.getGameWorld().addObject2DToWorld(poutrelle, true);
+
+barbedTriggeredObject2D = new BarbedTriggeredObject2D(game.getGameWorld().getWorld(), 12299.308f, 0.5800171f, 0.0f); //triggered.BarbedTriggeredObject2DWXYA
+game.getGameWorld().addObject2DToWorld(barbedTriggeredObject2D, true);
+
+crane = new Crane(game.getGameWorld().getWorld(), 5000.628f, 270.2979f, 0.8f, 0.1f, 0.9f, 0.2f, true); //com.mygdx.game.scenery.CraneWXY0.8f0.1f0.9f0.2ftrue
+game.getGameWorld().addObject2DToWorld(crane, true);
+

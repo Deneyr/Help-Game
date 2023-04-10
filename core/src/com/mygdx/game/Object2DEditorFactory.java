@@ -5,6 +5,7 @@
  */
 package com.mygdx.game;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import gamenode.EditorGameNode;
 import java.lang.reflect.Constructor;
@@ -51,6 +52,9 @@ public class Object2DEditorFactory {
             this.listArgument.add(true);
         }else if(argument.toLowerCase().equals("false")){
             this.listArgument.add(false);
+        }else if(argument.contains(";")){
+            String[] tokens = argument.split(";");
+            this.listArgument.add(new Vector2(Float.parseFloat(tokens[0]), Float.parseFloat(tokens[1])));
         }else{
             this.listArgument.add(argument);
         }   
@@ -184,6 +188,9 @@ public class Object2DEditorFactory {
                     argument += "f";
                 }else if(obj instanceof Double){
                     argument += "d";
+                }else if(obj instanceof Vector2){
+                    Vector2 vector2 = (Vector2) obj;
+                    argument = "new Vector2(" + vector2.x + "f, " + vector2.y + "f)";
                 }
             }
             
