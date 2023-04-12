@@ -666,6 +666,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
         
         private boolean multipleSelectionState;
         
+        private Vector2 cameraPosition;
+        
         public GameEditorManager(){
             this.touchedObjects = new HashSet<Object2D>();
             
@@ -684,6 +686,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
             
             this.positionTouched = new Vector2();
             this.firstPositionTouched = null;
+            
+            this.cameraPosition = new Vector2(0, 0);
             
             this.multipleSelectionState = false;
         }
@@ -925,6 +929,10 @@ public class GameWorld implements WorldPlane, GameEventListener{
             try {
                 FileWriter writer = new FileWriter(saveFile);
                 
+                writer.write("//" + this.cameraPosition.x + ";" + this.cameraPosition.y);
+                
+                writer.write("\n\n");
+                
                 HashSet<String> hashSet = new HashSet<String>();
                 for(Object2D obj : world.listCurrentObject2D){
                     Object2DEditorFactory factory = this.mapObject2DToFactory.get(obj);
@@ -992,7 +1000,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
          * @return the gameRunning
          */
         public boolean isGameRunning() {
-            return gameRunning;
+            return this.gameRunning;
         }
 
         /**
@@ -1013,14 +1021,28 @@ public class GameWorld implements WorldPlane, GameEventListener{
          * @return the positionTouched
          */
         public Vector2 getPositionTouched() {
-            return positionTouched;
+            return this.positionTouched;
         }
 
         /**
          * @return the firstPositionTouched
          */
         public Vector2 getFirstPositionTouched() {
-            return firstPositionTouched;
+            return this.firstPositionTouched;
+        }
+
+        /**
+         * @return the cameraPosition
+         */
+        public Vector2 getCameraPosition() {
+            return this.cameraPosition;
+        }
+
+        /**
+         * @param cameraPosition the cameraPosition to set
+         */
+        public void setCameraPosition(float x, float y) {
+            this.cameraPosition.set(x, y);
         }
     }
 }

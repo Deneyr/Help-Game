@@ -10,10 +10,12 @@ import backgrounds.Lvl1_2_Residence;
 import backgrounds.Lvl1_3_Residence;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.BackgroundEditorScreen;
 import com.mygdx.game.BackgroundScreen;
+import com.mygdx.game.EditorScreen;
 import com.mygdx.game.ForegroundScreen;
 import com.mygdx.game.GameEditorScreen;
 import com.mygdx.game.HelpGame;
@@ -48,10 +50,12 @@ public class EditorGameNode extends GameNode{
     
     private final String SAVEFILENAME = "savedLevel.txt";
     
-    
+    private Vector2 initCameraPosition;
     
     public EditorGameNode(HelpGame game, Batch batch){
         super("Editor");
+        
+        this.initCameraPosition = Vector2.Zero;
         
         // --- init screen ---
         this.screensDisplayed.clear();
@@ -345,6 +349,7 @@ public class EditorGameNode extends GameNode{
         
         // Load level
         this.loadObject2Ds(game, SAVEFILENAME);
+        this.InitScreensCamera();
     }
     
     protected void initSoundsLvl(){
@@ -394,6 +399,17 @@ public class EditorGameNode extends GameNode{
             Scanner sc;
             try {
                 sc = new Scanner(file);
+                
+                if(sc.hasNextLine()){
+                    String line = sc.nextLine();
+                    if(line.contains("//") && line.contains(";")){
+                        line = line.replaceAll("//", "");
+                        
+                        String[] tokens = line.split(";");
+                        
+                        this.initCameraPosition = new Vector2(Float.parseFloat(tokens[0]), Float.parseFloat(tokens[1]));
+                    }
+                }
                 
                 while (sc.hasNextLine()){
                     String line = sc.nextLine();
@@ -465,6 +481,14 @@ public class EditorGameNode extends GameNode{
         }
         
         return listObject2DEditorFactories;
+    }
+    
+    private void InitScreensCamera(){
+        for(Screen screen : this.screensDisplayed){
+            if(screen instanceof EditorScreen){
+                ((EditorScreen) screen).InitCameraPosition(this.initCameraPosition);
+            }
+        }
     }
     
     @Override

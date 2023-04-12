@@ -114,5 +114,9 @@ public abstract class EditorScreen implements Screen{
      */
     public OrthographicCamera getCamera() {
         return camera;
-    }  
+    }
+    
+    public void InitCameraPosition(Vector2 cameraPosition){
+        this.cameraPosition = new Vector3(cameraPosition.x / P2M, cameraPosition.y / P2M, 0);
+    }
 }

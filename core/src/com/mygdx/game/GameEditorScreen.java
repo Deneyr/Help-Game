@@ -32,6 +32,7 @@ public class GameEditorScreen extends EditorScreen implements ScreenTouchListene
     public void render(float f) {
         
         super.render(f);
+        this.gameWorld.getGameEditorManager().setCameraPosition(this.cameraPosition.x * P2M, this.cameraPosition.y * P2M);     
         
         // Update camera (center on hero)
         //this.getCamera().position.set(this.gameWorld.getCameraPosition().x / P2M, this.gameWorld.getCameraPosition().y / P2M, 0);
