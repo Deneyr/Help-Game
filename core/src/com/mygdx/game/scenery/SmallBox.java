@@ -40,7 +40,7 @@ public class SmallBox extends Character2D{
     public SmallBox(World world, float posX, float posY) {
         super(3);
         
-        this.Initialize(world, posX, posY, 20f, 16f, 8f);
+        this.Initialize(world, posX, posY, 18f, 16f, 8f);
     }
     
     public SmallBox(World world, float posX, float posY, int lifePoint) {

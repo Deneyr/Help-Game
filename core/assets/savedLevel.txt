@@ -1,4 +1,4 @@
-//130.67274;21.216408
+//683.53174;0.19249994
 
 Sign sign;
 Pipe pipe;
@@ -29,7 +29,7 @@ game.getGameWorld().addObject2DToWorld(sign, true);
 pipe = new Pipe(game.getGameWorld().getWorld(), 899.4155f, 20.543823f, 1.0f, false); //com.mygdx.game.scenery.PipeWXY1ffalse
 game.getGameWorld().addObject2DToWorld(pipe, true);
 
-grandma = new Grandma(game.getGameWorld().getWorld(), 11600.53f, 8.269681f); //characters.GrandmaWXY
+grandma = new Grandma(game.getGameWorld().getWorld(), 11742.743f, 8.359692f); //characters.GrandmaWXY
 game.getGameWorld().addObject2DToWorld(grandma, true);
 
 abribus = new Abribus(game.getGameWorld().getWorld(), 1399.6486f, 15.26123f); //com.mygdx.game.scenery.AbribusWXY
@@ -101,6 +101,9 @@ game.getGameWorld().addObject2DToWorld(barbedTriggeredObject2D, true);
 crane = new Crane(game.getGameWorld().getWorld(), 5000.628f, 270.2979f, 0.8f, 0.1f, 0.9f, 0.2f, true); //com.mygdx.game.scenery.CraneWXY0.8f0.1f0.9f0.2ftrue
 game.getGameWorld().addObject2DToWorld(crane, true);
 
-grandma = new Grandma(game.getGameWorld().getWorld(), 5584.3706f, 905.2334f); //characters.GrandmaWXY
+grandma = new Grandma(game.getGameWorld().getWorld(), 5588.6333f, 8.21333f); //characters.GrandmaWXY
+game.getGameWorld().addObject2DToWorld(grandma, true);
+
+grandma = new Grandma(game.getGameWorld().getWorld(), 29173.021f, 8.21333f); //characters.GrandmaWXY
 game.getGameWorld().addObject2DToWorld(grandma, true);
 

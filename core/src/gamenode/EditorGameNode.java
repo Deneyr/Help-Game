@@ -157,8 +157,8 @@ public class EditorGameNode extends GameNode{
         Lvl1_2_Residence lvl1_2_Residence = new Lvl1_2_Residence(seed, 7300f, -25, 200, 200);
         game.getMapBackgroundPlanes().put(lvl1_2_Residence.getRatioDist(), lvl1_2_Residence);
         
-        Lvl1_3_Residence lvl1_3_Residence = new Lvl1_3_Residence(seed, 10200f, -25, 200, 200);
-        game.getMapBackgroundPlanes().put(lvl1_3_Residence.getRatioDist(), lvl1_3_Residence);
+        /*Lvl1_3_Residence lvl1_3_Residence = new Lvl1_3_Residence(seed, 10200f, -25, 200, 200);
+        game.getMapBackgroundPlanes().put(lvl1_3_Residence.getRatioDist(), lvl1_3_Residence);*/
         
         // init background solid objects
         
@@ -166,14 +166,14 @@ public class EditorGameNode extends GameNode{
         
         lvl1_2_Residence.createSolidObj(game.getGameWorld());
         
-        lvl1_3_Residence.createSolidObj(game.getGameWorld());
+        // lvl1_3_Residence.createSolidObj(game.getGameWorld());
         
         // Init Editor Menu Manager.
         GuiEditorBlock editorBlock = new GuiEditorBlock();
         game.getEditorMenuManager().setCanevas(editorBlock);
         
         // Init Editor Level
-        GroundUpperCity ground = new GroundUpperCity(game.getGameWorld().getWorld(), 10000, -150f, 150);
+        GroundUpperCity ground = new GroundUpperCity(game.getGameWorld().getWorld(), 10000, -150f, 1000);
         game.getGameWorld().addObject2DToWorld(ground);
         
         /*Sign sign = new Sign(game.getGameWorld().getWorld(), 100f, 0, 0.02f, 2);
