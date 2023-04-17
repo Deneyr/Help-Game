@@ -7,19 +7,18 @@ package gamenode;
 
 import backgrounds.Lvl1_1_Residence;
 import backgrounds.Lvl1_2_Residence;
-import backgrounds.Lvl1_3_Residence;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.BackgroundEditorScreen;
-import com.mygdx.game.BackgroundScreen;
 import com.mygdx.game.EditorScreen;
 import com.mygdx.game.ForegroundScreen;
 import com.mygdx.game.GameEditorScreen;
 import com.mygdx.game.HelpGame;
 import com.mygdx.game.MenuScreen;
+import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DEditorFactory;
 import com.mygdx.game.WorldPlane;
 import com.mygdx.game.scenery.GroundUpperCity;
@@ -411,6 +410,7 @@ public class EditorGameNode extends GameNode{
                     }
                 }
                 
+                Object2D createdObj = null;
                 while (sc.hasNextLine()){
                     String line = sc.nextLine();
                     if(line.contains("//")){
@@ -438,9 +438,26 @@ public class EditorGameNode extends GameNode{
                                 angle = Float.parseFloat(tokens[factory.getIndexPosA()]);
                             }
                             
-                            game.getGameWorld().createObject(factory, position, angle);
+                            createdObj = game.getGameWorld().createObject(factory, position, angle);
                         }                        
-                    }                
+                    }
+                    else if(createdObj != null){
+                        if(line.contains("setTransform")){
+                            int startIndex = line.indexOf("(");
+                            String subString = line.substring(startIndex + 1);
+
+                            int endIndex = subString.lastIndexOf(")");
+                            subString = subString.substring(0, endIndex);
+                            
+                            String[] tokens = subString.split(",");
+                            
+                            createdObj.setTransform(Float.parseFloat(tokens[0]), Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2]));
+                        }else if(line.contains("addObject2DToWorld")){
+                                               
+                        }else{
+                            createdObj = null;
+                        }
+                    }
                 }
             }catch (FileNotFoundException ex) {
                 Logger.getLogger(EditorGameNode.class.getName()).log(Level.SEVERE, null, ex);

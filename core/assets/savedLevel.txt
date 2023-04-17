@@ -1,4 +1,4 @@
-//683.53174;0.19249994
+//694.39996;0.19442567
 
 Sign sign;
 Pipe pipe;
@@ -15,6 +15,9 @@ Scaffolding scaffolding;
 Poutrelle poutrelle;
 BarbedTriggeredObject2D barbedTriggeredObject2D;
 Crane crane;
+ObstacleTestBlock obstacleTestBlock;
+SmallBox smallBox;
+UpTriggeredObject2D upTriggeredObject2D;
 
 
 sign = new Sign(game.getGameWorld().getWorld(), 98.33594f, 0.54382324f, 0.0f, 2); //com.mygdx.game.scenery.SignWXYA2i
@@ -29,7 +32,7 @@ game.getGameWorld().addObject2DToWorld(sign, true);
 pipe = new Pipe(game.getGameWorld().getWorld(), 899.4155f, 20.543823f, 1.0f, false); //com.mygdx.game.scenery.PipeWXY1ffalse
 game.getGameWorld().addObject2DToWorld(pipe, true);
 
-grandma = new Grandma(game.getGameWorld().getWorld(), 11742.743f, 8.359692f); //characters.GrandmaWXY
+grandma = new Grandma(game.getGameWorld().getWorld(), 9808.487f, 8.296739f); //characters.GrandmaWXY
 game.getGameWorld().addObject2DToWorld(grandma, true);
 
 abribus = new Abribus(game.getGameWorld().getWorld(), 1399.6486f, 15.26123f); //com.mygdx.game.scenery.AbribusWXY
@@ -101,9 +104,123 @@ game.getGameWorld().addObject2DToWorld(barbedTriggeredObject2D, true);
 crane = new Crane(game.getGameWorld().getWorld(), 5000.628f, 270.2979f, 0.8f, 0.1f, 0.9f, 0.2f, true); //com.mygdx.game.scenery.CraneWXY0.8f0.1f0.9f0.2ftrue
 game.getGameWorld().addObject2DToWorld(crane, true);
 
-grandma = new Grandma(game.getGameWorld().getWorld(), 5588.6333f, 8.21333f); //characters.GrandmaWXY
+grandma = new Grandma(game.getGameWorld().getWorld(), 3881.5515f, 8.296739f); //characters.GrandmaWXY
 game.getGameWorld().addObject2DToWorld(grandma, true);
 
-grandma = new Grandma(game.getGameWorld().getWorld(), 29173.021f, 8.21333f); //characters.GrandmaWXY
+obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 29164.016f, 76.45953f, 8); //com.mygdx.game.scenery.ObstacleTestBlockWXY8i
+game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
+obstacleTestBlock.setTransform(29164.016f, 76.45953f, -0.9694194f);
+
+obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 29488.47f, 108.5036f, 4); //com.mygdx.game.scenery.ObstacleTestBlockWXY4i
+game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
+obstacleTestBlock.setTransform(29488.47f, 108.5036f, 0.2319452f);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 28336.877f, -5.303471f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+smallBox.setTransform(28336.877f, -5.303471f, 47.12429f);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 29389.666f, -5.4013867f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+smallBox.setTransform(29389.666f, -5.4013867f, -15.705904f);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 29317.717f, -3.3728411f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+smallBox.setTransform(29317.717f, -3.3728411f, 1.5707004f);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 28300.26f, -5.3030834f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+smallBox.setTransform(28300.26f, -5.3030834f, 25.1333f);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 29282.61f, 18.645842f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+smallBox.setTransform(29282.61f, 18.645842f, -11.755505f);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 29246.053f, -5.384627f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+smallBox.setTransform(29246.053f, -5.384627f, -8.866405E-5f);
+
+poutrelle = new Poutrelle(game.getGameWorld().getWorld(), 29278.436f, 386.22794f, 1.3328708f, new Vector2(0.0f, 0.0f), 0.0f, 0.0f, 0.5f); //com.mygdx.game.scenery.PoutrelleWXYA0;00f0f0.5f
+game.getGameWorld().addObject2DToWorld(poutrelle, true);
+
+pipe = new Pipe(game.getGameWorld().getWorld(), 29543.047f, 439.39563f, 1.0f, false); //com.mygdx.game.scenery.PipeWXY1ffalse
+game.getGameWorld().addObject2DToWorld(pipe, true);
+pipe.setTransform(29543.047f, 439.39563f, 0.3672834f);
+
+poutrelle = new Poutrelle(game.getGameWorld().getWorld(), 29403.92f, 740.23267f, 1.1313808f, new Vector2(0.0f, 0.0f), 0.0f, 0.0f, 0.5f); //com.mygdx.game.scenery.PoutrelleWXYA0;00f0f0.5f
+game.getGameWorld().addObject2DToWorld(poutrelle, true);
+
+poutrelle = new Poutrelle(game.getGameWorld().getWorld(), 29624.596f, 1025.1088f, 0.6999334f, new Vector2(0.0f, 0.0f), 0.0f, 0.0f, 0.5f); //com.mygdx.game.scenery.PoutrelleWXYA0;00f0f0.5f
+game.getGameWorld().addObject2DToWorld(poutrelle, true);
+
+upTriggeredObject2D = new UpTriggeredObject2D(game.getGameWorld().getWorld(), 29351.373f, -3.787089f); //triggered.UpTriggeredObject2DWXY
+game.getGameWorld().addObject2DToWorld(upTriggeredObject2D, true);
+
+upTriggeredObject2D = new UpTriggeredObject2D(game.getGameWorld().getWorld(), 29343.953f, -3.650983f); //triggered.UpTriggeredObject2DWXY
+game.getGameWorld().addObject2DToWorld(upTriggeredObject2D, true);
+
+upTriggeredObject2D = new UpTriggeredObject2D(game.getGameWorld().getWorld(), 29281.963f, -3.5935962f); //triggered.UpTriggeredObject2DWXY
+game.getGameWorld().addObject2DToWorld(upTriggeredObject2D, true);
+
+upTriggeredObject2D = new UpTriggeredObject2D(game.getGameWorld().getWorld(), 29366.021f, -3.7867422f); //triggered.UpTriggeredObject2DWXY
+game.getGameWorld().addObject2DToWorld(upTriggeredObject2D, true);
+
+grandma = new Grandma(game.getGameWorld().getWorld(), 29636.732f, 8.295495f); //characters.GrandmaWXY
 game.getGameWorld().addObject2DToWorld(grandma, true);
+
+upTriggeredObject2D = new UpTriggeredObject2D(game.getGameWorld().getWorld(), 29614.383f, 261.77948f); //triggered.UpTriggeredObject2DWXY
+game.getGameWorld().addObject2DToWorld(upTriggeredObject2D, true);
+
+upTriggeredObject2D = new UpTriggeredObject2D(game.getGameWorld().getWorld(), 29659.383f, 288.77948f); //triggered.UpTriggeredObject2DWXY
+game.getGameWorld().addObject2DToWorld(upTriggeredObject2D, true);
+
+upTriggeredObject2D = new UpTriggeredObject2D(game.getGameWorld().getWorld(), 29695.383f, 304.77948f); //triggered.UpTriggeredObject2DWXY
+game.getGameWorld().addObject2DToWorld(upTriggeredObject2D, true);
+
+upTriggeredObject2D = new UpTriggeredObject2D(game.getGameWorld().getWorld(), 29742.383f, 308.77948f); //triggered.UpTriggeredObject2DWXY
+game.getGameWorld().addObject2DToWorld(upTriggeredObject2D, true);
+
+upTriggeredObject2D = new UpTriggeredObject2D(game.getGameWorld().getWorld(), 29778.383f, 299.77948f); //triggered.UpTriggeredObject2DWXY
+game.getGameWorld().addObject2DToWorld(upTriggeredObject2D, true);
+
+upTriggeredObject2D = new UpTriggeredObject2D(game.getGameWorld().getWorld(), 29806.383f, 281.77948f); //triggered.UpTriggeredObject2DWXY
+game.getGameWorld().addObject2DToWorld(upTriggeredObject2D, true);
+
+upTriggeredObject2D = new UpTriggeredObject2D(game.getGameWorld().getWorld(), 29831.383f, 249.77948f); //triggered.UpTriggeredObject2DWXY
+game.getGameWorld().addObject2DToWorld(upTriggeredObject2D, true);
+
+upTriggeredObject2D = new UpTriggeredObject2D(game.getGameWorld().getWorld(), 29851.383f, 205.77948f); //triggered.UpTriggeredObject2DWXY
+game.getGameWorld().addObject2DToWorld(upTriggeredObject2D, true);
+
+upTriggeredObject2D = new UpTriggeredObject2D(game.getGameWorld().getWorld(), 29865.383f, 154.77948f); //triggered.UpTriggeredObject2DWXY
+game.getGameWorld().addObject2DToWorld(upTriggeredObject2D, true);
+
+upTriggeredObject2D = new UpTriggeredObject2D(game.getGameWorld().getWorld(), 29878.383f, 101.77948f); //triggered.UpTriggeredObject2DWXY
+game.getGameWorld().addObject2DToWorld(upTriggeredObject2D, true);
+
+upTriggeredObject2D = new UpTriggeredObject2D(game.getGameWorld().getWorld(), 29894.383f, 46.77948f); //triggered.UpTriggeredObject2DWXY
+game.getGameWorld().addObject2DToWorld(upTriggeredObject2D, true);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 29379.564f, 29.144533f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+smallBox.setTransform(29379.564f, 29.144533f, -1.5634799f);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 29746.486f, -5.3662057f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+smallBox.setTransform(29746.486f, -5.3662057f, -2.1896881E-4f);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 29742.984f, 27.264618f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+smallBox.setTransform(29742.984f, 27.264618f, -9.2443544E-4f);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 29747.33f, 59.888256f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+smallBox.setTransform(29747.33f, 59.888256f, -0.0015790878f);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 29751.775f, 92.51197f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+smallBox.setTransform(29751.775f, 92.51197f, -0.0019622922f);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 29753.764f, 125.14297f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+smallBox.setTransform(29753.764f, 125.14297f, -0.0021108084f);
 

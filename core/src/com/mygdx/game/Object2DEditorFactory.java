@@ -165,6 +165,7 @@ public class Object2DEditorFactory {
         
         List<Object> argumentsListCloned = new ArrayList<Object>(this.listArgument);
         int i = 0;
+        boolean isThereRotateArg = false;
         for(Object obj : argumentsListCloned){
             String argument = "null";
             
@@ -181,6 +182,7 @@ public class Object2DEditorFactory {
                         argument = Float.toString(posY) + "f";
                     }else if(obj.equals("A")){
                         argument = Float.toString(angle) + "f";
+                        isThereRotateArg = true;
                     }else if(obj.equals("com.mygdx.game.Object2D")){
                         argument = "hero";
                     }
@@ -204,7 +206,13 @@ public class Object2DEditorFactory {
         
         result += "); //" + this.ID + "\n";
         
-        result += "game.getGameWorld().addObject2DToWorld(" + variableName + ", true);\n\n";
+        result += "game.getGameWorld().addObject2DToWorld(" + variableName + ", true);\n";
+        
+        if(angle != 0 && isThereRotateArg == false){
+            result += variableName + ".setTransform(" + posX + "f, " + posY + "f, " + angle + "f);\n";
+        }
+        
+        result += "\n";
         
         return result;
     }

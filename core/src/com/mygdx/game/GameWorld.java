@@ -582,20 +582,24 @@ public class GameWorld implements WorldPlane, GameEventListener{
         this.getGameEditorManager().onMouseMoved(this, positionX, positionY);
     }
     
-    public void createObject(Object2DEditorFactory factory){
+    public Object2D createObject(Object2DEditorFactory factory){
         Object2D obj = this.getGameEditorManager().createObject2D(this, factory);
         
         if(obj instanceof Grandma){
             this.hero = (Grandma) obj;
         }
+        
+        return obj;
     }
     
-    public void createObject(Object2DEditorFactory factory, Vector2 position, float angle){
+    public Object2D createObject(Object2DEditorFactory factory, Vector2 position, float angle){
         Object2D obj = this.getGameEditorManager().createObject2D(this, factory, position, angle);
         
         if(obj instanceof Grandma){
             this.hero = (Grandma) obj;
         }
+        
+        return obj;
     }
     
     public void onFactorySelected(){

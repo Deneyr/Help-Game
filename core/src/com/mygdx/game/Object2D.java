@@ -225,6 +225,12 @@ public abstract class Object2D implements Disposable, GraphicalComponent{
         this.scale = scale;
     }
     
+    public void setTransform(float x, float y, float angle){
+        if(this.physicBody != null){
+            this.physicBody.setTransform(x * P2M, y * P2M, angle);
+        }
+    }
+    
     // listener
     public void addGameEventListener(GameEventListener listener){
         if(listener != null){

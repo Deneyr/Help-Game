@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -30,14 +31,22 @@ public class UpTriggeredObject2D extends TriggeredObject2D{
 
     public static final String UPTEXTURE = "Collectible_Piece_spritemap.png";
     
-    private boolean wasOnFloor;
-    
     public UpTriggeredObject2D(){
         super();
         
         // Part graphic
         this.assignTextures();
         
+    }
+    
+    public UpTriggeredObject2D(World world, float posX, float posY){      
+        // Part graphic
+        this.assignTextures();
+        
+        // Part physic.
+        this.initialize(world, new Vector2(posX, posY), Vector2.Zero);   
+        
+        this.physicBody.setType(BodyDef.BodyType.StaticBody);
     }
     
     @Override
@@ -85,8 +94,6 @@ public class UpTriggeredObject2D extends TriggeredObject2D{
         this.collisionFixture = new ArrayList<Fixture>();
         this.collisionFixture.add(fix);
         fix.setUserData(this);
-        
-        this.wasOnFloor = false;
     }
     
     @Override
