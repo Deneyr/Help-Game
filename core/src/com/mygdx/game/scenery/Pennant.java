@@ -25,13 +25,13 @@ import ressourcesmanagers.TextureManager;
  *
  * @author Deneyr
  */
-public class Swag extends SolidObject2D{
-    private static final String SWAGTEXT = "urbanObj/Help_Props_360x32_Guirlande.png";
+public class Pennant extends SolidObject2D{
+    private static final String PENNANTTEXT = "urbanObj/Help_Props_180x40_Fanions.png";
     
     private static final float SCALE_X = 1f;
     private static final float SCALE_Y = 1f;
     
-    public Swag(World world, float posX, float posY, float scale){
+    public Pennant(World world, float posX, float posY, float scale){
         
         this.scale = scale;
         
@@ -55,7 +55,7 @@ public class Swag extends SolidObject2D{
         
         PolygonShape ground = new PolygonShape();
         
-        ground.setAsBox(80 * P2M * this.scale * SCALE_X, 8 * P2M * this.scale * SCALE_Y, new Vector2(0, 0), 0);
+        ground.setAsBox(88 * P2M * this.scale * SCALE_X, 10 * P2M * this.scale * SCALE_Y, new Vector2(0, 0), 0);
         
         FixtureDef fixtureDef = new FixtureDef();
         
@@ -80,16 +80,7 @@ public class Swag extends SolidObject2D{
     
     @Override
     public void assignTextures(){
-        this.texture = TextureManager.getInstance().getTexture(SWAGTEXT, this);
-        
-        if(this.texture != null){
-            TextureRegion[][] tmp = TextureRegion.split(this.texture, 180, 32);
-        
-            Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
-            this.listAnimations.add(new Animation(0.2f, array, Animation.PlayMode.LOOP));
-
-            this.changeAnimation(0, false);
-        }
+        this.texture = TextureManager.getInstance().getTexture(PENNANTTEXT, this);       
     }
     
     @Override
