@@ -227,6 +227,7 @@ smallBox.setTransform(29758.975f, 125.10529f, -0.004427129f);
 
 streetLamp = new StreetLamp(game.getGameWorld().getWorld(), 30352.428f, 62.912292f, 1.0f); //com.mygdx.game.scenery.StreetLampWXY1f
 game.getGameWorld().addObject2DToWorld(streetLamp, true);
+streetLamp.setPriority(4);
 
 smallBox = new SmallBox(game.getGameWorld().getWorld(), 30355.87f, 143.29546f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);

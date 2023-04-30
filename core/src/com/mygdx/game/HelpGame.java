@@ -358,6 +358,10 @@ public class HelpGame extends Game implements GameEventListener{
                     this.gameWorld.onMultipleSelectionStateChanged(gameEvent.eventType);
                     System.out.println(gameEvent.eventType);
                     break;
+                case EDITORUPPRIORITY:
+                case EDITORDOWNPRIORITY:
+                    this.gameWorld.onChangePriorityObj(gameEvent.eventType);
+                    break;
                 default:
                     this.soundMusicManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
 

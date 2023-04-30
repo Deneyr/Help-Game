@@ -582,6 +582,14 @@ public class GameWorld implements WorldPlane, GameEventListener{
         this.getGameEditorManager().onMouseMoved(this, positionX, positionY);
     }
     
+    public Object2D getEditorFirstSelectedObject(){
+        if(this.gameEditorManager.touchedObjects.isEmpty()){
+            return null;
+        }
+        
+        return this.gameEditorManager.touchedObjects.iterator().next();
+    }
+    
     public Object2D createObject(Object2DEditorFactory factory){
         Object2D obj = this.getGameEditorManager().createObject2D(this, factory);
         
@@ -626,6 +634,10 @@ public class GameWorld implements WorldPlane, GameEventListener{
     
     public void onRotateObj(EventType eventType, float deltaTime){
         this.getGameEditorManager().rotateSelectedObjects(eventType, deltaTime);
+    }
+    
+    public void onChangePriorityObj(EventType eventType){
+        this.getGameEditorManager().changePrioritySelectedObjects(eventType);
     }
     
     public void onMultipleSelectionStateChanged(EventType eventType){
@@ -917,6 +929,25 @@ public class GameWorld implements WorldPlane, GameEventListener{
             }
         }
         
+        public void changePrioritySelectedObjects(EventType eventType){
+            
+            for(Object2D obj : this.touchedObjects){
+                int priority = obj.getPriority();
+                
+                System.out.println("-----------------");
+                System.out.println("old priority " + priority);
+                
+                if(eventType == EventType.EDITORUPPRIORITY){
+                    priority++;
+                }else if(eventType == EventType.EDITORDOWNPRIORITY){
+                    priority--;
+                }
+                obj.setPriority(priority);
+                
+                System.out.println("new priority " + priority);
+            }
+        }
+        
         public void saveObject2Ds(GameWorld world, String fileName){
             File saveFile = new File(fileName);
             
@@ -957,7 +988,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
                     
                     if(factory != null){
                         Vector2 position = obj.getPositionBody();
-                        String line = factory.serializeObject2D(position.x / P2M, position.y / P2M, obj.getAngleBody());
+                        String line = factory.serializeObject2D(position.x / P2M, position.y / P2M, obj.getAngleBody(), obj.getPriority());
                         writer.write(line);
                     }
                 }

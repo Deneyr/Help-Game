@@ -106,6 +106,10 @@ public class EditorMenuManager extends MenuManager{
         
         if(Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL)){
             this.notifyGameEventListeners(EventType.EDITORDELETETOUCHEDOBJ, "", Vector2.Zero);
+        }else if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+            this.notifyGameEventListeners(EventType.EDITORUPPRIORITY, "", Vector2.Zero);
+        }else if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
+            this.notifyGameEventListeners(EventType.EDITORDOWNPRIORITY, "", Vector2.Zero);
         }
         
         if(Gdx.input.isKeyPressed(Input.Keys.E)){

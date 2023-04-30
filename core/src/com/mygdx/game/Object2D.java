@@ -154,6 +154,9 @@ public abstract class Object2D implements Disposable, GraphicalComponent{
         return this.priority;
     }
     
+    public void setPriority(int priority){
+        this.priority = priority;
+    }
     
     public boolean isCurrentAnimationOver(){
         if(this.currentAnimation < 0)

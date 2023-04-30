@@ -154,7 +154,7 @@ public class Object2DEditorFactory {
         return null;
     }
     
-    public String serializeObject2D(float posX, float posY, float angle){
+    public String serializeObject2D(float posX, float posY, float angle, int priority){
         
         String[] token = this.className.split("\\.");
         
@@ -210,6 +210,10 @@ public class Object2DEditorFactory {
         
         if(angle != 0 && isThereRotateArg == false){
             result += variableName + ".setTransform(" + posX + "f, " + posY + "f, " + angle + "f);\n";
+        }
+        
+        if(this.template.getPriority() != priority){
+            result += variableName + ".setPriority(" + priority + ");\n";
         }
         
         result += "\n";

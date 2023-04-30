@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.BackgroundEditorScreen;
 import com.mygdx.game.EditorScreen;
 import com.mygdx.game.ForegroundScreen;
+import com.mygdx.game.GUIEditorScreen;
 import com.mygdx.game.GameEditorScreen;
 import com.mygdx.game.HelpGame;
 import com.mygdx.game.MenuScreen;
@@ -61,7 +62,7 @@ public class EditorGameNode extends GameNode{
         this.screensDisplayed.add(new BackgroundEditorScreen(batch, game.getGameWorld(), game.getMapBackgroundPlanes()));
         this.screensDisplayed.add(new GameEditorScreen(batch, game.getGameWorld()));
         this.screensDisplayed.add(new ForegroundScreen(batch, game.getGameWorld(), game.getMapForegroundPlanes()));
-        //this.screensDisplayed.add(new GUIScreen(batch, game.getGameWorld()));
+        this.screensDisplayed.add(new GUIEditorScreen(batch, game.getGameWorld()));
         
         this.screensDisplayed.add(new MenuScreen(batch, game.getGameMenuManager()));  
         
@@ -452,6 +453,14 @@ public class EditorGameNode extends GameNode{
                             String[] tokens = subString.split(",");
                             
                             createdObj.setTransform(Float.parseFloat(tokens[0]), Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2]));
+                        }else if(line.contains("setPriority")){
+                            int startIndex = line.indexOf("(");
+                            String subString = line.substring(startIndex + 1);
+
+                            int endIndex = subString.lastIndexOf(")");
+                            subString = subString.substring(0, endIndex);
+                            
+                            createdObj.setPriority(Integer.parseInt(subString));
                         }else if(line.contains("addObject2DToWorld")){
                                                
                         }else{
