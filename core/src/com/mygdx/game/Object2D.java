@@ -130,6 +130,13 @@ public abstract class Object2D implements Disposable, GraphicalComponent{
         return new Vector2();
     }
     
+    public Vector2 getBodyVelocity(){
+        if(this.physicBody != null){
+            return new Vector2(this.physicBody.getLinearVelocity());
+        }
+        return new Vector2();
+    }
+    
      public float getAngleBody(){
         if(this.physicBody != null){
             return this.physicBody.getAngle();
@@ -230,7 +237,16 @@ public abstract class Object2D implements Disposable, GraphicalComponent{
     
     public void setTransform(float x, float y, float angle){
         if(this.physicBody != null){
-            this.physicBody.setTransform(x * P2M, y * P2M, angle);
+            if(this.physicBody.isAwake() == false){
+                this.physicBody.setAwake(true);
+            }
+            this.physicBody.setTransform(x, y, angle);
+        }
+    }
+    
+    public void setVelocity(float x, float y){
+        if(this.physicBody != null){
+            this.physicBody.setLinearVelocity(x, y);
         }
     }
     

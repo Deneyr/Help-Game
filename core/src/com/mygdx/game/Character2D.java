@@ -351,10 +351,6 @@ public abstract class Character2D extends Object2D{
         return this.lifePointMax;
     }
     
-    public Vector2 getBodyVelocity(){
-        return this.physicBody.getLinearVelocity();
-    }
-    
     // dispose function
     @Override
     public void dispose(){

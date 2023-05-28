@@ -14,7 +14,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import static com.mygdx.game.HelpGame.P2M;
-import com.mygdx.game.KinematicActionFixtures;
+import com.mygdx.game.KinematicActionFixture;
 import com.mygdx.game.SolidObject2D;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -31,7 +31,7 @@ public class Poutrelle extends SolidObject2D{
     private static final float SCALE_X = 1f;
     private static final float SCALE_Y = 1f;
     
-    private KinematicActionFixtures kinematicActionFixture;
+    private KinematicActionFixture kinematicActionFixture;
     
     private float angle;
     private float speed;
@@ -114,7 +114,7 @@ public class Poutrelle extends SolidObject2D{
             ground.setAsBox(382 * P2M * SCALE_X * this.scale, 117 / 8f * P2M * SCALE_Y * this.scale, new Vector2(0, (117 * 3/ 8f + 3) * P2M * SCALE_Y * this.scale), 0);
             fix = groundBody.createFixture(fixtureDef); 
             setFixtures.add(fix);
-            this.kinematicActionFixture = new KinematicActionFixtures(setFixtures);
+            this.kinematicActionFixture = new KinematicActionFixture(setFixtures);
         }
     }
     

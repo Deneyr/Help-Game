@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.Character2D;
 import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
-import com.mygdx.game.KinematicActionFixtures;
+import com.mygdx.game.KinematicActionFixture;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.SolidObject2D;
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class Elevator extends Character2D{
     private static final float SCALE_X = 0.5f;
     private static final float SCALE_Y = 0.5f;
     
-    private KinematicActionFixtures kinematicActionFixture;
+    private KinematicActionFixture kinematicActionFixture;
     
     private Vector2 velocityVector;
     

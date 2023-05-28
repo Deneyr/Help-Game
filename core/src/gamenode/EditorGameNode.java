@@ -18,6 +18,7 @@ import com.mygdx.game.ForegroundScreen;
 import com.mygdx.game.GUIEditorScreen;
 import com.mygdx.game.GameEditorScreen;
 import com.mygdx.game.HelpGame;
+import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.MenuScreen;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DEditorFactory;
@@ -452,7 +453,7 @@ public class EditorGameNode extends GameNode{
                             
                             String[] tokens = subString.split(",");
                             
-                            createdObj.setTransform(Float.parseFloat(tokens[0]), Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2]));
+                            createdObj.setTransform(Float.parseFloat(tokens[0]) * P2M, Float.parseFloat(tokens[1]) * P2M, Float.parseFloat(tokens[2]));
                         }else if(line.contains("setPriority")){
                             int startIndex = line.indexOf("(");
                             String subString = line.substring(startIndex + 1);

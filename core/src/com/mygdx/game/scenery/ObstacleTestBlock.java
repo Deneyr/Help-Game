@@ -33,16 +33,20 @@ public class ObstacleTestBlock extends SolidObject2D{
     "editorTestBlock/Blocs_300x50.png",
     "editorTestBlock/Blocs_100x50.png",
     "editorTestBlock/Blocs_50x300.png",
-    "editorTestBlock/Blocs_50x50.png"};  
+    "editorTestBlock/Blocs_50x50.png",
+    "editorTestBlock/Help_BlocNoir_150x150.png",
+    "editorTestBlock/Help_Decor_Fenetre_20x30.png"};  
     
     private int testBlockIndex;
     
     private static final float SCALE_X = 1f;
     private static final float SCALE_Y = 1f;
     
-    public ObstacleTestBlock(World world, float posX, float posY, int index){
+    public ObstacleTestBlock(World world, float posX, float posY, int index, float scale){
         
         this.testBlockIndex = index;
+        
+        this.scale = scale;
         
         // Part graphic
         this.assignTextures();
@@ -78,7 +82,7 @@ public class ObstacleTestBlock extends SolidObject2D{
         switch(this.testBlockIndex){
             case 0:
                 ground = new PolygonShape();
-                ground.setAsBox(50 * P2M * SCALE_X, 50 * P2M * SCALE_Y);
+                ground.setAsBox(50 * this.scale * P2M * SCALE_X, 50 * this.scale * P2M * SCALE_Y);
                 
                 fixtureDef.shape = ground;
                 fix = groundBody.createFixture(fixtureDef); 
@@ -87,7 +91,7 @@ public class ObstacleTestBlock extends SolidObject2D{
                 break;
             case 1:
                 ground = new PolygonShape();
-                ground.setAsBox(25 * P2M * SCALE_X, 50 * P2M * SCALE_Y);
+                ground.setAsBox(25 * this.scale * P2M * SCALE_X, 50 * this.scale * P2M * SCALE_Y);
                 
                 fixtureDef.shape = ground;
                 fix = groundBody.createFixture(fixtureDef); 
@@ -96,7 +100,7 @@ public class ObstacleTestBlock extends SolidObject2D{
                 break;
             case 2:
                 ground = new PolygonShape();
-                ground.setAsBox(75 * P2M * SCALE_X, 25 * P2M * SCALE_Y);
+                ground.setAsBox(75 * this.scale * P2M * SCALE_X, 25 * this.scale * P2M * SCALE_Y);
                 
                 fixtureDef.shape = ground;
                 fix = groundBody.createFixture(fixtureDef); 
@@ -105,7 +109,7 @@ public class ObstacleTestBlock extends SolidObject2D{
                 break;
             case 3:
                 ground = new PolygonShape();
-                ground.setAsBox(100 * P2M * SCALE_X, 50 * P2M * SCALE_Y);
+                ground.setAsBox(100 * this.scale * P2M * SCALE_X, 50 * this.scale * P2M * SCALE_Y);
                 
                 fixtureDef.shape = ground;
                 fix = groundBody.createFixture(fixtureDef); 
@@ -114,7 +118,7 @@ public class ObstacleTestBlock extends SolidObject2D{
                 break; 
             case 4:
                 ground = new PolygonShape();
-                ground.setAsBox(100 * P2M * SCALE_X, 100 * P2M * SCALE_Y);
+                ground.setAsBox(100 * this.scale * P2M * SCALE_X, 100 * this.scale * P2M * SCALE_Y);
                 
                 fixtureDef.shape = ground;
                 fix = groundBody.createFixture(fixtureDef); 
@@ -123,7 +127,7 @@ public class ObstacleTestBlock extends SolidObject2D{
                 break; 
             case 5:
                 ground = new PolygonShape();
-                ground.setAsBox(150 * P2M * SCALE_X, 150 * P2M * SCALE_Y);
+                ground.setAsBox(150 * this.scale * P2M * SCALE_X, 150 * this.scale * P2M * SCALE_Y);
                 
                 fixtureDef.shape = ground;
                 fix = groundBody.createFixture(fixtureDef); 
@@ -132,7 +136,7 @@ public class ObstacleTestBlock extends SolidObject2D{
                 break;
             case 6:
                 ground = new PolygonShape();
-                ground.setAsBox(150 * P2M * SCALE_X, 25 * P2M * SCALE_Y);
+                ground.setAsBox(150 * this.scale * P2M * SCALE_X, 25 * this.scale * P2M * SCALE_Y);
                 
                 fixtureDef.shape = ground;
                 fix = groundBody.createFixture(fixtureDef); 
@@ -141,7 +145,7 @@ public class ObstacleTestBlock extends SolidObject2D{
                 break;
             case 7:
                 ground = new PolygonShape();
-                ground.setAsBox(50 * P2M * SCALE_X, 25 * P2M * SCALE_Y);
+                ground.setAsBox(50 * this.scale * P2M * SCALE_X, 25 * this.scale * P2M * SCALE_Y);
                 
                 fixtureDef.shape = ground;
                 fix = groundBody.createFixture(fixtureDef); 
@@ -150,7 +154,7 @@ public class ObstacleTestBlock extends SolidObject2D{
                 break;
             case 8:
                 ground = new PolygonShape();
-                ground.setAsBox(25 * P2M * SCALE_X, 150 * P2M * SCALE_Y);
+                ground.setAsBox(25 * this.scale * P2M * SCALE_X, 150 * this.scale * P2M * SCALE_Y);
                 
                 fixtureDef.shape = ground;
                 fix = groundBody.createFixture(fixtureDef); 
@@ -159,11 +163,35 @@ public class ObstacleTestBlock extends SolidObject2D{
                 break;
             case 9:
                 ground = new PolygonShape();
-                ground.setAsBox(25 * P2M * SCALE_X, 25 * P2M * SCALE_Y);
+                ground.setAsBox(25 * this.scale * P2M * SCALE_X, 25 * this.scale * P2M * SCALE_Y);
                 
                 fixtureDef.shape = ground;
                 fix = groundBody.createFixture(fixtureDef); 
                 fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                break;
+                
+             // Help_Decor
+            case 10:
+                ground = new PolygonShape();
+                ground.setAsBox(76 * this.scale * P2M * SCALE_X, 76 * this.scale * P2M * SCALE_Y);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                this.collisionFixture.add(fix);
+                break;
+                
+            case 11:
+                this.priority = 5;
+                
+                ground = new PolygonShape();
+                ground.setAsBox(11 * this.scale * P2M * SCALE_X, 16 * this.scale * P2M * SCALE_Y);
+                
+                fixtureDef.shape = ground;
+                fix = groundBody.createFixture(fixtureDef); 
+                fix.setUserData(this);
+                fix.setSensor(true);
                 this.collisionFixture.add(fix);
                 break;
         }

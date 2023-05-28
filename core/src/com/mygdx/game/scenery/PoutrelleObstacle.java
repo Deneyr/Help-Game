@@ -21,8 +21,8 @@ public class PoutrelleObstacle extends ObstacleObject2D{
     private static final String[] OBJECT_ARRAY = {
         "urbanObj/Obstacle_Poutrelle.png"};
     
-    public PoutrelleObstacle(World world, float posX, float posY, float rotation, int indexTrash, int side){
-        super(world, posX, posY, rotation, 0.4f, side, indexTrash, OBJECT_ARRAY[indexTrash]);
+    public PoutrelleObstacle(World world, float posX, float posY, float rotation, int indexPoutrelle, int side){
+        super(world, posX, posY, rotation, 0.4f, side, indexPoutrelle, OBJECT_ARRAY[indexPoutrelle]);
     }
 
     @Override

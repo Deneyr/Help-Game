@@ -13,9 +13,9 @@ import java.util.Set;
  *
  * @author françois
  */
-public class KinematicActionFixtures extends ActionFixtures{
+public class KinematicActionFixture extends ActionFixtures{
 
-    public KinematicActionFixtures(Set<Fixture> fixtures){
+    public KinematicActionFixture(Set<Fixture> fixtures){
         super(fixtures);
     }
     
@@ -31,9 +31,11 @@ public class KinematicActionFixtures extends ActionFixtures{
         super.applyAction(deltaTime, owner);
         
         Vector2 velocity = owner.physicBody.getLinearVelocity();
+        
         for(Object2D obj : this.setObject2DInside){
-            if(obj instanceof Character2D){
+            if(obj instanceof Character2D){              
                 obj.physicBody.setTransform(obj.physicBody.getPosition().add(new Vector2(velocity.x/1.005f * deltaTime, 0)), 0);
+                //obj.physicBody.setLinearVelocity(new Vector2(velocity.x, obj.physicBody.getLinearVelocity().y));
             }
         }
     }

@@ -46,18 +46,14 @@ public class Antenna extends ObstacleObject2D{
                 
                 fixtureDef.shape = ground;
                 fix = groundBody.createFixture(fixtureDef); 
-                fix.setUserData(this);
-                this.collisionFixture.add(fix);
                 
                 ground = new PolygonShape();
                 ground.setAsBox(15 * P2M * this.scale, 20 * P2M * this.scale, new Vector2(12 * P2M * this.scale * this.side, -20 * P2M * this.scale), 0);
                 
                 fixtureDef.shape = ground;
                 fix = groundBody.createFixture(fixtureDef); 
-                fix.setUserData(this);
-                this.collisionFixture.add(fix);
                 
                 break;
-        }    
+        }
     }
 }
