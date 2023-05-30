@@ -9,25 +9,32 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Character2D;
+import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.TriggeredObject2D;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import ressourcesmanagers.TextureManager;
+import triggered.UpTriggeredObject2D;
 
 /**
  *
  * @author Deneyr
  */
 public class ConveyorBelt extends TriggeredObject2D{
+    
+    protected final String id = UUID.randomUUID().toString();   
     
     private static final String[] OBJECT_ARRAY = {
         "factory/Help_Props_TapisRoulant_1520x200.png"};  
@@ -63,6 +70,7 @@ public class ConveyorBelt extends TriggeredObject2D{
         PolygonShape ground = new PolygonShape();
         ground.setAsBox(180 * P2M * this.scale, 30 * P2M * this.scale);
         FixtureDef fixtureDef = new FixtureDef();
+        this.setCollisionFilterMask(fixtureDef, false);
         fixtureDef.shape = ground;
         fixtureDef.density = 1f; 
         fixtureDef.friction = 1f;
@@ -75,6 +83,11 @@ public class ConveyorBelt extends TriggeredObject2D{
 
         this.collisionFixture = new ArrayList<Fixture>();       
         this.collisionFixture.add(fix);
+    }
+    
+    @Override
+    protected void SetCollisionMask(FixtureDef fixtureDef){
+        this.setCollisionFilterMask(fixtureDef, false);
     }
     
     @Override
@@ -95,6 +108,8 @@ public class ConveyorBelt extends TriggeredObject2D{
     public void updateLogic(float deltaTime){
         super.updateLogic(deltaTime);
         
+        this.notifyGameEventListener(GameEventListener.EventType.LOOP, "conveyorBelt" + ":" + this.id, this.getPositionBody());
+        
         Vector2 newVelocity = new Vector2(this.velocity);
         newVelocity.rotate((float) (Math.toDegrees(this.physicBody.getAngle())));
 
@@ -106,14 +121,14 @@ public class ConveyorBelt extends TriggeredObject2D{
     
     @Override
     public void onObj2DEnteredArea(Object2D obj){
-        if(obj instanceof Character2D){
+        if(this.IsObject2DAffected(obj)){
             this.setObject2DInside.add(obj);
         }
     }
     
     @Override
     public void onObj2DExitedArea(Object2D obj){
-        if(obj instanceof Character2D){
+        if(this.IsObject2DAffected(obj)){
             this.setObject2DInside.remove(obj);
             
             Vector2 newVelocity = new Vector2(this.velocity);
@@ -123,6 +138,11 @@ public class ConveyorBelt extends TriggeredObject2D{
         }
     }
     
+    private boolean IsObject2DAffected(Object2D obj){
+        return obj instanceof Character2D 
+            || (obj instanceof TriggeredObject2D && obj.getBodyType() == BodyType.DynamicBody);
+    }
+    
     @Override
     public Sprite createCurrentSprite(){
         Sprite sprite = super.createCurrentSprite();
@@ -130,6 +150,17 @@ public class ConveyorBelt extends TriggeredObject2D{
         sprite.setScale(sprite.getScaleX() * this.side, sprite.getScaleY());
 
         return sprite;
+    }
+    
+    @Override
+    protected void setCollisionFilterMask(FixtureDef fixtureDef, boolean reset){
+        
+        if(reset){
+            super.setCollisionFilterMask(fixtureDef, true);
+            return;
+        }
+        
+        fixtureDef.filter.categoryBits = 0x0002;
     }
     
     @Override

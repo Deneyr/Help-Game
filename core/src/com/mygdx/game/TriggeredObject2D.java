@@ -115,6 +115,7 @@ public abstract class TriggeredObject2D extends Object2D{
 
             // Collision fixture
             FixtureDef fixtureDef = new FixtureDef();
+            this.SetCollisionMask(fixtureDef);
             fixtureDef.shape = shape;
 
             body.setFixedRotation(true);
@@ -143,6 +144,10 @@ public abstract class TriggeredObject2D extends Object2D{
     
     public boolean IsDynamicObject(){
         return false;
+    }
+    
+    protected void SetCollisionMask(FixtureDef fixtureDef){
+        // Nothing to do.
     }
     
     public void onOutOfScreen(double dist){

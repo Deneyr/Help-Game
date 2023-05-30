@@ -156,6 +156,7 @@ public abstract class LvlGameNode extends GameNode{
         
         // Environment sounds.
         SoundManager.getInstance().getSound("sounds/environment/Ventilo_Wind_Loop.ogg");
+        SoundManager.getInstance().getSound("sounds/environment/conveyorBelt_Loop.ogg");
         
         // Musics
         MusicManager.getInstance().registerResource("sounds/GameOver.ogg");
