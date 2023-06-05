@@ -48,5 +48,7 @@ public interface GameEventListener {
         EDITORCTRLRELEASED,
         EDITORUPPRIORITY,
         EDITORDOWNPRIORITY,
+        EDITORRUNNING,
+        EDITORSTOPPED
     }
 }

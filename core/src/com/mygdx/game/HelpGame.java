@@ -315,10 +315,11 @@ public class HelpGame extends Game implements GameEventListener{
         List<GameEventContainer> localListGameEvents;
         synchronized(this.listGameEvents){
             localListGameEvents = new ArrayList<GameEventContainer>(this.listGameEvents);
+            this.listGameEvents.clear();
         }
         
         for(GameEventContainer gameEvent : localListGameEvents){
-
+            
             this.updatePlayerData(gameEvent);
             
             switch(gameEvent.eventType){
@@ -356,7 +357,6 @@ public class HelpGame extends Game implements GameEventListener{
                 case EDITORCTRLPRESSED:
                 case EDITORCTRLRELEASED:
                     this.gameWorld.onMultipleSelectionStateChanged(gameEvent.eventType);
-                    System.out.println(gameEvent.eventType);
                     break;
                 case EDITORUPPRIORITY:
                 case EDITORDOWNPRIORITY:
@@ -387,7 +387,6 @@ public class HelpGame extends Game implements GameEventListener{
                 this.editorMenuManager.onHelpGameEvent(this, gameEvent.eventType, gameEvent.details, gameEvent.location);
             }
         }
-        this.listGameEvents.clear();
     }
     
     private void updatePlayerData(GameEventContainer gameEventContainer){

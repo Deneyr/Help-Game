@@ -161,6 +161,9 @@ public class SoundMusicManager implements GameEventListener, Disposable{
                 case LOOP:
                     this.clearSoundLoop(details);
                     break;
+                case EDITORSTOPPED:
+                    this.clearAllLoopSound();
+                    break;
             }
         }
     }
@@ -189,9 +192,6 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         this.musicChangeManager.dispose();
         
         this.clearAllLoopSound();
-        
-        this.setLoopSoundPathUsed.clear();
-        this.mapIdLoopSound.clear();
     }
     
     
@@ -425,6 +425,9 @@ public class SoundMusicManager implements GameEventListener, Disposable{
                 
             sound.stop();
         }
+        
+        this.setLoopSoundPathUsed.clear();
+        this.mapIdLoopSound.clear();
     }
     
     private class MusicChangeManager implements Disposable{

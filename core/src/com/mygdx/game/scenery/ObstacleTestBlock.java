@@ -35,7 +35,7 @@ public class ObstacleTestBlock extends SolidObject2D{
     "editorTestBlock/Blocs_50x300.png",
     "editorTestBlock/Blocs_50x50.png",
     "editorTestBlock/Help_BlocNoir_150x150.png",
-    "editorTestBlock/Help_Decor_Fenetre_20x30.png"};  
+    "editorTestBlock/Blocs_Help_Fenetre_50x100.png"};  
     
     private int testBlockIndex;
     

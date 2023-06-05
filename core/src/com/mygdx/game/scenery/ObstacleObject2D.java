@@ -27,6 +27,10 @@ public abstract class ObstacleObject2D extends SolidObject2D{
     
     protected int indexObject;
     
+    public ObstacleObject2D(){
+        
+    }
+    
     public ObstacleObject2D(World world, float posX, float posY, float rotation, float scale, int side, int indexObject, String texturePath){
         
         this.scale = scale;

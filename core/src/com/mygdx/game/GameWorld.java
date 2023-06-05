@@ -341,7 +341,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
 
     @Override
     public void onGameEvent(EventType type, String details, Vector2 location) {
-        
+
         switch(type){
             case SCORE:
                 this.setCurrentMoney(this.currentMoney + Integer.parseInt(details));

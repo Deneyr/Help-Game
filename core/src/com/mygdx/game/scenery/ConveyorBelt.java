@@ -111,7 +111,7 @@ public class ConveyorBelt extends TriggeredObject2D{
         this.notifyGameEventListener(GameEventListener.EventType.LOOP, "conveyorBelt" + ":" + this.id, this.getPositionBody());
         
         Vector2 newVelocity = new Vector2(this.velocity);
-        newVelocity.rotate((float) (Math.toDegrees(this.physicBody.getAngle())));
+        newVelocity.rotateRad(this.physicBody.getAngle());
 
         for(Object2D obj : this.setObject2DInside){
             Vector2 newPosition = obj.getPositionBody().add((new Vector2(newVelocity)).scl(deltaTime));
@@ -132,7 +132,7 @@ public class ConveyorBelt extends TriggeredObject2D{
             this.setObject2DInside.remove(obj);
             
             Vector2 newVelocity = new Vector2(this.velocity);
-            newVelocity.rotate((float) (Math.toDegrees(this.physicBody.getAngle())));
+            newVelocity.rotateRad(this.physicBody.getAngle());
             newVelocity.add(obj.getBodyVelocity());
             obj.setVelocity(newVelocity.x, newVelocity.y);
         }
@@ -166,5 +166,12 @@ public class ConveyorBelt extends TriggeredObject2D{
     @Override
     public void trigger(Object2D objThatTriggered){
         // Nothing to do
+    }
+    
+    @Override
+    public void dispose(){
+        this.notifyGameEventListener(GameEventListener.EventType.LOOP_STOP, "conveyorBelt" + ":" + this.id, this.getPositionBody());
+        
+        super.dispose();
     }
 }
