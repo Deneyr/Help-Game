@@ -561,14 +561,33 @@ public class Grandma extends Character2D{
         CINE_BACK_ON_FEET,
     }
     
-    public int stateUmbrella(){
-        if(this.currentStateNode.stateNode == GrandmaState.JUMP_UNFOLDED_UP 
-                || this.currentStateNode.stateNode == GrandmaState.UNFOLDED_UMBRELLA_UP ){
-            return 1;
-        }else if(this.currentStateNode.stateNode == GrandmaState.UNFOLDED_UMBRELLA_MIDDLE){
-            return -1;
+    public boolean isUmbrellaUnfolded(){
+        return this.currentStateNode.stateNode == GrandmaState.JUMP_UNFOLDED_UP
+            || this.currentStateNode.stateNode == GrandmaState.JUMP_UNFOLDED_MIDDLE
+            || this.currentStateNode.stateNode == GrandmaState.UNFOLDED_UMBRELLA_UP
+            || this.currentStateNode.stateNode == GrandmaState.UNFOLDED_UMBRELLA_MIDDLE
+            || this.currentStateNode.stateNode == GrandmaState.UNFOLDED_UMBRELLA_DOWN;
+    }
+    
+    public Vector2 GetUmbrellaDirection(){
+        Vector2 umbrellaDirection = new Vector2();
+        
+        if(this.currentStateNode.stateNode == GrandmaState.JUMP_UNFOLDED_UP
+            || this.currentStateNode.stateNode == GrandmaState.UNFOLDED_UMBRELLA_UP){
+            umbrellaDirection.y = 1;
+        }else if(this.currentStateNode.stateNode == GrandmaState.UNFOLDED_UMBRELLA_DOWN){
+            umbrellaDirection.y = -1;
+        }else{
+            SideCharacter side = this.getSideCharacter();
+            
+            if(side == SideCharacter.RIGHT){
+                umbrellaDirection.x = 1;
+            }else{
+                umbrellaDirection.x = -1;
+            }
         }
-        return 0;
+        
+        return umbrellaDirection;
     }
     
     protected enum GrandmaInfluence{

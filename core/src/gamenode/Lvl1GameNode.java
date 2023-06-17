@@ -216,13 +216,13 @@ public class Lvl1GameNode extends LvlGameNode{
         tree = new TreeWithoutLeaf(game.getGameWorld().getWorld(), -500f, -110f);
         game.getGameWorld().addObject2DToWorld(tree);
         
-        Ventilo ventilo = new Ventilo(game.getGameWorld().getWorld(), -2200f, -100f, 3f, (float) (Math.PI / 2), true);
+        Ventilo ventilo = new Ventilo(game.getGameWorld().getWorld(), -2200f, -100f, (float) (Math.PI / 2), 3f, 2, true);
         game.getGameWorld().addObject2DToWorld(ventilo);
         
-        ventilo = new Ventilo(game.getGameWorld().getWorld(), -2400f, -150f, 3f, (float) Math.PI, true);
+        ventilo = new Ventilo(game.getGameWorld().getWorld(), -2400f, -150f, (float) Math.PI, 3f, 2, true);
         game.getGameWorld().addObject2DToWorld(ventilo);
         
-        ActivableVentilo activableVentilo = new ActivableVentilo(game.getGameWorld().getWorld(), -3000f, -130f, 3f, (float) Math.PI*3/4, true);
+        ActivableVentilo activableVentilo = new ActivableVentilo(game.getGameWorld().getWorld(), -3000f, -130f, (float) Math.PI*3/4, 3f, 2, true);
         game.getGameWorld().addObject2DToWorld(activableVentilo);
         
         // box 

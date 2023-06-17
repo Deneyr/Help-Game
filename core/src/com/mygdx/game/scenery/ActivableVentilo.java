@@ -31,8 +31,8 @@ public class ActivableVentilo extends Ventilo{
     
     private boolean canBeActivated;
     
-    public ActivableVentilo(World world, float posX, float posY, float strength, float angle, boolean start) {
-        super(world, posX, posY, strength, angle, start);
+    public ActivableVentilo(World world, float posX, float posY, float strength, float angle, int windLength, boolean start) {
+        super(world, posX, posY, angle, strength, windLength, start);
         
         this.button = new ButtonObject2D(this, world, posX - (40 * SCALE_X), posY, -40 * SCALE_X);
 

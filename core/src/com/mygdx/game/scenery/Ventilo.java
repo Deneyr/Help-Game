@@ -39,7 +39,7 @@ public class Ventilo extends SolidObject2D{
     
     protected final String id = UUID.randomUUID().toString();
     
-    private static final String VENTILOTEXT = "destroyable/spritemapVentilloV3-01.png";
+    private static final String VENTILOTEXT = "destroyable/spritemapVentillo_V4-01.png";
     
     protected static final float SCALE_X = 1f;
     protected static final float SCALE_Y = 1f;
@@ -52,7 +52,7 @@ public class Ventilo extends SolidObject2D{
     
     protected boolean isWorking;
     
-    public Ventilo(World world, float posX, float posY, float strength, float angle, boolean start){
+    public Ventilo(World world, float posX, float posY, float angle, float strength, int windLength, boolean start){
         
         this.strength = strength;
         
@@ -100,14 +100,15 @@ public class Ventilo extends SolidObject2D{
         // ActionFixture
         Set<Fixture> setFixtures = new HashSet();
         
-        ground.setAsBox(152 * P2M * SCALE_X, (152f + 20)/2 * P2M * SCALE_Y, new Vector2((152) * P2M * SCALE_X, 0), 0);
+        ground.setAsBox((152f/2) * windLength * P2M * SCALE_X, (152f + 10)/2 * P2M * SCALE_Y, new Vector2(152f * (0.4f + windLength/2f) * P2M * SCALE_X, 0), 0);
         fix = groundBody.createFixture(fixtureDef); 
         setFixtures.add(fix);
         this.windActionFixture = new WindActionFixture(setFixtures, this.strength);
         
         this.wind = new ArrayList<WindObject2D>();
-        this.wind.add(new WindObject2D( this.physicBody, world, posX + (152 * SCALE_X), posY, 152 * SCALE_X));
-        this.wind.add(new WindObject2D( this.physicBody, world, posX + (152*2 * SCALE_X), posY, 152 * 2 * SCALE_X));        
+        for(int i = 1; i <= windLength; i++){
+            this.wind.add(new WindObject2D( this.physicBody, world, posX + (152 * i * SCALE_X), posY, 152 * i * SCALE_X)); 
+        }
         
         // Transform
         if(angle != 0){
@@ -117,7 +118,7 @@ public class Ventilo extends SolidObject2D{
         // Part graphic
         this.assignTextures();
         
-        this.isWorking = true;
+        this.isWorking = start;
     }
     
     @Override
