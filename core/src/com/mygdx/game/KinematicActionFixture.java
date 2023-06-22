@@ -34,8 +34,7 @@ public class KinematicActionFixture extends ActionFixtures{
         
         for(Object2D obj : this.setObject2DInside){
             if(obj instanceof Character2D){              
-                obj.physicBody.setTransform(obj.physicBody.getPosition().add(new Vector2(velocity.x/1.005f * deltaTime, 0)), 0);
-                //obj.physicBody.setLinearVelocity(new Vector2(velocity.x, obj.physicBody.getLinearVelocity().y));
+                obj.physicBody.setTransform(obj.physicBody.getPosition().add(new Vector2(velocity.x/1.004f * deltaTime, 0)), 0);
             }
         }
     }

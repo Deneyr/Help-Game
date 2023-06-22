@@ -68,6 +68,10 @@ public abstract class Object2D implements Disposable, GraphicalComponent{
         }
     }
     
+    public void ReinitPlatform(World world){
+        
+    }
+    
     public Sprite createCurrentSprite(){
         Sprite sprite;
         

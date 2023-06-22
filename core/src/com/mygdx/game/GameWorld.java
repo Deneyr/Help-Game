@@ -1048,8 +1048,14 @@ public class GameWorld implements WorldPlane, GameEventListener{
         /**
          * @param gameRunning the gameRunning to set
          */
-        public void setGameRunning(boolean gameRunning) {
+        public void setGameRunning(GameWorld world, boolean gameRunning) {
             this.gameRunning = gameRunning;
+            
+            if(this.gameRunning == false){
+                for(Object2D obj2D: world.listCurrentObject2D){
+                    obj2D.ReinitPlatform(world.getWorld());
+                }
+            }
         }
 
         /**

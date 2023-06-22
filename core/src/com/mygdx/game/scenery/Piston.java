@@ -143,6 +143,14 @@ public class Piston extends ObstacleObject2D{
         
         super.dispose();
     }
+    
+    @Override
+    public void removeBody(World world){
+        if(this.pistonHead != null){
+            this.pistonHead.removeBody(world);
+        }
+        super.removeBody(world);
+    }
 
     public class PistonHead extends SolidObject2D{ 
         
@@ -223,16 +231,18 @@ public class Piston extends ObstacleObject2D{
         public void updateLogic(float deltaTime){
             super.updateLogic(deltaTime);
 
-            Vector2 displacementDirection = this.getPositionBody().sub(this.startPosition);
-            float sameDirection = displacementDirection.dot(this.direction);
-                
-            if(sameDirection > 1){         
-                float length = displacementDirection.len();
-                if(length > this.height){   
-                    this.direction = this.direction.scl(-1);
-                    this.physicBody.setLinearVelocity(this.direction);
-                }
-            }      
+            if(this.physicBody != null){
+                Vector2 displacementDirection = this.getPositionBody().sub(this.startPosition);
+                float sameDirection = displacementDirection.dot(this.direction);
+
+                if(sameDirection > 1){         
+                    float length2 = displacementDirection.len2();
+                    if(length2 > this.height * this.height){   
+                        this.direction = this.direction.scl(-1);
+                        this.physicBody.setLinearVelocity(this.direction);
+                    }
+                }      
+            }
         }
     }
 }

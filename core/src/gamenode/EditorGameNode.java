@@ -18,6 +18,7 @@ import com.mygdx.game.ForegroundScreen;
 import com.mygdx.game.GUIEditorScreen;
 import com.mygdx.game.GameEditorScreen;
 import com.mygdx.game.GameEventListener;
+import com.mygdx.game.GameWorld;
 import com.mygdx.game.HelpGame;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.MenuScreen;
@@ -89,7 +90,8 @@ public class EditorGameNode extends GameNode{
         
         // Compute the next step of the environment game logic.
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){       
-            game.getGameWorld().getGameEditorManager().setGameRunning(!game.getGameWorld().getGameEditorManager().isGameRunning());
+            GameWorld gameWorld = game.getGameWorld();
+            game.getGameWorld().getGameEditorManager().setGameRunning(gameWorld, !gameWorld.getGameEditorManager().isGameRunning());
             
             if(game.getGameWorld().getGameEditorManager().isGameRunning()){
                 game.onGameEvent(GameEventListener.EventType.EDITORRUNNING, this.getId(), null);
