@@ -130,9 +130,9 @@ public abstract class APlatformObject extends SolidObject2D{
     @Override
     public void ReinitPlatform(World world){
         this.direction = new Vector2(1, 0).rotate(this.directionAngle);
+        Vector2 directionNormalized = new Vector2(this.direction);       
         this.direction.scl(this.speed);
         
-        Vector2 directionNormalized = new Vector2(this.direction);
         Vector2 initPosition = (new Vector2(this.startPosition)).add(directionNormalized.scl(this.ratio * this.maxRadius));
         
         this.setTransform(initPosition.x, initPosition.y, this.angle);

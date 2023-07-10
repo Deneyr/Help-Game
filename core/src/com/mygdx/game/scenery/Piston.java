@@ -48,7 +48,7 @@ public class Piston extends ObstacleObject2D{
         this.scaleY = scaleY;
         this.height = 76 * P2M * this.scale * this.scaleY;
         
-        this.pistonHead = new PistonHead(world, posX, posY, angle, new Vector2(0, 1), this.height, speed, ratio);
+        this.pistonHead = new PistonHead(world, posX, posY, angle, this.height, speed, ratio);
         
         // Part graphic
         this.assignTextures();
@@ -151,6 +151,14 @@ public class Piston extends ObstacleObject2D{
         }
         super.removeBody(world);
     }
+    
+    @Override
+    public void ReinitPlatform(World world){
+        Vector2 pistonPosition = this.getPositionBody();
+        this.pistonHead.updatePistonHead(pistonPosition.x / P2M, pistonPosition.y / P2M, this.physicBody.getAngle());
+        
+        this.pistonHead.ReinitPlatform(world);
+    }
 
     public class PistonHead extends SolidObject2D{ 
         
@@ -162,24 +170,30 @@ public class Piston extends ObstacleObject2D{
         private float angle;
         private float speed;
         private float height;
+        private float pistonHeight;
+        private float ratio;
         
         private Vector2 direction;
     
-        public PistonHead(World world, float posX, float posY, float angle, Vector2 direction, float height, float speed, float ratio){
+        public PistonHead(World world, float posX, float posY, float angle, float height, float speed, float ratio){
 
             this.angle = angle;
             this.speed = speed;
             this.height = height;
+            this.pistonHeight = 112 * P2M * this.scale;
+            this.ratio = ratio;
             
             this.startPosition = new Vector2(posX * P2M, posY * P2M); 
             
-            Vector2 directionNormalized = (new Vector2(direction)).rotateRad(angle);          
+            Vector2 directionNormalized = (new Vector2(0, 1)).rotateRad(angle);  
+            this.startPosition = this.startPosition.add((new Vector2(directionNormalized)).scl(height));
+                       
             this.direction = (new Vector2(directionNormalized)).scl(this.speed);
 
             // Part physic
             BodyDef groundBodyDef = new BodyDef();  
             // Set its world position
-            groundBodyDef.position.set((new Vector2(this.startPosition)).add(directionNormalized.scl(ratio * this.height)));
+            groundBodyDef.position.set((new Vector2(this.startPosition)).add(directionNormalized.scl(this.ratio * this.pistonHeight)));
 
             // Create a body from the defintion and add it to the world
             Body groundBody = world.createBody(groundBodyDef);  
@@ -237,12 +251,36 @@ public class Piston extends ObstacleObject2D{
 
                 if(sameDirection > 1){         
                     float length2 = displacementDirection.len2();
-                    if(length2 > this.height * this.height){   
+                    if(length2 > this.pistonHeight * this.pistonHeight){   
                         this.direction = this.direction.scl(-1);
                         this.physicBody.setLinearVelocity(this.direction);
                     }
                 }      
             }
+        }
+        
+        public void updatePistonHead(float posX, float posY, float angle){
+            this.angle = angle;
+            
+            this.startPosition = new Vector2(posX * P2M, posY * P2M); 
+            
+            Vector2 directionNormalized = (new Vector2(0, 1)).rotateRad(angle);  
+            this.startPosition = this.startPosition.add((new Vector2(directionNormalized)).scl(height));
+            
+            Vector2 newPosition = (new Vector2(this.startPosition)).add(directionNormalized.scl(this.ratio * this.pistonHeight));
+            this.physicBody.setTransform(newPosition, this.angle);
+        }
+        
+        @Override
+        public void ReinitPlatform(World world){
+            this.direction = (new Vector2(0, 1)).rotateRad(this.angle);
+            Vector2 directionNormalized = new Vector2(this.direction);            
+            this.direction = this.direction.scl(this.speed);
+
+            Vector2 initPosition = (new Vector2(this.startPosition)).add(directionNormalized.scl(this.ratio * this.pistonHeight));
+
+            this.setTransform(initPosition.x, initPosition.y, this.angle);
+            this.physicBody.setLinearVelocity(this.direction);
         }
     }
 }
