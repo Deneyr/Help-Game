@@ -51,10 +51,14 @@ public class Ventilo extends SolidObject2D{
     protected List<WindObject2D> wind;
     
     protected boolean isWorking;
+    private boolean isIncrement;
     
     public Ventilo(World world, float posX, float posY, float angle, float strength, int windLength, boolean start){
         
         this.strength = strength;
+        
+        this.isWorking = start;
+        this.isIncrement = true;
         
         // Part physic    
         BodyDef groundBodyDef = new BodyDef();  
@@ -117,8 +121,6 @@ public class Ventilo extends SolidObject2D{
         
         // Part graphic
         this.assignTextures();
-        
-        this.isWorking = start;
     }
     
     @Override
@@ -130,6 +132,7 @@ public class Ventilo extends SolidObject2D{
             TextureRegion[][] tmp = TextureRegion.split(this.texture, 152, 152);
             // walk folded
             Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
+            array.removeRange(1, 3);
             this.listAnimations.add(new Animation(0.2f, array));
             this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.NORMAL);
 
@@ -137,12 +140,28 @@ public class Ventilo extends SolidObject2D{
             array.removeRange(0, 2);
             this.listAnimations.add(new Animation(0.2f, array));
             this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.NORMAL);
-
-            this.changeAnimation(1, false);  
             
             // Child
             for(WindObject2D wind : this.wind){
                 wind.assignTextures(this.texture);
+            }
+            
+            this.InitAnimation();
+        }
+    }
+    
+    protected void InitAnimation(){
+        if(this.isWorking){
+            this.changeAnimation(1, false); 
+            
+            for(WindObject2D windUnit : this.wind){
+                windUnit.changeAnimation(0, false);
+            }
+        }else{
+            this.changeAnimation(0, false);
+            
+            for(WindObject2D windUnit : this.wind){
+                windUnit.changeAnimation(-1, false);
             }
         }
     }
@@ -159,6 +178,8 @@ public class Ventilo extends SolidObject2D{
         super.updateLogic(deltaTime);
         
         if(this.isWorking){
+            this.updateObject2D(deltaTime);
+            
             this.windActionFixture.applyAction(deltaTime, this);
             
             this.notifyGameEventListener(GameEventListener.EventType.LOOP, "ventiloWind" + ":" + this.id, this.getPositionBody());
@@ -166,6 +187,30 @@ public class Ventilo extends SolidObject2D{
         
         for(WindObject2D wind : this.wind){
             wind.updateLogic(deltaTime);
+        }
+    }
+    
+    protected void updateObject2D(float deltaTime){
+        float sign = 1;
+        if(this.isIncrement == false){
+            sign = -1;
+        }
+
+        this.scale = this.scale + sign * deltaTime * 1.5f;
+
+        float upperBound = 1.05f;
+        float lowerBound = 0.95f;
+        
+        if(this.isIncrement){
+            if(this.scale > upperBound){
+                this.isIncrement = false;
+                this.scale = upperBound;
+            }
+        }else{
+            if(this.scale < lowerBound){
+                this.isIncrement = true;
+                this.scale = lowerBound;
+            }
         }
     }
     

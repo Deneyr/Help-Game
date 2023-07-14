@@ -32,12 +32,10 @@ public class ActivableVentilo extends Ventilo{
     private boolean canBeActivated;
     
     public ActivableVentilo(World world, float posX, float posY, float strength, float angle, int windLength, boolean start) {
-        super(world, posX, posY, angle, strength, windLength, start);
+        super(world, posX, posY, strength, angle, windLength, start);
         
         this.button = new ButtonObject2D(this, world, posX - (40 * SCALE_X), posY, -40 * SCALE_X);
 
-        this.isWorking = true;
-        
         this.canBeActivated = true;
     }
     
@@ -54,9 +52,7 @@ public class ActivableVentilo extends Ventilo{
             this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.NORMAL);
 
             this.listAnimations.add(new Animation(0.2f, array));
-            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.REVERSED);
-            
-            this.changeAnimation(1, false);
+            this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.REVERSED);           
         }
     }
     
@@ -68,21 +64,10 @@ public class ActivableVentilo extends Ventilo{
         
         this.notifyGameEventListener(GameEventListener.EventType.ACTION, "ventiloButton", this.getPositionBody());
         
-        if(this.isWorking){
-            this.changeAnimation(3, false);
-            
-            for(WindObject2D windUnit : this.wind){
-                windUnit.changeAnimation(-1, false);
-            }
-        }else{
-            this.changeAnimation(2, false);
-            
-            for(WindObject2D windUnit : this.wind){
-                windUnit.changeAnimation(0, false);
-            }
-        }
-        
         this.isWorking = !this.isWorking;
+        
+        this.InitAnimation();
+        
         if(!this.isWorking){
             this.notifyGameEventListener(GameEventListener.EventType.LOOP_STOP, "ventiloWind" + ":" + this.id, this.getPositionBody());
         }
@@ -94,6 +79,23 @@ public class ActivableVentilo extends Ventilo{
                 ActivableVentilo.this.canBeActivated = true;
             }
         }, 1f);
+    }
+    
+    @Override
+    protected void InitAnimation(){
+        if(this.isWorking){
+            this.changeAnimation(2, false); 
+            
+            for(WindObject2D windUnit : this.wind){
+                windUnit.changeAnimation(0, false);
+            }
+        }else{
+            this.changeAnimation(3, false);
+            
+            for(WindObject2D windUnit : this.wind){
+                windUnit.changeAnimation(-1, false);
+            }
+        }
     }
     
     @Override
