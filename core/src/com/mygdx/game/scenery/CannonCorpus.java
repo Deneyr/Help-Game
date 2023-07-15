@@ -233,10 +233,11 @@ public abstract class CannonCorpus extends SolidObject2D{
     
         @Override
         public void removeBody(World world){
+            if(this.physicBody != null){
+                world.destroyJoint(this.joint);
 
-            world.destroyJoint(this.joint);
-            
-            super.removeBody(world);
+                super.removeBody(world);
+            }
         }
         
         @Override
@@ -287,19 +288,21 @@ public abstract class CannonCorpus extends SolidObject2D{
         
         protected void influences2Actions(float deltaTime){
             
-            StateNode prevNode = this.currentStateNode;
-            StateNode nextNode = this.currentStateNode.getNextStateNode();
-            if(nextNode != null){
-                this.currentStateNode = nextNode;
+            if(this.physicBody != null){
+                StateNode prevNode = this.currentStateNode;
+                StateNode nextNode = this.currentStateNode.getNextStateNode();
+                if(nextNode != null){
+                    this.currentStateNode = nextNode;
+                }
+
+                if(this.currentStateNode.getCurrentAnimation() != this.currentAnimation){
+                    this.changeAnimation(this.currentStateNode.getCurrentAnimation(), false);
+                }
+
+                this.updateAttack(prevNode, nextNode);
+
+                this.currentStateNode.updatePhysic(deltaTime);
             }
-            
-            if(this.currentStateNode.getCurrentAnimation() != this.currentAnimation){
-                this.changeAnimation(this.currentStateNode.getCurrentAnimation(), false);
-            }
-            
-            this.updateAttack(prevNode, nextNode);
-            
-            this.currentStateNode.updatePhysic(deltaTime);
         }
         
         protected void updateAttack(StateNode prevNode, StateNode nextNode){

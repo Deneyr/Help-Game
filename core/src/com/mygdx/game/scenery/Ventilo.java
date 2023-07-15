@@ -196,10 +196,10 @@ public class Ventilo extends SolidObject2D{
             sign = -1;
         }
 
-        this.scale = this.scale + sign * deltaTime * 1.5f;
+        this.scale = this.scale + sign * deltaTime * 1.4f;
 
-        float upperBound = 1.05f;
-        float lowerBound = 0.95f;
+        float upperBound = 1.02f;
+        float lowerBound = 0.98f;
         
         if(this.isIncrement){
             if(this.scale > upperBound){

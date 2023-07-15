@@ -160,21 +160,21 @@ public class EditorGameNode extends GameNode{
         TextureManager.getInstance().getTexture(HitCosmeticObject2D.HIT_TEXTURE, null);
         
         // Background houses
-        int seed = 80;
+        /*int seed = 80;
         Lvl1_1_Residence lvl1_1_Residence = new Lvl1_1_Residence(seed, 5500f, -25, 200, 200);
         game.getMapBackgroundPlanes().put(lvl1_1_Residence.getRatioDist(), lvl1_1_Residence);
         
         Lvl1_2_Residence lvl1_2_Residence = new Lvl1_2_Residence(seed, 7300f, -25, 200, 200);
         game.getMapBackgroundPlanes().put(lvl1_2_Residence.getRatioDist(), lvl1_2_Residence);
         
-        /*Lvl1_3_Residence lvl1_3_Residence = new Lvl1_3_Residence(seed, 10200f, -25, 200, 200);
-        game.getMapBackgroundPlanes().put(lvl1_3_Residence.getRatioDist(), lvl1_3_Residence);*/
+        Lvl1_3_Residence lvl1_3_Residence = new Lvl1_3_Residence(seed, 10200f, -25, 200, 200);
+        game.getMapBackgroundPlanes().put(lvl1_3_Residence.getRatioDist(), lvl1_3_Residence);
         
         // init background solid objects
         
         lvl1_1_Residence.createSolidObj(game.getGameWorld());
         
-        lvl1_2_Residence.createSolidObj(game.getGameWorld());
+        lvl1_2_Residence.createSolidObj(game.getGameWorld());*/
         
         // lvl1_3_Residence.createSolidObj(game.getGameWorld());
         
