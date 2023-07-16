@@ -9,6 +9,7 @@ import characters.Grandma;
 import characters.OpponentCAC1;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -18,7 +19,9 @@ import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
 import com.mygdx.game.Object2DStateListener;
+import com.mygdx.game.SolidObject2D;
 import com.mygdx.game.TriggeredObject2D;
+import com.mygdx.game.scenery.Chimney;
 import java.util.ArrayList;
 import ressourcesmanagers.TextureManager;
 
@@ -62,9 +65,10 @@ public class ChimneySmokeTriggeredObject2D extends TriggeredObject2D{
         circle.setPosition(new Vector2(0, 0));
 
         FixtureDef fixtureDef = new FixtureDef();
+        this.setCollisionFilterMask(fixtureDef, false);
         
         fixtureDef.shape = circle;
-        fixtureDef.density = 2f; 
+        fixtureDef.density = 1f; 
         fixtureDef.friction = 0.1f;
         fixtureDef.restitution = 0.8f; 
         
@@ -79,10 +83,26 @@ public class ChimneySmokeTriggeredObject2D extends TriggeredObject2D{
     }
     
     @Override
+    protected void SetBody(BodyDef bodyDef){
+        bodyDef.gravityScale = 0;
+    }
+    
+    @Override
+    protected void SetCollisionMask(FixtureDef fixtureDef){
+        fixtureDef.filter.categoryBits = 0x0004;
+        fixtureDef.filter.maskBits = 0x0003;
+    }
+    
+    @Override
+    protected void setCollisionFilterMask(FixtureDef fixtureDef, boolean reset){
+        fixtureDef.filter.categoryBits = 0x0004;
+        fixtureDef.filter.maskBits = 0x0003;
+    }
+    
+    @Override
     public void trigger(Object2D objThatTriggered){
-        
-        if(!this.isTriggered && 
-                (objThatTriggered instanceof Character2D)){
+        if(!this.isTriggered
+                && (objThatTriggered instanceof Chimney == false)){
             
             Vector2 targetPhysicBody = new Vector2(objThatTriggered.getPositionBody());
             Vector2 dirDamage = targetPhysicBody.sub(this.getPositionBody());
@@ -128,5 +148,10 @@ public class ChimneySmokeTriggeredObject2D extends TriggeredObject2D{
 
             super.trigger(reflecter);
         }
+    } 
+        
+    @Override
+    public boolean IsDynamicObject(){
+        return true;
     }
 }

@@ -57,6 +57,7 @@ public abstract class TriggeredObject2D extends Object2D{
         if(this.physicBody == null){
             // Part Physic
             BodyDef bodyDef = new BodyDef();
+            this.SetBody(bodyDef);
             
             if(this.IsDynamicObject()){
                 bodyDef.type = BodyDef.BodyType.DynamicBody;         
@@ -72,7 +73,9 @@ public abstract class TriggeredObject2D extends Object2D{
             circle.setRadius(radius * P2M);
             circle.setPosition(new Vector2(0, 0));
 
-            FixtureDef fixtureDef = new FixtureDef();         
+            FixtureDef fixtureDef = new FixtureDef(); 
+            this.SetCollisionMask(fixtureDef);
+            
             fixtureDef.shape = circle;
 
             body.setFixedRotation(true);
@@ -103,6 +106,7 @@ public abstract class TriggeredObject2D extends Object2D{
         if(this.physicBody == null){
             // Part Physic
             BodyDef bodyDef = new BodyDef();
+            this.SetBody(bodyDef);
             
             if(this.IsDynamicObject()){
                 bodyDef.type = BodyDef.BodyType.DynamicBody;         
@@ -115,6 +119,7 @@ public abstract class TriggeredObject2D extends Object2D{
 
             // Collision fixture
             FixtureDef fixtureDef = new FixtureDef();
+            
             this.SetCollisionMask(fixtureDef);
             fixtureDef.shape = shape;
 
@@ -147,6 +152,10 @@ public abstract class TriggeredObject2D extends Object2D{
     }
     
     protected void SetCollisionMask(FixtureDef fixtureDef){
+        // Nothing to do.
+    }
+    
+    protected void SetBody(BodyDef bodyDef){
         // Nothing to do.
     }
     
