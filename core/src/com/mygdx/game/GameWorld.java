@@ -684,6 +684,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
         
         private Vector2 cameraPosition;
         
+        private boolean isInEditorMode;
+        
         public GameEditorManager(){
             this.touchedObjects = new HashSet<Object2D>();
             
@@ -706,6 +708,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
             this.cameraPosition = new Vector2(0, 0);
             
             this.multipleSelectionState = false;
+            
+            this.isInEditorMode = false;
         }
         
         public void onTouchDown(GameWorld world, float positionX, float positionY, int pointer, int button){
@@ -1000,6 +1004,7 @@ public class GameWorld implements WorldPlane, GameEventListener{
         }
         
         /**
+         * @param world
          * @param isFactorySelected the isFactorySelected to set
          */
         public void setIsFactorySelected(GameWorld world, boolean isFactorySelected) {
@@ -1084,6 +1089,20 @@ public class GameWorld implements WorldPlane, GameEventListener{
          */
         public void setCameraPosition(float x, float y) {
             this.cameraPosition.set(x, y);
+        }
+
+        /**
+         * @return the isInEditorMode
+         */
+        public boolean isInEditorMode() {
+            return this.isInEditorMode;
+        }
+
+        /**
+         * @param isInEditorMode the isInEditorMode to set
+         */
+        public void setIsInEditorMode(boolean isInEditorMode) {
+            this.isInEditorMode = isInEditorMode;
         }
     }
 }

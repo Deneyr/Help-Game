@@ -249,7 +249,7 @@ public abstract class Character2D extends Object2D{
                 upVector = new Vector2(0, 1);
                 angle = dirDamage.angle(upVector) * 0.7f;
                 dirDamage = dirDamage.rotate(angle);
-                Vector2 speed = (dirDamage).nor().scl(3 + ratioDamage * 2f);
+                //Vector2 speed = (dirDamage).nor().scl(3 + ratioDamage * 2f);
                 
                 distance.y = 0;
                 this.notifyCosmeticObj2D2CreateListener(damageOwner, this, HitCosmeticObject2D.class, damageOwner.getPositionBody().add(distance.scl(0.9f)).scl(1 / P2M), Vector2.Zero, ratioDamage);

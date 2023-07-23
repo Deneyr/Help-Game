@@ -97,13 +97,11 @@ public class Ventilo extends SolidObject2D{
         fix.setUserData(this);
         this.collisionFixture.add(fix);
         
-        this.setCollisionFilterMask(fixtureDef, true);
-        
         this.physicBody = groundBody;
         
         // ActionFixture
         Set<Fixture> setFixtures = new HashSet();
-        
+        this.setCollisionFilterMaskWind(fixtureDef);
         ground.setAsBox((152f/2) * windLength * P2M * SCALE_X, (152f + 10)/2 * P2M * SCALE_Y, new Vector2(152f * (0.4f + windLength/2f) * P2M * SCALE_X, 0), 0);
         fix = groundBody.createFixture(fixtureDef); 
         setFixtures.add(fix);
@@ -121,6 +119,11 @@ public class Ventilo extends SolidObject2D{
         
         // Part graphic
         this.assignTextures();
+    }
+    
+    protected void setCollisionFilterMaskWind(FixtureDef fixtureDef){
+        fixtureDef.filter.categoryBits = 0x0004;
+        fixtureDef.filter.maskBits = 0x0001;
     }
     
     @Override
@@ -244,6 +247,9 @@ public class Ventilo extends SolidObject2D{
             // Set the polygon shape as a box which is twice the size of our view port and 20 high
             // (setAsBox takes half-width and half-height as arguments)
             FixtureDef fixtureDef = new FixtureDef();
+            
+            Ventilo.this.setCollisionFilterMaskWind(fixtureDef);
+            
             fixtureDef.shape = ground;
             fixtureDef.density = 1f; 
             fixtureDef.friction = 0.05f;

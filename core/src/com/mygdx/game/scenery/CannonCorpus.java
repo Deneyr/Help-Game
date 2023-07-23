@@ -256,7 +256,12 @@ public abstract class CannonCorpus extends SolidObject2D{
         }
 
         @Override
-        public void updateLogic(float deltaTime){       
+        public void updateLogic(float deltaTime){
+            
+            if(this.physicBody == null){
+                return;
+            }
+            
             super.updateLogic(deltaTime);
         
             this.createInfluences();
@@ -286,23 +291,20 @@ public abstract class CannonCorpus extends SolidObject2D{
             }
         }
         
-        protected void influences2Actions(float deltaTime){
-            
-            if(this.physicBody != null){
-                StateNode prevNode = this.currentStateNode;
-                StateNode nextNode = this.currentStateNode.getNextStateNode();
-                if(nextNode != null){
-                    this.currentStateNode = nextNode;
-                }
-
-                if(this.currentStateNode.getCurrentAnimation() != this.currentAnimation){
-                    this.changeAnimation(this.currentStateNode.getCurrentAnimation(), false);
-                }
-
-                this.updateAttack(prevNode, nextNode);
-
-                this.currentStateNode.updatePhysic(deltaTime);
+        protected void influences2Actions(float deltaTime){           
+            StateNode prevNode = this.currentStateNode;
+            StateNode nextNode = this.currentStateNode.getNextStateNode();
+            if(nextNode != null){
+                this.currentStateNode = nextNode;
             }
+
+            if(this.currentStateNode.getCurrentAnimation() != this.currentAnimation){
+                this.changeAnimation(this.currentStateNode.getCurrentAnimation(), false);
+            }
+
+            this.updateAttack(prevNode, nextNode);
+
+            this.currentStateNode.updatePhysic(deltaTime);
         }
         
         protected void updateAttack(StateNode prevNode, StateNode nextNode){
@@ -590,7 +592,7 @@ public abstract class CannonCorpus extends SolidObject2D{
             
             float diffAngle = angleTargeted - angleCannon;
             diffAngle = (diffAngle + 180) % 360 - 180;
-            if(Math.abs(angleCannon - angleTargeted) < 2){
+            if(Math.abs(angleCannon - angleTargeted) < 4){
                 if(Math.abs(angleCannon - angleTargeted) > 0.5){
                     this.physicBody.setTransform(this.getPositionBody(), (float) (angleTargeted * Math.PI / 180));
                 }

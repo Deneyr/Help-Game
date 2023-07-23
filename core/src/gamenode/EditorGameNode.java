@@ -130,6 +130,8 @@ public class EditorGameNode extends GameNode{
     public boolean onStartingNode(HelpGame game){
         super.onStartingNode(game);
         
+        game.getGameWorld().getGameEditorManager().setIsInEditorMode(true);
+        
         game.clearAllWorldPlanes();
         
         TextureManager.getInstance().resetLoadedResources();
@@ -533,6 +535,8 @@ public class EditorGameNode extends GameNode{
         super.onEndingNode(game);
         
         this.flushLevel(game);
+        
+        game.getGameWorld().getGameEditorManager().setIsInEditorMode(false);
     }
     
     @Override

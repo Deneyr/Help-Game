@@ -17,11 +17,13 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.DamageActionFixture;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.KinematicActionFixture;
 import com.mygdx.game.SolidObject2D;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import ressourcesmanagers.TextureManager;
 
@@ -39,7 +41,7 @@ public class Piston extends ObstacleObject2D{
     private float scaleY;  
     private float height;
     
-    public Piston(World world, float posX, float posY, float angle, float scaleY, float speed, float ratio){
+    public Piston(World world, float posX, float posY, float angle, float scaleY, float speed, float delay, float ratio){
         
         this.scale = 1;       
         this.texturePath = OBJECT_ARRAY[0];      
@@ -48,7 +50,7 @@ public class Piston extends ObstacleObject2D{
         this.scaleY = scaleY;
         this.height = 76 * P2M * this.scale * this.scaleY;
         
-        this.pistonHead = new PistonHead(world, posX, posY, angle, this.height, speed, ratio);
+        this.pistonHead = new PistonHead(world, posX, posY, angle, this.height, speed, delay, ratio);
         
         // Part graphic
         this.assignTextures();
@@ -172,16 +174,22 @@ public class Piston extends ObstacleObject2D{
         private float height;
         private float pistonHeight;
         private float ratio;
+        private float delay;
         
         private Vector2 direction;
+        
+        private DamageActionFixture damageActionFixture;
+        
+        private StateNode pistonStateNode;
     
-        public PistonHead(World world, float posX, float posY, float angle, float height, float speed, float ratio){
+        public PistonHead(World world, float posX, float posY, float angle, float height, float speed, float delay, float ratio){
 
             this.angle = angle;
             this.speed = speed;
             this.height = height;
             this.pistonHeight = 112 * P2M * this.scale;
             this.ratio = ratio;
+            this.delay = delay;
             
             this.startPosition = new Vector2(posX * P2M, posY * P2M); 
             
@@ -222,10 +230,24 @@ public class Piston extends ObstacleObject2D{
             fix.setUserData(this);
             this.collisionFixture.add(fix);
 
+            ground = new PolygonShape();
+            ground.setAsBox(75f * P2M * this.scale, 2f * P2M * this.scale, new Vector2(0, 98 * P2M * this.scale), 0);
+            fixtureDef.shape = ground;
+            Set<Fixture> setFixtures = new HashSet();
+            fix = groundBody.createFixture(fixtureDef); 
+            setFixtures.add(fix);
+            ground.setAsBox(75f * P2M * this.scale, 2f * P2M * this.scale, new Vector2(0, -98 * P2M * this.scale), 0);
+            fixtureDef.shape = ground;
+            fix = groundBody.createFixture(fixtureDef); 
+            setFixtures.add(fix);
+            this.damageActionFixture = new DamageActionFixture(setFixtures, 4);
+            
             this.physicBody = groundBody;
             this.physicBody.setTransform(this.getPositionBody(), this.angle);
             
             this.physicBody.setLinearVelocity(this.direction);
+            
+            this.pistonStateNode = new StateNode(Piston.PistonState.MOVE);
         }
         
         public void assignTextures(Texture texture){
@@ -245,17 +267,12 @@ public class Piston extends ObstacleObject2D{
         public void updateLogic(float deltaTime){
             super.updateLogic(deltaTime);
 
-            if(this.physicBody != null){
-                Vector2 displacementDirection = this.getPositionBody().sub(this.startPosition);
-                float sameDirection = displacementDirection.dot(this.direction);
-
-                if(sameDirection > 1){         
-                    float length2 = displacementDirection.len2();
-                    if(length2 > this.pistonHeight * this.pistonHeight){   
-                        this.direction = this.direction.scl(-1);
-                        this.physicBody.setLinearVelocity(this.direction);
-                    }
-                }      
+            this.damageActionFixture.applyAction(deltaTime, this);
+            
+            StateNode nextStateNode = this.pistonStateNode.updateStateNode(deltaTime, this);
+            
+            if(nextStateNode != null){
+                this.pistonStateNode = nextStateNode;
             }
         }
         
@@ -281,6 +298,85 @@ public class Piston extends ObstacleObject2D{
 
             this.setTransform(initPosition.x, initPosition.y, this.angle);
             this.physicBody.setLinearVelocity(this.direction);
+            
+            this.pistonStateNode = new StateNode(Piston.PistonState.MOVE);
         }
+        
+        protected class StateNode{
+            private Piston.PistonState stateNode;
+            
+            private float currentStopTime;
+
+            public StateNode(Piston.PistonState state){
+                this.stateNode = state;
+                
+                this.currentStopTime = 0;
+            }
+
+            // Part nextNode
+            public StateNode updateStateNode(float deltaTime, PistonHead parent){
+                switch(this.getStateNode()){
+                    case MOVE:
+                        return this.updateNodeMove(deltaTime, parent);
+                    case STOP:
+                        return this.updateNodeStop(deltaTime, parent);
+
+                } 
+                return null;
+            }
+
+            private StateNode updateNodeStop(float deltaTime, PistonHead parent){
+
+                if(parent.physicBody != null){
+                    this.currentStopTime += deltaTime;
+
+                    if(this.currentStopTime > parent.delay){
+                        parent.physicBody.setLinearVelocity(parent.direction);
+
+                        return new StateNode(Piston.PistonState.MOVE);
+                    }
+                }
+                
+                return null;
+            }
+
+            private StateNode updateNodeMove(float deltaTime, PistonHead parent){
+
+                if(parent.physicBody != null){
+                    
+                    Vector2 displacementDirection = parent.getPositionBody().sub(parent.startPosition);
+                    float sameDirection = displacementDirection.dot(parent.direction);
+
+                    if(sameDirection > 1){         
+                        float length2 = displacementDirection.len2();
+                        if(length2 > parent.pistonHeight * parent.pistonHeight){
+                            Vector2 finalPosition = (new Vector2(parent.startPosition)).add((new Vector2(parent.direction)).setLength(parent.pistonHeight));                     
+                            parent.setTransform(finalPosition.x, finalPosition.y, parent.angle);
+                            
+                            parent.direction = parent.direction.scl(-1);
+                            parent.physicBody.setLinearVelocity(Vector2.Zero);
+                            
+                            return new StateNode(Piston.PistonState.STOP);
+                        }
+                    } 
+                }
+                
+                return null;
+            }
+
+
+            /**
+             * @return the stateNode
+             */
+            public Piston.PistonState getStateNode() {
+                return stateNode;
+            }
+        }
+    
+    }
+    
+    protected enum PistonState{
+        MOVE,
+        STOP
     }
 }

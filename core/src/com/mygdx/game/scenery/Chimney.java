@@ -233,6 +233,10 @@ public class Chimney extends Character2D{
         // Part nextNode
         public StateNode getNextStateNode(){
 
+            if(Chimney.this.getLifePoints() <= 0){
+                return new StateNode(Chimney.ChimneyState.DEAD);
+            }
+            
             switch(this.getStateNode()){
                 case STOP:
                     return getNextNodeStop();
@@ -296,7 +300,8 @@ public class Chimney extends Character2D{
     
     protected enum ChimneyState{
         STOP,
-        ATTACK
+        ATTACK,
+        DEAD
     }
 
     protected enum ChimneyInfluence{
