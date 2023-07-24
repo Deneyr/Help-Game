@@ -179,6 +179,7 @@ public class Piston extends ObstacleObject2D{
         private Vector2 direction;
         
         private DamageActionFixture damageActionFixture;
+        private KinematicActionFixture kinematicActionFixture;
         
         private StateNode pistonStateNode;
     
@@ -230,17 +231,31 @@ public class Piston extends ObstacleObject2D{
             fix.setUserData(this);
             this.collisionFixture.add(fix);
 
+            // Crush damage fictures (one top, one bottom)
             ground = new PolygonShape();
-            ground.setAsBox(75f * P2M * this.scale, 2f * P2M * this.scale, new Vector2(0, 98 * P2M * this.scale), 0);
+            ground.setAsBox(72f * P2M * this.scale, 2f * P2M * this.scale, new Vector2(0, 98 * P2M * this.scale), 0);
             fixtureDef.shape = ground;
             Set<Fixture> setFixtures = new HashSet();
             fix = groundBody.createFixture(fixtureDef); 
             setFixtures.add(fix);
-            ground.setAsBox(75f * P2M * this.scale, 2f * P2M * this.scale, new Vector2(0, -98 * P2M * this.scale), 0);
+            ground.setAsBox(72f * P2M * this.scale, 2f * P2M * this.scale, new Vector2(0, -98 * P2M * this.scale), 0);
             fixtureDef.shape = ground;
             fix = groundBody.createFixture(fixtureDef); 
             setFixtures.add(fix);
             this.damageActionFixture = new DamageActionFixture(setFixtures, 4);
+            
+            // Kinematic action fixtures (one left, one right)
+            ground = new PolygonShape();
+            ground.setAsBox(5f * P2M * this.scale, 110f * P2M * this.scale, new Vector2(-75 * P2M * this.scale, 0), 0);
+            fixtureDef.shape = ground;
+            setFixtures = new HashSet();
+            fix = groundBody.createFixture(fixtureDef); 
+            setFixtures.add(fix);
+            ground.setAsBox(5f * P2M * this.scale, 110f * P2M * this.scale, new Vector2(75 * P2M * this.scale, 0), 0);
+            fixtureDef.shape = ground;
+            fix = groundBody.createFixture(fixtureDef); 
+            setFixtures.add(fix);
+            this.kinematicActionFixture = new KinematicActionFixture(setFixtures);
             
             this.physicBody = groundBody;
             this.physicBody.setTransform(this.getPositionBody(), this.angle);
@@ -268,6 +283,7 @@ public class Piston extends ObstacleObject2D{
             super.updateLogic(deltaTime);
 
             this.damageActionFixture.applyAction(deltaTime, this);
+            this.kinematicActionFixture.applyAction(deltaTime, this);
             
             StateNode nextStateNode = this.pistonStateNode.updateStateNode(deltaTime, this);
             

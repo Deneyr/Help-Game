@@ -14,11 +14,11 @@ import com.mygdx.game.Object2D;
  */
 public class DirectCannonCorpus extends CannonCorpus{
     
-    public DirectCannonCorpus(World world, Object2D target, float posX, float posY, float angle) {
+    public DirectCannonCorpus(World world, Object2D target, float posX, float posY, float angle, float attackCooldown) {
         super(world, target, posX, posY, angle);
         
         // Child
-        this.cannon = new Cannon(this.physicBody, target, world, posX , posY);
+        this.cannon = new Cannon(this.physicBody, target, world, posX , posY, attackCooldown);
         
         // Part graphic
         this.assignTextures();

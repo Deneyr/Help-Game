@@ -259,10 +259,10 @@ public class Lvl1GameNode extends LvlGameNode{
         
         // Cannon
         
-        CannonCorpus cannon = new AutoCannonCorpus(game.getGameWorld().getWorld(), hero, -3400f, -170f, 0, false, 1);
+        CannonCorpus cannon = new AutoCannonCorpus(game.getGameWorld().getWorld(), hero, -3400f, -170f, 0, 2f, false, 1);
         game.getGameWorld().addObject2DToWorld(cannon, true);
         
-        cannon = new AutoCannonCorpus(game.getGameWorld().getWorld(), hero, -3800f, -100f, (float) -Math.PI / 2, false, 0);
+        cannon = new AutoCannonCorpus(game.getGameWorld().getWorld(), hero, -3800f, -100f, (float) -Math.PI / 2, 2f, false, 0);
         game.getGameWorld().addObject2DToWorld(cannon, true);
         
         opp = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -3800f, 130);

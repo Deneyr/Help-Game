@@ -1,9 +1,10 @@
-//18.536854;0.19631913
+//67.3455;0.19723925
 
 Chimney chimney;
 ObstacleTestBlock obstacleTestBlock;
 Piston piston;
 GrandUltima grandUltima;
+AutoCannonCorpus autoCannonCorpus;
 
 
 chimney = new Chimney(game.getGameWorld().getWorld(), -226.0f, -7.5305786f, 0.0f, 1.0f, 4.0f, 3.0f); //com.mygdx.game.scenery.ChimneyWXYA1f4f3f
@@ -21,6 +22,24 @@ game.getGameWorld().addObject2DToWorld(piston, true);
 piston = new Piston(game.getGameWorld().getWorld(), 1084.575f, -120.69745f, 0.0f, 2.0f, 10.0f, 2.5f, 0.0f); //com.mygdx.game.scenery.PistonWXYA2f10f2.5f0f
 game.getGameWorld().addObject2DToWorld(piston, true);
 
-grandUltima = new GrandUltima(game.getGameWorld().getWorld(), 799.90576f, 8.376283f); //characters.GrandUltimaWXY
+grandUltima = new GrandUltima(game.getGameWorld().getWorld(), 2882.408f, 8.415542f); //characters.GrandUltimaWXY
 game.getGameWorld().addObject2DToWorld(grandUltima, true);
+
+piston = new Piston(game.getGameWorld().getWorld(), 1835.0586f, -14.927002f, -1.5661536f, 2.0f, 10.0f, 2.5f, 0.0f); //com.mygdx.game.scenery.PistonWXYA2f10f2.5f0f
+game.getGameWorld().addObject2DToWorld(piston, true);
+
+piston = new Piston(game.getGameWorld().getWorld(), 1491.562f, -42.280884f, 0.0f, 2.0f, 10.0f, 2.5f, 0.0f); //com.mygdx.game.scenery.PistonWXYA2f10f2.5f0f
+game.getGameWorld().addObject2DToWorld(piston, true);
+
+piston = new Piston(game.getGameWorld().getWorld(), 1490.562f, 717.71906f, -3.1337821f, 2.0f, 10.0f, 2.5f, 0.0f); //com.mygdx.game.scenery.PistonWXYA2f10f2.5f0f
+game.getGameWorld().addObject2DToWorld(piston, true);
+
+autoCannonCorpus = new AutoCannonCorpus(game.getGameWorld().getWorld(), hero, 2744.8132f, 5.8217773f, 0.0f, true, 0); //com.mygdx.game.scenery.AutoCannonCorpusWcom.mygdx.game.Object2DXYAtrue0i
+game.getGameWorld().addObject2DToWorld(autoCannonCorpus, true);
+
+autoCannonCorpus = new AutoCannonCorpus(game.getGameWorld().getWorld(), hero, 2929.408f, 218.58453f, -1.0349216f, true, 0); //com.mygdx.game.scenery.AutoCannonCorpusWcom.mygdx.game.Object2DXYAtrue0i
+game.getGameWorld().addObject2DToWorld(autoCannonCorpus, true);
+
+autoCannonCorpus = new AutoCannonCorpus(game.getGameWorld().getWorld(), hero, 3156.408f, 160.91553f, -1.998304f, true, 0); //com.mygdx.game.scenery.AutoCannonCorpusWcom.mygdx.game.Object2DXYAtrue0i
+game.getGameWorld().addObject2DToWorld(autoCannonCorpus, true);
 

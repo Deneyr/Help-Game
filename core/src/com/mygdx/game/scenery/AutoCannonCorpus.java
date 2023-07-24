@@ -14,16 +14,17 @@ import com.mygdx.game.Object2D;
  */
 public class AutoCannonCorpus extends CannonCorpus{
    
-    public AutoCannonCorpus(World world, Object2D target, float posX, float posY, float angle, boolean isMovable, int startDirTargeted) {
+    public AutoCannonCorpus(World world, Object2D target, float posX, float posY, float angle, float attackCooldown, boolean isMovable, int startDirTargeted) {
         super(world, target, posX, posY, angle);
         
         // Child
-        this.cannon = new AutoCannon(this.physicBody, target, world, posX , posY, isMovable, startDirTargeted, angle);
+        this.cannon = new AutoCannon(this.physicBody, target, world, posX , posY, attackCooldown, isMovable, CannonPosition.fromInteger(startDirTargeted));
         
         // Part graphic
         this.assignTextures();
     }
     
+    /*
     public AutoCannonCorpus(World world, Object2D target, float posX, float posY, float angle) {
         super(world, target, posX, posY, angle);
         
@@ -32,7 +33,7 @@ public class AutoCannonCorpus extends CannonCorpus{
         
         // Part graphic
         this.assignTextures();
-    }
+    }*/
    
     
 }

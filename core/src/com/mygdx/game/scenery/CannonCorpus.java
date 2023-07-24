@@ -139,6 +139,11 @@ public abstract class CannonCorpus extends SolidObject2D{
     }
     
     @Override
+    public void ReinitPlatform(World world){
+        this.cannon.ReinitPlatform(world);
+    }
+    
+    @Override
     public void addObject2DStateListener(Object2DStateListener object2DStateListener){
         this.cannon.addObject2DStateListener(object2DStateListener);
     }
@@ -146,8 +151,6 @@ public abstract class CannonCorpus extends SolidObject2D{
     public class Cannon extends Character2D{
 
         private Joint joint;
-        
-        private int angularDir = -1;
         
         protected Object2D target;
 
@@ -158,7 +161,7 @@ public abstract class CannonCorpus extends SolidObject2D{
         
         protected float attackCooldown;
         
-        public Cannon(Body ownerBody, Object2D target, World world, float posX, float posY) {
+        public Cannon(Body ownerBody, Object2D target, World world, float posX, float posY, float attackCooldown) {
             super(100);
             
             this.target = target;
@@ -170,7 +173,7 @@ public abstract class CannonCorpus extends SolidObject2D{
             
             this.canAttack = true;
             
-            this.attackCooldown = 2;
+            this.attackCooldown = attackCooldown;
             
             // Part physic
             this.collisionFixture = new ArrayList<Fixture>();
@@ -488,17 +491,17 @@ public abstract class CannonCorpus extends SolidObject2D{
                         Cannon.this.physicBody.applyAngularImpulse((float) (10000 * deltaTime * Math.PI / 180), true);
                     }
 
-                    if(Cannon.this.physicBody.getAngle() > 0){
+                    /*if(Cannon.this.physicBody.getAngle() > 0){
                         Cannon.this.angularDir = -1;
-                    }
+                    }*/
                 }else{
                     if(Cannon.this.physicBody.getAngle() > -(Math.PI / 2 + 0.2)){
                         Cannon.this.physicBody.applyAngularImpulse((float) (-10000 * deltaTime * Math.PI / 180), true);
                     }
 
-                    if(Cannon.this.physicBody.getAngle() < -Math.PI){
+                    /*if(Cannon.this.physicBody.getAngle() < -Math.PI){
                         Cannon.this.angularDir = 1;
-                    }
+                    }*/
                 }
 
             }
@@ -515,91 +518,67 @@ public abstract class CannonCorpus extends SolidObject2D{
     
     public class AutoCannon extends Cannon{
         
-        private int cannonDirTargeted;
+        private CannonPosition startCannonDirTargeted;
+        private CannonPosition cannonDirTargeted;
         
         private boolean isMovable;
         
         private float parentAngle;
         
-        public AutoCannon(Body ownerBody, Object2D target, World world, float posX, float posY, boolean isMovable, int startDirTargeted, float parentAngle) {
-            super(ownerBody, target, world, posX, posY);
+        public AutoCannon(Body ownerBody, Object2D target, World world, float posX, float posY, float attackCooldown, boolean isMovable, CannonPosition startDirTargeted) {
+            super(ownerBody, target, world, posX, posY, attackCooldown);
             
-            if(isMovable){
-                this.attackCooldown = 1f;               
+            /*if(isMovable){
+                this.attackCooldown = 5f;               
             }else{
                 this.attackCooldown = 2f;
-            }
+            }*/
             
-            this.cannonDirTargeted = startDirTargeted;
+            this.startCannonDirTargeted = startDirTargeted;
             
             this.isMovable = isMovable;
             
             this.isInvulnerable = false;
             
-            this.parentAngle = (float) (parentAngle * 180 / Math.PI);
+            this.InitCannonPosition();
         }
         
+        /*
         public AutoCannon(Body ownerBody, Object2D target, World world, float posX, float posY) {
             super(ownerBody, target, world, posX, posY);
             
             this.attackCooldown = 0.7f;
             
-            this.cannonDirTargeted = 0;
+            this.cannonDirTargeted = CannonPosition.TOP;
             
             this.isMovable = true;
             
             this.isInvulnerable = false;
             
             this.parentAngle = 0;
+        }*/
+        
+        @Override
+        public void ReinitPlatform(World world){
+            this.InitCannonPosition();
         }
         
         @Override
         protected void createInfluences(){
-            float angleTargeted = this.parentAngle - 90;
-            float angleCannon = (float) (this.physicBody.getAngle() * 180 / Math.PI);
-            int nextDirTargeted = this.cannonDirTargeted;
-            switch(this.cannonDirTargeted){
-                case -1:
-                    angleTargeted = this.parentAngle;
-                    break;
-                case 0:
-                    angleTargeted = this.parentAngle - 90; 
-                    break;
-                case 2:
-                    angleTargeted = this.parentAngle - 90; 
-                    break;
-                case 1:
-                    angleTargeted = this.parentAngle - 180;
-                    break;
-            }
             
-            if(this.isMovable){
-                switch(this.cannonDirTargeted){
-                    case -1:
-                        nextDirTargeted = 0;
-                        break;
-                    case 0:
-                        nextDirTargeted = 1;
-                        break;
-                    case 2:
-                        nextDirTargeted = -1;
-                        break;
-                    case 1:
-                        nextDirTargeted = 2;
-                        break;
-                }
-            }
+            float angleTargeted = this.GetAngleFromCannonPosition(this.cannonDirTargeted);
+            float angleCannon = (float) Math.toDegrees(this.physicBody.getAngle());
             
             float diffAngle = angleTargeted - angleCannon;
             diffAngle = (diffAngle + 180) % 360 - 180;
             if(Math.abs(angleCannon - angleTargeted) < 4){
                 if(Math.abs(angleCannon - angleTargeted) > 0.5){
-                    this.physicBody.setTransform(this.getPositionBody(), (float) (angleTargeted * Math.PI / 180));
+                    this.physicBody.setTransform(this.getPositionBody(), (float) Math.toRadians(angleTargeted));
                 }
                 
                 this.influences.add(CannonInfluence.ATTACK);
                 
-                this.cannonDirTargeted = nextDirTargeted;
+                //this.cannonDirTargeted = nextDirTargeted;
             }else if(diffAngle < 0){
                 this.influences.add(CannonInfluence.GO_RIGHT);
             }else{
@@ -618,29 +597,12 @@ public abstract class CannonCorpus extends SolidObject2D{
                 
                 this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "hitPunch", new Vector2(this.getPositionBody()));
 
-                Vector2 dirCannon = new Vector2(0, 1).rotate(this.parentAngle);
-                float signHitDir = dirDamage.crs(dirCannon);
-                
-                switch(this.cannonDirTargeted){
-                    case -1:
-                        if(signHitDir > 0){
-                            this.cannonDirTargeted = 0;
-                        }
-                        break;
-                    case 0:
-                    case 2:
-                        if(signHitDir > 0){
-                            this.cannonDirTargeted = 1;
-                        }else{
-                            this.cannonDirTargeted = -1;
-                        }
-                        break;
-                    case 1:
-                        if(signHitDir < 0){
-                            this.cannonDirTargeted = 0;
-                        }
-                        break;
-                }
+                //float angleCannon = (float) Math.toDegrees(this.physicBody.getAngle());
+                Vector2 dirCannon = new Vector2(0, 1).rotate((float) Math.toDegrees(CannonCorpus.this.getAngleBody()));
+                Vector2 dirOwner = CannonCorpus.this.getPositionBody().sub(damageOwner.getPositionBody());
+                float signHitDir = dirOwner.crs(dirCannon);
+               
+                this.NextCannonPosition(signHitDir);
                 
                 this.isInvulnerable = true;
             
@@ -657,11 +619,76 @@ public abstract class CannonCorpus extends SolidObject2D{
             return false;
         }
         
+        private void InitCannonPosition(){
+            this.cannonDirTargeted = this.startCannonDirTargeted;
+            this.parentAngle = (float) Math.toDegrees(CannonCorpus.this.getAngleBody());
+            
+            float angleTargeted = this.GetAngleFromCannonPosition(this.cannonDirTargeted);
+            
+            this.physicBody.setTransform(this.getPositionBody(), (float) Math.toRadians(angleTargeted));
+        }
+        
+        private float GetAngleFromCannonPosition(CannonPosition cannonPosition){
+            float cannonAngle = 0;
+            switch(cannonPosition){
+                case RIGHT:
+                    cannonAngle = this.parentAngle;
+                    break;
+                case TOP:
+                    cannonAngle = this.parentAngle - 90; 
+                    break;
+                case LEFT:
+                    cannonAngle = this.parentAngle - 180;
+                    break;
+            }
+            return cannonAngle;
+        }
+        
+        private void NextCannonPosition(float signHitDir){
+            switch(this.cannonDirTargeted){
+                case RIGHT:
+                    if(signHitDir > 0){
+                        this.cannonDirTargeted = CannonPosition.TOP;
+                    }
+                    break;
+                case TOP:
+                    if(signHitDir > 0){
+                        this.cannonDirTargeted = CannonPosition.LEFT;
+                    }else if(signHitDir < 0){
+                        this.cannonDirTargeted = CannonPosition.RIGHT;
+                    } 
+                    break;
+                case LEFT:
+                    if(signHitDir < 0){
+                        this.cannonDirTargeted = CannonPosition.TOP;
+                    }
+                    break;
+            }
+        }
+        
         @Override
         public boolean applyDamage(int damage, Vector2 dirDamage, Object2D damageOwner, Vector2 ptApplication){
             return this.applyDamage(damage, dirDamage, damageOwner);
         }
         
+    }
+    
+    protected enum CannonPosition{
+        LEFT,
+        RIGHT,
+        TOP;
+        
+        public static CannonPosition fromInteger(int x) {
+            switch(x) {
+            case 0:
+                return TOP;
+            case 1:
+                return LEFT;
+            case 2:
+                return RIGHT;
+            }
+            return null;
+        }
     }
     
     protected enum CannonState{

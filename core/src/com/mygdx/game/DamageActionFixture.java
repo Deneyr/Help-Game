@@ -16,11 +16,11 @@ import java.util.Set;
  */
 public class DamageActionFixture extends ActionFixtures{
     
-    private int damageInflicted;
+    protected int damageInflicted;
     
-    private boolean encounterSomething;
+    protected boolean encounterSomething;
     
-    private boolean canBeApplied;
+    protected boolean canBeApplied;
     
     public DamageActionFixture(Set<Fixture> fixtures, int damageInflicted){
         super(fixtures);

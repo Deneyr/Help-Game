@@ -240,9 +240,9 @@ public class Grandma extends Character2D{
         if(this.side != this.previousSide){
             updateFixture();
             if(this.side == SideCharacter.LEFT){
-                this.physicBody.setTransform(this.physicBody.getPosition().x - LEFT_RIGHT_DIST * P2M, this.physicBody.getPosition().y, 0);
+                this.physicBody.setTransform(this.physicBody.getPosition().x - LEFT_RIGHT_DIST * 1.4f * P2M, this.physicBody.getPosition().y, 0);
             }else{
-                this.physicBody.setTransform(this.physicBody.getPosition().x + LEFT_RIGHT_DIST * P2M, this.physicBody.getPosition().y, 0);
+                this.physicBody.setTransform(this.physicBody.getPosition().x + LEFT_RIGHT_DIST * 1.4f * P2M, this.physicBody.getPosition().y, 0);
             }
             this.previousSide = this.side;
             
