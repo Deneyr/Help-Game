@@ -41,7 +41,7 @@ import triggered.CannonBallTriggeredObject2D;
  */
 public abstract class CannonCorpus extends SolidObject2D{
     
-    private static final String CANNONCORPUSTEXT = "CannonCorpus.png";
+    private static final String CANNONCORPUSTEXT = "Danger_Canon_Socle_Interactif_V2.png";
     private static final String CANNONTEXT = "Cannon.png";
     
     protected static final float SCALE_X = 1f;
@@ -108,6 +108,26 @@ public abstract class CannonCorpus extends SolidObject2D{
         
         if(this.texture != null
                 && cannon != null){
+            
+            TextureRegion[][] tmp = TextureRegion.split(this.texture, 118, 60);
+            
+            Array<TextureRegion> array = new Array<TextureRegion>();
+            array.add(tmp[0][2]);
+            this.listAnimations.add(new Animation(0.2f, array, Animation.PlayMode.LOOP));
+            
+            array = new Array<TextureRegion>();
+            array.add(tmp[0][1]);
+            this.listAnimations.add(new Animation(0.2f, array, Animation.PlayMode.LOOP));
+            
+            array = new Array<TextureRegion>();
+            array.add(tmp[0][3]);
+            this.listAnimations.add(new Animation(0.2f, array, Animation.PlayMode.LOOP));
+            
+            array = new Array<TextureRegion>();
+            array.add(tmp[0][0]);
+            this.listAnimations.add(new Animation(0.2f, array, Animation.PlayMode.LOOP));
+
+            this.changeAnimation(3, true);
             
             this.cannon.assignTextures(cannon);
         }
@@ -296,10 +316,10 @@ public abstract class CannonCorpus extends SolidObject2D{
                 array = new Array<TextureRegion>(tmp[0]);
                 this.listAnimations.add(new Animation(0.1f, array));        
                 
-                this.changeAnimation(0, false);
+                this.changeAnimation(0, false);               
             }
         }
-    
+        
         @Override
         public void removeBody(World world){
             if(this.physicBody != null){
@@ -628,6 +648,24 @@ public abstract class CannonCorpus extends SolidObject2D{
         }*/
         
         @Override
+        public void assignTextures(Texture texture){
+
+            super.assignTextures(texture);
+            
+            this.UpdateCannonPosition();
+        }
+        
+        private void UpdateCannonPosition(){
+            if(this.texture != null){
+                if(this.isMovable){
+                    CannonCorpus.this.changeAnimation(CannonPosition.toInteger(this.cannonDirTargeted), true);
+                }else{
+                    CannonCorpus.this.changeAnimation(3, true);
+                }
+            }
+        }
+        
+        @Override
         public void ReinitPlatform(World world){
             this.InitCannonPosition();
         }
@@ -658,7 +696,8 @@ public abstract class CannonCorpus extends SolidObject2D{
         @Override
         public boolean applyDamage(int damage, Vector2 dirDamage, Object2D damageOwner){
 
-            if(this.isInvulnerable){
+            if(this.isMovable == false
+                    || this.isInvulnerable){
                 return false;
             }
             
@@ -692,7 +731,7 @@ public abstract class CannonCorpus extends SolidObject2D{
         }
         
         private void InitCannonPosition(){
-            this.cannonDirTargeted = this.startCannonDirTargeted;
+            this.setCannonDirTargeted(this.startCannonDirTargeted);
             this.parentAngle = (float) Math.toDegrees(CannonCorpus.this.getAngleBody());
             
             float angleTargeted = this.GetAngleFromCannonPosition(this.cannonDirTargeted);
@@ -703,13 +742,13 @@ public abstract class CannonCorpus extends SolidObject2D{
         private float GetAngleFromCannonPosition(CannonPosition cannonPosition){
             float cannonAngle = 0;
             switch(cannonPosition){
-                case RIGHT:
+                case LEFT:
                     cannonAngle = this.parentAngle;
                     break;
                 case TOP:
                     cannonAngle = this.parentAngle - 90; 
                     break;
-                case LEFT:
+                case RIGHT:
                     cannonAngle = this.parentAngle - 180;
                     break;
             }
@@ -719,20 +758,20 @@ public abstract class CannonCorpus extends SolidObject2D{
         private void NextCannonPosition(float signHitDir){
             switch(this.cannonDirTargeted){
                 case RIGHT:
-                    if(signHitDir > 0){
-                        this.cannonDirTargeted = CannonPosition.TOP;
+                    if(signHitDir < 0){
+                        this.setCannonDirTargeted(CannonPosition.TOP);
                     }
                     break;
                 case TOP:
                     if(signHitDir > 0){
-                        this.cannonDirTargeted = CannonPosition.LEFT;
+                        this.setCannonDirTargeted(CannonPosition.RIGHT);
                     }else if(signHitDir < 0){
-                        this.cannonDirTargeted = CannonPosition.RIGHT;
+                        this.setCannonDirTargeted(CannonPosition.LEFT);
                     } 
                     break;
                 case LEFT:
-                    if(signHitDir < 0){
-                        this.cannonDirTargeted = CannonPosition.TOP;
+                    if(signHitDir > 0){
+                        this.setCannonDirTargeted(CannonPosition.TOP);
                     }
                     break;
             }
@@ -743,6 +782,15 @@ public abstract class CannonCorpus extends SolidObject2D{
             return this.applyDamage(damage, dirDamage, damageOwner);
         }
         
+        /**
+         * @param cannonDirTargeted the cannonDirTargeted to set
+         */
+        public void setCannonDirTargeted(CannonPosition cannonDirTargeted) {
+            this.cannonDirTargeted = cannonDirTargeted;
+            
+            this.UpdateCannonPosition();
+        }
+        
     }
     
     protected enum CannonPosition{
@@ -750,8 +798,8 @@ public abstract class CannonCorpus extends SolidObject2D{
         RIGHT,
         TOP;
         
-        public static CannonPosition fromInteger(int x) {
-            switch(x) {
+        public static CannonPosition fromInteger(int cannonPosition) {
+            switch(cannonPosition) {
             case 0:
                 return TOP;
             case 1:
@@ -760,6 +808,18 @@ public abstract class CannonCorpus extends SolidObject2D{
                 return RIGHT;
             }
             return null;
+        }
+        
+        public static int toInteger(CannonPosition cannonPosition) {
+            switch(cannonPosition) {
+            case TOP:
+                return 0;
+            case LEFT:
+                return 1;
+            case RIGHT:
+                return 2;
+            }
+            return 0;
         }
     }
     

@@ -234,12 +234,12 @@ public class Piston extends ObstacleObject2D{
 
             // Crush damage fictures (one top, one bottom)
             ground = new PolygonShape();
-            ground.setAsBox(72f * P2M * this.scale, 2f * P2M * this.scale, new Vector2(0, 98 * P2M * this.scale), 0);
+            ground.setAsBox(70f * P2M * this.scale, 2f * P2M * this.scale, new Vector2(0, 98 * P2M * this.scale), 0);
             fixtureDef.shape = ground;
             Set<Fixture> setFixtures = new HashSet();
             fix = groundBody.createFixture(fixtureDef); 
             setFixtures.add(fix);
-            ground.setAsBox(72f * P2M * this.scale, 2f * P2M * this.scale, new Vector2(0, -98 * P2M * this.scale), 0);
+            ground.setAsBox(70f * P2M * this.scale, 2f * P2M * this.scale, new Vector2(0, -98 * P2M * this.scale), 0);
             fixtureDef.shape = ground;
             fix = groundBody.createFixture(fixtureDef); 
             setFixtures.add(fix);
