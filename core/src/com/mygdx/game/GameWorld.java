@@ -72,6 +72,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
     
     // Screen shake
     private float shakeTime;
+    private float shakeIntensity;
+    private float shakeTotalTime;
     private Vector2 targetOffsetCameraPoint;
     private Vector2 offsetCameraPoint;
     
@@ -105,6 +107,8 @@ public class GameWorld implements WorldPlane, GameEventListener{
         
         // Screen shake       
         this.shakeTime = -1;
+        this.shakeIntensity = 0;
+        this.shakeTotalTime = 0;
         this.targetOffsetCameraPoint = null;
         this.offsetCameraPoint = new Vector2(0, 0);
     }
@@ -352,16 +356,30 @@ public class GameWorld implements WorldPlane, GameEventListener{
                     cinematicManager.reset();
                 }
                 break;
-            case ATTACK:
+            /*case ATTACK:
                 if(details.equals("hitPunch")){
-                    this.shakeTime = 0;
-                    this.offsetCameraPoint = new Vector2(0, 0);
-                    this.targetOffsetCameraPoint = new Vector2((float) Math.random() * 0.2f, (float) Math.random() * 0.2f);
+                    this.InitShakScreen(0.2f, 0.3f);
+                }
+                break;*/
+            case SHAKESCREEN:
+                Vector2 diffPosition = this.getCameraPosition().sub(location);
+                
+                if(this.screenFOV > 0 && diffPosition.len2() < this.screenFOV * this.screenFOV){
+                    String[] keys = details.split(":");
+                    this.InitShakScreen(Float.parseFloat(keys[0]), Float.parseFloat(keys[1]));
                 }
                 break;
         }
         
         this.notifyGameEventListeners(type, details, location);
+    }
+    
+    private void InitShakScreen(float shakeIntensity, float shakeTotalTime){
+        this.shakeTime = 0;
+        this.shakeIntensity = shakeIntensity;
+        this.shakeTotalTime = shakeTotalTime;
+        this.offsetCameraPoint = new Vector2(0, 0);
+        this.targetOffsetCameraPoint = new Vector2((float) Math.random() * this.shakeIntensity, (float) Math.random() * this.shakeIntensity);
     }
     
     private void updateShakingScreen(float deltaTime){
@@ -375,16 +393,16 @@ public class GameWorld implements WorldPlane, GameEventListener{
             
             if(offsetDir.dot(newOffsetDir) < 0){
                 this.offsetCameraPoint = this.targetOffsetCameraPoint;
-                this.targetOffsetCameraPoint = new Vector2((float) Math.random() * 0.2f, (float) Math.random() * 0.2f);
+                this.targetOffsetCameraPoint = new Vector2((float) Math.random() * this.shakeIntensity, (float) Math.random() * this.shakeIntensity);
                 
-                this.targetOffsetCameraPoint.setLength(this.targetOffsetCameraPoint.len() * (1 - this.shakeTime / 0.3f));
+                this.targetOffsetCameraPoint.setLength(this.targetOffsetCameraPoint.len() * (1 - this.shakeTime / this.shakeTotalTime));
             }else{
                 this.offsetCameraPoint = newOffset;
             }
             
             this.shakeTime += deltaTime;
             
-            if(this.shakeTime > 0.30){
+            if(this.shakeTime > this.shakeTotalTime){
                this.shakeTime = -1; 
                this.targetOffsetCameraPoint = null;
                this.offsetCameraPoint = new Vector2(0, 0);

@@ -181,7 +181,7 @@ public class Ventilo extends SolidObject2D{
         super.updateLogic(deltaTime);
         
         if(this.isWorking){
-            this.updateObject2D(deltaTime);
+            this.updateScaling(deltaTime);
             
             this.windActionFixture.applyAction(deltaTime, this);
             
@@ -193,7 +193,7 @@ public class Ventilo extends SolidObject2D{
         }
     }
     
-    protected void updateObject2D(float deltaTime){
+    protected void updateScaling(float deltaTime){
         float sign = 1;
         if(this.isIncrement == false){
             sign = -1;

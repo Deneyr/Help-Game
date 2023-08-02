@@ -23,6 +23,7 @@ public interface GameEventListener {
         ENDCINEMATIC,
         DAMAGE,
         ATTACK,
+        SHAKESCREEN, // Shake the screen
         LOWLIFE, // A character2D is near death (<25% lp)
         DEATH, // A character2D is dead.
         ACTION,

@@ -125,9 +125,9 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
     public Sprite createCurrentSprite(){
         Sprite sprite = super.createCurrentSprite();
         
-        if(sprite != null){
+        /*if(sprite != null){
             sprite.setColor(0.5f, 0.5f, 0.5f, 1f);
-        }
+        }*/
         return sprite;
     }
     

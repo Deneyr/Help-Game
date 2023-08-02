@@ -49,6 +49,9 @@ public abstract class CannonCorpus extends SolidObject2D{
     
     protected Cannon cannon;
     
+    private float totalScalingTime;
+    private float currentScalingTime;
+    private boolean isIncrement;
     
     public CannonCorpus(World world, Object2D target, float posX, float posY, float angle){
         
@@ -65,6 +68,10 @@ public abstract class CannonCorpus extends SolidObject2D{
         this.collisionFixture = new ArrayList<Fixture>();
         
         this.priority = 1;
+        
+        this.isIncrement = true;
+        this.totalScalingTime = 0.15f;
+        this.currentScalingTime = -1;
         
         // Create a polygon shape
         CircleShape circle = new CircleShape();
@@ -135,7 +142,62 @@ public abstract class CannonCorpus extends SolidObject2D{
     public void updateLogic(float deltaTime){  
         super.updateLogic(deltaTime);
         
+        this.updateScaling(deltaTime);
+        
         this.cannon.updateLogic(deltaTime);
+    }
+    
+    public void interactWith(){
+        this.currentScalingTime = 0;      
+    }
+    
+    protected void updateScaling(float deltaTime){
+        if(this.currentScalingTime >= 0 
+                && this.currentScalingTime < this.totalScalingTime){
+            
+            this.currentScalingTime += deltaTime;
+            
+            if(this.currentScalingTime < this.totalScalingTime){
+                float sign = 1;
+                if(this.isIncrement == false){
+                    sign = -1;
+                }
+
+                float scale = this.scale + sign * deltaTime * 3f;
+
+                float upperBound = 1.2f;
+                float lowerBound = 0.8f;
+
+                if(this.isIncrement){
+                    if(scale > upperBound){
+                        this.isIncrement = false;
+                        scale = upperBound;
+                    }
+                }else{
+                    if(scale < lowerBound){
+                        this.isIncrement = true;
+                        scale = lowerBound;
+                    }
+                }
+                
+                this.setScale(scale);
+            }else{
+                this.currentScalingTime = -1;
+                this.setScale(1);
+            }
+        }
+    }
+    
+    /**
+     * @param scale the scale to set
+     */
+    @Override
+    public void setScale(float scale) {    
+        super.setScale(scale);
+        
+        if(this.cannon != null){
+            this.cannon.setScale(scale);
+        }
     }
     
     @Override
@@ -209,12 +271,16 @@ public abstract class CannonCorpus extends SolidObject2D{
             jointDef.bodyA = ownerBody;
             jointDef.bodyB = this.physicBody;
             jointDef.localAnchorA.set(new Vector2(0,  0));
-            jointDef.localAnchorB.set(new Vector2(50 * P2M, 0));
+            jointDef.localAnchorB.set(new Vector2(60 * P2M, 0));
             jointDef.collideConnected = false;
             
             this.physicBody.setTransform(this.getPositionBody(), (float) (ownerBody.getAngle() - Math.PI / 4));
             
             this.joint = world.createJoint(jointDef);
+        }
+        
+        public void interactWith(){
+            CannonCorpus.this.interactWith();  
         }
         
         public void assignTextures(Texture texture){
@@ -322,11 +388,14 @@ public abstract class CannonCorpus extends SolidObject2D{
                 Timer.schedule(new Timer.Task(){
                         @Override
                         public void run() {
-                            Vector2 dirBall = new Vector2(-1, 0).rotate((float) (Cannon.this.physicBody.getAngle() * 180 / Math.PI));
-                            
-                            Cannon.this.notifyObject2D2CreateListener(CannonBallTriggeredObject2D.class, Cannon.this.getPositionBody().add(dirBall.scl(Cannon.this.texture.getWidth() / 10.5f * P2M)).scl(1 / P2M), dirBall.scl(160 * P2M));
-                            
-                            Cannon.this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "cannon", Cannon.this.getPositionBody());
+                            if(Cannon.this.physicBody != null){
+                                Vector2 dirBall = new Vector2(-1, 0).rotate((float) (Cannon.this.physicBody.getAngle() * 180 / Math.PI));
+
+                                Cannon.this.notifyObject2D2CreateListener(CannonBallTriggeredObject2D.class, Cannon.this.getPositionBody().add(dirBall.scl(Cannon.this.texture.getWidth() / 10.5f * P2M)).scl(1 / P2M), dirBall.scl(160 * P2M));
+
+                                Cannon.this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "cannon", Cannon.this.getPositionBody());
+                                Cannon.this.notifyGameEventListener(GameEventListener.EventType.SHAKESCREEN, "0.2:0.2", Cannon.this.getPositionBody());                               
+                            }
                         }
                         
                 }, 0.5f);
@@ -488,7 +557,7 @@ public abstract class CannonCorpus extends SolidObject2D{
             private void updateCannonMove(float deltaTime){
                 if(Cannon.this.side == SideCharacter.LEFT){
                     if(Cannon.this.physicBody.getAngle() < -(Math.PI / 2 - 0.2)){
-                        Cannon.this.physicBody.applyAngularImpulse((float) (10000 * deltaTime * Math.PI / 180), true);
+                        Cannon.this.physicBody.applyAngularImpulse((float) (20000 * deltaTime * Math.PI / 180), true);
                     }
 
                     /*if(Cannon.this.physicBody.getAngle() > 0){
@@ -496,7 +565,7 @@ public abstract class CannonCorpus extends SolidObject2D{
                     }*/
                 }else{
                     if(Cannon.this.physicBody.getAngle() > -(Math.PI / 2 + 0.2)){
-                        Cannon.this.physicBody.applyAngularImpulse((float) (-10000 * deltaTime * Math.PI / 180), true);
+                        Cannon.this.physicBody.applyAngularImpulse((float) (-20000 * deltaTime * Math.PI / 180), true);
                     }
 
                     /*if(Cannon.this.physicBody.getAngle() < -Math.PI){
@@ -595,7 +664,8 @@ public abstract class CannonCorpus extends SolidObject2D{
             
             if(damageOwner instanceof Character2D){
                 
-                this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "hitPunch", new Vector2(this.getPositionBody()));
+                this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "hitPunch", this.getPositionBody());
+                //this.notifyGameEventListener(GameEventListener.EventType.SHAKESCREEN, "0.2:0.3", this.getPositionBody());
 
                 //float angleCannon = (float) Math.toDegrees(this.physicBody.getAngle());
                 Vector2 dirCannon = new Vector2(0, 1).rotate((float) Math.toDegrees(CannonCorpus.this.getAngleBody()));
@@ -612,6 +682,8 @@ public abstract class CannonCorpus extends SolidObject2D{
                         AutoCannon.this.isInvulnerable = false;
                     }
                 }, this.timeInvulnerabilitySec);
+                
+                this.interactWith();
                 
                 return true;
             }

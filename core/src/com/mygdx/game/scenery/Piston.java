@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.DamageActionFixture;
+import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.KinematicActionFixture;
 import com.mygdx.game.SolidObject2D;
@@ -289,6 +290,14 @@ public class Piston extends ObstacleObject2D{
             
             if(nextStateNode != null){
                 this.pistonStateNode = nextStateNode;
+                
+                if(nextStateNode.getStateNode() == PistonState.STOP){
+                    Vector2 initDirection = (new Vector2(0, 1)).rotateRad(this.angle);
+                    
+                    if(initDirection.dot(this.direction) < 0){
+                        Piston.this.notifyGameEventListener(GameEventListener.EventType.SHAKESCREEN, "0.2:0.2", Piston.this.getPositionBody());
+                    }
+                }
             }
         }
         
