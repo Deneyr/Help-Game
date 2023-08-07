@@ -113,7 +113,7 @@ public abstract class AGearObject extends SolidObject2D{
     }
     
     @Override
-    public void dispose(){      
+    public void dispose(){
         if(this.gearActionFixture != null){
             this.gearActionFixture.dispose(this.physicBody);
         }

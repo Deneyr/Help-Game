@@ -13,10 +13,12 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.GameEventListener;
 import com.mygdx.game.GearActionFixture;
 import static com.mygdx.game.HelpGame.P2M;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import ressourcesmanagers.TextureManager;
 
 /**
@@ -29,6 +31,8 @@ public class FactoryGearWheelPlatform extends AGearObject {
         "factory/Help_Props_RouageBlanc_260x260.png",
         "factory/Help_Props_RouageNoir3_260x260.png"};  
     
+    protected final String id = UUID.randomUUID().toString(); 
+    
     protected int testBlockIndex;
     
     protected static final float SCALE_X = 1f;
@@ -40,6 +44,13 @@ public class FactoryGearWheelPlatform extends AGearObject {
         this.testBlockIndex = testBlockIndex;
         
         this.assignTextures();
+    }
+    
+    @Override
+    public void updateLogic(float deltaTime){
+        super.updateLogic(deltaTime);
+        
+        this.notifyGameEventListener(GameEventListener.EventType.LOOP, "gear" + ":" + this.id, this.getPositionBody());
     }
     
     @Override
@@ -119,5 +130,12 @@ public class FactoryGearWheelPlatform extends AGearObject {
             fix.setUserData(this);
             this.collisionFixture.add(fix);
         }
+    }
+    
+    @Override
+    public void dispose(){
+        this.notifyGameEventListener(GameEventListener.EventType.LOOP_STOP, "gear" + ":" + this.id, this.getPositionBody());
+        
+        super.dispose();
     }
 }
