@@ -108,7 +108,8 @@ public abstract class AGearObject extends SolidObject2D{
     
     @Override
     public void ReinitPlatform(World world){
-        this.setTransform(this.startPosition.x, this.startPosition.y, this.angle);
+        Vector2 currentPosition = this.getPositionBody();
+        this.setTransform(currentPosition.x, currentPosition.y, this.angle);
         this.physicBody.setAngularVelocity(this.rotationSpeed);
     }
     

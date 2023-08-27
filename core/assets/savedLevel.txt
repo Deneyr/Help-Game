@@ -1,4 +1,4 @@
-//65.178375;10.823724
+//87.8804;3.3716044
 
 Chimney chimney;
 ObstacleTestBlock obstacleTestBlock;
@@ -8,6 +8,7 @@ AutoCannonCorpus autoCannonCorpus;
 BigMetalBox bigMetalBox;
 MetalBox metalBox;
 FactoryGearWheelPlatform factoryGearWheelPlatform;
+LowerCityCabin lowerCityCabin;
 
 
 chimney = new Chimney(game.getGameWorld().getWorld(), -226.0f, -7.5305786f, 0.0f, 1.0f, 4.0f, 3.0f); //com.mygdx.game.scenery.ChimneyWXYA1f4f3f
@@ -53,4 +54,7 @@ game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
 factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 2757.7744f, 321.89978f, 1.9167746f, 1.0f, 10.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1f10f0i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
+
+lowerCityCabin = new LowerCityCabin(game.getGameWorld().getWorld(), 4188.5635f, 325.3551f, 0, 1.0f); //com.mygdx.game.scenery.LowerCityCabinWXY0i1f
+game.getGameWorld().addObject2DToWorld(lowerCityCabin, true);
 
