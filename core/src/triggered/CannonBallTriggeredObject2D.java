@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -62,7 +63,7 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
     
     @Override
     public void initialize(World world, Vector2 position, Vector2 speed) {
-        float radius = 25;
+        float radius = 20;
 
         super.initialize(world, position, speed, radius * 1.1f);
         
@@ -72,6 +73,7 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
         circle.setPosition(new Vector2(0, 0));
 
         FixtureDef fixtureDef = new FixtureDef();
+        this.setCollisionFilterMask(fixtureDef, false);
         
         fixtureDef.shape = circle;
         fixtureDef.density = 2f; 
@@ -91,9 +93,7 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
     @Override
     public void trigger(Object2D objThatTriggered){
         
-        if(!this.isTriggered && 
-                (objThatTriggered instanceof Character2D)){
-            
+        if(!this.isTriggered){
             Vector2 targetPhysicBody = new Vector2(objThatTriggered.getPositionBody());
             Vector2 dirDamage = targetPhysicBody.sub(this.getPositionBody());
             dirDamage = dirDamage.nor();
@@ -106,12 +106,33 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
                 this.changeAnimation(1, false);
 
                 super.trigger(objThatTriggered);
-            }else{
+            }else if(objThatTriggered instanceof Character2D){
                 Character2D chara = (Character2D) objThatTriggered;
                 
                 chara.applyDamage(50, dirDamage, this);
+            }else{
+                this.physicBody.setLinearVelocity(Vector2.Zero);
+                this.changeAnimation(1, false);
+                super.trigger(objThatTriggered);
             }
         }
+    }
+    
+    @Override
+    protected void SetBody(BodyDef bodyDef){
+        bodyDef.gravityScale = 0;
+    }
+    
+    @Override
+    protected void SetCollisionMask(FixtureDef fixtureDef){
+        fixtureDef.filter.categoryBits = 0x0004;
+        fixtureDef.filter.maskBits = 0x0003;
+    }
+    
+    @Override
+    protected void setCollisionFilterMask(FixtureDef fixtureDef, boolean reset){
+        fixtureDef.filter.categoryBits = 0x0004;
+        fixtureDef.filter.maskBits = 0x0003;
     }
     
     @Override
@@ -140,5 +161,10 @@ public class CannonBallTriggeredObject2D extends TriggeredObject2D{
             this.changeAnimation(1, false);
             super.trigger(reflecter);
         }
+    }
+    
+    @Override
+    public boolean IsDynamicObject(){
+        return true;
     }
 }

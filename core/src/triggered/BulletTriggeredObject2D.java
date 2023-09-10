@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -76,6 +77,7 @@ public class BulletTriggeredObject2D extends TriggeredObject2D{
         circle.setPosition(new Vector2(0, 0));
 
         FixtureDef fixtureDef = new FixtureDef();
+        this.setCollisionFilterMask(fixtureDef, false);
         
         fixtureDef.shape = circle;
         fixtureDef.density = 2f; 
@@ -93,11 +95,9 @@ public class BulletTriggeredObject2D extends TriggeredObject2D{
     }
     
     @Override
-    public void trigger(Object2D objThatTriggered){
-        
-        if(!this.isTriggered && 
-                (objThatTriggered instanceof Grandma || objThatTriggered instanceof SolidObject2D)){ // Didn't work : the bullet is not stopped by wall.
-            
+    public void trigger(Object2D objThatTriggered){      
+        if(!this.isTriggered)
+        {
             if(objThatTriggered instanceof Grandma){
                 Grandma grandma = (Grandma) objThatTriggered;
                 
@@ -111,11 +111,6 @@ public class BulletTriggeredObject2D extends TriggeredObject2D{
 
             super.trigger(objThatTriggered);
         }
-    }
-    
-    @Override
-    public boolean IsDynamicObject(){
-        return false;
     }
     
     @Override
@@ -142,6 +137,28 @@ public class BulletTriggeredObject2D extends TriggeredObject2D{
             
             this.physicBody.setLinearVelocity(dirChara);      
         }
+    }
+    
+    @Override
+    protected void SetBody(BodyDef bodyDef){
+        bodyDef.gravityScale = 0;
+    }
+    
+    @Override
+    protected void SetCollisionMask(FixtureDef fixtureDef){
+        fixtureDef.filter.categoryBits = 0x0004;
+        fixtureDef.filter.maskBits = 0x0003;
+    }
+    
+    @Override
+    protected void setCollisionFilterMask(FixtureDef fixtureDef, boolean reset){
+        fixtureDef.filter.categoryBits = 0x0004;
+        fixtureDef.filter.maskBits = 0x0003;
+    }
+    
+    @Override
+    public boolean IsDynamicObject(){
+        return true;
     }
     
     @Override
