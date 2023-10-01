@@ -22,19 +22,20 @@ import ressourcesmanagers.TextureManager;
  *
  * @author Deneyr
  */
-public class Stilts extends SolidObject2D{
+public class LowerCityStilts extends SolidObject2D{
     private static final String[] STILTS_ARRAY = {
     "lowerCity/Help_Props_160x380_Buche1.png",
     "lowerCity/Help_Props_160x380_Buche2.png",
     "lowerCity/Help_Props_160x380_Buche3.png",
-    "lowerCity/Help_Props_330x380_Buche4.png"};  
+    "lowerCity/Help_Props_330x380_Buche4.png",
+    "lowerCity/Grand-Piloti_80x610.png"};  
     
     private int testBlockIndex;
     
     private static final float SCALE_X = 1f;
     private static final float SCALE_Y = 1f;
     
-    public Stilts(World world, float posX, float posY, int index, float scale){
+    public LowerCityStilts(World world, float posX, float posY, int index, float scale){
         
         this.testBlockIndex = index;
         
@@ -94,6 +95,9 @@ public class Stilts extends SolidObject2D{
                 this.collisionFixture.add(fix);
                 
                 ground.setAsBox(80 * this.scale * P2M * SCALE_X, 17 * this.scale * P2M * SCALE_Y, new Vector2(0 * this.scale * P2M * SCALE_X, 36 * this.scale * P2M * SCALE_Y), (float) Math.toRadians(15));
+                break;
+            case 4:
+                ground.setAsBox(30 * this.scale * P2M * SCALE_X, 300 * this.scale * P2M * SCALE_Y, new Vector2(0 * this.scale * P2M * SCALE_X, 0 * this.scale * P2M * SCALE_Y), 0);
                 break;
         }
         
