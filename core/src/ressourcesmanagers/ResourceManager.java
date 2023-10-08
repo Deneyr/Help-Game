@@ -187,7 +187,7 @@ public abstract class ResourceManager implements WorldPlane, Disposable, Resourc
     public List<Sprite> getSpritesInRegion(float lowerX, float lowerY, float upperX, float upperY){
         ArrayList<Sprite> listSprites = new ArrayList<Sprite>();
                 
-        ResourceManager.loadingScreenSprite.setPosition(lowerX + (upperX - lowerX) * 3.8f/5, lowerY + (upperY - lowerY) * 0.5f/5);
+        ResourceManager.loadingScreenSprite.setPosition(lowerX + (upperX - lowerX) * 0.25f + 300, lowerY + (upperY - lowerY) * 0.2f);
         
         listSprites.add(loadingScreenSprite);
         

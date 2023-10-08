@@ -1,4 +1,4 @@
-//169.33575;4.5600004
+//192.98224;14.305741
 
 Chimney chimney;
 ObstacleTestBlock obstacleTestBlock;
@@ -12,6 +12,8 @@ LowerCityCabin lowerCityCabin;
 DirectCannonCorpus directCannonCorpus;
 MetalBeam metalBeam;
 LowerCityPlank lowerCityPlank;
+LowerCityStilts lowerCityStilts;
+TreeWithoutLeaf treeWithoutLeaf;
 
 
 chimney = new Chimney(game.getGameWorld().getWorld(), -226.0f, -7.5305786f, 0.0f, 1.0f, 4.0f, 3.0f); //com.mygdx.game.scenery.ChimneyWXYA1f4f3f
@@ -29,7 +31,7 @@ game.getGameWorld().addObject2DToWorld(piston, true);
 piston = new Piston(game.getGameWorld().getWorld(), 1084.575f, -120.69745f, 0.0f, 2.0f, 10.0f, 2.5f, 0.0f); //com.mygdx.game.scenery.PistonWXYA2f10f2.5f0f
 game.getGameWorld().addObject2DToWorld(piston, true);
 
-grandUltima = new GrandUltima(game.getGameWorld().getWorld(), 7233.9746f, 194.55756f); //characters.GrandUltimaWXY
+grandUltima = new GrandUltima(game.getGameWorld().getWorld(), 8224.909f, 610.3783f); //characters.GrandUltimaWXY
 game.getGameWorld().addObject2DToWorld(grandUltima, true);
 
 piston = new Piston(game.getGameWorld().getWorld(), 1835.0586f, -14.927002f, -1.5661536f, 2.0f, 10.0f, 2.5f, 0.0f); //com.mygdx.game.scenery.PistonWXYA2f10f2.5f0f
@@ -44,18 +46,18 @@ game.getGameWorld().addObject2DToWorld(piston, true);
 autoCannonCorpus = new AutoCannonCorpus(game.getGameWorld().getWorld(), hero, 3189.4387f, 2.7954102f, 0.0f, 2.0f, true, 0); //com.mygdx.game.scenery.AutoCannonCorpusWcom.mygdx.game.Object2DXYA2ftrue0i
 game.getGameWorld().addObject2DToWorld(autoCannonCorpus, true);
 
-bigMetalBox = new BigMetalBox(game.getGameWorld().getWorld(), 3642.2527f, 54.734116f); //com.mygdx.game.scenery.BigMetalBoxWXY
+bigMetalBox = new BigMetalBox(game.getGameWorld().getWorld(), 3642.326f, 54.729996f); //com.mygdx.game.scenery.BigMetalBoxWXY
 game.getGameWorld().addObject2DToWorld(bigMetalBox, true);
-bigMetalBox.setTransform(3642.2527f, 54.734116f, -9.1267546E-5f);
+bigMetalBox.setTransform(3642.326f, 54.729996f, -1.6220848E-4f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 3681.9402f, 169.37045f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 3682.1387f, 169.36444f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(3681.9402f, 169.37045f, -9.117391E-5f);
+metalBox.setTransform(3682.1387f, 169.36444f, -1.8661778E-4f);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 2949.074f, 187.81964f, 6.4000344f, 1.0f, 10.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1f10f0i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 2949.074f, 187.81964f, 14.83597f, 1.0f, 10.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1f10f0i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 2757.7744f, 321.89978f, 3.2757173f, 1.0f, 10.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1f10f0i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 2757.7744f, 321.89978f, 11.71165f, 1.0f, 10.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1f10f0i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
 lowerCityCabin = new LowerCityCabin(game.getGameWorld().getWorld(), 4188.5635f, 325.3551f, 0, 1.0f); //com.mygdx.game.scenery.LowerCityCabinWXY0i1f
@@ -84,4 +86,21 @@ game.getGameWorld().addObject2DToWorld(lowerCityCabin, true);
 
 lowerCityPlank = new LowerCityPlank(game.getGameWorld().getWorld(), 7322.371f, 101.75983f, 0, 1.0f); //com.mygdx.game.scenery.LowerCityPlankWXY0i1f
 game.getGameWorld().addObject2DToWorld(lowerCityPlank, true);
+
+lowerCityStilts = new LowerCityStilts(game.getGameWorld().getWorld(), 7839.813f, 166.80566f, 2, 1.0f); //com.mygdx.game.scenery.LowerCityStiltsWXY2i1f
+game.getGameWorld().addObject2DToWorld(lowerCityStilts, true);
+
+lowerCityStilts = new LowerCityStilts(game.getGameWorld().getWorld(), 8045.2246f, 280.32593f, 4, 1.0f); //com.mygdx.game.scenery.LowerCityStiltsWXY4i1f
+game.getGameWorld().addObject2DToWorld(lowerCityStilts, true);
+lowerCityStilts.setPriority(0);
+
+lowerCityCabin = new LowerCityCabin(game.getGameWorld().getWorld(), 8018.059f, 681.16473f, 0, 1.0f); //com.mygdx.game.scenery.LowerCityCabinWXY0i1f
+game.getGameWorld().addObject2DToWorld(lowerCityCabin, true);
+
+lowerCityStilts = new LowerCityStilts(game.getGameWorld().getWorld(), 8224.059f, 280.16504f, 4, 1.0f); //com.mygdx.game.scenery.LowerCityStiltsWXY4i1f
+game.getGameWorld().addObject2DToWorld(lowerCityStilts, true);
+lowerCityStilts.setPriority(3);
+
+treeWithoutLeaf = new TreeWithoutLeaf(game.getGameWorld().getWorld(), 7704.9087f, 578.3783f); //com.mygdx.game.scenery.TreeWithoutLeafWXY
+game.getGameWorld().addObject2DToWorld(treeWithoutLeaf, true);
 

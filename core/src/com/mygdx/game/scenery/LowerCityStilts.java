@@ -28,7 +28,9 @@ public class LowerCityStilts extends SolidObject2D{
     "lowerCity/Help_Props_160x380_Buche2.png",
     "lowerCity/Help_Props_160x380_Buche3.png",
     "lowerCity/Help_Props_330x380_Buche4.png",
-    "lowerCity/Grand-Piloti_80x610.png"};  
+    "lowerCity/Grand-Piloti_80x610.png",
+    "lowerCity/Grand-Piloti_100x610.png",
+    "lowerCity/Grand-Piloti-1_70x610.png"};  
     
     private int testBlockIndex;
     
@@ -98,6 +100,12 @@ public class LowerCityStilts extends SolidObject2D{
                 break;
             case 4:
                 ground.setAsBox(30 * this.scale * P2M * SCALE_X, 300 * this.scale * P2M * SCALE_Y, new Vector2(0 * this.scale * P2M * SCALE_X, 0 * this.scale * P2M * SCALE_Y), 0);
+                break;
+            case 5:
+                ground.setAsBox(28 * this.scale * P2M * SCALE_X, 300 * this.scale * P2M * SCALE_Y, new Vector2(0 * this.scale * P2M * SCALE_X, 0 * this.scale * P2M * SCALE_Y), 0);
+                break;
+            case 6:
+                ground.setAsBox(23 * this.scale * P2M * SCALE_X, 300 * this.scale * P2M * SCALE_Y, new Vector2(0 * this.scale * P2M * SCALE_X, 0 * this.scale * P2M * SCALE_Y), 0);
                 break;
         }
         
