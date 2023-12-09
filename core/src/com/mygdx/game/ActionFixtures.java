@@ -80,4 +80,7 @@ public abstract class ActionFixtures{
         }
     }
     
+    public int nbObject2DInside(){
+        return this.setObject2DInside.size();
+    }
 }

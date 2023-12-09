@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -35,7 +36,9 @@ public class ObstacleTestBlock extends SolidObject2D{
     "editorTestBlock/Blocs_50x300.png",
     "editorTestBlock/Blocs_50x50.png",
     "editorTestBlock/Help_BlocNoir_150x150.png",
-    "editorTestBlock/Blocs_Help_Fenetre_50x100.png"};  
+    "editorTestBlock/Blocs_Help_Fenetre_50x100.png",
+    "editorTestBlock/Bloc_Cercle_102x102.png",
+    "editorTestBlock/Bloc_Cercle_302x302.png"};  
     
     private int testBlockIndex;
     
@@ -77,6 +80,7 @@ public class ObstacleTestBlock extends SolidObject2D{
         fixtureDef.restitution = 0.1f; // Make it bounce a little bit
         // Create a fixture from our polygon shape and add it to our ground body  
         PolygonShape ground = new PolygonShape();
+        CircleShape circle = null;
         
         switch(this.testBlockIndex){
             case 0:
@@ -110,7 +114,7 @@ public class ObstacleTestBlock extends SolidObject2D{
                 ground.setAsBox(25 * this.scale * P2M * SCALE_X, 25 * this.scale * P2M * SCALE_Y);
                 break;
                 
-             // Help_Decor
+            // Help_Decor
             case 10:
                 ground.setAsBox(76 * this.scale * P2M * SCALE_X, 76 * this.scale * P2M * SCALE_Y);               
                 break;
@@ -120,9 +124,25 @@ public class ObstacleTestBlock extends SolidObject2D{
                 
                 ground.setAsBox(11 * this.scale * P2M * SCALE_X, 16 * this.scale * P2M * SCALE_Y);
                 break;
+                
+            // Circles
+            case 12:
+                circle = new CircleShape();
+                circle.setRadius(51 * P2M * this.scale);              
+                break;
+                
+            case 13:
+                circle = new CircleShape();
+                circle.setRadius(151 * P2M * this.scale);    
+                break;
         }
         
-        fixtureDef.shape = ground;
+        if(circle != null){
+            fixtureDef.shape = circle; 
+        }else{
+            fixtureDef.shape = ground; 
+        }
+        
         Fixture fix = groundBody.createFixture(fixtureDef); 
         fix.setUserData(this);
         

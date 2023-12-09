@@ -123,7 +123,9 @@ public abstract class APlatformObject extends SolidObject2D{
                 }
             }
             
-            this.kinematicActionFixture.applyAction(deltaTime, this);
+            if(this.kinematicActionFixture != null){
+                this.kinematicActionFixture.applyAction(deltaTime, this);
+            }
         }
     }
     
