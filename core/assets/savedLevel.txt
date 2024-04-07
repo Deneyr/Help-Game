@@ -17,6 +17,7 @@ TreeWithoutLeaf treeWithoutLeaf;
 LowerCityTree lowerCityTree;
 SmallBox smallBox;
 LowerCityCloudPlatform lowerCityCloudPlatform;
+SpikePlatform spikePlatform;
 
 
 chimney = new Chimney(game.getGameWorld().getWorld(), -226.0f, -7.5305786f, 0.0f, 1.0f, 4.0f, 3.0f); //com.mygdx.game.scenery.ChimneyWXYA1f4f3f
@@ -123,4 +124,7 @@ game.getGameWorld().addObject2DToWorld(lowerCityTree, true);
 
 lowerCityCloudPlatform = new LowerCityCloudPlatform(game.getGameWorld().getWorld(), 10472.808f, 51.434814f, 0.0f, 1.0f, 0.0f, 10.0f, 0.0f, 10.0f, 2.0f, 2.0f); //com.mygdx.game.scenery.LowerCityCloudPlatformWXYA1f0f10f0f10f2f2f
 game.getGameWorld().addObject2DToWorld(lowerCityCloudPlatform, true);
+
+spikePlatform = new SpikePlatform(game.getGameWorld().getWorld(), 9831.665f, 39.190247f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 10.0f, 2.0f, 2.0f, 1); //com.mygdx.game.scenery.SpikePlatformWXYA1f0f0f0f10f2f2f1i
+game.getGameWorld().addObject2DToWorld(spikePlatform, true);
 

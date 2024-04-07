@@ -122,10 +122,9 @@ public abstract class APlatformObject extends SolidObject2D{
                     this.physicBody.setLinearVelocity(this.direction);
                 }
             }
-            
-            if(this.kinematicActionFixture != null){
-                this.kinematicActionFixture.applyAction(deltaTime, this);
-            }
+        }
+        if(this.kinematicActionFixture != null){
+            this.kinematicActionFixture.applyAction(deltaTime, this);
         }
     }
     

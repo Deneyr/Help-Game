@@ -64,7 +64,7 @@ public class LowerCityCloudPlatform extends ABreakablePlatformObject {
         this.physicBody = groundBody;
         this.physicBody.setTransform(this.getPositionBody(), this.angle);
         
-        if(this.speed > 0){
+        //if(this.speed > 0){
             this.physicBody.setLinearVelocity(this.direction);
 
             // ActionFixture
@@ -74,7 +74,7 @@ public class LowerCityCloudPlatform extends ABreakablePlatformObject {
             fix = groundBody.createFixture(fixtureDef); 
             setFixtures.add(fix);
             this.kinematicActionFixture = new KinematicActionFixture(setFixtures);
-        }
+        //}
     }
     
     @Override

@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.DamageActionFixture;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.KinematicActionFixture;
 import java.util.HashSet;
@@ -26,15 +27,20 @@ import ressourcesmanagers.TextureManager;
  *
  * @author Deneyr
  */
-public class LowerCitySmallCloudPlatform extends ABreakablePlatformObject {
+public class SpikePlatform extends ADamagePlatformObject {
 
-    private static final String CLOUDPLATFORMTEXT = "lowerCity/Help_NuagesNoir_Anim.png";
+    private static final String SPIKEPLATFORMTEXT = "factory/Help_Props_480x70_PlateformePique.png";
     
     private static final float SCALE_X = 1f;
     private static final float SCALE_Y = 1f;
     
-    public LowerCitySmallCloudPlatform(World world, float posX, float posY, float angle, float scale, float directionAngle, float speed, float ratio, float maxRadius, float disappearingPeriod, float cooldownPeriod) {
-        super(world, posX, posY, angle, scale, directionAngle, speed, ratio, maxRadius, disappearingPeriod, cooldownPeriod);
+    private int hitDamage;
+    
+    public SpikePlatform(World world, float posX, float posY, float angle, float scale, float directionAngle, float speed, float ratio, float maxRadius, float appearingPeriod, float cooldownPeriod, int hitDamage) {
+        super(world, posX, posY, angle, scale, directionAngle, speed, ratio, maxRadius, appearingPeriod, cooldownPeriod);
+        
+        this.hitDamage = hitDamage;
+        this.damageFixture.setDamageInflicted(this.hitDamage);
         
         this.assignTextures();
     }
@@ -43,7 +49,7 @@ public class LowerCitySmallCloudPlatform extends ABreakablePlatformObject {
     protected void createCollisions(Body groundBody){
         // Create a polygon shape
         PolygonShape ground = new PolygonShape();
-        ground.setAsBox(90 * SCALE_X * P2M * this.scale, 15 * SCALE_Y * P2M * this.scale);
+        ground.setAsBox(75 * SCALE_X * P2M * this.scale, 8 * SCALE_Y * P2M * this.scale, new Vector2(0, -12 * SCALE_Y * P2M * this.scale), 0);
         // Set the polygon shape as a box which is twice the size of our view port and 20 high
         // (setAsBox takes half-width and half-height as arguments)
         FixtureDef fixtureDef = new FixtureDef();
@@ -64,13 +70,21 @@ public class LowerCitySmallCloudPlatform extends ABreakablePlatformObject {
         this.physicBody = groundBody;
         this.physicBody.setTransform(this.getPositionBody(), this.angle);
         
+        // ActionFixture
+        Set<Fixture> setFixtures = new HashSet();
+
+        ground.setAsBox(75 * SCALE_X * P2M * this.scale, 8 * SCALE_Y * P2M * this.scale, new Vector2(0, -10 * SCALE_Y * P2M * this.scale), 0);
+        fix = groundBody.createFixture(fixtureDef); 
+        setFixtures.add(fix);
+        this.damageFixture = new DamageActionFixture(setFixtures, this.hitDamage);
+        
         //if(this.speed > 0){
             this.physicBody.setLinearVelocity(this.direction);
 
             // ActionFixture
-            Set<Fixture> setFixtures = new HashSet();
+            setFixtures = new HashSet();
 
-            ground.setAsBox(85 * SCALE_X * P2M * this.scale, 15 * SCALE_Y * P2M * this.scale, new Vector2(0, 2f * SCALE_Y * P2M * this.scale), 0);
+            ground.setAsBox(75 * SCALE_X * P2M * this.scale, 8 * SCALE_Y * P2M * this.scale, new Vector2(0, -10 * SCALE_Y * P2M * this.scale), 0);
             fix = groundBody.createFixture(fixtureDef); 
             setFixtures.add(fix);
             this.kinematicActionFixture = new KinematicActionFixture(setFixtures);
@@ -79,44 +93,41 @@ public class LowerCitySmallCloudPlatform extends ABreakablePlatformObject {
     
     @Override
     public void assignTextures(){
-        this.texture = TextureManager.getInstance().getTexture(CLOUDPLATFORMTEXT, this);
+        this.texture = TextureManager.getInstance().getTexture(SPIKEPLATFORMTEXT, this);
         
         if(this.texture != null){
-            TextureRegion[][] tmp = TextureRegion.split(this.texture, 300, 80);
+            TextureRegion[][] tmp = TextureRegion.split(this.texture, 160, 70);
         
-            Array<TextureRegion> array = new Array<TextureRegion>(tmp[2]);
+            Array<TextureRegion> array = new Array<TextureRegion>(tmp[0]);
             array.removeRange(1, array.size - 1);
             this.listAnimations.add(new Animation(0, array, Animation.PlayMode.NORMAL));
             
-            array = new Array<TextureRegion>(tmp[2]);
-            array.removeRange(5, array.size - 1);
-            this.listAnimations.add(new Animation(0.2f, array, Animation.PlayMode.LOOP));
+            array = new Array<TextureRegion>(tmp[0]);
+            array.removeIndex(0);
+            array.removeRange(1, array.size - 1);
+            this.listAnimations.add(new Animation(0.2f, array, Animation.PlayMode.NORMAL));
             
-            array = new Array<TextureRegion>(tmp[2]);
-            array.removeRange(0, 3);
-            Array<TextureRegion> array2 = new Array<TextureRegion>(tmp[3]);
-            array.addAll(array2);
-            this.listAnimations.add(new Animation(0.05f, array, Animation.PlayMode.NORMAL));
-            
-            this.listAnimations.add(new Animation(0.05f, array, Animation.PlayMode.REVERSED));
+            array = new Array<TextureRegion>(tmp[0]);
+            array.removeRange(0, array.size - 2);
+            this.listAnimations.add(new Animation(0.2f, array, Animation.PlayMode.NORMAL));
             
             this.changeAnimation(0, false);
         }
     }
-
+    
     @Override
-    protected void onDisappearingState(float deltaTime) {
+    protected void onAppearingFirstState(float deltaTime) {
         this.changeAnimation(1, false);
     }
 
     @Override
-    protected void onDisappearedState(float deltaTime) {
+    protected void onAppearingSecondState(float deltaTime) {
         this.changeAnimation(2, false);
     }
 
     @Override
-    protected void onReapparingState(float deltaTime) {
-        this.changeAnimation(3, false);
+    protected void onCooldownState(float deltaTime) {
+        this.changeAnimation(0, false);
     }
     
     @Override
