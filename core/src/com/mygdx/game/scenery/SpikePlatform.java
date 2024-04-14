@@ -5,6 +5,7 @@
  */
 package com.mygdx.game.scenery;
 
+import characters.OpponentCAC1;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.DamageActionFixture;
+import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.KinematicActionFixture;
 import java.util.HashSet;
@@ -118,11 +120,15 @@ public class SpikePlatform extends ADamagePlatformObject {
     @Override
     protected void onAppearingFirstState(float deltaTime) {
         this.changeAnimation(1, false);
+        
+        this.notifyGameEventListener(GameEventListener.EventType.ACTION, "setPikeTrap", new Vector2(this.getPositionBody()));
     }
 
     @Override
     protected void onAppearingSecondState(float deltaTime) {
         this.changeAnimation(2, false);
+        
+        this.notifyGameEventListener(GameEventListener.EventType.ACTION, "pikeTrap", new Vector2(this.getPositionBody()));
     }
 
     @Override

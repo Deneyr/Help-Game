@@ -395,6 +395,8 @@ public class EditorGameNode extends GameNode{
         SoundManager.getInstance().getSound("sounds/action/metalHit2.ogg");
         SoundManager.getInstance().getSound("sounds/action/checkPointTaken.ogg");
         SoundManager.getInstance().getSound("sounds/action/StrongChestOpen.ogg");
+        SoundManager.getInstance().getSound("sounds/action/pikeTrap.ogg");
+        SoundManager.getInstance().getSound("sounds/action/setPikeTrap.ogg");
         SoundManager.getInstance().getSound("sounds/action/PhoneBoxOpen.ogg");
                 
         // Damages taken.
