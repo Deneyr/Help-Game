@@ -5,8 +5,6 @@
  */
 package com.mygdx.game.scenery;
 
-import characters.OpponentCAC1;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -29,8 +27,7 @@ import ressourcesmanagers.TextureManager;
  *
  * @author Deneyr
  */
-public class SpikePlatform extends ADamagePlatformObject {
-
+public class AutoSpikePlatform extends ADamagePlatformObject{
     private static final String SPIKEPLATFORMTEXT = "factory/Help_Props_480x70_PlateformePique.png";
     
     private static final float SCALE_X = 1f;
@@ -38,8 +35,14 @@ public class SpikePlatform extends ADamagePlatformObject {
     
     private int hitDamage;
     
-    public SpikePlatform(World world, float posX, float posY, float angle, float scale, float appearingPeriod, float cooldownPeriod, int hitDamage) {
+    private float offsetTime;
+    private float currentOffsetTime;
+    
+    public AutoSpikePlatform(World world, float posX, float posY, float angle, float scale, float offsetTime, float appearingPeriod, float cooldownPeriod, int hitDamage) {
         super(world, posX, posY, angle, scale, 0, 0, 0, 0, appearingPeriod, cooldownPeriod);
+        
+        this.offsetTime = offsetTime;
+        this.currentOffsetTime = 0;
         
         this.hitDamage = hitDamage;
         this.damageFixture.setDamageInflicted(this.hitDamage);
@@ -119,7 +122,12 @@ public class SpikePlatform extends ADamagePlatformObject {
     
     @Override
     protected boolean IsPlatformActivated(float deltaTime){
-        return this.kinematicActionFixture.nbObject2DInside() > 0;
+        if(this.currentOffsetTime >= this.offsetTime){
+            return true;
+        }else{
+            this.currentOffsetTime += deltaTime;
+            return false;
+        }
     }
     
     @Override
@@ -151,6 +159,15 @@ public class SpikePlatform extends ADamagePlatformObject {
         Sprite sprite = super.createCurrentSprite();
         sprite.setScale(sprite.getScaleX() * SCALE_X, sprite.getScaleY() * SCALE_Y);
         return sprite;
+    }
+    
+    @Override
+    public void ReinitPlatform(World world){
+        super.ReinitPlatform(world);
+        
+        this.currentOffsetTime = 0;
+        
+        this.platformState = BPtlatformState.FREE;
     }
     
 }

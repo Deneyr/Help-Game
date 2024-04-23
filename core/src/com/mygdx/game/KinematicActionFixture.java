@@ -32,7 +32,8 @@ public class KinematicActionFixture extends ActionFixtures{
         
         Vector2 velocity = owner.physicBody.getLinearVelocity();
         
-        if(this.setObject2DInside.size() > 0){
+        if(this.setObject2DInside.size() > 0
+                && velocity.x != 0){
             Vector2 offsetPosition = new Vector2(velocity.x/1.004f * deltaTime, 0);
             
             for(Object2D obj : this.setObject2DInside){

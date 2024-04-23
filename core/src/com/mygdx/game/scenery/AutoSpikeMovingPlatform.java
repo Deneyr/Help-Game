@@ -5,7 +5,6 @@
  */
 package com.mygdx.game.scenery;
 
-import characters.OpponentCAC1;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -29,20 +28,30 @@ import ressourcesmanagers.TextureManager;
  *
  * @author Deneyr
  */
-public class SpikePlatform extends ADamagePlatformObject {
-
+public class AutoSpikeMovingPlatform extends ADamagePlatformObject{
     private static final String SPIKEPLATFORMTEXT = "factory/Help_Props_480x70_PlateformePique.png";
+    private static final String FANTEXT = "factory/Help_Props_50x20_PlateformeVolantePales.png";
     
     private static final float SCALE_X = 1f;
     private static final float SCALE_Y = 1f;
     
     private int hitDamage;
     
-    public SpikePlatform(World world, float posX, float posY, float angle, float scale, float appearingPeriod, float cooldownPeriod, int hitDamage) {
-        super(world, posX, posY, angle, scale, 0, 0, 0, 0, appearingPeriod, cooldownPeriod);
+    private float offsetTime;
+    private float currentOffsetTime;
+    
+    private FanObject2D fan;
+    
+    public AutoSpikeMovingPlatform(World world, float posX, float posY, float angle, float scale, float directionAngle, float speed, float ratio, float maxRadius, float offsetTime, float appearingPeriod, float cooldownPeriod, int hitDamage) {
+        super(world, posX, posY, angle, scale, directionAngle, speed, ratio, maxRadius, appearingPeriod, cooldownPeriod);
+        
+        this.offsetTime = offsetTime;
+        this.currentOffsetTime = 0;
         
         this.hitDamage = hitDamage;
         this.damageFixture.setDamageInflicted(this.hitDamage);
+        
+        this.fan = new FanObject2D(this.physicBody, world, posX, posY, -28);
         
         this.assignTextures();
     }
@@ -115,11 +124,22 @@ public class SpikePlatform extends ADamagePlatformObject {
             
             this.changeAnimation(0, false);
         }
+        
+        Texture fanText = TextureManager.getInstance().getTexture(FANTEXT, this);
+        
+        if(fanText != null){
+            this.fan.assignTextures(fanText);
+        }
     }
     
     @Override
     protected boolean IsPlatformActivated(float deltaTime){
-        return this.kinematicActionFixture.nbObject2DInside() > 0;
+        if(this.currentOffsetTime >= this.offsetTime){
+            return true;
+        }else{
+            this.currentOffsetTime += deltaTime;
+            return false;
+        }
     }
     
     @Override
@@ -147,10 +167,33 @@ public class SpikePlatform extends ADamagePlatformObject {
     }
     
     @Override
+    public void updateLogic(float deltaTime){  
+        super.updateLogic(deltaTime);
+        
+        this.fan.updateLogic(deltaTime);
+    }
+    
+    @Override
+    public void removeBody(World world){      
+        if(this.fan != null){
+            this.fan.removeBody(world);
+        }
+        super.removeBody(world);
+    }
+    
+    @Override
     public Sprite createCurrentSprite(){
         Sprite sprite = super.createCurrentSprite();
         sprite.setScale(sprite.getScaleX() * SCALE_X, sprite.getScaleY() * SCALE_Y);
         return sprite;
     }
     
+    @Override
+    public void ReinitPlatform(World world){
+        super.ReinitPlatform(world);
+        
+        this.currentOffsetTime = 0;
+        
+        this.platformState = ADamagePlatformObject.BPtlatformState.FREE;
+    }
 }

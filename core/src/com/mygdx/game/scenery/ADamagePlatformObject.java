@@ -90,7 +90,7 @@ public abstract class ADamagePlatformObject extends APlatformObject{
     }
     
     private void updateDPtlatformFreeState(float deltaTime){
-        if(this.kinematicActionFixture.nbObject2DInside() > 0){            
+        if(this.IsPlatformActivated(deltaTime)){            
             this.currentAppearingPeriod = 0;
             
             this.platformState = BPtlatformState.APPEARING_FIRST;
@@ -98,6 +98,8 @@ public abstract class ADamagePlatformObject extends APlatformObject{
             this.onAppearingFirstState(deltaTime);
         }
     }
+    
+    protected abstract boolean IsPlatformActivated(float deltaTime);
     
     protected abstract void onAppearingFirstState(float deltaTime);
     
