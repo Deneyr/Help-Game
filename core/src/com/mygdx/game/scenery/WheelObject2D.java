@@ -81,6 +81,18 @@ public class WheelObject2D extends Object2D{
 
         this.joint = world.createJoint(jointDef);           
     }
+    
+    @Override
+    protected void setCollisionFilterMask(FixtureDef fixtureDef, boolean reset){
+        
+        if(reset){
+            super.setCollisionFilterMask(fixtureDef, true);
+            return;
+        }
+        
+        fixtureDef.filter.categoryBits = 0x0001;
+        fixtureDef.filter.maskBits = 0x0002;
+    }
 
     public void assignTextures(Texture texture){
         if(texture != null){

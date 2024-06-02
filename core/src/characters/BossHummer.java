@@ -70,6 +70,13 @@ public class BossHummer extends Character2D{
     protected WheelObject2D leftWheel;
     protected WheelObject2D rightWheel;
     
+    private float timerBeforeTurning;
+    private final float maxTimerBeforeTurning;
+    
+    private SideCharacter bounceSide;
+    private float bounceTimer;
+    private final float maxBounceTimer;
+    
     public BossHummer(){
        this(12 * 35, null);    
     }
@@ -77,7 +84,14 @@ public class BossHummer extends Character2D{
     public BossHummer(int lifePoint, Object2D target){
         super(lifePoint);
         
-        this.scaleDamageForce = 1f;
+        this.timerBeforeTurning = 0;
+        this.maxTimerBeforeTurning = 1;
+        
+        this.bounceSide = Character2D.SideCharacter.LEFT;
+        this.bounceTimer = 0;
+        this.maxBounceTimer = 1;
+        
+        this.scaleDamageForce = 0.1f;
         
         this.side = SideCharacter.LEFT;
         
@@ -87,7 +101,7 @@ public class BossHummer extends Character2D{
         
         this.target = target;
         
-        this.maxSpeed = 10f;
+        this.maxSpeed = 15f;
         
         this.spawnPoint = new Vector2(0, 0);
         this.maxDistanceFromSpawn = -1f;
@@ -97,10 +111,18 @@ public class BossHummer extends Character2D{
     public BossHummer(World world, Object2D target, float posX, float posY) {
         super(12 * 35);
         
+        this.maxTimerBeforeTurning = 1;
+        this.maxBounceTimer = 1;
+        
         this.initialize(world, target, posX, posY);
     }
     
     public final void initialize(World world, Object2D target, float posX, float posY){
+        
+        this.timerBeforeTurning = 0;
+        this.bounceSide = Character2D.SideCharacter.LEFT;
+        this.bounceTimer = 0;
+        
         this.offsetPosition = new Vector2();
         this.targetedOffsetPosition = new Vector2();
         this.offsetTime = -1;
@@ -117,7 +139,7 @@ public class BossHummer extends Character2D{
         
         this.canAttack = true;
         
-        this.maxSpeed = 10f;
+        this.maxSpeed = 15f;
         
         this.spawnPoint = new Vector2(posX * P2M, posY * P2M);
         this.maxDistanceFromSpawn = -1;
@@ -193,6 +215,8 @@ public class BossHummer extends Character2D{
     @Override
     public void updateLogic(float deltaTime){
         super.updateLogic(deltaTime);
+        
+        this.updateTimer(deltaTime);
         
         this.updateOffsetPosition(deltaTime);
         
@@ -296,10 +320,29 @@ public class BossHummer extends Character2D{
             int indexAnimation = (int) (((float) (this.getLifePointsMax() - this.getLifePoints()) / this.getLifePointsMax()) * (this.listAnimations.size() - 1));
 
             this.changeAnimation(indexAnimation, true);
+            
+            if(damageOwner instanceof Character2D
+                && this.bounceTimer <= 0){
+                this.bounceSide = ((Character2D) damageOwner).getSideCharacter();
+                this.bounceTimer = this.maxBounceTimer;         
+            }
         }
         
         return result;
     }
+    
+    /*
+    @Override
+    protected void setCollisionFilterMask(FixtureDef fixtureDef, boolean reset){
+        
+        if(reset){
+            super.setCollisionFilterMask(fixtureDef, true);
+            return;
+        }
+        
+        fixtureDef.filter.categoryBits = 0x0001;
+        fixtureDef.filter.maskBits = 0x0002;
+    }*/
     
     protected final void initializePhysicBossHummer(World world, float posX, float posY){
         BodyDef bodyDef = new BodyDef();
@@ -329,43 +372,6 @@ public class BossHummer extends Character2D{
         this.collisionFixture.add(fix);
         fix.setUserData(this);
         
-        /*
-        CircleShape circle = new CircleShape();
-        circle.setRadius(38 * P2M);
-        circle.setPosition(new Vector2(56 * P2M, -37 * P2M));
-        fixtureDef = new FixtureDef();
-        
-        this.setCollisionFilterMask(fixtureDef, false);
-        
-        fixtureDef.shape = circle;
-        fixtureDef.density = 10f; 
-        fixtureDef.friction = 0.1f;
-        fixtureDef.restitution = 0.1f; 
-        fix = body.createFixture(fixtureDef);
-        
-        this.setCollisionFilterMask(fixtureDef, true);
-        
-        this.collisionFixture.add(fix);
-        fix.setUserData(this);
-        
-        circle = new CircleShape();
-        circle.setRadius(38 * P2M);
-        circle.setPosition(new Vector2(-56 * P2M, -37 * P2M));
-        fixtureDef = new FixtureDef();
-        
-        this.setCollisionFilterMask(fixtureDef, false);
-        
-        fixtureDef.shape = circle;
-        fixtureDef.density = 10f; 
-        fixtureDef.friction = 0.1f;
-        fixtureDef.restitution = 0.1f; 
-        fix = body.createFixture(fixtureDef);
-        
-        this.setCollisionFilterMask(fixtureDef, true);
-        
-        this.collisionFixture.add(fix);
-        fix.setUserData(this);
-        */
         // Feet fixture
         PolygonShape feet = new PolygonShape();
         feet.setAsBox(90 * P2M, 5 * P2M, new Vector2(0, -75 * P2M), 0);
@@ -384,7 +390,7 @@ public class BossHummer extends Character2D{
                 
          // Part damage zone    
         PolygonShape damageBox = new PolygonShape();
-        damageBox.setAsBox(100 * P2M, 50 * P2M, new Vector2( 0, -20 * P2M), 0);
+        damageBox.setAsBox(95 * P2M, 50 * P2M, new Vector2( 0, -20 * P2M), 0);
         fixtureDef = new FixtureDef();
         fixtureDef.shape = damageBox;
         fixtureDef.density = 0f; 
@@ -403,7 +409,17 @@ public class BossHummer extends Character2D{
     
     @Override
     public void applyBounce(Vector2 bounceVector, Object2D bounceOwner){
-        // Nothing to do
+        if(this.lifeState == LifeState.DEAD){
+            return;
+        }
+        
+        if(bounceOwner instanceof Character2D
+            && this.bounceTimer <= 0){
+            this.bounceSide = ((Character2D) bounceOwner).getSideCharacter();
+            this.bounceTimer = this.maxBounceTimer;
+            
+            this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "hitProjectile", new Vector2(this.getPositionBody()));             
+        }
     }
     
     @Override
@@ -415,14 +431,18 @@ public class BossHummer extends Character2D{
         float angle = dirVelocity.angle(upVector) / 2f;
         dirVelocity = dirVelocity.rotate(angle);
         
-        if(Math.random() < 0.3){
-            this.notifyObject2D2CreateListener(TeethTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirVelocity.scl(-3f));
-        }
-        if(Math.random() < 0.1){
-            this.notifyObject2D2CreateListener(TeethTriggeredObject2D.class, this.getPositionBody().scl(1 / P2M), dirVelocity.scl(-4f));
-        }
+        this.spawnLoot(dirVelocity);
         
         this.notifyGameEventListener(GameEventListener.EventType.DEATH, this.name, this.getPositionBody());
+    }
+    
+    protected void spawnLoot(Vector2 dirVelocity)
+    {
+        //this.notifyGameEventListener(GameEventListener.EventType.CINEMATIC, "dialogueKaira4", new Vector2(this.getPositionBody()));
+            
+        this.notifyObject2D2CreateListener(OpponentCAC1.class, this.getPositionBody().add(5 * P2M, 50 * P2M).scl(1 / P2M), new Vector2(0, 0));
+            
+        this.notifyObject2D2CreateListener(OpponentCAC2.class, this.getPositionBody().add(-5 * P2M, 50 * P2M).scl(1 / P2M), new Vector2(0, 0));
     }
     
     @Override
@@ -520,6 +540,16 @@ public class BossHummer extends Character2D{
     public void setMaxDistance(float maxDistance) {
         this.maxDistanceFromSpawn = maxDistance * P2M;
     }
+
+    private void updateTimer(float deltaTime) {
+        if(this.timerBeforeTurning > 0){
+            this.timerBeforeTurning -= deltaTime;
+        }
+        
+        if(this.bounceTimer > 0){
+            this.bounceTimer -= deltaTime;
+        }
+    }
     
     protected enum OppState{
         NORMAL
@@ -580,21 +610,27 @@ public class BossHummer extends Character2D{
 
                 isMove = false;
                 
-                while(it.hasNext()){
-                    BossHummer.OppInfluence currentInfluence = it.next();
-                    switch(currentInfluence){
-                        case GO_RIGHT :
-                            velocity.x += 0.2f;
-                            BossHummer.this.side = SideCharacter.RIGHT;
-                            isMove = true;
-                            break;
-                        case GO_LEFT :
-                            velocity.x -= 0.2f;
-                            BossHummer.this.side = SideCharacter.LEFT;
-                            isMove = true;
-                            break;
+                if((isMove = this.ApplyBounce(velocity)) == false){           
+                    while(it.hasNext()){
+                        BossHummer.OppInfluence currentInfluence = it.next();
+                        switch(currentInfluence){
+                            case GO_RIGHT :
+                                if(this.CanTurn(currentInfluence)){
+                                    velocity.x += 0.3f;
+                                    BossHummer.this.side = SideCharacter.RIGHT;
+                                    isMove = true;
+                                }
+                                break;
+                            case GO_LEFT :
+                                if(this.CanTurn(currentInfluence)){
+                                    velocity.x -= 0.3f;
+                                    BossHummer.this.side = SideCharacter.LEFT;
+                                    isMove = true;
+                                }
+                                break;
+                        }
                     }
-                }              
+                }
             }
             
             float angularVelocity = BossHummer.this.physicBody.getAngularVelocity();
@@ -630,6 +666,20 @@ public class BossHummer extends Character2D{
             //BossHummer.this.physicBody.setAngularVelocity(angularVelocity);
         }
          
+        public boolean CanTurn(BossHummer.OppInfluence currentInfluence){
+            if(BossHummer.this.side == SideCharacter.LEFT && currentInfluence == BossHummer.OppInfluence.GO_LEFT
+                || BossHummer.this.side == SideCharacter.RIGHT && currentInfluence == BossHummer.OppInfluence.GO_RIGHT){
+                return true;
+            }
+            if(BossHummer.this.timerBeforeTurning <= 0){
+                
+                BossHummer.this.timerBeforeTurning = BossHummer.this.maxTimerBeforeTurning;
+                
+                return true;
+            }
+            return false;
+        }
+        
         public int isPauseAnimation(){
            return this.pauseAnimation;
         }
@@ -643,6 +693,29 @@ public class BossHummer extends Character2D{
          */
         public OppState getStateNode() {
             return stateNode;
+        }
+
+        private boolean ApplyBounce(Vector2 velocity) {
+            if(BossHummer.this.bounceTimer > 0){
+                SideCharacter bounceOwnerSide = BossHummer.this.bounceSide;
+
+                if(bounceOwnerSide == SideCharacter.LEFT){
+                    if(velocity.x > 0){
+                        velocity.x = 0;
+                    }
+                    velocity.x -= 0.3f;
+                    BossHummer.this.side = SideCharacter.LEFT;
+                }else{
+                    if(velocity.x < 0){
+                        velocity.x = 0;
+                    }
+                    velocity.x += 0.3f;
+                    BossHummer.this.side = SideCharacter.RIGHT;
+                }    
+                
+                return true;
+            }
+            return false;
         }
     }
     
