@@ -148,6 +148,7 @@ public class OpponentCACElite extends OpponentCAC2{
         }*/
     }
     
+    @Override
     protected void updateFixture(){
         
         if(this.damageActionFixture != null){

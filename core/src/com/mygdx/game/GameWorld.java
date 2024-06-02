@@ -481,8 +481,10 @@ public class GameWorld implements WorldPlane, GameEventListener{
     
     private void handleObject2D2Flush(){
         for(Object2D obj : this.object2D2Flush){
-            this.removeObject2DToWorld(obj);
-            this.stateAnimationHandler.freeObject2D(obj);
+            if(obj.IsPhysicValid()){
+                this.removeObject2DToWorld(obj);
+                this.stateAnimationHandler.freeObject2D(obj);
+            }
         }
         
         this.object2D2Flush.clear();

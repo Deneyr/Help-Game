@@ -5,6 +5,7 @@
  */
 package com.mygdx.game;
 
+import characters.BossHummer;
 import characters.OpponentCAC1;
 import characters.OpponentCAC2;
 import triggered.UpTriggeredObject2D;
@@ -47,6 +48,7 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
     // Part Pool create
     private final Map<Class, FactoryPool> object2DFactoriesPool;
     private final Map<Class, OpponentPool> object2DOpponentsPool;
+    private final Map<Class, BossOpponentPool> object2DBossOpponentsPool;
     
     private List<CosmeticObject2D> cosmeticObject2DPool;
     private final Map<Class, CosmeticFactoryPool> cosmeticObj2DFactoriesPool;
@@ -71,7 +73,10 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
         this.object2DOpponentsPool = new HashMap<Class, OpponentPool>();
         this.object2DOpponentsPool.put(OpponentCAC1.class, new OpponentFactoryPool<OpponentCAC1>(OpponentCAC1.class));
         this.object2DOpponentsPool.put(OpponentCAC2.class, new OpponentFactoryPool<OpponentCAC2>(OpponentCAC2.class));
-
+        
+        // Set Boss pool
+        this.object2DBossOpponentsPool = new HashMap<Class, BossOpponentPool>();
+        this.object2DBossOpponentsPool.put(BossHummer.class, new BossOpponentFactoryPool<BossHummer>(BossHummer.class));
         
         // Set Pool cosmetic
         this.cosmeticObj2DFactoriesPool.put(HitCosmeticObject2D.class, new CosmeticFactoryPool<HitCosmeticObject2D>(HitCosmeticObject2D.class));
@@ -206,7 +211,12 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
                 OpponentCAC1 newObject2D = factoryPool.obtainTriggeredObject2D(this.gameWorld.get().getWorld(), this.gameWorld.get().getHero(), position.x, position.y);
 
                 this.gameWorld.get().addObject2DToWorld(newObject2D, true);
-            }    
+            }else if(this.object2DBossOpponentsPool.containsKey(obj2DClass)){
+                BossOpponentPool factoryPool = this.object2DBossOpponentsPool.get(obj2DClass);
+                BossHummer newObject2D = factoryPool.obtainTriggeredObject2D(this.gameWorld.get().getWorld(), this.gameWorld.get().getHero(), position.x, position.y);
+
+                this.gameWorld.get().addObject2DToWorld(newObject2D, true);
+            }   
         }
     }
     

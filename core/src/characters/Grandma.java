@@ -61,7 +61,6 @@ public class Grandma extends Character2D{
     
     public Grandma(World world, float posX, float posY){
         super(12);
-        this.scaleDamageForce = 0.9f;
         
         this.timeInvulnerabilitySec = 2.f;
         this.scaleDamageForce = 0.2f;

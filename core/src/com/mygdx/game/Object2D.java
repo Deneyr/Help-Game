@@ -161,6 +161,10 @@ public abstract class Object2D implements Disposable, GraphicalComponent{
         }
     }
     
+    public boolean IsPhysicValid(){
+        return this.physicBody != null;
+    }
+    
     public int getPriority(){
         return this.priority;
     }

@@ -47,10 +47,6 @@ public abstract class TriggeredObject2D extends Object2D{
         // nothing to do
     }
     
-    public void setObject2DStateListener(Object2DStateListener obj){
-        this.object2DStateListener = new WeakReference(object2DStateListener);
-    }
-    
     public abstract void initialize(World world, Vector2 position, Vector2 speed);
     
     public void initialize(World world, Vector2 position, Vector2 speed, float radius){

@@ -127,10 +127,8 @@ public class ConveyorBelt extends TriggeredObject2D{
     }
     
     @Override
-    public void onObj2DExitedArea(Object2D obj){
-        if(this.IsObject2DAffected(obj)){
-            this.setObject2DInside.remove(obj);
-            
+    public void onObj2DExitedArea(Object2D obj){               
+        if(this.setObject2DInside.remove(obj)){          
             Vector2 newVelocity = new Vector2(this.velocity);
             newVelocity.rotateRad(this.physicBody.getAngle());
             newVelocity.add(obj.getBodyVelocity());

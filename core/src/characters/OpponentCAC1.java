@@ -842,7 +842,7 @@ public class OpponentCAC1 extends Character2D{
     }
     
     protected class StateNode{
-        private OppState stateNode;
+        private final OppState stateNode;
         
         private int pauseAnimation;
         

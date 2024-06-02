@@ -195,6 +195,7 @@ public class OpponentCAC2 extends OpponentCAC1{
         this.physicBody = body;
     }
     
+    @Override
     protected void updateFixture(){
         
         if(this.damageActionFixture != null){
