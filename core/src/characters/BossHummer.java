@@ -372,6 +372,24 @@ public class BossHummer extends Character2D{
         this.collisionFixture.add(fix);
         fix.setUserData(this);
         
+        collisionBox = new PolygonShape();
+        collisionBox.setAsBox(30 * P2M, 50 * P2M, new Vector2( 0, 20 * P2M), 0);
+        
+        fixtureDef = new FixtureDef();
+        
+        this.setCollisionFilterMask(fixtureDef, false);
+        
+        fixtureDef.shape = collisionBox;
+        fixtureDef.density = 5f; 
+        fixtureDef.friction = 0.5f;
+        fixtureDef.restitution = 0.1f; 
+        fix = body.createFixture(fixtureDef);
+        
+        this.setCollisionFilterMask(fixtureDef, true);
+
+        this.collisionFixture.add(fix);
+        fix.setUserData(this);
+        
         // Feet fixture
         PolygonShape feet = new PolygonShape();
         feet.setAsBox(90 * P2M, 5 * P2M, new Vector2(0, -75 * P2M), 0);
@@ -390,7 +408,7 @@ public class BossHummer extends Character2D{
                 
          // Part damage zone    
         PolygonShape damageBox = new PolygonShape();
-        damageBox.setAsBox(95 * P2M, 50 * P2M, new Vector2( 0, -20 * P2M), 0);
+        damageBox.setAsBox(94 * P2M, 40 * P2M, new Vector2( 0, -25 * P2M), 0);
         fixtureDef = new FixtureDef();
         fixtureDef.shape = damageBox;
         fixtureDef.density = 0f; 
@@ -400,6 +418,18 @@ public class BossHummer extends Character2D{
         fix = this.physicBody.createFixture(fixtureDef);
         Set<Fixture> setDamage = new HashSet<Fixture>();
         setDamage.add(fix);
+             
+        damageBox = new PolygonShape();
+        damageBox.setAsBox(10 * P2M, 50 * P2M, new Vector2( 0, 22 * P2M), 0);
+        fixtureDef = new FixtureDef();
+        fixtureDef.shape = damageBox;
+        fixtureDef.density = 0f; 
+        fixtureDef.friction = 0.05f;
+        fixtureDef.restitution = 0.1f; 
+        
+        fix = this.physicBody.createFixture(fixtureDef);
+        setDamage.add(fix);
+        
         this.damageActionFixture = new DamageActionFixture(setDamage, 1);
         
         // Wheels
@@ -424,6 +454,8 @@ public class BossHummer extends Character2D{
     
     @Override
     protected void onDeath(){
+        this.setDeathCollisionBox();
+        
         this.offsetPosition = new Vector2(0, 0);
         
         Vector2 dirVelocity = this.getBodyVelocity().nor();
@@ -434,6 +466,32 @@ public class BossHummer extends Character2D{
         this.spawnLoot(dirVelocity);
         
         this.notifyGameEventListener(GameEventListener.EventType.DEATH, this.name, this.getPositionBody());
+    }
+    
+    private void setDeathCollisionBox(){
+        for(Fixture fix : this.collisionFixture){
+            this.physicBody.destroyFixture(fix);
+        }
+        this.collisionFixture.clear();
+        
+        // Collision fixture
+        PolygonShape collisionBox = new PolygonShape();
+        collisionBox.setAsBox(90 * P2M, 25 * P2M, new Vector2( 0, -50 * P2M), 0);
+        
+        FixtureDef fixtureDef = new FixtureDef();
+        
+        this.setCollisionFilterMask(fixtureDef, false);
+        
+        fixtureDef.shape = collisionBox;
+        fixtureDef.density = 5f; 
+        fixtureDef.friction = 0.5f;
+        fixtureDef.restitution = 0.1f; 
+        Fixture fix = this.physicBody.createFixture(fixtureDef);
+        
+        this.setCollisionFilterMask(fixtureDef, true);
+        
+        this.collisionFixture.add(fix);
+        fix.setUserData(this);
     }
     
     protected void spawnLoot(Vector2 dirVelocity)
