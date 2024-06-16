@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.UUID;
 import ressourcesmanagers.TextureManager;
 import triggered.TeethTriggeredObject2D;
 
@@ -43,11 +44,13 @@ public class BossHummer extends Character2D{
     private static final String BOSSHUMMERTEXT = "character/Anim_hummer_Carosserie.png";
     private static final String BOSSHUMMERWHEELTEXT = "character/Anim_hummer_Wheel.png";
     
+    protected final String id = UUID.randomUUID().toString();
+    
     private static final float MOVE_DIST = P2M * 1000;
     
     protected StateNode currentStateNode;
     
-    protected Set<OppInfluence> influences = new HashSet<OppInfluence>();
+    protected Set<HummerInfluence> influences = new HashSet<HummerInfluence>();
     
     protected Object2D target;
     
@@ -95,7 +98,7 @@ public class BossHummer extends Character2D{
         
         this.side = SideCharacter.LEFT;
         
-        this.currentStateNode = new BossHummer.StateNode(BossHummer.OppState.NORMAL);
+        this.currentStateNode = new BossHummer.StateNode(BossHummer.HummerState.NORMAL);
         
         this.canAttack = true;
         
@@ -135,7 +138,7 @@ public class BossHummer extends Character2D{
         
         this.side = SideCharacter.LEFT;
         
-        this.currentStateNode = new BossHummer.StateNode(BossHummer.OppState.NORMAL);
+        this.currentStateNode = new BossHummer.StateNode(BossHummer.HummerState.NORMAL);
         
         this.canAttack = true;
         
@@ -205,9 +208,9 @@ public class BossHummer extends Character2D{
         for(String influence : lInfluences){
             influence = influence.toLowerCase();
             if(influence.equals("right")){
-                this.influences.add(OppInfluence.GO_RIGHT);
+                this.influences.add(HummerInfluence.GO_RIGHT);
             }else if(influence.equals("left")){
-                this.influences.add(OppInfluence.GO_LEFT);
+                this.influences.add(HummerInfluence.GO_LEFT);
             }
         }
     }
@@ -239,6 +242,8 @@ public class BossHummer extends Character2D{
         if(this.lifeState == LifeState.ALIVE){
             this.damageActionFixture.applyAction(deltaTime, this);
         }
+        
+        this.notifyGameEventListener(GameEventListener.EventType.LOOP, "hummer" + ":" + this.id, this.getPositionBody());
     }
     
     protected void updateOffsetPosition(float deltaTime){    
@@ -534,49 +539,63 @@ public class BossHummer extends Character2D{
         if(this.isCinematicEntity){
             return;
         }
-        
-        if(this.target == null){
-            return;
+        // Balance influences
+        double reworkedAngle = getReworkedAngle(Math.toDegrees(this.physicBody.getAngle()));
+        if(reworkedAngle > 20){
+            this.influences.add(HummerInfluence.TURN_LEFT);
+        }else if(reworkedAngle < -20){
+            this.influences.add(HummerInfluence.TURN_RIGHT);
         }
         
-        if(this.maxDistanceFromSpawn > 0 
-                && (Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn
-                    || (this.isReseting && Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn / 2))){
-            if(!this.isReseting){
-                this.isReseting = true;
-            }
-            if(this.spawnPoint.x - this.physicBody.getPosition().x > 0){
-                this.influences.add(OppInfluence.GO_RIGHT);
-            }else{
-                this.influences.add(OppInfluence.GO_LEFT);
-            }      
-        }else{
-            if(this.isReseting){
-                this.isReseting = false;
-            }
-            if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
-                if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
-                    this.influences.add(OppInfluence.GO_RIGHT);
+        // Attack influences
+        if(this.target != null){   
+            if(this.maxDistanceFromSpawn > 0 
+                    && (Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn
+                        || (this.isReseting && Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn / 2))){
+                if(!this.isReseting){
+                    this.isReseting = true;
+                }
+                if(this.spawnPoint.x - this.physicBody.getPosition().x > 0){
+                    this.influences.add(HummerInfluence.GO_RIGHT);
                 }else{
-                    this.influences.add(OppInfluence.GO_LEFT);
-                }
+                    this.influences.add(HummerInfluence.GO_LEFT);
+                }      
             }else{
-                double rand = Math.random()*100;
-                if(rand > 80){
-                    if(this.side == SideCharacter.RIGHT){
-                        this.influences.add(OppInfluence.GO_RIGHT);
+                if(this.isReseting){
+                    this.isReseting = false;
+                }
+                if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
+                    if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
+                        this.influences.add(HummerInfluence.GO_RIGHT);
                     }else{
-                        this.influences.add(OppInfluence.GO_LEFT);
+                        this.influences.add(HummerInfluence.GO_LEFT);
                     }
-                }else if(rand > 60){
-                    if(this.side == SideCharacter.RIGHT){
-                        this.influences.add(OppInfluence.GO_LEFT);
-                    }else{
-                        this.influences.add(OppInfluence.GO_RIGHT);
+                }else{
+                    double rand = Math.random()*100;
+                    if(rand > 80){
+                        if(this.side == SideCharacter.RIGHT){
+                            this.influences.add(HummerInfluence.GO_RIGHT);
+                        }else{
+                            this.influences.add(HummerInfluence.GO_LEFT);
+                        }
+                    }else if(rand > 60){
+                        if(this.side == SideCharacter.RIGHT){
+                            this.influences.add(HummerInfluence.GO_LEFT);
+                        }else{
+                            this.influences.add(HummerInfluence.GO_RIGHT);
+                        }
                     }
                 }
             }
         }
+    }
+    
+    private static double getReworkedAngle(double angle){
+        double circleAngle = angle % 360;
+        if(Math.abs(circleAngle) > 360){
+            circleAngle = -(Math.signum(angle) * 360 - circleAngle);
+        }
+        return circleAngle;
     }
     
     protected void influences2Actions(float deltaTime){
@@ -609,23 +628,25 @@ public class BossHummer extends Character2D{
         }
     }
     
-    protected enum OppState{
+    protected enum HummerState{
         NORMAL
     }
     
-    protected enum OppInfluence{
+    protected enum HummerInfluence{
         GO_RIGHT,
         GO_LEFT,
+        TURN_RIGHT,
+        TURN_LEFT
     }
     
     protected class StateNode{
-        private final OppState stateNode;
+        private final HummerState stateNode;
         
         private int pauseAnimation;
         
         private boolean restartAnimation;
         
-        public StateNode(OppState state){
+        public StateNode(HummerState state){
             this.stateNode = state;
             
             this.pauseAnimation = 0;
@@ -646,7 +667,7 @@ public class BossHummer extends Character2D{
         }
         
         private StateNode getNextNodeNormal(){
-            Iterator<OppInfluence> it = BossHummer.this.influences.iterator();
+            Iterator<HummerInfluence> it = BossHummer.this.influences.iterator();
             
             return null;
         }
@@ -664,13 +685,13 @@ public class BossHummer extends Character2D{
             
             boolean isMove = false;         
             if(!BossHummer.this.isFlying()){
-                Iterator<BossHummer.OppInfluence> it = BossHummer.this.influences.iterator();
+                Iterator<BossHummer.HummerInfluence> it = BossHummer.this.influences.iterator();
 
                 isMove = false;
                 
                 if((isMove = this.ApplyBounce(velocity)) == false){           
                     while(it.hasNext()){
-                        BossHummer.OppInfluence currentInfluence = it.next();
+                        BossHummer.HummerInfluence currentInfluence = it.next();
                         switch(currentInfluence){
                             case GO_RIGHT :
                                 if(this.CanTurn(currentInfluence)){
@@ -691,15 +712,18 @@ public class BossHummer extends Character2D{
                 }
             }
             
+            // Balance physic
             float angularVelocity = BossHummer.this.physicBody.getAngularVelocity();
-            float angle = BossHummer.this.physicBody.getAngle();
-            if(angularVelocity > 0){
-                if(angle > 0){
-                    angularVelocity -= 0.1;
-                }
-            }else if(angularVelocity < 0){
-                if(angle < 0){
-                    angularVelocity += 0.1;
+            Iterator<BossHummer.HummerInfluence> it = BossHummer.this.influences.iterator();
+            while(it.hasNext()){
+                BossHummer.HummerInfluence currentInfluence = it.next();
+                switch(currentInfluence){
+                    case TURN_LEFT :
+                        angularVelocity -= 0.2;
+                        break;
+                    case TURN_RIGHT :
+                        angularVelocity += 0.2;
+                        break;
                 }
             }
             
@@ -721,12 +745,12 @@ public class BossHummer extends Character2D{
             }
             //System.out.println("Angle : " + angle);
             BossHummer.this.physicBody.setLinearVelocity(velocity);
-            //BossHummer.this.physicBody.setAngularVelocity(angularVelocity);
+            BossHummer.this.physicBody.setAngularVelocity(angularVelocity);
         }
          
-        public boolean CanTurn(BossHummer.OppInfluence currentInfluence){
-            if(BossHummer.this.side == SideCharacter.LEFT && currentInfluence == BossHummer.OppInfluence.GO_LEFT
-                || BossHummer.this.side == SideCharacter.RIGHT && currentInfluence == BossHummer.OppInfluence.GO_RIGHT){
+        public boolean CanTurn(BossHummer.HummerInfluence currentInfluence){
+            if(BossHummer.this.side == SideCharacter.LEFT && currentInfluence == BossHummer.HummerInfluence.GO_LEFT
+                || BossHummer.this.side == SideCharacter.RIGHT && currentInfluence == BossHummer.HummerInfluence.GO_RIGHT){
                 return true;
             }
             if(BossHummer.this.timerBeforeTurning <= 0){
@@ -749,7 +773,7 @@ public class BossHummer extends Character2D{
         /**
          * @return the stateNode
          */
-        public OppState getStateNode() {
+        public HummerState getStateNode() {
             return stateNode;
         }
 
