@@ -6,6 +6,7 @@
 package com.mygdx.game.scenery;
 
 import characters.BossHummer;
+import characters.BossTank;
 import characters.OpponentCAC1;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -83,7 +84,7 @@ public class StrongChestBoss extends SmallBox{
         
             dirDamage.scl(10);
             
-            this.notifyObject2D2CreateListener(BossHummer.class, this.getPositionBody().scl(1 / P2M).add(new Vector2(0, 75)), new Vector2(0, 0));
+            this.notifyObject2D2CreateListener(BossTank.class, this.getPositionBody().scl(1 / P2M).add(new Vector2(0, 75)), new Vector2(0, 0));
         //}
     }
     

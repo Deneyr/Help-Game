@@ -5,7 +5,9 @@
  */
 package com.mygdx.game;
 
+import characters.ABoss2D;
 import characters.BossHummer;
+import characters.BossTank;
 import characters.OpponentCAC1;
 import characters.OpponentCAC2;
 import triggered.UpTriggeredObject2D;
@@ -24,6 +26,7 @@ import java.util.Map.Entry;
 import triggered.BulletTriggeredObject2D;
 import triggered.CannonBallTriggeredObject2D;
 import triggered.ChimneySmokeTriggeredObject2D;
+import triggered.GravityCannonBallTriggeredObject2D;
 import triggered.TeethTriggeredObject2D;
 
 /**
@@ -67,6 +70,7 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
         this.object2DFactoriesPool.put(UpTriggeredObject2D.class, new Object2DFactoryPool<UpTriggeredObject2D>(UpTriggeredObject2D.class));
         this.object2DFactoriesPool.put(TeethTriggeredObject2D.class, new Object2DFactoryPool<TeethTriggeredObject2D>(TeethTriggeredObject2D.class));
         this.object2DFactoriesPool.put(CannonBallTriggeredObject2D.class, new Object2DFactoryPool<CannonBallTriggeredObject2D>(CannonBallTriggeredObject2D.class));
+        this.object2DFactoriesPool.put(GravityCannonBallTriggeredObject2D.class, new Object2DFactoryPool<GravityCannonBallTriggeredObject2D>(GravityCannonBallTriggeredObject2D.class));
         this.object2DFactoriesPool.put(ChimneySmokeTriggeredObject2D.class, new Object2DFactoryPool<ChimneySmokeTriggeredObject2D>(ChimneySmokeTriggeredObject2D.class));
         this.object2DFactoriesPool.put(BulletTriggeredObject2D.class, new Object2DFactoryPool<BulletTriggeredObject2D>(BulletTriggeredObject2D.class));
         
@@ -77,6 +81,7 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
         // Set Boss pool
         this.object2DBossOpponentsPool = new HashMap<Class, BossOpponentPool>();
         this.object2DBossOpponentsPool.put(BossHummer.class, new BossOpponentFactoryPool<BossHummer>(BossHummer.class));
+        this.object2DBossOpponentsPool.put(BossTank.class, new BossOpponentFactoryPool<BossTank>(BossTank.class));
         
         // Set Pool cosmetic
         this.cosmeticObj2DFactoriesPool.put(HitCosmeticObject2D.class, new CosmeticFactoryPool<HitCosmeticObject2D>(HitCosmeticObject2D.class));
@@ -213,7 +218,7 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
                 this.gameWorld.get().addObject2DToWorld(newObject2D, true);
             }else if(this.object2DBossOpponentsPool.containsKey(obj2DClass)){
                 BossOpponentPool factoryPool = this.object2DBossOpponentsPool.get(obj2DClass);
-                BossHummer newObject2D = factoryPool.obtainTriggeredObject2D(this.gameWorld.get().getWorld(), this.gameWorld.get().getHero(), position.x, position.y);
+                ABoss2D newObject2D = factoryPool.obtainTriggeredObject2D(this.gameWorld.get().getWorld(), this.gameWorld.get().getHero(), position.x, position.y);
 
                 this.gameWorld.get().addObject2DToWorld(newObject2D, true);
             }   

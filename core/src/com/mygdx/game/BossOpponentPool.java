@@ -5,6 +5,7 @@
  */
 package com.mygdx.game;
 
+import characters.ABoss2D;
 import characters.BossHummer;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -13,7 +14,7 @@ import com.badlogic.gdx.physics.box2d.World;
  * @author françois
  * @param <T>
  */
-public interface BossOpponentPool<T extends BossHummer>{
+public interface BossOpponentPool<T extends ABoss2D>{
     
     public T obtainTriggeredObject2D(World world, Object2D target, float posX, float posY);
     

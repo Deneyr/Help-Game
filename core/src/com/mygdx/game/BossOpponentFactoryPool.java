@@ -5,6 +5,7 @@
  */
 package com.mygdx.game;
 
+import characters.ABoss2D;
 import characters.BossHummer;
 import characters.OpponentCAC1;
 import com.badlogic.gdx.math.Vector2;
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author Deneyr
  */
-public class BossOpponentFactoryPool <T extends BossHummer> extends Pool<T> implements BossOpponentPool<T>{
+public class BossOpponentFactoryPool <T extends ABoss2D> extends Pool<T> implements BossOpponentPool<T>{
 
     private Class class2Generate;
     

@@ -33,16 +33,17 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import ressourcesmanagers.TextureManager;
+import triggered.CannonBallTriggeredObject2D;
+import triggered.GravityCannonBallTriggeredObject2D;
 import triggered.TeethTriggeredObject2D;
 
 /**
  *
  * @author Deneyr
  */
-public class BossHummer extends ABoss2D{
+public class BossTank extends ABoss2D{
    
-    private static final String BOSSHUMMERTEXT = "character/Anim_hummer_Carosserie.png";
-    private static final String BOSSHUMMERWHEELTEXT = "character/Anim_hummer_Wheel.png";
+    private static final String BOSSTANKTEXT = "character/Anim_Tank_400x250px-01.png";
     
     protected final String id = UUID.randomUUID().toString();
     
@@ -50,7 +51,7 @@ public class BossHummer extends ABoss2D{
     
     protected StateNode currentStateNode;
     
-    protected Set<HummerInfluence> influences = new HashSet<HummerInfluence>();
+    protected Set<TankInfluence> influences;
     
     protected Object2D target;
     
@@ -70,9 +71,6 @@ public class BossHummer extends ABoss2D{
     protected Vector2 targetedOffsetPosition;
     protected float offsetTime;
     
-    protected WheelObject2D leftWheel;
-    protected WheelObject2D rightWheel;
-    
     private float timerBeforeTurning;
     private final float maxTimerBeforeTurning;
     
@@ -80,12 +78,17 @@ public class BossHummer extends ABoss2D{
     private float bounceTimer;
     private final float maxBounceTimer;
     
-    public BossHummer(){
-       this(12 * 35, null);    
+    protected float attackCooldown;
+    
+    public BossTank(){
+       this(6 * 35, null);
     }
     
-    public BossHummer(int lifePoint, Object2D target){
+    public BossTank(int lifePoint, Object2D target){
         super(lifePoint);
+        this.influences = new HashSet<TankInfluence>();
+        
+        this.attackCooldown = 2f;
         
         this.timerBeforeTurning = 0;
         this.maxTimerBeforeTurning = 1;
@@ -98,7 +101,7 @@ public class BossHummer extends ABoss2D{
         
         this.side = SideCharacter.LEFT;
         
-        this.currentStateNode = new BossHummer.StateNode(BossHummer.HummerState.NORMAL);
+        this.currentStateNode = new BossTank.StateNode(TankState.NORMAL);
         
         this.canAttack = true;
         
@@ -111,8 +114,11 @@ public class BossHummer extends ABoss2D{
         this.isReseting = false;
     }
     
-    public BossHummer(World world, Object2D target, float posX, float posY) {
-        super(12 * 35);
+    public BossTank(World world, Object2D target, float posX, float posY) {
+        super(6 * 35);
+        this.influences = new HashSet<TankInfluence>();
+        
+        this.attackCooldown = 2f;
         
         this.maxTimerBeforeTurning = 1;
         this.maxBounceTimer = 1;
@@ -138,18 +144,18 @@ public class BossHummer extends ABoss2D{
         
         this.side = SideCharacter.LEFT;
         
-        this.currentStateNode = new BossHummer.StateNode(BossHummer.HummerState.NORMAL);
+        this.currentStateNode = new BossTank.StateNode(TankState.NORMAL);
         
         this.canAttack = true;
         
-        this.maxSpeed = 15f;
+        this.maxSpeed = 5f;
         
         this.spawnPoint = new Vector2(posX * P2M, posY * P2M);
         this.maxDistanceFromSpawn = -1;
         this.isReseting = false;
         
         // Part Physic
-        this.initializePhysicBossHummer(world, posX, posY);
+        this.initializePhysicBossTank(world, posX, posY);
         
         // Part graphic
         this.assignTextures();
@@ -208,9 +214,9 @@ public class BossHummer extends ABoss2D{
         for(String influence : lInfluences){
             influence = influence.toLowerCase();
             if(influence.equals("right")){
-                this.influences.add(HummerInfluence.GO_RIGHT);
+                this.influences.add(TankInfluence.GO_RIGHT);
             }else if(influence.equals("left")){
-                this.influences.add(HummerInfluence.GO_LEFT);
+                this.influences.add(TankInfluence.GO_LEFT);
             }
         }
     }
@@ -233,12 +239,6 @@ public class BossHummer extends ABoss2D{
         }
         
         Vector2 linearVelocity = this.getBodyVelocity();
-        this.leftWheel.setParentSpeedX(linearVelocity.x);
-        this.rightWheel.setParentSpeedX(linearVelocity.x);
-        
-        this.leftWheel.updateLogic(deltaTime);
-        this.rightWheel.updateLogic(deltaTime);
-        
         if(this.lifeState == LifeState.ALIVE){
             this.damageActionFixture.applyAction(deltaTime, this);
             
@@ -247,7 +247,7 @@ public class BossHummer extends ABoss2D{
     }
     
     protected void updateOffsetPosition(float deltaTime){    
-        if(BossHummer.this.lifeState == LifeState.DEAD){
+        if(BossTank.this.lifeState == LifeState.DEAD){
             return;
         }
         
@@ -279,41 +279,29 @@ public class BossHummer extends ABoss2D{
     protected final void initializeGraphic()
     {
         // Part graphic
-        TextureRegion[][] tmp = TextureRegion.split(this.texture, 200, 150);
+        TextureRegion[][] tmp = TextureRegion.split(this.texture, 400, 250);
         // walk
-        for (TextureRegion item : tmp[0]) {
-            Array<TextureRegion> array = new Array<TextureRegion>();
-            array.add(item);
+        for (int i =0; i < tmp.length - 1; i++) {
+            Array<TextureRegion> array = new Array<TextureRegion>(tmp[i]);
             this.listAnimations.add(new Animation(0.2f, array));
             this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.NORMAL);
         }
+        
+        Array<TextureRegion> array = new Array<TextureRegion>();
+        array.add(tmp[tmp.length - 1][0]);
+        this.listAnimations.add(new Animation(0.2f, array));
+        this.listAnimations.get(this.listAnimations.size()-1).setPlayMode(Animation.PlayMode.NORMAL);
         
         this.changeAnimation(0, true);
     }
     
     @Override
-    public void changeAnimation(int index, boolean isPause){
-        super.changeAnimation(index, isPause);
-        
-        if(this.leftWheel != null){
-            this.leftWheel.changeAnimation(index, isPause);
-        }
-        if(this.rightWheel != null){
-            this.rightWheel.changeAnimation(index, isPause);
-        }
-    }
-    
-    @Override
     public void assignTextures(){
         
-        this.texture = TextureManager.getInstance().getTexture(BOSSHUMMERTEXT, this);
-        Texture wheelText = TextureManager.getInstance().getTexture(BOSSHUMMERWHEELTEXT, this);
+        this.texture = TextureManager.getInstance().getTexture(BOSSTANKTEXT, this);
         
         if(this.texture != null){
             this.initializeGraphic();
-            
-            this.leftWheel.assignTextures(wheelText);
-            this.rightWheel.assignTextures(wheelText);
         }
     }
     
@@ -323,8 +311,7 @@ public class BossHummer extends ABoss2D{
         
         if(result){
             int indexAnimation = (int) (((float) (this.getLifePointsMax() - this.getLifePoints()) / this.getLifePointsMax()) * (this.listAnimations.size() - 1));
-
-            this.changeAnimation(indexAnimation, true);
+            this.changeAnimation(indexAnimation, this.pause, this.animationTime);
             
             if(damageOwner instanceof Character2D
                 && this.bounceTimer <= 0){
@@ -349,7 +336,7 @@ public class BossHummer extends ABoss2D{
         fixtureDef.filter.maskBits = 0x0002;
     }*/
     
-    protected final void initializePhysicBossHummer(World world, float posX, float posY){
+    protected final void initializePhysicBossTank(World world, float posX, float posY){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(posX * P2M, posY * P2M); 
@@ -359,7 +346,7 @@ public class BossHummer extends ABoss2D{
         
         // Collision fixture
         PolygonShape collisionBox = new PolygonShape();
-        collisionBox.setAsBox(90 * P2M, 25 * P2M, new Vector2( 0, 5 * P2M), 0);
+        collisionBox.setAsBox(100 * P2M, 75 * P2M, new Vector2( -17 * P2M, 15 * P2M), 0);
         
         FixtureDef fixtureDef = new FixtureDef();
         
@@ -378,7 +365,25 @@ public class BossHummer extends ABoss2D{
         fix.setUserData(this);
         
         collisionBox = new PolygonShape();
-        collisionBox.setAsBox(30 * P2M, 50 * P2M, new Vector2( 0, 20 * P2M), 0);
+        collisionBox.setAsBox(180 * P2M, 45 * P2M, new Vector2( -5 * P2M, -75 * P2M), 0);
+        
+        fixtureDef = new FixtureDef();
+        
+        this.setGhostCollisionFilterMask(fixtureDef, false);
+        
+        fixtureDef.shape = collisionBox;
+        fixtureDef.density = 5f; 
+        fixtureDef.friction = 0.5f;
+        fixtureDef.restitution = 0.1f; 
+        fix = body.createFixture(fixtureDef);
+        
+        this.setGhostCollisionFilterMask(fixtureDef, true);
+
+        this.collisionFixture.add(fix);
+        fix.setUserData(this);
+        
+        collisionBox = new PolygonShape();
+        collisionBox.setAsBox(50 * P2M, 35 * P2M, new Vector2( 116 * P2M, 2 * P2M), (float) Math.toRadians(-20));
         
         fixtureDef = new FixtureDef();
         
@@ -397,7 +402,7 @@ public class BossHummer extends ABoss2D{
         
         // Feet fixture
         PolygonShape feet = new PolygonShape();
-        feet.setAsBox(90 * P2M, 5 * P2M, new Vector2(0, -75 * P2M), 0);
+        feet.setAsBox(170 * P2M, 40 * P2M, new Vector2( -5 * P2M, -85 * P2M), 0);
         fixtureDef = new FixtureDef();
         fixtureDef.shape = feet;
         fixtureDef.density = 1f; 
@@ -411,9 +416,9 @@ public class BossHummer extends ABoss2D{
         this.feetFixture = fix;
         this.physicBody = body;
                 
-         // Part damage zone    
+        // Part damage zone    
         PolygonShape damageBox = new PolygonShape();
-        damageBox.setAsBox(94 * P2M, 40 * P2M, new Vector2( 0, -25 * P2M), 0);
+        damageBox.setAsBox(180 * P2M, 45 * P2M, new Vector2( -5 * P2M, -75 * P2M), 0);
         fixtureDef = new FixtureDef();
         fixtureDef.shape = damageBox;
         fixtureDef.density = 0f; 
@@ -423,23 +428,19 @@ public class BossHummer extends ABoss2D{
         fix = this.physicBody.createFixture(fixtureDef);
         Set<Fixture> setDamage = new HashSet<Fixture>();
         setDamage.add(fix);
-             
-        damageBox = new PolygonShape();
-        damageBox.setAsBox(10 * P2M, 50 * P2M, new Vector2( 0, 22 * P2M), 0);
-        fixtureDef = new FixtureDef();
-        fixtureDef.shape = damageBox;
-        fixtureDef.density = 0f; 
-        fixtureDef.friction = 0.05f;
-        fixtureDef.restitution = 0.1f; 
-        
-        fix = this.physicBody.createFixture(fixtureDef);
-        setDamage.add(fix);
         
         this.damageActionFixture = new DamageActionFixture(setDamage, 1);
+    }
+    
+    protected void setGhostCollisionFilterMask(FixtureDef fixtureDef, boolean reset){
         
-        // Wheels
-        this.leftWheel = new WheelObject2D(this.physicBody, world, posX, posY, -56, -37, this.priority + 1);
-        this.rightWheel = new WheelObject2D(this.physicBody, world, posX, posY, 56, -37, this.priority + 1);
+        if(reset){
+            this.setCollisionFilterMask(fixtureDef, true);
+            return;
+        }
+        
+        fixtureDef.filter.categoryBits = 0x0001;
+        fixtureDef.filter.maskBits = 0x0002;
     }
     
     @Override
@@ -483,7 +484,7 @@ public class BossHummer extends ABoss2D{
         
         // Collision fixture
         PolygonShape collisionBox = new PolygonShape();
-        collisionBox.setAsBox(90 * P2M, 25 * P2M, new Vector2( 0, -50 * P2M), 0);
+        collisionBox.setAsBox(180 * P2M, 25 * P2M, new Vector2( -5 * P2M, -95 * P2M), 0);
         
         FixtureDef fixtureDef = new FixtureDef();
         
@@ -522,14 +523,7 @@ public class BossHummer extends ABoss2D{
     }
     
     @Override
-    public void removeBody(World world){      
-        if(this.leftWheel != null){
-            this.leftWheel.removeBody(world);
-        }
-        if(this.rightWheel != null){
-            this.rightWheel.removeBody(world);
-        }
-        
+    public void removeBody(World world){
         super.removeBody(world);
     }
     
@@ -544,12 +538,13 @@ public class BossHummer extends ABoss2D{
         // Balance influences
         double reworkedAngle = getReworkedAngle(Math.toDegrees(this.physicBody.getAngle()));
         if(reworkedAngle > 20){
-            this.influences.add(HummerInfluence.TURN_LEFT);
+            this.influences.add(TankInfluence.TURN_LEFT);
         }else if(reworkedAngle < -20){
-            this.influences.add(HummerInfluence.TURN_RIGHT);
+            this.influences.add(TankInfluence.TURN_RIGHT);
         }
         
         // Attack influences
+        
         if(this.target != null){   
             if(this.maxDistanceFromSpawn > 0 
                     && (Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn
@@ -558,33 +553,35 @@ public class BossHummer extends ABoss2D{
                     this.isReseting = true;
                 }
                 if(this.spawnPoint.x - this.physicBody.getPosition().x > 0){
-                    this.influences.add(HummerInfluence.GO_RIGHT);
+                    this.influences.add(TankInfluence.GO_RIGHT);
                 }else{
-                    this.influences.add(HummerInfluence.GO_LEFT);
-                }      
+                    this.influences.add(TankInfluence.GO_LEFT);
+                }
             }else{
                 if(this.isReseting){
                     this.isReseting = false;
                 }
                 if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
+                    this.influences.add(TankInfluence.ATTACK);
+                    
                     if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
-                        this.influences.add(HummerInfluence.GO_RIGHT);
+                        this.influences.add(TankInfluence.GO_RIGHT);
                     }else{
-                        this.influences.add(HummerInfluence.GO_LEFT);
+                        this.influences.add(TankInfluence.GO_LEFT);
                     }
                 }else{
                     double rand = Math.random()*100;
                     if(rand > 80){
                         if(this.side == SideCharacter.RIGHT){
-                            this.influences.add(HummerInfluence.GO_RIGHT);
+                            this.influences.add(TankInfluence.GO_RIGHT);
                         }else{
-                            this.influences.add(HummerInfluence.GO_LEFT);
+                            this.influences.add(TankInfluence.GO_LEFT);
                         }
                     }else if(rand > 60){
                         if(this.side == SideCharacter.RIGHT){
-                            this.influences.add(HummerInfluence.GO_LEFT);
+                            this.influences.add(TankInfluence.GO_LEFT);
                         }else{
-                            this.influences.add(HummerInfluence.GO_RIGHT);
+                            this.influences.add(TankInfluence.GO_RIGHT);
                         }
                     }
                 }
@@ -607,11 +604,86 @@ public class BossHummer extends ABoss2D{
         if(nextNode != null){
             this.currentStateNode = nextNode;
         }
+        /*
+        int animIndex = this.currentStateNode.getCurrentAnimation();
+        boolean restartAnimation = this.currentStateNode.isRestartAnimation();
+        
+        int pauseAnim = this.currentStateNode.isPauseAnimation();
+        if(animIndex >= 0 && (this.currentAnimation != animIndex || (pauseAnim == 0) == this.pause)){
+            if(prevNode != this.currentStateNode || restartAnimation){
+                System.out.println("change anim :" + prevNode.stateNode + " : " + this.currentStateNode.stateNode + " - " + restartAnimation);
+                switch(pauseAnim){
+                    case 0:
+                        this.changeAnimation(animIndex, false);
+                        break;
+                    case 1 :
+                        this.changeAnimation(animIndex, true, 10f);
+                        break;
+                    case -1 :
+                        this.changeAnimation(animIndex, true);
+                        break;
+                }
+            }else{
+                switch(pauseAnim){
+                    case 0:
+                        this.changeAnimation(animIndex, false, this.animationTime);
+                        break;
+                    case 1 :
+                        this.changeAnimation(animIndex, true, this.animationTime);
+                        break;
+                    case -1 :
+                        this.changeAnimation(animIndex, true, this.animationTime);
+                        break;
+                }
+            }
+        }*/
+        
+        this.updateAttack(prevNode, nextNode);
         
         this.currentStateNode.updatePhysic();
                 
         this.influences.clear();
-    }   
+    }
+    
+    protected void updateAttack(StateNode prevNode, StateNode nextNode){
+        if(this.lifeState == LifeState.DEAD){
+            return;
+        }
+
+        if(this.canAttack
+                && prevNode.getStateNode() != TankState.ATTACK 
+                && (nextNode != null && nextNode.getStateNode() == TankState.ATTACK)){
+            this.canAttack = false;
+            Timer.schedule(new Timer.Task(){
+                    @Override
+                    public void run() {
+                        if(BossTank.this.lifeState == LifeState.ALIVE){
+                            int dirScale = BossTank.this.side == SideCharacter.LEFT ? 1 : -1;
+
+                            float angle = (BossTank.this.side == SideCharacter.RIGHT ? 0 : (float) Math.PI) + BossTank.this.physicBody.getAngle();
+                            
+                            //Vector2 dirBall = new Vector2(-1 * dirScale, 0).rotate((float) (Math.toDegrees(BossTank.this.physicBody.getAngle())));
+                            Vector2 cannonPosition = BossTank.this.getPositionBody().add(new Vector2(-140 * P2M * dirScale, 65 * P2M).rotate((float) (Math.toDegrees(BossTank.this.physicBody.getAngle()))));
+                            Vector2 velocityBall = GravityCannonBallTriggeredObject2D.getSpeedToTarget(angle, BossTank.this.target.getPositionBody().sub(cannonPosition));
+                            
+                            BossTank.this.notifyObject2D2CreateListener(GravityCannonBallTriggeredObject2D.class, cannonPosition.scl(1 / P2M), velocityBall);
+
+                            BossTank.this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "cannon", BossTank.this.getPositionBody());
+                            BossTank.this.notifyGameEventListener(GameEventListener.EventType.SHAKESCREEN, "0.2:0.2", BossTank.this.getPositionBody()); 
+                        }
+                    }
+
+            }, 1f);
+
+            Timer.schedule(new Timer.Task(){
+                    @Override
+                    public void run() {
+                        BossTank.this.canAttack = true;
+                    }
+
+            }, this.attackCooldown);
+        }
+    }
     
     /**
      * @param maxDistance the maxDistanceFromSpawn to set
@@ -630,25 +702,27 @@ public class BossHummer extends ABoss2D{
         }
     }
     
-    protected enum HummerState{
-        NORMAL
+    protected enum TankState{
+        NORMAL,
+        ATTACK
     }
     
-    protected enum HummerInfluence{
+    protected enum TankInfluence{
         GO_RIGHT,
         GO_LEFT,
         TURN_RIGHT,
-        TURN_LEFT
+        TURN_LEFT,
+        ATTACK
     }
     
     protected class StateNode{
-        private final HummerState stateNode;
+        private final TankState stateNode;
         
         private int pauseAnimation;
         
         private boolean restartAnimation;
         
-        public StateNode(HummerState state){
+        public StateNode(TankState state){
             this.stateNode = state;
             
             this.pauseAnimation = 0;
@@ -658,52 +732,110 @@ public class BossHummer extends ABoss2D{
         
         // Part nextNode
         public StateNode getNextStateNode(){
-            if(BossHummer.this.lifeState == LifeState.DEAD)
+            if(BossTank.this.lifeState == LifeState.DEAD)
                 return null;
             
             switch(this.getStateNode()){
                 case NORMAL:
                     return getNextNodeNormal();
+                case ATTACK:
+                    return getNextNodeAttack();
             } 
             return null;
         }
         
         private StateNode getNextNodeNormal(){
-            Iterator<HummerInfluence> it = BossHummer.this.influences.iterator();
+            Iterator<TankInfluence> it = BossTank.this.influences.iterator();
             
+            while(it.hasNext()){
+                TankInfluence currentInfluence = it.next();
+                switch(currentInfluence){
+                    case ATTACK :
+                        if(BossTank.this.canAttack){
+                            BossTank.this.changeAnimation(BossTank.this.currentAnimation, false);
+                            
+                            return new StateNode(TankState.ATTACK);
+                        }
+                }
+            }
+            return null;
+        }
+        
+        private StateNode getNextNodeAttack(){
+            if(BossTank.this.isCurrentAnimationOver()){
+                BossTank.this.changeAnimation(BossTank.this.currentAnimation, true);
+                
+                return new StateNode(TankState.NORMAL);
+            }
             return null;
         }
         
         // Part animation      
+        public int getCurrentAnimation(){
+            if(BossTank.this.lifeState == LifeState.DEAD){
+                this.pauseAnimation = -1;
+                this.restartAnimation = true;
+                return BossTank.this.currentAnimation;
+            }
+
+            
+            /*if(BossTank.this.isInvulnerable){
+                this.pauseAnimation = -1;
+                this.restartAnimation = false;
+                return BossTank.this.currentAnimation;
+            }*/
+            
+            switch(this.getStateNode()){
+                case NORMAL:
+                    return getAnimationNormal();
+                case ATTACK:
+                    return getAnimationAttack();
+
+            } 
+            return -1;
+        }
+        
+        private int getAnimationNormal(){
+            this.pauseAnimation = -1;
+            this.restartAnimation = true;
+            return BossTank.this.currentAnimation;
+        }
+        
+        private int getAnimationAttack(){
+            this.pauseAnimation = 0;
+            this.restartAnimation = true;
+            return BossTank.this.currentAnimation;
+        }
         
         // Part physic
         public void updatePhysic(){
-            if(BossHummer.this.lifeState == LifeState.DEAD){
+            if(BossTank.this.lifeState == LifeState.DEAD){
                 return;
             }
             
-            Vector2 velocity = BossHummer.this.physicBody.getLinearVelocity();
+            Vector2 velocity = BossTank.this.physicBody.getLinearVelocity();
             //System.out.println("Speed pre : " + velocity.x);
             
             boolean isMove = false;         
-            if(!BossHummer.this.isFlying()){
-                Iterator<BossHummer.HummerInfluence> it = BossHummer.this.influences.iterator();
+            if(!BossTank.this.isFlying()){
+                Iterator<BossTank.TankInfluence> it = BossTank.this.influences.iterator();
                 
-                if((isMove = this.ApplyBounce(velocity)) == false){           
+                if(this.getStateNode() != BossTank.TankState.ATTACK 
+                        && (isMove = this.ApplyBounce(velocity)) == false){           
                     while(it.hasNext()){
-                        BossHummer.HummerInfluence currentInfluence = it.next();
+                        BossTank.TankInfluence currentInfluence = it.next();
                         switch(currentInfluence){
                             case GO_RIGHT :
                                 if(this.CanTurn(currentInfluence)){
                                     velocity.x += 0.3f;
-                                    BossHummer.this.side = SideCharacter.RIGHT;
+                                    BossTank.this.side = SideCharacter.RIGHT;
                                     isMove = true;
                                 }
                                 break;
                             case GO_LEFT :
                                 if(this.CanTurn(currentInfluence)){
                                     velocity.x -= 0.3f;
-                                    BossHummer.this.side = SideCharacter.LEFT;
+                                    BossTank.this.side = SideCharacter.LEFT;
                                     isMove = true;
                                 }
                                 break;
@@ -713,10 +845,10 @@ public class BossHummer extends ABoss2D{
             }
             
             // Balance physic
-            float angularVelocity = BossHummer.this.physicBody.getAngularVelocity();
-            Iterator<BossHummer.HummerInfluence> it = BossHummer.this.influences.iterator();
+            float angularVelocity = BossTank.this.physicBody.getAngularVelocity();
+            Iterator<TankInfluence> it = BossTank.this.influences.iterator();
             while(it.hasNext()){
-                BossHummer.HummerInfluence currentInfluence = it.next();
+                TankInfluence currentInfluence = it.next();
                 switch(currentInfluence){
                     case TURN_LEFT :
                         angularVelocity -= 0.2;
@@ -727,7 +859,7 @@ public class BossHummer extends ABoss2D{
                 }
             }
             
-            if(!(isMove || BossHummer.this.isFlying())){
+            if(!(isMove || BossTank.this.isFlying())){
                 if(Math.abs(velocity.x) > 1.f){
                     velocity.x -= 0.5f * (float)Math.signum(velocity.x);
                 }else{
@@ -735,8 +867,8 @@ public class BossHummer extends ABoss2D{
                 }
             }
             
-            if(Math.abs(velocity.x) > BossHummer.this.maxSpeed){
-                velocity.x = BossHummer.this.maxSpeed * (float)Math.signum(velocity.x);
+            if(Math.abs(velocity.x) > BossTank.this.maxSpeed){
+                velocity.x = BossTank.this.maxSpeed * (float)Math.signum(velocity.x);
             }
             
             // Clamp speed
@@ -744,18 +876,18 @@ public class BossHummer extends ABoss2D{
                 velocity.y = 15.f * (float)Math.signum(velocity.y);
             }
             //System.out.println("Angle : " + angle);
-            BossHummer.this.physicBody.setLinearVelocity(velocity);
-            BossHummer.this.physicBody.setAngularVelocity(angularVelocity);
+            BossTank.this.physicBody.setLinearVelocity(velocity);
+            BossTank.this.physicBody.setAngularVelocity(angularVelocity);
         }
          
-        public boolean CanTurn(BossHummer.HummerInfluence currentInfluence){
-            if(BossHummer.this.side == SideCharacter.LEFT && currentInfluence == BossHummer.HummerInfluence.GO_LEFT
-                || BossHummer.this.side == SideCharacter.RIGHT && currentInfluence == BossHummer.HummerInfluence.GO_RIGHT){
+        public boolean CanTurn(TankInfluence currentInfluence){
+            if(BossTank.this.side == SideCharacter.LEFT && currentInfluence == TankInfluence.GO_LEFT
+                || BossTank.this.side == SideCharacter.RIGHT && currentInfluence == TankInfluence.GO_RIGHT){
                 return true;
             }
-            if(BossHummer.this.timerBeforeTurning <= 0){
+            if(BossTank.this.timerBeforeTurning <= 0){
                 
-                BossHummer.this.timerBeforeTurning = BossHummer.this.maxTimerBeforeTurning;
+                BossTank.this.timerBeforeTurning = BossTank.this.maxTimerBeforeTurning;
                 
                 return true;
             }
@@ -773,26 +905,26 @@ public class BossHummer extends ABoss2D{
         /**
          * @return the stateNode
          */
-        public HummerState getStateNode() {
+        public TankState getStateNode() {
             return stateNode;
         }
 
         private boolean ApplyBounce(Vector2 velocity) {
-            if(BossHummer.this.bounceTimer > 0){
-                SideCharacter bounceOwnerSide = BossHummer.this.bounceSide;
+            if(BossTank.this.bounceTimer > 0){
+                SideCharacter bounceOwnerSide = BossTank.this.bounceSide;
 
                 if(bounceOwnerSide == SideCharacter.LEFT){
                     if(velocity.x > 0){
                         velocity.x = 0;
                     }
                     velocity.x -= 0.3f;
-                    BossHummer.this.side = SideCharacter.LEFT;
+                    BossTank.this.side = SideCharacter.LEFT;
                 }else{
                     if(velocity.x < 0){
                         velocity.x = 0;
                     }
                     velocity.x += 0.3f;
-                    BossHummer.this.side = SideCharacter.RIGHT;
+                    BossTank.this.side = SideCharacter.RIGHT;
                 }    
                 
                 return true;
