@@ -1630,10 +1630,10 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 23268.727f, 1322.0037f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 23567.463f, 1414.7167f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
+obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 23565.463f, 1480.7167f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 23864.525f, 1414.3959f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
+obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 23864.525f, 1435.3959f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 24163.525f, 1414.3959f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f

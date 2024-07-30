@@ -110,6 +110,7 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         this.putLoopSound("conveyorBelt", "sounds/environment/conveyorBelt_Loop.ogg");
         this.putLoopSound("gear", "sounds/environment/gear_Loop.ogg");
         this.putLoopSound("hummer", "sounds/environment/hummer_Loop.ogg");
+        this.putLoopSound("tank", "sounds/environment/tank_Loop.ogg");
         this.mapIdLoopSound = new HashMap<String, Long>();
         this.setLoopSoundPathUsed = new HashSet<String>();
         

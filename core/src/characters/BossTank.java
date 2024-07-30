@@ -24,6 +24,7 @@ import com.mygdx.game.DamageActionFixture;
 import com.mygdx.game.GameEventListener;
 import static com.mygdx.game.HelpGame.P2M;
 import com.mygdx.game.Object2D;
+import com.mygdx.game.scenery.TrackObject2D;
 import com.mygdx.game.scenery.WheelObject2D;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -43,7 +44,7 @@ import triggered.TeethTriggeredObject2D;
  */
 public class BossTank extends ABoss2D{
    
-    private static final String BOSSTANKTEXT = "character/Anim_Tank_400x250px-01.png";
+    private static final String BOSSTANKTEXT = "character/Anim_Tank V2.png";
     
     protected final String id = UUID.randomUUID().toString();
     
@@ -77,6 +78,8 @@ public class BossTank extends ABoss2D{
     private SideCharacter bounceSide;
     private float bounceTimer;
     private final float maxBounceTimer;
+    
+    protected TrackObject2D wheels;
     
     protected float attackCooldown;
     
@@ -112,6 +115,8 @@ public class BossTank extends ABoss2D{
         this.spawnPoint = new Vector2(0, 0);
         this.maxDistanceFromSpawn = -1f;
         this.isReseting = false;
+        
+        this.previousSide = this.side;
     }
     
     public BossTank(World world, Object2D target, float posX, float posY) {
@@ -164,48 +169,92 @@ public class BossTank extends ABoss2D{
     }
     
     protected void updateFixture(){
-        /*
-        if(this.damageActionFixture != null){
-            damageActionFixture.dispose(this.physicBody);
-        }
         
+        for(Fixture fix : this.collisionFixture){
+            this.physicBody.destroyFixture(fix);
+        }
+        this.collisionFixture.clear();
         
         if(this.side == SideCharacter.RIGHT){        
-            // Part damage zone
-            
-            PolygonShape damageShape = new PolygonShape();
+            // Collision fixture
+            PolygonShape collisionBox = new PolygonShape();
+            collisionBox.setAsBox(100 * P2M, 75 * P2M, new Vector2( 15 * P2M, 20 * P2M), 0);
 
-            damageShape.setAsBox(20 * P2M, 35 * P2M, new Vector2(20 * P2M, 0), 0);
-            
             FixtureDef fixtureDef = new FixtureDef();
-            fixtureDef.shape = damageShape;
-            fixtureDef.density = 0f; 
-            fixtureDef.friction = 0.05f;
-            fixtureDef.restitution = 0.1f; 
 
+            this.setCollisionFilterMask(fixtureDef, false);
+
+            fixtureDef.shape = collisionBox;
+            fixtureDef.density = 5f; 
+            fixtureDef.friction = 0.5f;
+            fixtureDef.restitution = 0.1f; 
             Fixture fix = this.physicBody.createFixture(fixtureDef);
-            Set<Fixture> setDamage = new HashSet<Fixture>();
-            setDamage.add(fix);
-            this.damageActionFixture = new DamageActionFixture(setDamage, 1);
+
+            this.setCollisionFilterMask(fixtureDef, true);
+
+            this.collisionFixture = new ArrayList<Fixture>();
+            this.collisionFixture.add(fix);
+            fix.setUserData(this);
+
+
+            collisionBox = new PolygonShape();
+            collisionBox.setAsBox(50 * P2M, 35 * P2M, new Vector2( -116 * P2M, -10 * P2M), (float) Math.toRadians(20));
+
+            fixtureDef = new FixtureDef();
+
+            this.setCollisionFilterMask(fixtureDef, false);
+
+            fixtureDef.shape = collisionBox;
+            fixtureDef.density = 5f; 
+            fixtureDef.friction = 0.5f;
+            fixtureDef.restitution = 0.1f; 
+            fix = this.physicBody.createFixture(fixtureDef);
+
+            this.setCollisionFilterMask(fixtureDef, true);
+
+            this.collisionFixture.add(fix);
+            fix.setUserData(this);
             
         }else{
-            // Part damage zone
-            
-            PolygonShape damageShape = new PolygonShape();
+            // Collision fixture
+            PolygonShape collisionBox = new PolygonShape();
+            collisionBox.setAsBox(100 * P2M, 75 * P2M, new Vector2( -15 * P2M, 20 * P2M), 0);
 
-            damageShape.setAsBox(20 * P2M, 35 * P2M, new Vector2(-20 * P2M, 0), 0);
-            
             FixtureDef fixtureDef = new FixtureDef();
-            fixtureDef.shape = damageShape;
-            fixtureDef.density = 0f; 
-            fixtureDef.friction = 0.05f;
-            fixtureDef.restitution = 0.1f; 
 
+            this.setCollisionFilterMask(fixtureDef, false);
+
+            fixtureDef.shape = collisionBox;
+            fixtureDef.density = 5f; 
+            fixtureDef.friction = 0.5f;
+            fixtureDef.restitution = 0.1f; 
             Fixture fix = this.physicBody.createFixture(fixtureDef);
-            Set<Fixture> setDamage = new HashSet<Fixture>();
-            setDamage.add(fix);
-            this.damageActionFixture = new DamageActionFixture(setDamage, 1);
-        }*/
+
+            this.setCollisionFilterMask(fixtureDef, true);
+
+            this.collisionFixture = new ArrayList<Fixture>();
+            this.collisionFixture.add(fix);
+            fix.setUserData(this);
+
+
+            collisionBox = new PolygonShape();
+            collisionBox.setAsBox(50 * P2M, 35 * P2M, new Vector2( 116 * P2M, -10 * P2M), (float) Math.toRadians(-20));
+
+            fixtureDef = new FixtureDef();
+
+            this.setCollisionFilterMask(fixtureDef, false);
+
+            fixtureDef.shape = collisionBox;
+            fixtureDef.density = 5f; 
+            fixtureDef.friction = 0.5f;
+            fixtureDef.restitution = 0.1f; 
+            fix = this.physicBody.createFixture(fixtureDef);
+
+            this.setCollisionFilterMask(fixtureDef, true);
+
+            this.collisionFixture.add(fix);
+            fix.setUserData(this);
+        }
     }
     
     @Override
@@ -239,10 +288,13 @@ public class BossTank extends ABoss2D{
         }
         
         Vector2 linearVelocity = this.getBodyVelocity();
+        this.wheels.setParentSpeedX(linearVelocity.x);     
+        this.wheels.updateLogic(deltaTime);
+        
         if(this.lifeState == LifeState.ALIVE){
             this.damageActionFixture.applyAction(deltaTime, this);
             
-            this.notifyGameEventListener(GameEventListener.EventType.LOOP, "hummer" + ":" + this.id, this.getPositionBody());
+            this.notifyGameEventListener(GameEventListener.EventType.LOOP, "tank" + ":" + this.id, this.getPositionBody());
         }
     }
     
@@ -300,8 +352,10 @@ public class BossTank extends ABoss2D{
         
         this.texture = TextureManager.getInstance().getTexture(BOSSTANKTEXT, this);
         
-        if(this.texture != null){
+        if(this.texture != null){            
             this.initializeGraphic();
+            
+            this.wheels.assignTextures(this.texture);
         }
     }
     
@@ -323,19 +377,6 @@ public class BossTank extends ABoss2D{
         return result;
     }
     
-    /*
-    @Override
-    protected void setCollisionFilterMask(FixtureDef fixtureDef, boolean reset){
-        
-        if(reset){
-            super.setCollisionFilterMask(fixtureDef, true);
-            return;
-        }
-        
-        fixtureDef.filter.categoryBits = 0x0001;
-        fixtureDef.filter.maskBits = 0x0002;
-    }*/
-    
     protected final void initializePhysicBossTank(World world, float posX, float posY){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -346,7 +387,7 @@ public class BossTank extends ABoss2D{
         
         // Collision fixture
         PolygonShape collisionBox = new PolygonShape();
-        collisionBox.setAsBox(100 * P2M, 75 * P2M, new Vector2( -17 * P2M, 15 * P2M), 0);
+        collisionBox.setAsBox(100 * P2M, 75 * P2M, new Vector2( -15 * P2M, 20 * P2M), 0);
         
         FixtureDef fixtureDef = new FixtureDef();
         
@@ -364,26 +405,9 @@ public class BossTank extends ABoss2D{
         this.collisionFixture.add(fix);
         fix.setUserData(this);
         
-        collisionBox = new PolygonShape();
-        collisionBox.setAsBox(180 * P2M, 45 * P2M, new Vector2( -5 * P2M, -75 * P2M), 0);
-        
-        fixtureDef = new FixtureDef();
-        
-        this.setGhostCollisionFilterMask(fixtureDef, false);
-        
-        fixtureDef.shape = collisionBox;
-        fixtureDef.density = 5f; 
-        fixtureDef.friction = 0.5f;
-        fixtureDef.restitution = 0.1f; 
-        fix = body.createFixture(fixtureDef);
-        
-        this.setGhostCollisionFilterMask(fixtureDef, true);
-
-        this.collisionFixture.add(fix);
-        fix.setUserData(this);
         
         collisionBox = new PolygonShape();
-        collisionBox.setAsBox(50 * P2M, 35 * P2M, new Vector2( 116 * P2M, 2 * P2M), (float) Math.toRadians(-20));
+        collisionBox.setAsBox(50 * P2M, 35 * P2M, new Vector2( 116 * P2M, -10 * P2M), (float) Math.toRadians(-20));
         
         fixtureDef = new FixtureDef();
         
@@ -430,17 +454,9 @@ public class BossTank extends ABoss2D{
         setDamage.add(fix);
         
         this.damageActionFixture = new DamageActionFixture(setDamage, 1);
-    }
-    
-    protected void setGhostCollisionFilterMask(FixtureDef fixtureDef, boolean reset){
         
-        if(reset){
-            this.setCollisionFilterMask(fixtureDef, true);
-            return;
-        }
-        
-        fixtureDef.filter.categoryBits = 0x0001;
-        fixtureDef.filter.maskBits = 0x0002;
+        // Wheels
+        this.wheels = new TrackObject2D(this.physicBody, world, posX, posY, 0, 0, this.priority + 1);
     }
     
     @Override
@@ -462,6 +478,9 @@ public class BossTank extends ABoss2D{
     protected void onDeath(){
         this.setDeathCollisionBox();
         
+        this.priority = 1;
+        this.wheels.setIsDestroyed(true);
+        
         this.offsetPosition = new Vector2(0, 0);
         
         Vector2 dirVelocity = this.getBodyVelocity().nor();
@@ -473,7 +492,7 @@ public class BossTank extends ABoss2D{
         
         this.notifyGameEventListener(GameEventListener.EventType.DEATH, this.name, this.getPositionBody());
         
-        this.notifyGameEventListener(GameEventListener.EventType.LOOP_STOP, "hummer" + ":" + this.id, this.getPositionBody());
+        this.notifyGameEventListener(GameEventListener.EventType.LOOP_STOP, "tank" + ":" + this.id, this.getPositionBody());
     }
     
     private void setDeathCollisionBox(){
@@ -523,7 +542,11 @@ public class BossTank extends ABoss2D{
     }
     
     @Override
-    public void removeBody(World world){
+    public void removeBody(World world){      
+        if(this.wheels != null){
+            this.wheels.removeBody(world);
+        }
+        
         super.removeBody(world);
     }
     
@@ -604,39 +627,6 @@ public class BossTank extends ABoss2D{
         if(nextNode != null){
             this.currentStateNode = nextNode;
         }
-        /*
-        int animIndex = this.currentStateNode.getCurrentAnimation();
-        boolean restartAnimation = this.currentStateNode.isRestartAnimation();
-        
-        int pauseAnim = this.currentStateNode.isPauseAnimation();
-        if(animIndex >= 0 && (this.currentAnimation != animIndex || (pauseAnim == 0) == this.pause)){
-            if(prevNode != this.currentStateNode || restartAnimation){
-                System.out.println("change anim :" + prevNode.stateNode + " : " + this.currentStateNode.stateNode + " - " + restartAnimation);
-                switch(pauseAnim){
-                    case 0:
-                        this.changeAnimation(animIndex, false);
-                        break;
-                    case 1 :
-                        this.changeAnimation(animIndex, true, 10f);
-                        break;
-                    case -1 :
-                        this.changeAnimation(animIndex, true);
-                        break;
-                }
-            }else{
-                switch(pauseAnim){
-                    case 0:
-                        this.changeAnimation(animIndex, false, this.animationTime);
-                        break;
-                    case 1 :
-                        this.changeAnimation(animIndex, true, this.animationTime);
-                        break;
-                    case -1 :
-                        this.changeAnimation(animIndex, true, this.animationTime);
-                        break;
-                }
-            }
-        }*/
         
         this.updateAttack(prevNode, nextNode);
         

@@ -461,6 +461,8 @@ public class BossHummer extends ABoss2D{
     protected void onDeath(){
         this.setDeathCollisionBox();
         
+        this.priority = 1;
+        
         this.offsetPosition = new Vector2(0, 0);
         
         Vector2 dirVelocity = this.getBodyVelocity().nor();

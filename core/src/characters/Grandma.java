@@ -284,6 +284,7 @@ public class Grandma extends Character2D{
         for(Fixture fix : this.collisionFixture){
             this.physicBody.destroyFixture(fix);
         }
+        this.collisionFixture.clear();
         
         if(this.damageZone != null){
             this.damageZone.dispose(this.physicBody);

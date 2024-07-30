@@ -408,6 +408,7 @@ public class EditorGameNode extends GameNode{
         SoundManager.getInstance().getSound("sounds/environment/conveyorBelt_Loop.ogg");
         SoundManager.getInstance().getSound("sounds/environment/gear_Loop.ogg");
         SoundManager.getInstance().getSound("sounds/environment/hummer_Loop.ogg");
+        SoundManager.getInstance().getSound("sounds/environment/tank_Loop.ogg");
     }
     
     private void loadObject2Ds(HelpGame game, String path){
