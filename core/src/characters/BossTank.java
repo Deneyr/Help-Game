@@ -49,6 +49,7 @@ public class BossTank extends ABoss2D{
     protected final String id = UUID.randomUUID().toString();
     
     private static final float MOVE_DIST = P2M * 1000;
+    private static final float ATTACK_DIST = P2M * 400;
     
     protected StateNode currentStateNode;
     
@@ -585,7 +586,9 @@ public class BossTank extends ABoss2D{
                     this.isReseting = false;
                 }
                 if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
-                    this.influences.add(TankInfluence.ATTACK);
+                    if(this.target.getPositionBody().dst(this.physicBody.getPosition()) > ATTACK_DIST){
+                        this.influences.add(TankInfluence.ATTACK);
+                    }
                     
                     if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
                         this.influences.add(TankInfluence.GO_RIGHT);
@@ -594,13 +597,13 @@ public class BossTank extends ABoss2D{
                     }
                 }else{
                     double rand = Math.random()*100;
-                    if(rand > 80){
+                    if(rand > 50){
                         if(this.side == SideCharacter.RIGHT){
                             this.influences.add(TankInfluence.GO_RIGHT);
                         }else{
                             this.influences.add(TankInfluence.GO_LEFT);
                         }
-                    }else if(rand > 60){
+                    }else if(rand > 40){
                         if(this.side == SideCharacter.RIGHT){
                             this.influences.add(TankInfluence.GO_LEFT);
                         }else{
@@ -656,7 +659,16 @@ public class BossTank extends ABoss2D{
                             Vector2 cannonPosition = BossTank.this.getPositionBody().add(new Vector2(-140 * P2M * dirScale, 65 * P2M).rotate((float) (Math.toDegrees(BossTank.this.physicBody.getAngle()))));
                             Vector2 velocityBall = GravityCannonBallTriggeredObject2D.getSpeedToTarget(angle, BossTank.this.target.getPositionBody().sub(cannonPosition));
                             
-                            BossTank.this.notifyObject2D2CreateListener(GravityCannonBallTriggeredObject2D.class, cannonPosition.scl(1 / P2M), velocityBall);
+                            Vector2 dirBall = (new Vector2(1, 0)).rotateRad(angle);
+                            float normVelocityBall = velocityBall.len();
+                            if(normVelocityBall < 8){
+                                normVelocityBall = 8;
+                            }else if(normVelocityBall > 20){
+                                normVelocityBall = 20;
+                            }
+                            dirBall = dirBall.setLength(normVelocityBall);
+                            
+                            BossTank.this.notifyObject2D2CreateListener(GravityCannonBallTriggeredObject2D.class, cannonPosition.scl(1 / P2M), dirBall);
 
                             BossTank.this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "cannon", BossTank.this.getPositionBody());
                             BossTank.this.notifyGameEventListener(GameEventListener.EventType.SHAKESCREEN, "0.2:0.2", BossTank.this.getPositionBody()); 
