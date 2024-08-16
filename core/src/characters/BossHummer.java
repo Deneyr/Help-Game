@@ -41,8 +41,8 @@ import triggered.TeethTriggeredObject2D;
  */
 public class BossHummer extends ABoss2D{
    
-    private static final String BOSSHUMMERTEXT = "character/Anim_hummer_Carosserie.png";
-    private static final String BOSSHUMMERWHEELTEXT = "character/Anim_hummer_Wheel.png";
+    private static final String BOSSHUMMERTEXT = "car/Anim_hummer_Carosserie.png";
+    private static final String BOSSHUMMERWHEELTEXT = "car/Anim_hummer_Wheel.png";
     
     protected final String id = UUID.randomUUID().toString();
     

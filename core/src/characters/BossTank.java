@@ -44,7 +44,7 @@ import triggered.TeethTriggeredObject2D;
  */
 public class BossTank extends ABoss2D{
    
-    private static final String BOSSTANKTEXT = "character/Anim_Tank V2.png";
+    private static final String BOSSTANKTEXT = "car/Anim_Tank V2.png";
     
     protected final String id = UUID.randomUUID().toString();
     

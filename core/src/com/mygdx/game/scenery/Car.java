@@ -28,6 +28,8 @@ public class Car extends ObstacleObject2D{
     
     public Car(World world, float posX, float posY, int indexTrash, int side){
         super(world, posX, posY, 0f, 0.8f, side, indexTrash, OBJECT_ARRAY[indexTrash]);
+        
+        this.priority = 3;
     }
 
     @Override
