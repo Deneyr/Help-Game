@@ -267,6 +267,10 @@ public class BossTank extends ABoss2D{
                 this.influences.add(TankInfluence.GO_RIGHT);
             }else if(influence.equals("left")){
                 this.influences.add(TankInfluence.GO_LEFT);
+            }else if(influence.equals("turnLeft")){
+                this.influences.add(TankInfluence.TURN_LEFT);
+            }else if(influence.equals("turnRight")){
+                this.influences.add(TankInfluence.TURN_RIGHT);
             }
         }
     }
@@ -279,7 +283,7 @@ public class BossTank extends ABoss2D{
         
         this.updateOffsetPosition(deltaTime);
         
-        createInfluencesBossHummer();
+        createInfluencesBossTank();
         
         influences2Actions(deltaTime);
         
@@ -551,7 +555,7 @@ public class BossTank extends ABoss2D{
         super.removeBody(world);
     }
     
-    protected void createInfluencesBossHummer(){
+    protected void createInfluencesBossTank(){
         if(this.lifeState == LifeState.DEAD){
             return;
         }
@@ -702,6 +706,18 @@ public class BossTank extends ABoss2D{
         if(this.bounceTimer > 0){
             this.bounceTimer -= deltaTime;
         }
+    }
+    
+    // dispose function
+    @Override
+    public void dispose(){
+        
+        if(this.damageActionFixture != null){
+            this.damageActionFixture.dispose(this.physicBody);
+            this.damageActionFixture = null;
+        }
+        
+        super.dispose();
     }
     
     protected enum TankState{

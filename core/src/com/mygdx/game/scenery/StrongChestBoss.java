@@ -5,6 +5,7 @@
  */
 package com.mygdx.game.scenery;
 
+import characters.BossBastion;
 import characters.BossHummer;
 import characters.BossTank;
 import characters.OpponentCAC1;
@@ -84,7 +85,7 @@ public class StrongChestBoss extends SmallBox{
         
             dirDamage.scl(10);
             
-            this.notifyObject2D2CreateListener(BossTank.class, this.getPositionBody().scl(1 / P2M).add(new Vector2(0, 75)), new Vector2(0, 0));
+            this.notifyObject2D2CreateListener(BossBastion.class, this.getPositionBody().scl(1 / P2M).add(new Vector2(0, 400)), new Vector2(0, 0));
         //}
     }
     

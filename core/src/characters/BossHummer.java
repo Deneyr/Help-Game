@@ -211,6 +211,10 @@ public class BossHummer extends ABoss2D{
                 this.influences.add(HummerInfluence.GO_RIGHT);
             }else if(influence.equals("left")){
                 this.influences.add(HummerInfluence.GO_LEFT);
+            }else if(influence.equals("turnLeft")){
+                this.influences.add(HummerInfluence.TURN_LEFT);
+            }else if(influence.equals("turnRight")){
+                this.influences.add(HummerInfluence.TURN_RIGHT);
             }
         }
     }
@@ -613,7 +617,19 @@ public class BossHummer extends ABoss2D{
         this.currentStateNode.updatePhysic();
                 
         this.influences.clear();
-    }   
+    }
+    
+    // dispose function
+    @Override
+    public void dispose(){
+        
+        if(this.damageActionFixture != null){
+            this.damageActionFixture.dispose(this.physicBody);
+            this.damageActionFixture = null;
+        }
+        
+        super.dispose();
+    }
     
     /**
      * @param maxDistance the maxDistanceFromSpawn to set

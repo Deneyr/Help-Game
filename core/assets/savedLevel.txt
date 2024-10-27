@@ -1,4 +1,4 @@
-//566.2203;37.373646
+//589.2324;37.372887
 
 ObstacleTestBlock obstacleTestBlock;
 BarbedTriggeredObject2D barbedTriggeredObject2D;
@@ -25,6 +25,7 @@ UpTriggeredObject2D upTriggeredObject2D;
 BarbedBalloonTriggeredObject2D barbedBalloonTriggeredObject2D;
 StrongChestBoss strongChestBoss;
 GrandUltima grandUltima;
+BreakableCar breakableCar;
 
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), -4104.0635f, 126.82736f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
@@ -269,9 +270,9 @@ game.getGameWorld().addObject2DToWorld(barbedTriggeredObject2D, true);
 barbedTriggeredObject2D = new BarbedTriggeredObject2D(game.getGameWorld().getWorld(), -3686.1436f, -9.468292f, 0.0f); //triggered.BarbedTriggeredObject2DWXYA
 game.getGameWorld().addObject2DToWorld(barbedTriggeredObject2D, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -3674.37f, 145.09062f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, -3675.348f, -3.4953516f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
-opponentCAC1.setTransform(-3674.37f, 145.09062f, 1.665242f);
+opponentCAC1.setTransform(-3675.348f, -3.4953516f, 1.665242f);
 
 directCannonCorpus = new DirectCannonCorpus(game.getGameWorld().getWorld(), hero, -2300.6323f, 394.53506f, 3.1337633f, 2.0f); //com.mygdx.game.scenery.DirectCannonCorpusWcom.mygdx.game.Object2DXYA2f
 game.getGameWorld().addObject2DToWorld(directCannonCorpus, true);
@@ -300,21 +301,21 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), -1710.5895f, 1168.7915f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), -2525.0876f, 16.4942f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), -2524.1187f, 16.635443f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(-2525.0876f, 16.4942f, 0.005119422f);
+metalBox.setTransform(-2524.1187f, 16.635443f, 1.3703373E-4f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), -2533.317f, 92.78779f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), -2532.0918f, 93.3352f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(-2533.317f, 92.78779f, 0.01750844f);
+metalBox.setTransform(-2532.0918f, 93.3352f, 0.002758454f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), -2548.93f, 168.85106f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), -2548.9412f, 169.92006f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(-2548.93f, 168.85106f, 0.02522419f);
+metalBox.setTransform(-2548.9412f, 169.92006f, 0.003002269f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), -2566.9194f, 244.87645f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), -2569.6135f, 246.49323f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(-2566.9194f, 244.87645f, 0.028718285f);
+metalBox.setTransform(-2569.6135f, 246.49323f, 0.0031082677f);
 
 poutrelleObstacle = new PoutrelleObstacle(game.getGameWorld().getWorld(), -1580.5824f, 249.50513f, 0.0f, 0, -1); //com.mygdx.game.scenery.PoutrelleObstacleWXYA0i-1i
 game.getGameWorld().addObject2DToWorld(poutrelleObstacle, true);
@@ -421,17 +422,17 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 230.78796f, 126.28662f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), -1456.5961f, 16.772175f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), -1456.5961f, 16.716177f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(-1456.5961f, 16.772175f, 3.589067E-8f);
+metalBox.setTransform(-1456.5961f, 16.716177f, 1.4949407E-4f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), -1379.3195f, 16.772175f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), -1379.3195f, 16.716177f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(-1379.3195f, 16.772175f, 3.928992E-8f);
+metalBox.setTransform(-1379.3195f, 16.716177f, 1.4948203E-4f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), -1301.232f, 16.772175f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), -1301.2338f, 16.716154f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(-1301.232f, 16.772175f, 3.291445E-8f);
+metalBox.setTransform(-1301.2338f, 16.716154f, 1.4894635E-4f);
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 83.23511f, 1167.9868f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
@@ -535,10 +536,10 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 poutrelleObstacle = new PoutrelleObstacle(game.getGameWorld().getWorld(), 3626.2295f, 887.468f, 0.40231955f, 0, 1); //com.mygdx.game.scenery.PoutrelleObstacleWXYA0i1i
 game.getGameWorld().addObject2DToWorld(poutrelleObstacle, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), -490.27747f, 513.51526f, -45.3789f, 1.0f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1f-70f1i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), -490.27747f, 513.51526f, -94.98983f, 1.0f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1f-70f1i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), -172.8772f, 695.4524f, 19.44809f, 1.0f, 30.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1f30f0i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), -172.8772f, 695.4524f, 40.709896f, 1.0f, 30.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1f30f0i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 4117.24f, 1468.5287f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
@@ -772,7 +773,7 @@ game.getGameWorld().addObject2DToWorld(barbedTriggeredObject2D, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 6509.8184f, 872.6857f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 5511.099f, 1138.6857f, -45.3789f, 1.4f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1.4f-70f1i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 5511.099f, 1138.6857f, -94.98983f, 1.4f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1.4f-70f1i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
 autoCannonCorpus = new AutoCannonCorpus(game.getGameWorld().getWorld(), hero, 5508.225f, 748.4822f, 0.0f, 2.0f, true, 0); //com.mygdx.game.scenery.AutoCannonCorpusWcom.mygdx.game.Object2DXYA2ftrue0i
@@ -793,7 +794,7 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 6808.949f, 1618.4043f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 6350.233f, 894.11255f, -45.3789f, 0.6f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f-70f1i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 6350.233f, 894.11255f, -94.98983f, 0.6f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f-70f1i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 7108.642f, 573.0306f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
@@ -886,9 +887,9 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 6884.4785f, 648.17694f, 10, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY10i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 6917.082f, 762.9487f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 6917.082f, 762.8931f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(6917.082f, 762.9487f, 1.0281548E-6f);
+metalBox.setTransform(6917.082f, 762.8931f, 1.4961309E-4f);
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 8006.4585f, 1319.7358f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
@@ -902,17 +903,17 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 8005.7397f, 1617.5968f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 8121.304f, 761.8903f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 8120.864f, 761.79346f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(8121.304f, 761.8903f, 0.002198185f);
+metalBox.setTransform(8120.864f, 761.79346f, 2.829521E-4f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 8116.5254f, 838.5347f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 8115.1973f, 838.4053f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(8116.5254f, 838.5347f, 0.0026305357f);
+metalBox.setTransform(8115.1973f, 838.4053f, 5.999427E-4f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 8215.909f, 761.93726f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 8215.909f, 761.88165f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(8215.909f, 761.93726f, 7.835313E-7f);
+metalBox.setTransform(8215.909f, 761.88165f, 1.4936861E-4f);
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 8900.538f, 872.6843f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
@@ -1109,17 +1110,17 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 11216.526f, 340.0583f, 10, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY10i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 11551.137f, 16.576334f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 11551.122f, 16.548983f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(11551.137f, 16.576334f, 1.5078778E-4f);
+metalBox.setTransform(11551.122f, 16.548983f, 3.903563E-5f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 11550.461f, 93.09192f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 11550.47f, 93.011406f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(11550.461f, 93.09192f, 5.4675346E-4f);
+metalBox.setTransform(11550.47f, 93.011406f, 7.148595E-5f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 11551.698f, 169.6572f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 11551.761f, 169.54294f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(11551.698f, 169.6572f, 7.451549E-4f);
+metalBox.setTransform(11551.761f, 169.54294f, 4.975214E-5f);
 
 autoCannonCorpus = new AutoCannonCorpus(game.getGameWorld().getWorld(), hero, 9833.402f, 637.3158f, -3.1364577f, 2.0f, true, 0); //com.mygdx.game.scenery.AutoCannonCorpusWcom.mygdx.game.Object2DXYA2ftrue0i
 game.getGameWorld().addObject2DToWorld(autoCannonCorpus, true);
@@ -1240,7 +1241,7 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 13822.97f, 124.85492f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 12158.317f, 94.812744f, -45.3789f, 1.0f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1f-70f1i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 12158.317f, 94.812744f, -94.98983f, 1.0f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1f-70f1i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
 conveyorBelt = new ConveyorBelt(game.getGameWorld().getWorld(), 12365.801f, 307.55164f, 0.0f, 1.0f, 1, new Vector2(7.0f, 0.0f)); //com.mygdx.game.scenery.ConveyorBeltWXYA1f1i7;0
@@ -1824,17 +1825,17 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 31814.102f, 2027.7915f, 10, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY10i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 31928.9f, 2032.9818f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 31929.21f, 2033.7074f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(31928.9f, 2032.9818f, 1.5717493f);
+metalBox.setTransform(31929.21f, 2033.7074f, 1.5775754f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 31798.041f, 2142.509f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 31798.041f, 2142.508f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(31798.041f, 2142.509f, -4.712496f);
+metalBox.setTransform(31798.041f, 2142.508f, -4.7122397f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 31930.896f, 1956.7544f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 31930.361f, 1957.1532f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(31930.896f, 1956.7544f, 4.713986f);
+metalBox.setTransform(31930.361f, 1957.1532f, 4.718266f);
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 31664.83f, 2027.9526f, 10, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY10i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
@@ -1866,9 +1867,9 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 32638.533f, 2404.1213f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 31953.453f, 1880.4491f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 31951.467f, 1880.6229f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(31953.453f, 1880.4491f, 1.5700264f);
+metalBox.setTransform(31951.467f, 1880.6229f, 1.5719675f);
 
 autoCannonCorpus = new AutoCannonCorpus(game.getGameWorld().getWorld(), hero, 31671.791f, 2129.7285f, 0.0f, 2.0f, true, 1); //com.mygdx.game.scenery.AutoCannonCorpusWcom.mygdx.game.Object2DXYA2ftrue1i
 game.getGameWorld().addObject2DToWorld(autoCannonCorpus, true);
@@ -1876,17 +1877,17 @@ game.getGameWorld().addObject2DToWorld(autoCannonCorpus, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 32361.162f, 1815.1406f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 31940.24f, 2109.3828f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 31938.99f, 2110.3713f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(31940.24f, 2109.3828f, 1.5721793f);
+metalBox.setTransform(31938.99f, 2110.3713f, 1.578729f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 31914.861f, 2185.8718f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 31912.516f, 2186.7773f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(31914.861f, 2185.8718f, 1.5735427f);
+metalBox.setTransform(31912.516f, 2186.7773f, 1.5804547f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 32041.764f, 2025.5654f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 32042.062f, 2023.7467f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(32041.764f, 2025.5654f, -1.759082f);
+metalBox.setTransform(32042.062f, 2023.7467f, -1.839247f);
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 32661.162f, 1815.1406f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
@@ -1897,17 +1898,17 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 33259.1f, 1815.1234f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 32019.521f, 1952.0197f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 32017.049f, 1951.1417f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(32019.521f, 1952.0197f, -0.18437274f);
+metalBox.setTransform(32017.049f, 1951.1417f, -0.26845315f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 32245.295f, 2004.3058f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 32245.31f, 2004.2988f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(32245.295f, 2004.3058f, -0.009221582f);
+metalBox.setTransform(32245.31f, 2004.2988f, -0.011613738f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 32122.229f, 2004.687f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 32125.314f, 2004.6073f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(32122.229f, 2004.687f, -4.053482E-4f);
+metalBox.setTransform(32125.314f, 2004.6073f, -6.276185E-4f);
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 33258.934f, 2102.7224f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
@@ -2046,9 +2047,9 @@ piston.setPriority(2);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 34279.41f, 3103.0203f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 32075.53f, 2900.7317f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 32031.414f, 2592.839f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(32075.53f, 2900.7317f, -2.2448123f);
+metalBox.setTransform(32031.414f, 2592.839f, -1.5706664f);
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 36237.176f, 3105.0203f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
@@ -2101,7 +2102,7 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 34280.55f, 3559.6165f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 34112.39f, 3121.719f, -18.497334f, 1.0f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1f-70f1i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 34112.39f, 3121.719f, -68.10813f, 1.0f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1f-70f1i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
 piston = new Piston(game.getGameWorld().getWorld(), 37077.055f, 3031.198f, 0.0f, 2.0f, -40.0f, 0.8f, 0.0f); //com.mygdx.game.scenery.PistonWXYA2f-40f0.8f0f
@@ -2122,13 +2123,13 @@ game.getGameWorld().addObject2DToWorld(piston, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 37318.72f, 3261.4993f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 33129.105f, 3328.2146f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 33172.83f, 3041.4255f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(33129.105f, 3328.2146f, 1.9867541f);
+metalBox.setTransform(33172.83f, 3041.4255f, 1.570947f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 33277.34f, 3131.7878f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 33276.41f, 3041.4238f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(33277.34f, 3131.7878f, -14.214311f);
+metalBox.setTransform(33276.41f, 3041.4238f, -14.13701f);
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 37614.82f, 3260.841f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
@@ -2197,34 +2198,34 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 38899.848f, 3034.3552f, 10, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY10i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 30539.953f, 1584.9208f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 30539.953f, 1584.8573f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 30583.76f, 1584.9208f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 30583.705f, 1584.8789f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
 
-opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 30622.953f, 1584.9208f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 30622.953f, 1584.8573f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
 
-opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 30665.953f, 1584.9208f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
+opponentCAC2 = new OpponentCAC2(game.getGameWorld().getWorld(), hero, 30665.953f, 1584.8573f); //characters.OpponentCAC2Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC2, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 33263.895f, 2317.3699f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 33274.668f, 2309.6868f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 33253.625f, 2578.8914f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 33237.258f, 2271.9353f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 33098.043f, 2023.956f, -18.497335f, 0.6f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f-70f1i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 33098.043f, 2023.956f, -68.10813f, 0.6f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f-70f1i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 32782.043f, 2258.956f, 7.927425f, 0.6f, 30.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f30f0i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 32782.043f, 2258.956f, 29.189253f, 0.6f, 30.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f30f0i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
-opponentDIST1 = new OpponentDIST1(game.getGameWorld().getWorld(), hero, 33265.297f, 2271.9333f); //characters.OpponentDIST1Wcom.mygdx.game.Object2DXY
+opponentDIST1 = new OpponentDIST1(game.getGameWorld().getWorld(), hero, 33275.13f, 2271.9236f); //characters.OpponentDIST1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentDIST1, true);
 
-opponentDIST1 = new OpponentDIST1(game.getGameWorld().getWorld(), hero, 33818.09f, 2428.3274f); //characters.OpponentDIST1Wcom.mygdx.game.Object2DXY
+opponentDIST1 = new OpponentDIST1(game.getGameWorld().getWorld(), hero, 33867.223f, 2376.738f); //characters.OpponentDIST1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentDIST1, true);
 
 piston = new Piston(game.getGameWorld().getWorld(), 39295.477f, 3683.9883f, 0.0f, 2.0f, -40.0f, 0.8f, 0.0f); //com.mygdx.game.scenery.PistonWXYA2f-40f0.8f0f
@@ -2285,28 +2286,28 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 40208.176f, 3230.9553f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 40564.504f, 3400.5457f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
+opponentCAC1 = new OpponentCAC1(game.getGameWorld().getWorld(), hero, 40564.516f, 3400.5457f); //characters.OpponentCAC1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentCAC1, true);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 40527.297f, 3397.9421f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 40527.23f, 3397.9238f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
-smallBox.setTransform(40527.297f, 3397.9421f, -0.001312375f);
+smallBox.setTransform(40527.23f, 3397.9238f, -0.0022031048f);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 40533.785f, 3431.0725f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 40532.684f, 3430.4714f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
-smallBox.setTransform(40533.785f, 3431.0725f, -0.05098925f);
+smallBox.setTransform(40532.684f, 3430.4714f, -0.008124289f);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 40601.715f, 3397.9026f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 40601.797f, 3397.9207f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
-smallBox.setTransform(40601.715f, 3397.9026f, 0.0022853413f);
+smallBox.setTransform(40601.797f, 3397.9207f, 0.0024128675f);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 40598.56f, 3430.4016f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 40597.39f, 3430.4475f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
-smallBox.setTransform(40598.56f, 3430.4016f, 0.0066824052f);
+smallBox.setTransform(40597.39f, 3430.4475f, 0.007365863f);
 
-smallBox = new SmallBox(game.getGameWorld().getWorld(), 40566.934f, 3462.8857f); //com.mygdx.game.scenery.SmallBoxWXY
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 40565.184f, 3462.9177f); //com.mygdx.game.scenery.SmallBoxWXY
 game.getGameWorld().addObject2DToWorld(smallBox, true);
-smallBox.setTransform(40566.934f, 3462.8857f, -8.7719643E-4f);
+smallBox.setTransform(40565.184f, 3462.9177f, -5.017877E-4f);
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 40505.785f, 3231.333f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
@@ -2389,7 +2390,7 @@ conveyorBelt.setPriority(5);
 conveyorBelt = new ConveyorBelt(game.getGameWorld().getWorld(), 42384.1f, 3481.2488f, 0.0f, 1.0f, -1, new Vector2(-7.0f, 0.0f)); //com.mygdx.game.scenery.ConveyorBeltWXYA1f-1i-7;0
 game.getGameWorld().addObject2DToWorld(conveyorBelt, true);
 
-factoryGearScrewPlatform = new FactoryGearScrewPlatform(game.getGameWorld().getWorld(), 42116.062f, 3378.3762f, 13.047566f, 1.0f, 100.0f, 0); //com.mygdx.game.scenery.FactoryGearScrewPlatformWXYA1f100f0i
+factoryGearScrewPlatform = new FactoryGearScrewPlatform(game.getGameWorld().getWorld(), 42116.062f, 3378.3762f, 83.92015f, 1.0f, 100.0f, 0); //com.mygdx.game.scenery.FactoryGearScrewPlatformWXYA1f100f0i
 game.getGameWorld().addObject2DToWorld(factoryGearScrewPlatform, true);
 factoryGearScrewPlatform.setPriority(5);
 
@@ -2399,7 +2400,7 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 41569.062f, 3339.3762f, 1, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY1i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-factoryGearScrewPlatform = new FactoryGearScrewPlatform(game.getGameWorld().getWorld(), 41570.062f, 3385.3762f, 13.047566f, 1.0f, 100.0f, 0); //com.mygdx.game.scenery.FactoryGearScrewPlatformWXYA1f100f0i
+factoryGearScrewPlatform = new FactoryGearScrewPlatform(game.getGameWorld().getWorld(), 41570.062f, 3385.3762f, 83.92015f, 1.0f, 100.0f, 0); //com.mygdx.game.scenery.FactoryGearScrewPlatformWXYA1f100f0i
 game.getGameWorld().addObject2DToWorld(factoryGearScrewPlatform, true);
 factoryGearScrewPlatform.setPriority(5);
 
@@ -2479,11 +2480,11 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 42017.18f, 3952.6875f, 7, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY7i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-factoryGearScrewPlatform = new FactoryGearScrewPlatform(game.getGameWorld().getWorld(), 42675.46f, 3678.9688f, 13.047566f, 1.0f, 100.0f, 0); //com.mygdx.game.scenery.FactoryGearScrewPlatformWXYA1f100f0i
+factoryGearScrewPlatform = new FactoryGearScrewPlatform(game.getGameWorld().getWorld(), 42675.46f, 3678.9688f, 83.92015f, 1.0f, 100.0f, 0); //com.mygdx.game.scenery.FactoryGearScrewPlatformWXYA1f100f0i
 game.getGameWorld().addObject2DToWorld(factoryGearScrewPlatform, true);
 factoryGearScrewPlatform.setPriority(5);
 
-factoryGearScrewPlatform = new FactoryGearScrewPlatform(game.getGameWorld().getWorld(), 42051.46f, 3954.9688f, 13.047566f, 1.0f, 100.0f, 0); //com.mygdx.game.scenery.FactoryGearScrewPlatformWXYA1f100f0i
+factoryGearScrewPlatform = new FactoryGearScrewPlatform(game.getGameWorld().getWorld(), 42051.46f, 3954.9688f, 83.92015f, 1.0f, 100.0f, 0); //com.mygdx.game.scenery.FactoryGearScrewPlatformWXYA1f100f0i
 game.getGameWorld().addObject2DToWorld(factoryGearScrewPlatform, true);
 factoryGearScrewPlatform.setPriority(5);
 
@@ -2560,29 +2561,29 @@ activableVentilo.setPriority(1);
 conveyorBelt = new ConveyorBelt(game.getGameWorld().getWorld(), 44591.72f, 4529.2705f, 0.0f, 1.0f, -1, new Vector2(-7.0f, 0.0f)); //com.mygdx.game.scenery.ConveyorBeltWXYA1f-1i-7;0
 game.getGameWorld().addObject2DToWorld(conveyorBelt, true);
 
-strongChest = new StrongChest(game.getGameWorld().getWorld(), 45121.234f, 4521.3286f); //com.mygdx.game.scenery.StrongChestWXY
+strongChest = new StrongChest(game.getGameWorld().getWorld(), 45121.234f, 4521.2803f); //com.mygdx.game.scenery.StrongChestWXY
 game.getGameWorld().addObject2DToWorld(strongChest, true);
-strongChest.setTransform(45121.234f, 4521.3286f, 1.6200124E-6f);
+strongChest.setTransform(45121.234f, 4521.2803f, 1.543243E-4f);
 
 activableVentilo = new ActivableVentilo(game.getGameWorld().getWorld(), 46031.094f, 4558.2705f, 3.1338634f, 10.0f, 4, true); //com.mygdx.game.scenery.ActivableVentiloWXYA10f4itrue
 game.getGameWorld().addObject2DToWorld(activableVentilo, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 45480.97f, 4922.2705f, -9.133296f, 0.6f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f-70f1i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 45480.97f, 4922.2705f, -58.74411f, 0.6f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f-70f1i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 45521.97f, 4598.2705f, 3.9142718f, 0.6f, 30.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f30f0i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 45521.97f, 4598.2705f, 25.176092f, 0.6f, 30.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f30f0i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 45728.97f, 4780.2705f, 3.9142718f, 1.0f, 30.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1f30f0i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 45728.97f, 4780.2705f, 25.176092f, 1.0f, 30.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1f30f0i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 47048.97f, 4965.2705f, -9.133296f, 1.0f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1f-70f1i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 47048.97f, 4965.2705f, -58.74411f, 1.0f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1f-70f1i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
 conveyorBelt = new ConveyorBelt(game.getGameWorld().getWorld(), 44282.48f, 5524.653f, 0.0f, 1.0f, 1, new Vector2(7.0f, 0.0f)); //com.mygdx.game.scenery.ConveyorBeltWXYA1f1i7;0
 game.getGameWorld().addObject2DToWorld(conveyorBelt, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 44285.48f, 5820.653f, -9.133296f, 0.6f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f-70f1i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 44285.48f, 5820.653f, -58.74411f, 0.6f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f-70f1i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 44606.48f, 5852.653f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
@@ -2597,7 +2598,7 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 conveyorBelt = new ConveyorBelt(game.getGameWorld().getWorld(), 44908.324f, 5528.653f, 0.0f, 1.0f, -1, new Vector2(-7.0f, 0.0f)); //com.mygdx.game.scenery.ConveyorBeltWXYA1f-1i-7;0
 game.getGameWorld().addObject2DToWorld(conveyorBelt, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 44925.324f, 5759.653f, 3.9142718f, 0.6f, 30.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f30f0i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 44925.324f, 5759.653f, 25.176092f, 0.6f, 30.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f30f0i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
 activableVentilo = new ActivableVentilo(game.getGameWorld().getWorld(), 46033.83f, 4778.7563f, 3.1306658f, 10.0f, 4, true); //com.mygdx.game.scenery.ActivableVentiloWXYA10f4itrue
@@ -2634,10 +2635,10 @@ game.getGameWorld().addObject2DToWorld(activableVentilo, true);
 directCannonCorpus = new DirectCannonCorpus(game.getGameWorld().getWorld(), hero, 46659.38f, 5524.3843f, 3.1349912f, 2.0f); //com.mygdx.game.scenery.DirectCannonCorpusWcom.mygdx.game.Object2DXYA2f
 game.getGameWorld().addObject2DToWorld(directCannonCorpus, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 45703.05f, 5068.6235f, -9.133296f, 0.6f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f-70f1i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 45703.05f, 5068.6235f, -58.74411f, 0.6f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f-70f1i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 45531.05f, 5278.6235f, 3.9142718f, 0.6f, 30.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f30f0i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 45531.05f, 5278.6235f, 25.176092f, 0.6f, 30.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA0.6f30f0i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 46658.203f, 5698.1226f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
@@ -2778,7 +2779,7 @@ game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 48850.66f, 4454.8203f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 
-opponentDIST1 = new OpponentDIST1(game.getGameWorld().getWorld(), hero, 48497.965f, 5217.843f); //characters.OpponentDIST1Wcom.mygdx.game.Object2DXY
+opponentDIST1 = new OpponentDIST1(game.getGameWorld().getWorld(), hero, 48497.965f, 5217.7783f); //characters.OpponentDIST1Wcom.mygdx.game.Object2DXY
 game.getGameWorld().addObject2DToWorld(opponentDIST1, true);
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 49683.965f, 5047.288f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
@@ -2973,10 +2974,10 @@ obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 47427.
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
 obstacleTestBlock.setTransform(47427.09f, 6058.012f, 0.6654837f);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 53091.688f, 5362.06f, -9.133296f, 1.4f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1.4f-70f1i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 53091.688f, 5362.06f, -58.74411f, 1.4f, -70.0f, 1); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1.4f-70f1i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
-factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 52765.58f, 5621.871f, 3.9142718f, 1.4f, 30.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1.4f30f0i
+factoryGearWheelPlatform = new FactoryGearWheelPlatform(game.getGameWorld().getWorld(), 52765.58f, 5621.871f, 25.176092f, 1.4f, 30.0f, 0); //com.mygdx.game.scenery.FactoryGearWheelPlatformWXYA1.4f30f0i
 game.getGameWorld().addObject2DToWorld(factoryGearWheelPlatform, true);
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 53265.438f, 5046.202f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
@@ -3135,25 +3136,25 @@ pipe = new Pipe(game.getGameWorld().getWorld(), 387.75912f, 1091.7466f, 0.5f, fa
 game.getGameWorld().addObject2DToWorld(pipe, true);
 pipe.setTransform(387.75912f, 1091.7466f, 0.20464261f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 635.7726f, 1207.8318f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 635.7331f, 1207.7085f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(635.7726f, 1207.8318f, 2.248805E-4f);
+metalBox.setTransform(635.7331f, 1207.7085f, 6.581972E-5f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 556.83356f, 1207.8475f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 556.758f, 1207.7327f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(556.83356f, 1207.8475f, 2.5304384E-4f);
+metalBox.setTransform(556.758f, 1207.7327f, -1.4946533E-4f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 635.00995f, 1284.4708f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 634.9157f, 1284.2966f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(635.00995f, 1284.4708f, 2.2623787E-4f);
+metalBox.setTransform(634.9157f, 1284.2966f, 1.721947E-4f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 477.04642f, 1207.8667f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 476.97116f, 1207.816f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(477.04642f, 1207.8667f, -1.6306369E-5f);
+metalBox.setTransform(476.97116f, 1207.816f, 1.5257948E-4f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 553.8023f, 1284.486f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 553.6452f, 1284.3486f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(553.8023f, 1284.486f, 2.5169217E-4f);
+metalBox.setTransform(553.6452f, 1284.3486f, -1.9163392E-4f);
 
 obstacleTestBlock = new ObstacleTestBlock(game.getGameWorld().getWorld(), 827.47876f, 1766.6998f, 5, 1.0f); //com.mygdx.game.scenery.ObstacleTestBlockWXY5i1f
 game.getGameWorld().addObject2DToWorld(obstacleTestBlock, true);
@@ -3194,49 +3195,65 @@ game.getGameWorld().addObject2DToWorld(directCannonCorpus, true);
 autoCannonCorpus = new AutoCannonCorpus(game.getGameWorld().getWorld(), hero, 28995.992f, 1591.627f, 0.0f, 2.0f, true, 0); //com.mygdx.game.scenery.AutoCannonCorpusWcom.mygdx.game.Object2DXYA2ftrue0i
 game.getGameWorld().addObject2DToWorld(autoCannonCorpus, true);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 29496.068f, 1604.045f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 29495.938f, 1604.0751f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(29496.068f, 1604.045f, 3.1339555E-4f);
+metalBox.setTransform(29495.938f, 1604.0751f, 2.7395078E-4f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 29494.102f, 1680.5371f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 29493.717f, 1680.6246f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(29494.102f, 1680.5371f, 7.6771696E-4f);
+metalBox.setTransform(29493.717f, 1680.6246f, 7.097073E-4f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 29491.951f, 1757.0856f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 29491.117f, 1757.208f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(29491.951f, 1757.0856f, 9.724198E-4f);
+metalBox.setTransform(29491.117f, 1757.208f, 9.2558237E-4f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 29416.867f, 1604.0913f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 29416.643f, 1604.1102f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(29416.867f, 1604.0913f, -3.58248E-4f);
+metalBox.setTransform(29416.643f, 1604.1102f, 4.3724704E-5f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 29413.518f, 1680.6061f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 29412.852f, 1680.6816f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(29413.518f, 1680.6061f, 3.6971556E-4f);
+metalBox.setTransform(29412.852f, 1680.6816f, 0.0011891809f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 29408.938f, 1757.1656f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 29407.555f, 1757.2714f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(29408.938f, 1757.1656f, 7.359626E-4f);
+metalBox.setTransform(29407.555f, 1757.2714f, 0.0021184864f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 29334.908f, 1604.0414f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 29334.695f, 1604.0785f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(29334.908f, 1604.0414f, 3.8296802E-4f);
+metalBox.setTransform(29334.695f, 1604.0785f, 5.699436E-4f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 29331.727f, 1680.5275f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 29331.088f, 1680.6323f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(29331.727f, 1680.5275f, 9.371912E-4f);
+metalBox.setTransform(29331.088f, 1680.6323f, 0.0017675344f);
 
-metalBox = new MetalBox(game.getGameWorld().getWorld(), 29330.346f, 1757.0708f); //com.mygdx.game.scenery.MetalBoxWXY
+metalBox = new MetalBox(game.getGameWorld().getWorld(), 29329.229f, 1757.2173f); //com.mygdx.game.scenery.MetalBoxWXY
 game.getGameWorld().addObject2DToWorld(metalBox, true);
-metalBox.setTransform(29330.346f, 1757.0708f, 0.0011399103f);
+metalBox.setTransform(29329.229f, 1757.2173f, 0.0019617518f);
 
 sign = new Sign(game.getGameWorld().getWorld(), 28872.992f, 1645.627f, 0.0f, 4); //com.mygdx.game.scenery.SignWXYA4i
 game.getGameWorld().addObject2DToWorld(sign, true);
 
-strongChestBoss = new StrongChestBoss(game.getGameWorld().getWorld(), 24398.977f, 1596.1348f); //com.mygdx.game.scenery.StrongChestBossWXY
+strongChestBoss = new StrongChestBoss(game.getGameWorld().getWorld(), 24398.977f, 1596.0859f); //com.mygdx.game.scenery.StrongChestBossWXY
 game.getGameWorld().addObject2DToWorld(strongChestBoss, true);
-strongChestBoss.setTransform(24398.977f, 1596.1348f, 1.4536754E-6f);
+strongChestBoss.setTransform(24398.977f, 1596.0859f, 1.5177707E-4f);
 
-grandUltima = new GrandUltima(game.getGameWorld().getWorld(), 24167.732f, 1594.6089f); //characters.GrandUltimaWXY
+grandUltima = new GrandUltima(game.getGameWorld().getWorld(), 25149.584f, 1594.5765f); //characters.GrandUltimaWXY
 game.getGameWorld().addObject2DToWorld(grandUltima, true);
+
+breakableCar = new BreakableCar(game.getGameWorld().getWorld(), 24735.842f, 1609.9987f, 0, 1); //com.mygdx.game.scenery.BreakableCarWXY0i1i
+game.getGameWorld().addObject2DToWorld(breakableCar, true);
+breakableCar.setTransform(24735.842f, 1609.9987f, 6.7127175E-6f);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 25352.586f, 1580.8589f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+smallBox.setTransform(25352.586f, 1580.8589f, 0.0018412578f);
+
+smallBox = new SmallBox(game.getGameWorld().getWorld(), 25353.549f, 1613.1971f); //com.mygdx.game.scenery.SmallBoxWXY
+game.getGameWorld().addObject2DToWorld(smallBox, true);
+smallBox.setTransform(25353.549f, 1613.1971f, 0.0064710677f);
+
+breakableCar = new BreakableCar(game.getGameWorld().getWorld(), 25343.938f, 1674.5864f, 0, 1); //com.mygdx.game.scenery.BreakableCarWXY0i1i
+game.getGameWorld().addObject2DToWorld(breakableCar, true);
+breakableCar.setTransform(25343.938f, 1674.5864f, 0.009136246f);
 

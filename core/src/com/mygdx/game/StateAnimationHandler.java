@@ -6,6 +6,7 @@
 package com.mygdx.game;
 
 import characters.ABoss2D;
+import characters.BossBastion;
 import characters.BossHummer;
 import characters.BossTank;
 import characters.OpponentCAC1;
@@ -82,6 +83,7 @@ public class StateAnimationHandler implements Disposable, Object2DStateListener{
         this.object2DBossOpponentsPool = new HashMap<Class, BossOpponentPool>();
         this.object2DBossOpponentsPool.put(BossHummer.class, new BossOpponentFactoryPool<BossHummer>(BossHummer.class));
         this.object2DBossOpponentsPool.put(BossTank.class, new BossOpponentFactoryPool<BossTank>(BossTank.class));
+        this.object2DBossOpponentsPool.put(BossBastion.class, new BossOpponentFactoryPool<BossBastion>(BossBastion.class));
         
         // Set Pool cosmetic
         this.cosmeticObj2DFactoriesPool.put(HitCosmeticObject2D.class, new CosmeticFactoryPool<HitCosmeticObject2D>(HitCosmeticObject2D.class));
