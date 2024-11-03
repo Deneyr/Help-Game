@@ -98,6 +98,7 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         this.putActionSound("smoke", "sounds/action/smoke.ogg");
         this.putActionSound("pikeTrap", "sounds/action/pikeTrap.ogg");
         this.putActionSound("setPikeTrap", "sounds/action/setPikeTrap.ogg");
+        this.putActionSound("steamPressure", "sounds/action/steamPressure.ogg");
         
         // Part damages taken sounds map fill.
         this.mapDamagesTakenSound = new HashMap<String, List<String>>();
@@ -111,6 +112,8 @@ public class SoundMusicManager implements GameEventListener, Disposable{
         this.putLoopSound("gear", "sounds/environment/gear_Loop.ogg");
         this.putLoopSound("hummer", "sounds/environment/hummer_Loop.ogg");
         this.putLoopSound("tank", "sounds/environment/tank_Loop.ogg");
+        this.putLoopSound("steamEngine", "sounds/environment/steamEngine_Loop.ogg");
+        this.putLoopSound("mechanismTranslate", "sounds/environment/mechanismTranslate_Loop.ogg");
         this.mapIdLoopSound = new HashMap<String, Long>();
         this.setLoopSoundPathUsed = new HashSet<String>();
         

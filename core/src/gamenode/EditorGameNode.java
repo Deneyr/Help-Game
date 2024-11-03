@@ -398,6 +398,7 @@ public class EditorGameNode extends GameNode{
         SoundManager.getInstance().getSound("sounds/action/pikeTrap.ogg");
         SoundManager.getInstance().getSound("sounds/action/setPikeTrap.ogg");
         SoundManager.getInstance().getSound("sounds/action/PhoneBoxOpen.ogg");
+        SoundManager.getInstance().getSound("sounds/action/steamPressure.ogg");
                 
         // Damages taken.
         SoundManager.getInstance().getSound("sounds/damagesTaken/crash_box.ogg");
@@ -409,6 +410,8 @@ public class EditorGameNode extends GameNode{
         SoundManager.getInstance().getSound("sounds/environment/gear_Loop.ogg");
         SoundManager.getInstance().getSound("sounds/environment/hummer_Loop.ogg");
         SoundManager.getInstance().getSound("sounds/environment/tank_Loop.ogg");
+        SoundManager.getInstance().getSound("sounds/environment/steamEngine_Loop.ogg");
+        SoundManager.getInstance().getSound("sounds/environment/mechanismTranslate_Loop.ogg");
     }
     
     private void loadObject2Ds(HelpGame game, String path){

@@ -75,6 +75,7 @@ public class BossBastion extends ABoss2D{
     
     private List<Cannon> cannons;
     
+    private float defenderSpawnRatio;
     
     public BossBastion(){
        this(40 * 35, null);    
@@ -101,6 +102,8 @@ public class BossBastion extends ABoss2D{
         this.target = target;
         
         this.isReseting = false;
+        
+        this.defenderSpawnRatio = 0.2f;
     }
     
     public BossBastion(World world, Object2D target, float posX, float posY) {
@@ -108,6 +111,8 @@ public class BossBastion extends ABoss2D{
         
         this.maxTimerBeforeTurning = 1;
         this.maxBounceTimer = 1;
+        
+        this.defenderSpawnRatio = 0.25f;
         
         this.initialize(world, target, posX, posY);
     }
@@ -124,7 +129,7 @@ public class BossBastion extends ABoss2D{
         
         this.lifePoints = this.getLifePointsMax();
         
-        this.priority = -1;
+        this.priority = 3;
         
         this.target = target;
         
@@ -223,15 +228,18 @@ public class BossBastion extends ABoss2D{
             
             if(this.damageActionFixture.hasEncounteredSomething()){
                 this.notifyGameEventListener(GameEventListener.EventType.ATTACK, "barbed", new Vector2(this.getPositionBody()));
-            }       
-            //this.notifyGameEventListener(GameEventListener.EventType.LOOP, "hummer" + ":" + this.id, this.getPositionBody());
+            }
+            
+            if(this.currentStateNode.stateNode == BastionState.CONSTRUCTING){
+                this.notifyGameEventListener(GameEventListener.EventType.LOOP, "steamEngine" + ":" + this.id, this.getPositionBody());
+            }
         }
         
         for(Cannon cannonObj : this.cannons){
             cannonObj.updateLogic(deltaTime);
         }
     }
-    
+     
     protected void updateOffsetPosition(float deltaTime){    
         if(BossBastion.this.lifeState == LifeState.DEAD){
             return;
@@ -305,9 +313,26 @@ public class BossBastion extends ABoss2D{
         }
     }
     
+    private void SpawnDefender(Object2D damageOwner, int previousLifePoints, int currentLifePoints){
+        float previousLPRatio = previousLifePoints / (float) (this.getLifePointsMax());
+        float currentLPRatio = currentLifePoints / (float) (this.getLifePointsMax());
+        
+        int previousNbWave = (int) (previousLPRatio / this.defenderSpawnRatio);
+        int currentNbWave = (int) (currentLPRatio / this.defenderSpawnRatio);
+        
+        int nbWavesToGenerate = previousNbWave - currentNbWave;
+        Vector2 diffDamageOwnerThis = damageOwner.getPositionBody().sub(this.getPositionBody());
+        for(int i = 0; i < nbWavesToGenerate; i++){
+            this.notifyObject2D2CreateListener(OpponentCAC1.class, this.getPositionBody().add(Math.signum(diffDamageOwnerThis.x) * 200 * P2M, 50 * P2M).scl(1 / P2M), new Vector2(0, 0));
+        }
+    }
+    
     @Override
     public boolean applyDamage(int damage, Vector2 dirDamage, Object2D damageOwner){
-        if(this.currentStateNode.stateNode == BastionState.NORMAL){
+        if(this.currentStateNode.stateNode == BastionState.NORMAL
+            && damageOwner instanceof CannonBallTriggeredObject2D == false){
+            
+            int previousLifePoints = this.getLifePoints();
             boolean result = super.applyDamage(damage, dirDamage, damageOwner);
 
             if(result){
@@ -321,6 +346,8 @@ public class BossBastion extends ABoss2D{
                     this.bounceSide = ((Character2D) damageOwner).getSideCharacter();
                     this.bounceTimer = this.maxBounceTimer;         
                 }
+                
+                this.SpawnDefender(damageOwner, previousLifePoints, this.getLifePoints());
             }
 
             return result;
@@ -463,10 +490,11 @@ public class BossBastion extends ABoss2D{
         
         // Cannons
         this.cannons = new ArrayList<Cannon>();
-        this.cannons.add(new Cannon(this.physicBody, target, world, posX, posY, -150, 30, SideCharacter.LEFT, 2f));
-        this.cannons.add(new Cannon(this.physicBody, target, world, posX, posY, 150, 30, SideCharacter.RIGHT, 2f));
-        /*this.cannons.add(new Cannon(this.physicBody, target, world, posX + 200, posY, 2f));
-        this.cannons.add(new Cannon(this.physicBody, target, world, posX + 300, posY - 100, 2f));*/
+        this.cannons.add(new Cannon(this.physicBody, target, world, posX, posY, -150, 30, 0, SideCharacter.LEFT, 2f));
+        this.cannons.add(new Cannon(this.physicBody, target, world, posX, posY, 150, 30, 0, SideCharacter.RIGHT, 2f));
+        
+        this.cannons.add(new Cannon(this.physicBody, target, world, posX, posY, -100, 160, 1, SideCharacter.LEFT, 2f));
+        this.cannons.add(new Cannon(this.physicBody, target, world, posX, posY, 100, 160, 1, SideCharacter.RIGHT, 2f));
     }
     
     @Override
@@ -504,7 +532,7 @@ public class BossBastion extends ABoss2D{
         //this.notifyGameEventListener(GameEventListener.EventType.LOOP_STOP, "hummer" + ":" + this.id, this.getPositionBody());
     }
     
-        // listener
+    // listener
     @Override
     public void addGameEventListener(GameEventListener listener){
         super.addGameEventListener(listener);
@@ -525,6 +553,8 @@ public class BossBastion extends ABoss2D{
     
     @Override
     public void addObject2DStateListener(Object2DStateListener object2DStateListener){
+        super.addObject2DStateListener(object2DStateListener);
+        
         for(Cannon cannonObj : this.cannons){
             cannonObj.addObject2DStateListener(object2DStateListener);
         }
@@ -604,50 +634,6 @@ public class BossBastion extends ABoss2D{
                 }
             }
         }
-        
-        /*
-        // Attack influences
-        if(this.target != null){   
-            if(this.maxDistanceFromSpawn > 0 
-                    && (Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn
-                        || (this.isReseting && Math.abs(this.physicBody.getPosition().x - this.spawnPoint.x) > this.maxDistanceFromSpawn / 2))){
-                if(!this.isReseting){
-                    this.isReseting = true;
-                }
-                if(this.spawnPoint.x - this.physicBody.getPosition().x > 0){
-                    this.influences.add(BastionInfluence.GO_RIGHT);
-                }else{
-                    this.influences.add(BastionInfluence.GO_LEFT);
-                }      
-            }else{
-                if(this.isReseting){
-                    this.isReseting = false;
-                }
-                if(this.target.getPositionBody().dst(this.physicBody.getPosition()) < MOVE_DIST){
-                    if(this.target.getPositionBody().x - this.physicBody.getPosition().x > 0){
-                        this.influences.add(BastionInfluence.GO_RIGHT);
-                    }else{
-                        this.influences.add(BastionInfluence.GO_LEFT);
-                    }
-                }else{
-                    double rand = Math.random()*100;
-                    if(rand > 80){
-                        if(this.side == SideCharacter.RIGHT){
-                            this.influences.add(BastionInfluence.GO_RIGHT);
-                        }else{
-                            this.influences.add(BastionInfluence.GO_LEFT);
-                        }
-                    }else if(rand > 60){
-                        if(this.side == SideCharacter.RIGHT){
-                            this.influences.add(BastionInfluence.GO_LEFT);
-                        }else{
-                            this.influences.add(BastionInfluence.GO_RIGHT);
-                        }
-                    }
-                }
-            }
-        }
-        */
     }
     
     private static double getReworkedAngle(double angle){
@@ -747,7 +733,7 @@ public class BossBastion extends ABoss2D{
                 BastionInfluence currentInfluence = it.next();
                 switch(currentInfluence){
                     case CONSTRUCT :
-                        BossBastion.this.changeAnimation(0, false);
+                        BossBastion.this.changeAnimation(0, false);                    
                         
                         return new StateNode(BastionState.CONSTRUCTING);
                 }
@@ -757,6 +743,15 @@ public class BossBastion extends ABoss2D{
                 
         private StateNode getNextNodeConstructing(){
             if(BossBastion.this.isCurrentAnimationOver()){
+                
+                List<String> influences = new ArrayList<String>();
+                influences.add("construct");
+                for(Cannon cannonObj: BossBastion.this.cannons){
+                    cannonObj.setInfluenceList(influences);
+                }
+                
+                BossBastion.this.notifyGameEventListener(GameEventListener.EventType.LOOP_STOP, "steamEngine" + ":" + BossBastion.this.id, BossBastion.this.getPositionBody());
+                
                 return new StateNode(BastionState.NORMAL);
             }
             
@@ -862,7 +857,7 @@ public class BossBastion extends ABoss2D{
         public BastionState getStateNode() {
             return stateNode;
         }
-
+        
         private boolean ApplyBounce(Vector2 velocity) {
             /*if(BossBastion.this.bounceTimer > 0){
                 SideCharacter bounceOwnerSide = BossBastion.this.bounceSide;
@@ -888,7 +883,8 @@ public class BossBastion extends ABoss2D{
     }
     
     public class Cannon extends Character2D{
-
+        protected final String id = UUID.randomUUID().toString();
+        
         private Joint joint;
         
         protected Object2D target;
@@ -905,7 +901,9 @@ public class BossBastion extends ABoss2D{
         
         private SideCharacter startSide;
         
-        public Cannon(Body ownerBody, Object2D target, World world, float posX, float posY, float offsetX, float offsetY, SideCharacter side, float attackCooldown) {
+        private float constructOffsetX;
+        
+        public Cannon(Body ownerBody, Object2D target, World world, float posX, float posY, float offsetX, float offsetY, int high, SideCharacter side, float attackCooldown) {
             super(100);
             
             this.target = target;
@@ -913,7 +911,7 @@ public class BossBastion extends ABoss2D{
             this.isInvulnerable = true;
             this.hasLifeBar = false;
             
-            this.currentStateNode = new StateNode(BossBastion.CannonState.STOP);
+            this.currentStateNode = new StateNode(BossBastion.CannonState.START);
             
             this.canAttack = true;
             
@@ -964,11 +962,19 @@ public class BossBastion extends ABoss2D{
             
             jointDef.enableLimit = true; 
             if(this.startSide == SideCharacter.LEFT){
-                jointDef.lowerAngle = (float) (-(Math.PI / 2 - 0.2));
+                if(high == 0){
+                    jointDef.lowerAngle = (float) (-(Math.PI / 2 - 0.2));
+                }else{
+                    jointDef.lowerAngle = (float) (-Math.PI);
+                }
                 jointDef.upperAngle = (float) (Math.PI / 2 - 0.2);
             }else{
                 jointDef.lowerAngle = (float) (Math.PI / 2 + 0.2);
-                jointDef.upperAngle = (float) (3*Math.PI / 2 - 0.2);
+                if(high == 0){
+                    jointDef.upperAngle = (float) (3*Math.PI / 2 - 0.2);
+                }else{
+                    jointDef.upperAngle = (float) (2*Math.PI);
+                }
             }
             
             float startAngle;
@@ -980,6 +986,8 @@ public class BossBastion extends ABoss2D{
             this.physicBody.setTransform(this.getPositionBody(), startAngle);
             
             this.joint = world.createJoint(jointDef);
+            
+            this.constructOffsetX = 0;
         }
         
         public void assignTextures(Texture texture){
@@ -1019,16 +1027,34 @@ public class BossBastion extends ABoss2D{
                     this.influences.add(BossBastion.CannonInfluence.GO_LEFT);
                 }else if(influence.equals("attack")){
                     this.influences.add(BossBastion.CannonInfluence.ATTACK);
+                }else if(influence.equals("construct")){
+                    this.influences.add(BossBastion.CannonInfluence.CONSTRUCT);
                 }
             }
         }
 
+        @Override
+        public Sprite createCurrentSprite(){
+            
+            if(this.currentStateNode.stateNode != CannonState.START){
+                Sprite sprite = super.createCurrentSprite();
+                
+                sprite.setX(sprite.getX() + this.constructOffsetX);
+                
+                return sprite;
+            }
+            
+            return null;
+        }
+        
         @Override
         public void updateLogic(float deltaTime){
             
             if(this.physicBody == null){
                 return;
             }
+            
+            this.currentStateNode.updateLogic(deltaTime);
             
             super.updateLogic(deltaTime);
         
@@ -1126,10 +1152,28 @@ public class BossBastion extends ABoss2D{
                 this.stateNode = state;
             }
 
+            public void updateLogic(float deltaTime){           
+                if(Cannon.this.currentStateNode.stateNode == CannonState.CONSTRUCT){
+                    
+                    float constuctSpeed = 100;
+                    if(Cannon.this.startSide == SideCharacter.LEFT){
+                        Cannon.this.constructOffsetX -= deltaTime * constuctSpeed; 
+                    }else{
+                        Cannon.this.constructOffsetX += deltaTime * constuctSpeed;
+                    }
+                    
+                    Cannon.this.notifyGameEventListener(GameEventListener.EventType.LOOP, "mechanismTranslate" + ":" + Cannon.this.id, Cannon.this.getPositionBody());
+                }
+            }
+            
             // Part nextNode
             public StateNode getNextStateNode(){
 
                 switch(this.getStateNode()){
+                    case START:
+                        return getNextNodeStart();
+                    case CONSTRUCT:
+                        return getNextNodeConstruct();
                     case STOP:
                         return getNextNodeStop();
                     case MOVE:
@@ -1140,7 +1184,58 @@ public class BossBastion extends ABoss2D{
                 } 
                 return null;
             }
+            
+            private StateNode getNextNodeConstruct(){
+                boolean canMove = false;
+                if(Cannon.this.startSide == SideCharacter.LEFT){
+                    canMove = Cannon.this.constructOffsetX <= 0;
+                }else{
+                    canMove = Cannon.this.constructOffsetX >= 0;
+                }
+                          
+                if(canMove){
+                    Cannon.this.constructOffsetX = 0;
+                    Cannon.this.physicBody.setFixedRotation(false);
+                    Cannon.this.physicBody.setAwake(true);
+                    
+                    Cannon.this.notifyGameEventListener(GameEventListener.EventType.LOOP_STOP, "mechanismTranslate" + ":" + Cannon.this.id, Cannon.this.getPositionBody());
+                    Cannon.this.notifyGameEventListener(GameEventListener.EventType.ACTION, "steamPressure", Cannon.this.getPositionBody());
+                    
+                    return new StateNode(BossBastion.CannonState.MOVE); 
+                }
+                
+                return null;
+            }
 
+            private StateNode getNextNodeStart(){
+                
+                Iterator<BossBastion.CannonInfluence> it = Cannon.this.influences.iterator();
+                
+                while(it.hasNext()){
+                    BossBastion.CannonInfluence currentInfluence = it.next();
+                    switch(currentInfluence){
+                        case CONSTRUCT :
+                            
+                            if(Cannon.this.startSide == SideCharacter.LEFT){
+                                Cannon.this.physicBody.setTransform(Cannon.this.getPositionBody(), 0);
+                            }else{
+                                Cannon.this.physicBody.setTransform(Cannon.this.getPositionBody(), (float) (Math.PI));
+                            }
+                            Cannon.this.physicBody.setFixedRotation(true);
+                            
+                            if(Cannon.this.startSide == SideCharacter.LEFT){
+                                Cannon.this.constructOffsetX = 200;
+                            }else{
+                                Cannon.this.constructOffsetX = -200;
+                            }
+                            return new StateNode(BossBastion.CannonState.CONSTRUCT);
+                            
+                    }
+                }
+                
+                return null;
+            }
+            
             private StateNode getNextNodeStop(){
                 
                 Iterator<BossBastion.CannonInfluence> it = Cannon.this.influences.iterator();
@@ -1225,6 +1320,12 @@ public class BossBastion extends ABoss2D{
 
             // Part physic
             public void updatePhysic(float deltaTime){
+                
+                if(Cannon.this.currentStateNode.stateNode == CannonState.START
+                    || Cannon.this.currentStateNode.stateNode == CannonState.CONSTRUCT){
+                    return;
+                }
+                
                 Iterator<BossBastion.CannonInfluence> it = Cannon.this.influences.iterator();
             
                 while(it.hasNext()){
@@ -1298,12 +1399,15 @@ public class BossBastion extends ABoss2D{
     }
     
     protected enum CannonState{
+        START,
+        CONSTRUCT,
         STOP,
         MOVE,
         ATTACK
     }
 
     protected enum CannonInfluence{
+        CONSTRUCT,
         GO_RIGHT,
         GO_LEFT,
         ATTACK
